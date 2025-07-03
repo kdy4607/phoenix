@@ -1,1 +1,1 @@
-alert(123)
+console.log(12345678910)
