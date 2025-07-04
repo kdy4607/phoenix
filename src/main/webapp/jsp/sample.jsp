@@ -9,8 +9,9 @@
 <html>
 <head>
     <title>Title</title>
+    <title>Title2</title>
 </head>
 <body>
-
+<title>Title2</title>  <title>Title2</title>
 </body>
 </html>
