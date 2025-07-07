@@ -8,6 +8,7 @@
     <title>Movie Booking - CGV Style</title>
 </head>
 <body>
-
+<%--<h1 onclick="location.href='/schedule'">상영 시간표 (클릭)</h1>--%>
+<a href="/schedule">상영 시간표 (클릭)</a>
 </body>
 </html>
