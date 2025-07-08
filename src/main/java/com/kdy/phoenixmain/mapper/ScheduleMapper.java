@@ -9,8 +9,7 @@ import java.util.List;
 public interface ScheduleMapper {
 
     // 전체조회
-    @Select("select * from test_table")
+    @Select("select * from showtimes")
     public List<ScheduleVO> selectAllReview();
-
 
 }
