@@ -1,0 +1,37 @@
+body, html {
+    margin: 0;
+    padding: 0;
+}
+
+.head-info {
+    display: flex;
+    justify-content: space-around;
+    background-color: aqua;
+    border: 2px solid red;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 20px;
+}
+
+.nothing {
+    width:  100%;
+    border: 2px solid blue;
+}
+.title-img {
+    display: flex;
+    width:  100%;
+    justify-content: center; /* 가로 중앙 */
+    align-items: center;
+    border: 2px solid blue;
+}
+.login-status{
+    width:  100%;
+    border:  2px solid blue;
+}
+.login-status > div {
+    margin-top: 10px;
+    margin-right: 5px;
+    margin-left: auto;
+    width: fit-content; /* 내용 크기만큼만 차지하게 */
+
+}
