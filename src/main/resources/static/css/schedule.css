@@ -258,6 +258,12 @@ body {
     border-color: #FB4357;
 }
 
+.selected:hover {
+    background-color: #FB4357;
+    color: white;
+    border-color: #FB4357;
+}
+
 /* Button */
 .btn-primary {
     background-color: #FB4357;

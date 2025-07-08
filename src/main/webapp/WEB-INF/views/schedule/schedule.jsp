@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movie Schedule</title>
-    <link rel="stylesheet" href="resources/css/sample.css">
+    <link rel="stylesheet" href="resources/css/schedule.css">
 </head>
 <body>
 <header class="header">
