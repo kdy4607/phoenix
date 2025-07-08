@@ -1,0 +1,19 @@
+body, html {
+    margin: 0;
+    padding: 0;
+}
+.menu-sel{
+    display: flex;
+    justify-content: space-evenly;
+    background-color: aquamarine;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+.menu-sel > div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+    width: 150px;
+    border: purple solid 2px;
+}
