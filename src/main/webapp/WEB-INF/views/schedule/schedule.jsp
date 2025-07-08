@@ -5,13 +5,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movie Booking - CGV Style</title>
+    <title>Movie Schedule</title>
     <link rel="stylesheet" href="resources/css/sample.css">
 </head>
 <body>
 <header class="header">
     <div class="header-content">
-        <div class="logo">CGV</div>
+        <div class="logo">Pheonix</div>
         <ul class="nav-menu">
             <li><a href="#">영화</a></li>
             <li><a href="#">예매</a></li>
@@ -47,9 +47,9 @@
 
     <!-- Current Theater -->
     <div class="section">
-        <div class="section-header">CGV 강남점</div>
+        <div class="section-header">Phoenix 종각점</div>
         <div class="section-content">
-            <p style="color: #666; font-size: 14px;">서울특별시 강남구 강남대로 438</p>
+            <p style="color: #666; font-size: 14px;">서울특별시 종로구 종로12길 15 </p>
         </div>
     </div>
 
