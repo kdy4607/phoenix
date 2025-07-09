@@ -94,7 +94,7 @@
                                 <div class="movie-poster">
                                     <c:choose>
                                         <c:when test="${not empty firstRuntime.poster_url}">
-                                            <img src="${firstRuntime.poster_url}" alt="${movieTitle}"
+                                            <img src="resources/${firstRuntime.poster_url}" alt="${movieTitle}"
                                                  style="width: 100%; height: 100%; object-fit: cover;" />
                                         </c:when>
                                         <c:otherwise>
@@ -193,7 +193,7 @@
             <div class="movie-card">
                 <div class="movie-poster">
                     \${firstRuntime.poster_url ?
-                        `<img src="\${firstRuntime.poster_url}" alt="\${movieTitle}" style="width: 100%; height: 100%; object-fit: cover;" />` :
+                        `<img src="resources/\${firstRuntime.poster_url}" alt="\${movieTitle}" style="width: 100%; height: 100%; object-fit: cover;" />` :
                         movieTitle
                     }
                 </div>
