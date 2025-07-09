@@ -8,6 +8,7 @@ body, html {
     background-color: aquamarine;
     margin-left: 20px;
     margin-right: 20px;
+    margin-top: 20px;
 }
 .menu-sel > div{
     display: flex;

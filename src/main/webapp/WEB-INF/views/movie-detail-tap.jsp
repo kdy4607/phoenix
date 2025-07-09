@@ -3,28 +3,33 @@
 <html>
 <head>
     <title>Title</title>
-    <link rel="stylesheet" href="/resources/css/test.css">
+    <link rel="stylesheet" href="/resources/css/clickTap.css">
 </head>
 <body>
-<body>
-<div class="movie-container">
-    <c:forEach var="movie" items="${Allmovie}">
-        <div class="movie-card">
-            <div class="movie-title">${movie.TITLE}</div>
-            <img class="movie-img" src="movieFile/${movie.POSTER_URL}" alt="${movie.TITLE}">
-            <div class="movie-meta">
-                <div>${movie.GENRE}</div>
-<%--                <div>${movie.m_country}</div>--%>
-                <div>코멘트</div>
-                <div>표 가격</div>
-                <div>
-                    <button onclick="location.href='oneMovieDetail?MOVIE_ID=${movie.MOVIE_ID}'">상세페이지</button>
-                </div>
-            </div>
-        </div>
-    </c:forEach>
+<div class="tap-outBox">
+    <!-- 탭 버튼 영역 -->
+    <div class="tab" onclick="showTab(0)">관객평</div>
+    <div class="tab" onclick="showTab(1)">스토리</div>
+    <div class="tab" onclick="showTab(2)">동일장르 영화</div>
+</div>
+<div class="tap-inBox">
+    <!-- 탭 내용 영역 -->
+    <div class="content active"></div>
+    <div class="content">줄거리:${movieDetail2.description}</div>
+    <div class="content">탭 3의 내용입니다</div>
 </div>
 
+<script>
+    function showTab(index) {
+        const tabs = document.querySelectorAll('.tab');
+        const contents = document.querySelectorAll('.content');
+
+        tabs.forEach((tab, i) => {
+            tab.classList.toggle('active', i === index);
+            contents[i].classList.toggle('active', i === index);
+        });
+    }
+</script>
 
 </body>
 </html>
