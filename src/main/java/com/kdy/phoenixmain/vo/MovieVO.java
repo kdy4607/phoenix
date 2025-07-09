@@ -13,10 +13,13 @@ import java.util.List;
 public class MovieVO {
     private int movie_id;
     private String title;
+    private String director;
+    private String actor;
     private String genre;
     private String rating;
+    private int user_critic;
+    private int pro_critic;
     private String description;
     private int running_time;
     private String poster_url;
-    private List<TagVO> m_tagList;
 }
