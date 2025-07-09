@@ -1,17 +1,18 @@
-<%@ page language = "java" contentType = "text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movie Schedule</title>
-    <link rel="stylesheet" href="resources/css/schedule.css">
+    <link rel="stylesheet" href="/resources/css/schedule.css">
 </head>
 <body>
 <header class="header">
     <div class="header-content">
-        <div class="logo">Pheonix</div>
+        <a href="/"><div class="logo">Phoenix</div></a>
         <ul class="nav-menu">
             <li><a href="#">영화</a></li>
             <li><a href="#">예매</a></li>
@@ -45,11 +46,18 @@
         </div>
     </div>
 
+    <!-- Error Message -->
+    <c:if test="${not empty error}">
+        <div class="error-message" style="background-color: #ffebee; color: #c62828; padding: 10px; margin: 10px 0; border-radius: 4px;">
+                ${error}
+        </div>
+    </c:if>
+
     <!-- Current Theater -->
     <div class="section">
         <div class="section-header">Phoenix 종각점</div>
         <div class="section-content">
-            <p style="color: #666; font-size: 14px;">서울특별시 종로구 종로12길 15 </p>
+            <p style="color: #666; font-size: 14px;">서울특별시 종로구 종로12길 15</p>
         </div>
     </div>
 
@@ -58,34 +66,14 @@
         <div class="section-header">날짜 선택</div>
         <div class="section-content">
             <div class="date-selection">
-                <div class="date-item active">
-                    <div class="date-day">오늘</div>
-                    <div class="date-number">7</div>
-                </div>
-                <div class="date-item">
-                    <div class="date-day">화</div>
-                    <div class="date-number">8</div>
-                </div>
-                <div class="date-item">
-                    <div class="date-day">수</div>
-                    <div class="date-number">9</div>
-                </div>
-                <div class="date-item">
-                    <div class="date-day">목</div>
-                    <div class="date-number">10</div>
-                </div>
-                <div class="date-item">
-                    <div class="date-day">금</div>
-                    <div class="date-number">11</div>
-                </div>
-                <div class="date-item">
-                    <div class="date-day">토</div>
-                    <div class="date-number">12</div>
-                </div>
-                <div class="date-item">
-                    <div class="date-day">일</div>
-                    <div class="date-number">13</div>
-                </div>
+                <c:forEach var="date" items="${dates}" varStatus="status">
+                    <div class="date-item ${status.index == 0 ? 'active' : ''}"
+                         data-date="${date.dateString}"
+                         onclick="selectDate('${date.dateString}', this)">
+                        <div class="date-day">${date.dayName}</div>
+                        <div class="date-number">${date.dayNumber}</div>
+                    </div>
+                </c:forEach>
             </div>
         </div>
     </div>
@@ -94,140 +82,205 @@
     <div class="section">
         <div class="section-header">영화 선택</div>
         <div class="section-content">
-            <div class="movie-grid">
-                <div class="movie-card">
-                    <div class="movie-poster">영화 포스터</div>
-                    <div class="movie-info">
-                        <div class="movie-title">인사이드 아웃 2</div>
-                        <div class="movie-genre">애니메이션/가족</div>
-                        <div class="movie-rating">전체관람가</div>
-                        <div class="showtimes-grid">
-                            <div class="showtime-btn">10:00</div>
-                            <div class="showtime-btn">12:30</div>
-                            <div class="showtime-btn">15:00</div>
-                            <div class="showtime-btn">17:30</div>
-                            <div class="showtime-btn">20:00</div>
-                            <div class="showtime-btn full">22:30</div>
-                        </div>
-                    </div>
-                </div>
+            <div class="movie-grid" id="movieGrid">
+                <c:choose>
+                    <c:when test="${not empty movieRuntimes}">
+                        <c:forEach var="movieEntry" items="${movieRuntimes}">
+                            <c:set var="movieTitle" value="${movieEntry.key}" />
+                            <c:set var="runtimes" value="${movieEntry.value}" />
+                            <c:set var="firstRuntime" value="${runtimes[0]}" />
 
-                <div class="movie-card">
-                    <div class="movie-poster">영화 포스터</div>
-                    <div class="movie-info">
-                        <div class="movie-title">디스피커블 미 4</div>
-                        <div class="movie-genre">애니메이션/코미디</div>
-                        <div class="movie-rating">전체관람가</div>
-                        <div class="showtimes-grid">
-                            <div class="showtime-btn">09:30</div>
-                            <div class="showtime-btn">11:45</div>
-                            <div class="showtime-btn">14:15</div>
-                            <div class="showtime-btn">16:45</div>
-                            <div class="showtime-btn">19:15</div>
-                            <div class="showtime-btn">21:45</div>
+                            <div class="movie-card">
+                                <div class="movie-poster">
+                                    <c:choose>
+                                        <c:when test="${not empty firstRuntime.poster_url}">
+                                            <img src="${firstRuntime.poster_url}" alt="${movieTitle}"
+                                                 style="width: 100%; height: 100%; object-fit: cover;" />
+                                        </c:when>
+                                        <c:otherwise>
+                                            ${movieTitle}
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
+                                <div class="movie-info">
+                                    <div class="movie-title">${movieTitle}</div>
+                                    <div class="movie-genre">${firstRuntime.movie_genre}</div>
+                                    <div class="movie-rating">${firstRuntime.movie_rating}</div>
+                                    <div class="showtimes-grid">
+                                        <c:forEach var="runtime" items="${runtimes}">
+                                            <c:set var="isSoldOut" value="${soldOutStatus[runtime.runtime_id]}" />
+                                            <div class="showtime-btn ${isSoldOut ? 'full' : ''}"
+                                                 data-runtime-id="${runtime.runtime_id}"
+                                                 data-movie-title="${movieTitle}"
+                                                 data-start-time="${runtime.start_time}"
+                                                 data-room-name="${runtime.room_name}"
+                                                 data-available-seats="${runtime.available_seats}"
+                                                 onclick="${isSoldOut ? '' : 'selectShowtime(this)'}">
+                                                    ${runtime.start_time}
+                                                <br><small>${runtime.room_name}</small>
+                                                <br><small>${runtime.available_seats}석</small>
+                                            </div>
+                                        </c:forEach>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:forEach>
+                    </c:when>
+                    <c:otherwise>
+                        <div style="text-align: center; padding: 40px; color: #666;">
+                            선택하신 날짜에 상영 중인 영화가 없습니다.
                         </div>
-                    </div>
-                </div>
-
-                <div class="movie-card">
-                    <div class="movie-poster">영화 포스터</div>
-                    <div class="movie-info">
-                        <div class="movie-title">탈주</div>
-                        <div class="movie-genre">액션/범죄</div>
-                        <div class="movie-rating">15세관람가</div>
-                        <div class="showtimes-grid">
-                            <div class="showtime-btn">11:00</div>
-                            <div class="showtime-btn">13:40</div>
-                            <div class="showtime-btn">16:20</div>
-                            <div class="showtime-btn">19:00</div>
-                            <div class="showtime-btn">21:40</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="movie-card">
-                    <div class="movie-poster">영화 포스터</div>
-                    <div class="movie-info">
-                        <div class="movie-title">헤드리거</div>
-                        <div class="movie-genre">액션/드라마</div>
-                        <div class="movie-rating">12세관람가</div>
-                        <div class="showtimes-grid">
-                            <div class="showtime-btn">10:30</div>
-                            <div class="showtime-btn">13:10</div>
-                            <div class="showtime-btn">15:50</div>
-                            <div class="showtime-btn">18:30</div>
-                            <div class="showtime-btn">21:10</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="movie-card">
-                    <div class="movie-poster">영화 포스터</div>
-                    <div class="movie-info">
-                        <div class="movie-title">파일럿</div>
-                        <div class="movie-genre">코미디</div>
-                        <div class="movie-rating">12세관람가</div>
-                        <div class="showtimes-grid">
-                            <div class="showtime-btn">11:20</div>
-                            <div class="showtime-btn">14:00</div>
-                            <div class="showtime-btn">16:40</div>
-                            <div class="showtime-btn">19:20</div>
-                            <div class="showtime-btn">22:00</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="movie-card">
-                    <div class="movie-poster">영화 포스터</div>
-                    <div class="movie-info">
-                        <div class="movie-title">트위스터스</div>
-                        <div class="movie-genre">액션/스릴러</div>
-                        <div class="movie-rating">12세관람가</div>
-                        <div class="showtimes-grid">
-                            <div class="showtime-btn">09:45</div>
-                            <div class="showtime-btn">12:25</div>
-                            <div class="showtime-btn">15:05</div>
-                            <div class="showtime-btn">17:45</div>
-                            <div class="showtime-btn">20:25</div>
-                        </div>
-                    </div>
-                </div>
+                    </c:otherwise>
+                </c:choose>
             </div>
 
-            <button class="btn-primary">다음 단계로</button>
+            <!-- 선택된 상영시간 정보 -->
+            <div id="selectedShowtimeInfo" style="display: none; background: #f5f5f5; padding: 15px; margin-top: 20px; border-radius: 8px;">
+                <h4>선택된 상영시간</h4>
+                <p id="selectedDetails"></p>
+            </div>
+
+            <form id="showtimeForm" action="/schedule/select" method="post" style="display: none;">
+                <input type="hidden" id="selectedRuntimeId" name="runtimeId" />
+                <button type="submit" class="btn-primary">다음 단계로</button>
+            </form>
         </div>
     </div>
 </div>
 
 <script>
+    let selectedShowtime = null;
+
     // 날짜 선택 기능
-    document.querySelectorAll('.date-item').forEach(item => {
-        item.addEventListener('click', function() {
-            document.querySelectorAll('.date-item').forEach(i => i.classList.remove('active'));
-            this.classList.add('active');
+    function selectDate(dateString, element) {
+        // 모든 날짜 아이템에서 active 클래스 제거
+        document.querySelectorAll('.date-item').forEach(item => {
+            item.classList.remove('active');
         });
-    });
+
+        // 선택된 날짜에 active 클래스 추가
+        element.classList.add('active');
+
+        // 해당 날짜의 상영시간 조회
+        fetch(`/schedule/date/\${dateString}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    updateMovieGrid(data.movieRuntimes, data.soldOutStatus);
+                } else {
+                    alert(data.message || '데이터를 불러올 수 없습니다.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('오류가 발생했습니다. 다시 시도해 주세요.');
+            });
+    }
+
+    // 영화 그리드 업데이트
+    function updateMovieGrid(movieRuntimes, soldOutStatus) {
+        const movieGrid = document.getElementById('movieGrid');
+
+        if (!movieRuntimes || Object.keys(movieRuntimes).length === 0) {
+            movieGrid.innerHTML = '<div style="text-align: center; padding: 40px; color: #666;">선택하신 날짜에 상영 중인 영화가 없습니다.</div>';
+            return;
+        }
+
+        let html = '';
+        for (const [movieTitle, runtimes] of Object.entries(movieRuntimes)) {
+            const firstRuntime = runtimes[0];
+            html += `
+            <div class="movie-card">
+                <div class="movie-poster">
+                    \${firstRuntime.poster_url ?
+                        `<img src="\${firstRuntime.poster_url}" alt="\${movieTitle}" style="width: 100%; height: 100%; object-fit: cover;" />` :
+                        movieTitle
+                    }
+                </div>
+                <div class="movie-info">
+                    <div class="movie-title">\${movieTitle}</div>
+                    <div class="movie-genre">\${firstRuntime.movie_genre}</div>
+                    <div class="movie-rating">\${firstRuntime.movie_rating}</div>
+                    <div class="showtimes-grid">`;
+
+            runtimes.forEach(runtime => {
+                const isSoldOut = soldOutStatus[runtime.runtime_id];
+                html += `
+                <div class="showtime-btn \${isSoldOut ? 'full' : ''}"
+                     data-runtime-id="\${runtime.runtime_id}"
+                     data-movie-title="\${movieTitle}"
+                     data-start-time="\${runtime.start_time}"
+                     data-room-name="\${runtime.room_name}"
+                     data-available-seats="\${runtime.available_seats}"
+                     onclick="\${isSoldOut ? '' : 'selectShowtime(this)'}">
+                    \${runtime.start_time}
+                    <br><small>\${runtime.room_name}</small>
+                    <br><small>\${runtime.available_seats}석</small>
+                </div>`;
+            });
+
+            html += `
+                    </div>
+                </div>
+            </div>`;
+        }
+
+        movieGrid.innerHTML = html;
+    }
 
     // 상영시간 선택 기능
-    document.querySelectorAll('.showtime-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            if (!this.classList.contains('full')) {
-                document.querySelectorAll('.showtime-btn').forEach(b => b.classList.remove('selected'));
-                this.classList.add('selected');
-            } else {
-
-            }
+    function selectShowtime(element) {
+        // 이전 선택 해제
+        document.querySelectorAll('.showtime-btn').forEach(btn => {
+            btn.classList.remove('selected');
         });
-    });
+
+        // 현재 선택 표시
+        element.classList.add('selected');
+
+        // 선택된 정보 저장
+        selectedShowtime = {
+            runtimeId: element.dataset.runtimeId,
+            movieTitle: element.dataset.movieTitle,
+            startTime: element.dataset.startTime,
+            roomName: element.dataset.roomName,
+            availableSeats: element.dataset.availableSeats
+        };
+
+        // 선택된 정보 표시
+        showSelectedInfo();
+    }
+
+    // 선택된 상영시간 정보 표시
+    function showSelectedInfo() {
+        if (selectedShowtime) {
+            const infoDiv = document.getElementById('selectedShowtimeInfo');
+            const detailsP = document.getElementById('selectedDetails');
+            const form = document.getElementById('showtimeForm');
+            const runtimeIdInput = document.getElementById('selectedRuntimeId');
+
+            detailsP.innerHTML = `
+            <strong>\${selectedShowtime.movieTitle}</strong><br>
+            \${selectedShowtime.startTime} | \${selectedShowtime.roomName} | 잔여좌석: \${selectedShowtime.availableSeats}석
+        `;
+
+            runtimeIdInput.value = selectedShowtime.runtimeId;
+
+            infoDiv.style.display = 'block';
+            form.style.display = 'block';
+        }
+    }
 
     // 영화 카드 호버 효과
-    document.querySelectorAll('.movie-card').forEach(card => {
-        card.addEventListener('mouseenter', function() {
-            this.style.borderColor = '#FB4357';
-        });
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.movie-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.borderColor = '#FB4357';
+            });
 
-        card.addEventListener('mouseleave', function() {
-            this.style.borderColor = '#e5e5e5';
+            card.addEventListener('mouseleave', function() {
+                this.style.borderColor = '#e5e5e5';
+            });
         });
     });
 </script>
