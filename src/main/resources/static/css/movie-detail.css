@@ -70,10 +70,27 @@ body, html {
     border: red 2px solid;
 }
 .info-ather {
-    height: 150px;
-    margin-top: 210px;
+    height: auto;
+    margin-top: 170px;
     margin-bottom: 20px;
     border: blue 2px solid;
+}
+.row {
+    display: flex;
+    margin-bottom: 6px;
+    align-items: center;
+}
+
+.label {
+    width: 100px; /* 고정 너비로 줄 맞춤 */
+    font-weight: bold;
+    display: inline-block;
+    text-align: right;
+    margin-right: 10px;
+}
+
+.value {
+    flex: 1;
 }
 .side-bar {
     position: fixed;
