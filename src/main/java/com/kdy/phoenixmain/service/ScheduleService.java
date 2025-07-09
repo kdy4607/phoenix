@@ -15,7 +15,7 @@ public class ScheduleService {
 
     // 전체조회
     public List<MovieVO> getAllMovies() {
-        List<MovieVO> movies = movieMapper.selectAllMovies();
+        List<MovieVO> movies = movieMapper.selectAllMovie();
         System.out.println(movies);
         return movies;
     }

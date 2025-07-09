@@ -1,14 +1,19 @@
 <%@ page language = "java" contentType = "text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html lang="ko">
+<!doctype html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movie Booking - CGV Style</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Document</title>
+<%--    <link rel="stylesheet" href="resources/css/czcz.css">--%>
 </head>
 <body>
-<%--<h1 onclick="location.href='/schedule'">상영 시간표 (클릭)</h1>--%>
+<h1>index jsp</h1>
+
+<a href="/movie-all">get all movie</a>
 <a href="/schedule">상영 시간표 (클릭)</a>
+
+</form>
 </body>
 </html>
