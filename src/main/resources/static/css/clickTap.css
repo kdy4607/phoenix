@@ -1,0 +1,44 @@
+body, html {
+    margin: 0;
+    padding: 0;
+}
+.clickTap {
+    display: flex;
+    background-color: lightcoral;
+    border: 2px solid black;
+    margin-left: 20px;
+    margin-right: 60px;
+    margin-bottom: 100px;
+    height: 60px;
+    justify-content: space-evenly;
+}
+.clickTap > div {
+    border: 2px solid red;
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* -------------------- */
+.tab {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #eee;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    margin-right: 5px;
+}
+.tab.active {
+    background: #fff;
+    font-weight: bold;
+}
+.content {
+    display: none;
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin-top: 10px;
+}
+.content.active {
+    display: block;
+}

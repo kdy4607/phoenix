@@ -1,7 +1,7 @@
 package com.kdy.phoenixmain.mapper;
 
 
-import com.kdy.phoenixmain.VO.MoviesVO;
+import com.kdy.phoenixmain.vo.MovieVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -11,7 +11,7 @@ import java.util.List;
 public interface ReservationMapper {
 
     @Select("select title from movies")
-    List<MoviesVO> getAllMovies();
+    List<MovieVO> getAllMovies();
 
 
 

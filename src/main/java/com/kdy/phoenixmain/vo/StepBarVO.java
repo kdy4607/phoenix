@@ -1,4 +1,4 @@
-package com.kdy.phoenixmain.VO;
+package com.kdy.phoenixmain.vo;
 
 import lombok.Data;
 

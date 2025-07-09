@@ -1,7 +1,6 @@
 package com.kdy.phoenixmain.service;
 
-
-import com.kdy.phoenixmain.mapper.ReservationMapper;
+import com.kdy.phoenixmain.mapper.MovieMapper;
 import com.kdy.phoenixmain.vo.MovieVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,22 +8,16 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ReservationService {
+public class ScheduleService {
 
     @Autowired
-    ReservationMapper reservationMapper;
+    private MovieMapper movieMapper;
 
-    // 전체 조회하는 일
+    // 전체조회
     public List<MovieVO> getAllMovies() {
-        List<MovieVO> movies = reservationMapper.getAllMovies();
+        List<MovieVO> movies = movieMapper.selectAllMovie();
         System.out.println(movies);
         return movies;
     }
 
-    //
-
-
-
-
-    }
-
+}
