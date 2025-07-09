@@ -1,8 +1,6 @@
-package com.mz.mzapp.vo;
+package com.kdy.phoenixmain.vo;
 
 import lombok.*;
-
-import java.util.Date;
 
 @Data
 public class TagVO{

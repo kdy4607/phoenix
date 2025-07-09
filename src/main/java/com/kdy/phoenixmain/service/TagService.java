@@ -1,9 +1,7 @@
-package com.mz.mzapp.service;
+package com.kdy.phoenixmain.service;
 
-import com.mz.mzapp.mapper.TagMapper;
-import com.mz.mzapp.mapper.TagMapper;
-import com.mz.mzapp.vo.TagVO;
-import com.mz.mzapp.vo.TagVO;
+import com.kdy.phoenixmain.mapper.TagMapper;
+import com.kdy.phoenixmain.vo.TagVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,7 +1,6 @@
-package com.mz.mzapp.mapper;
+package com.kdy.phoenixmain.mapper;
 
-import com.mz.mzapp.vo.TagVO;
-import com.mz.mzapp.vo.TagVO;
+import com.kdy.phoenixmain.vo.TagVO;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;

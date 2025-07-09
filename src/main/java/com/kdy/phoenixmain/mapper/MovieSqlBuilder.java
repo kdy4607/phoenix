@@ -1,4 +1,4 @@
-package com.mz.mzapp.mapper;
+package com.kdy.phoenixmain.mapper;
 
 import java.util.List;
 import java.util.Map;
