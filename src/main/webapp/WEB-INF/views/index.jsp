@@ -13,7 +13,7 @@
 
 <a href="/movie-all">get all movie</a>
 <a href="/schedule">상영 시간표 (클릭)</a>
+<a href="/oneMovieDetail">상세페이지 바로가기</a>
 
-</form>
 </body>
 </html>
