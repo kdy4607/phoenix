@@ -2,16 +2,18 @@ package com.kdy.phoenixmain.controller;
 
 import com.kdy.phoenixmain.service.SeatService;
 import com.kdy.phoenixmain.service.ScheduleService;
+import com.kdy.phoenixmain.service.ReservationService;
 import com.kdy.phoenixmain.vo.RuntimeVO;
 import com.kdy.phoenixmain.vo.SeatVO;
+import com.kdy.phoenixmain.vo.ReservationVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/seat")
@@ -22,6 +24,9 @@ public class SeatC {
 
     @Autowired
     private ScheduleService scheduleService;
+
+    @Autowired
+    private ReservationService reservationService;
 
     /**
      * 특정 상영시간의 좌석 상태 조회 (AJAX)
@@ -73,7 +78,48 @@ public class SeatC {
     }
 
     /**
-     * 좌석 선택 임시 예약 (AJAX)
+     * 좌석 예약 생성 (AJAX) - 실제 예약 생성
+     */
+    @PostMapping("/reserve")
+    @ResponseBody
+    public Map<String, Object> createReservation(@RequestBody Map<String, Object> request) {
+        Map<String, Object> response = new HashMap<>();
+
+        try {
+            // 안전한 형변환 처리
+            int runtimeId = convertToInteger(request.get("runtimeId"));
+            @SuppressWarnings("unchecked")
+            List<Object> selectedSeatIdsObj = (List<Object>) request.get("selectedSeatIds");
+
+            // List<Object>를 List<Integer>로 변환
+            List<Integer> selectedSeatIds = selectedSeatIdsObj.stream()
+                    .map(this::convertToInteger)
+                    .toList();
+
+            // 임시 사용자 ID (실제 구현에서는 세션에서 가져와야 함)
+            int userId = 1; // 테스트용으로 첫 번째 사용자 사용
+
+            // 예약 생성
+            ReservationVO reservation = reservationService.createReservation(runtimeId, selectedSeatIds, userId);
+
+            response.put("success", true);
+            response.put("reservation", reservation);
+            response.put("message", "예약이 완료되었습니다.");
+
+            System.out.println("예약 생성 완료 - ID: " + reservation.getReservation_id());
+
+        } catch (Exception e) {
+            System.err.println("예약 생성 오류: " + e.getMessage());
+            e.printStackTrace();
+            response.put("success", false);
+            response.put("message", e.getMessage());
+        }
+
+        return response;
+    }
+
+    /**
+     * 좌석 선택 임시 확인 (AJAX) - 예약 전 검증
      */
     @PostMapping("/select")
     @ResponseBody
@@ -87,10 +133,9 @@ public class SeatC {
             List<Object> selectedSeatIdsObj = (List<Object>) request.get("selectedSeatIds");
 
             // List<Object>를 List<Integer>로 변환
-            List<Integer> selectedSeatIds = new ArrayList<>();
-            for (Object seatId : selectedSeatIdsObj) {
-                selectedSeatIds.add(convertToInteger(seatId));
-            }
+            List<Integer> selectedSeatIds = selectedSeatIdsObj.stream()
+                    .map(this::convertToInteger)
+                    .toList();
 
             // 좌석 사용 가능 여부 확인
             boolean isAvailable = seatService.checkSeatAvailability(runtimeId, selectedSeatIds);
@@ -104,14 +149,11 @@ public class SeatC {
             // 선택한 좌석 정보 조회
             List<SeatVO> selectedSeats = seatService.getSeatsByIds(selectedSeatIds);
 
-            // 임시 예약 생성 (실제 결제 전까지 일정 시간 동안 보류)
-            // 여기서는 세션에 저장하거나 임시 테이블에 저장할 수 있음
-
             response.put("success", true);
             response.put("selectedSeats", selectedSeats);
-            response.put("message", "좌석이 선택되었습니다.");
+            response.put("message", "좌석이 선택되었습니다. 예약을 진행하시겠습니까?");
 
-            System.out.println("좌석 선택 완료: " + selectedSeatIds.size() + "석");
+            System.out.println("좌석 선택 검증 완료: " + selectedSeatIds.size() + "석");
 
         } catch (Exception e) {
             System.err.println("좌석 선택 오류: " + e.getMessage());
@@ -133,7 +175,7 @@ public class SeatC {
 
         try {
             int runtimeId = convertToInteger(request.get("runtimeId"));
-            // 임시 예약 취소 로직
+            // 임시 예약 취소 로직 (현재는 세션 기반이므로 특별한 처리 없음)
 
             response.put("success", true);
             response.put("message", "좌석 선택이 취소되었습니다.");
