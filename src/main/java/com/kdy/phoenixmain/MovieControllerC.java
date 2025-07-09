@@ -13,7 +13,8 @@ public class MovieControllerC {
 
     @GetMapping("/")
     public String movieDetailAllPage(Model model) { //맨 처음에 볼거.
-        model.addAttribute("movieDetail", "temp.jsp");
+        model.addAttribute("movieDetail", "movie-detail.jsp");
+        //temp
         return "movieDetailView";
     }
 
