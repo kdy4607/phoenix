@@ -10,14 +10,25 @@ import java.util.List;
 public interface ReservationMapper {
 
     /**
+     * 다음 예약 ID 조회
+     */
+    @Select("SELECT SEQ_RESERVATION_ID.NEXTVAL FROM DUAL")
+    int getNextReservationId();
+
+    /**
      * 예약 정보 저장
      */
     @Insert("""
         INSERT INTO reservations (reservation_id, u_id, runtime_id, adult, youth, child, total_amount, reservation_status, reserved_at)
-        VALUES (SEQ_RESERVATION_ID.NEXTVAL, #{u_id}, #{runtime_id}, #{adult}, #{youth}, #{child}, #{total_amount}, #{reservation_status}, #{reserved_at})
+        VALUES (#{reservation_id}, #{u_id}, #{runtime_id}, #{adult}, #{youth}, #{child}, #{total_amount}, #{reservation_status}, CURRENT_TIMESTAMP)
     """)
-    @Options(useGeneratedKeys = true, keyProperty = "reservation_id", keyColumn = "reservation_id")
     int insertReservation(ReservationVO reservation);
+
+    /**
+     * 마지막 삽입된 예약 ID 조회
+     */
+    @Select("SELECT SEQ_RESERVATION_ID.CURRVAL FROM DUAL")
+    int getLastReservationId();
 
     /**
      * 예약 좌석 정보 저장

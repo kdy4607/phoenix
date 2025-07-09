@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -48,8 +47,12 @@ public class ReservationService {
                 throw new RuntimeException("일부 좌석 정보를 찾을 수 없습니다.");
             }
 
-            // 4. 예약 정보 생성
+            // 4. 다음 예약 ID 조회
+            int reservationId = reservationMapper.getNextReservationId();
+
+            // 5. 예약 정보 생성
             ReservationVO reservation = new ReservationVO();
+            reservation.setReservation_id(reservationId);
             reservation.setU_id((long) userId);
             reservation.setRuntime_id(runtimeId);
             reservation.setAdult(seatIds.size()); // 일단 모두 성인으로 처리
@@ -57,13 +60,12 @@ public class ReservationService {
             reservation.setChild(0);
             reservation.setTotal_amount(runtime.getPrice() * seatIds.size());
             reservation.setReservation_status("예약완료");
-            reservation.setReserved_at(LocalDateTime.now());
+            // reserved_at은 DB에서 CURRENT_TIMESTAMP로 자동 설정
 
-            // 5. 예약 정보 DB 저장
-            int reservationId = reservationMapper.insertReservation(reservation);
-            reservation.setReservation_id(reservationId);
+            // 6. 예약 정보 DB 저장
+            reservationMapper.insertReservation(reservation);
 
-            // 6. 예약 좌석 정보 저장
+            // 7. 예약 좌석 정보 저장
             for (Integer seatId : seatIds) {
                 ReservationSeatVO reservationSeat = new ReservationSeatVO();
                 reservationSeat.setReservation_id(reservationId);
@@ -71,11 +73,11 @@ public class ReservationService {
                 reservationMapper.insertReservationSeat(reservationSeat);
             }
 
-            // 7. 상영시간 잔여 좌석 수 업데이트
+            // 8. 상영시간 잔여 좌석 수 업데이트
             int newAvailableSeats = runtime.getAvailable_seats() - seatIds.size();
             runtimeMapper.updateAvailableSeats(runtimeId, newAvailableSeats);
 
-            // 8. 예약 완료 정보 조회하여 반환
+            // 9. 예약 완료 정보 조회하여 반환
             ReservationVO completedReservation = getReservationDetail(reservationId);
 
             System.out.println("예약 완료 - ID: " + reservationId + ", 좌석 수: " + seatIds.size());

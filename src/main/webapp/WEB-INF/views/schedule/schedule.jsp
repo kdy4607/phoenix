@@ -405,10 +405,25 @@
         document.getElementById('scheduleSection').style.display = 'block';
     }
 
-    // 좌석 선택 확인
+    // 좌석 선택 확인 - 실제 예약 생성
     function confirmSeats() {
         if (selectedSeats.length === 0) {
             alert('좌석을 선택해주세요.');
+            return;
+        }
+
+        // 확인 메시지
+        const seatLabels = selectedSeats.map(seat => seat.seat_row + seat.seat_number).join(', ');
+        const totalAmount = selectedSeats.length * seatPrice;
+
+        const confirmMessage = '다음 내용으로 예약하시겠습니까?\n\n' +
+            '영화: ' + selectedShowtime.movieTitle + '\n' +
+            '상영시간: ' + selectedShowtime.startTime + '\n' +
+            '상영관: ' + selectedShowtime.roomName + '\n' +
+            '좌석: ' + seatLabels + '\n' +
+            '총 금액: ' + totalAmount.toLocaleString() + '원';
+
+        if (!confirm(confirmMessage)) {
             return;
         }
 
@@ -416,7 +431,8 @@
         const selectedSeatIds = selectedSeats.map(seat => parseInt(seat.seat_id));
         const runtimeId = parseInt(selectedShowtime.runtimeId);
 
-        fetch('/seat/select', {
+        // 예약 생성 요청
+        fetch('/seat/reserve', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -429,18 +445,38 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    alert('좌석 선택이 완료되었습니다. 결제 단계로 이동합니다.');
-                    updateSteps(3);
-                    // 다음 단계로 이동 (결제 페이지 등)
-                    // window.location.href = '/payment';
+                    // 예약 완료 메시지 표시
+                    showReservationComplete(data.reservation);
+                    updateSteps(4);
                 } else {
-                    alert(data.message || '좌석 선택 중 오류가 발생했습니다.');
+                    alert(data.message || '예약 중 오류가 발생했습니다.');
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert('좌석 선택 중 오류가 발생했습니다.');
+                alert('예약 중 오류가 발생했습니다.');
             });
+    }
+
+    // 예약 완료 화면 표시
+    function showReservationComplete(reservation) {
+        const message = '🎉 예약이 완료되었습니다!\n\n' +
+            '예약번호: ' + reservation.reservation_id + '\n' +
+            '영화: ' + reservation.movie_title + '\n' +
+            '상영시간: ' + reservation.start_time + '\n' +
+            '상영관: ' + reservation.room_name + '\n' +
+            '좌석: ' + reservation.selected_seats + '\n' +
+            '총 금액: ' + reservation.total_amount.toLocaleString() + '원\n\n' +
+            '예약 내역은 마이페이지에서 확인할 수 있습니다.';
+
+        alert(message);
+
+        // 예약 내역 페이지로 이동할지 메인 페이지로 이동할지 선택
+        if (confirm('예약 내역을 확인하시겠습니까?')) {
+            window.location.href = '/reservation/list';
+        } else {
+            window.location.href = '/';
+        }
     }
 
     // 단계 업데이트

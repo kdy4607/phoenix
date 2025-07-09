@@ -1,11 +1,9 @@
 package com.kdy.phoenixmain.vo;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -20,7 +18,7 @@ public class ReservationVO {
     private int child;
     private int total_amount;
     private String reservation_status;
-    private LocalDateTime reserved_at;
+    private Date reserved_at;  // LocalDateTime → Date 변경
 
     // 조인용 필드들
     private String u_nickname;
