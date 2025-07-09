@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: 2zino
-  Date: 2025-07-07
-  Time: 오후 1:10
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -16,26 +9,48 @@
 <div class="M-detail">
     <div class="detail-img-res"> <%-- 이미지파일과 예매버튼 나중에 수정--%>
         <div id="img"><img
-                class="movie-img" src="movieFile/${movieDetail2.POSTER_URL}" alt="">
+                class="movie-img"
+                src="${movieDetail2.poster_url}"
+                alt="${movieDetail2.title}">
         </div>
         <div id="check">
             <button style="width: 200px; height: 30px"
-                    onclick="예매사이트">예매</button>
+                    onclick="예매사이트">예매
+            </button>
         </div>
     </div>
     <%--   밑에는 이외의 정보들이 들었습니다.  --%>
-    <div class="detail-info">
-        <div class="info-title">
-            <div>${movieDetail2.TITLE}</div>
-            <div>북마크 이미지</div>
-        </div>
-        <div class="info-plusStar">총 별점</div>
-        <div class="info-ather">
-            <div>영화감독:</div>
-            <div>주연:</div>
-            <div>평론가 평점:</div>
-            <div>관객 평점:</div>
-        </div>
+          <div class="detail-info">
+                <div class="info-title">
+
+                    <div class="info-title-t">${movieDetail2.title}</div>
+                    <div class="bookmark-icon" onclick="toggleBookmark(this)">
+                        <!-- 여기에 SVG 코드 직접 넣기 -->
+                        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                             xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                             width="30.972px" height="30.972px" viewBox="0 0 431.972 431.972"
+                             style="enable-background:new 0 0 431.972 431.972;"
+                             xml:space="preserve">
+<g>
+    <path d="M393.146,14.279c-3.713-5.333-8.713-9.233-14.989-11.707c-3.997-1.711-8.186-2.568-12.565-2.568V0H66.378
+		c-4.377,0-8.562,0.857-12.56,2.568c-6.28,2.472-11.278,6.377-14.989,11.707c-3.71,5.33-5.568,11.228-5.568,17.701v368.019
+		c0,6.475,1.858,12.371,5.568,17.706c3.711,5.329,8.709,9.233,14.989,11.704c3.994,1.711,8.183,2.566,12.56,2.566
+		c8.949,0,16.844-3.142,23.698-9.418l125.91-121.062l125.91,121.065c6.663,6.081,14.562,9.127,23.695,9.127
+		c4.76,0,8.948-0.756,12.565-2.279c6.276-2.471,11.276-6.375,14.989-11.711c3.71-5.328,5.564-11.225,5.564-17.699V31.98
+		C398.71,25.507,396.852,19.609,393.146,14.279z M362.166,391.139L241.397,275.224l-25.411-24.264l-25.409,24.264L69.809,391.139
+		V36.549h292.357V391.139L362.166,391.139z"/>
+</g>
+</svg>
+                    </div>
+                </div>
+                <div class="info-plusStar">총 별점</div>
+                <div class="info-ather">
+                    <div>영화감독:</div>
+                    <div>주연:</div>
+                    <div>평론가 평점:</div>
+                    <div>관객 평점:</div>
+                    <div>장르: ${movieDetail2.genre}</div>
+                </div>
     </div>
 </div>
 <div class="side-bar">side bar</div>
