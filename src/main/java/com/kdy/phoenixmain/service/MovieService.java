@@ -13,28 +13,27 @@ public class MovieService {
     @Autowired
     private MovieMapper movieMapper;
 
-
-    // 전체조회
-    public List<MovieVO> getAllmovie() {
+    // 전체 영화 조회
+    public List<MovieVO> getAllMovie() {
         List<MovieVO> movies = movieMapper.selectAllMovie();
-        System.out.println(movies);
+        System.out.println("[전체 영화 조회] → " + movies.size() + "건");
         return movies;
     }
 
-    // 하나 자세하게 조회
-    public MovieVO selectOneMovie(int num){
-        MovieVO movieOne = movieMapper.selectOneMovie(num);
-        System.out.println(movieOne);
-        return movieOne;
+    // 단일 영화 상세 조회
+    public MovieVO selectOneMovie(int movieId) {
+        MovieVO movie = movieMapper.selectOneMovie(movieId);
+        System.out.println("[단일 영화 조회] ID: " + movieId + " → " + movie);
+        return movie;
     }
 
-
-//태그로 영화 검색
-    public List<MovieVO> findMoviesByTags(List<String> tags) {
-        if (tags == null || tags.isEmpty()) {
-            return movieMapper.selectAllMovie();  // 태그 없으면 전체 조회
+    // 태그 ID 기반 영화 필터링 (AND 조건)
+    public List<MovieVO> findMoviesByTagIds(List<Integer> tagIds) {
+        if (tagIds == null || tagIds.isEmpty()) {
+            return getAllMovie();
         }
-        return movieMapper.selectMoviesByTags(tags, tags.size());
+        List<MovieVO> result = movieMapper.selectMoviesByTagIds(tagIds, tagIds.size());
+        System.out.println("[태그 필터링] 선택 태그 수: " + tagIds.size() + " → 결과: " + result.size() + "건");
+        return result;
     }
-
 }

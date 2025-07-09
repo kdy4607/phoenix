@@ -9,76 +9,57 @@ import java.util.List;
 @Mapper
 public interface MovieMapper {
 
-    // 전체 조회 + 태그 리스트 포함
-    @Select("SELECT * FROM movie_test")
+    // 전체 영화 조회 + 태그 리스트 포함
+    @Select("SELECT * FROM MOVIES")
     @Results({
-            @Result(property = "m_no", column = "m_no"),
-            @Result(property = "m_title", column = "m_title"),
-            @Result(property = "m_description", column = "m_description"),
-            @Result(property = "m_poster", column = "m_poster"),
-            @Result(property = "m_tagList", column = "m_no",
-                    many = @Many(select = "getTagsByMovieNo"))
+            @Result(property = "movie_id", column = "movie_id"),
+            @Result(property = "title", column = "title"),
+            @Result(property = "director", column = "director"),
+            @Result(property = "actor", column = "actor"),
+            @Result(property = "genre", column = "genre"),
+            @Result(property = "rating", column = "rating"),
+            @Result(property = "user_critic", column = "user_critic"),
+            @Result(property = "pro_critic", column = "pro_critic"),
+            @Result(property = "description", column = "description"),
+            @Result(property = "running_time", column = "running_time"),
+            @Result(property = "poster_url", column = "poster_url"),
+            @Result(property = "m_tagList", column = "movie_id",
+                    many = @Many(select = "getTagsByMovieId"))
     })
-    public List<MovieVO> selectAllMovie();
+    List<MovieVO> selectAllMovie();
 
-    // 단일 영화 조회
-    @Select("select * from movies where MOVIE_ID=#{MOVIE_ID}")
-    public MovieVO selectOneMovie(@Param("MOVIE_ID") int MOVIE_ID);
-
-    // 영화 삭제
-
-
-    // 영화 수정
-
-
-    // 영화 등록
-
-
-
-    @Select("""
-            SELECT
-                m.m_no,
-                m.m_title,
-                m.m_description,
-                m.m_poster,
-                t.t_no,
-                t.t_name,
-                t.t_type
-            FROM movie_test m
-            LEFT JOIN movie_tag_test mt ON m.m_no = mt.movie_no
-            LEFT JOIN tag_test t ON mt.tag_n o = t.t_no
-            ORDER BY m.m_no
-            """)
-    @Results(id = "movieWithTags", value = {
-            @Result(column = "m_no", property = "m_no", id = true),
-            @Result(column = "m_title", property = "m_title"),
-            @Result(column = "m_description", property = "m_description"),
-            @Result(column = "m_poster", property = "m_poster"),
-            @Result(property = "m_tagList", column = "m_no",
-                    many = @Many(select = "getTagsByMovieNo"))
-    })
-    List<MovieVO> selectMovieWithTags();
+    // 단일 영화 조회 (태그 제외)
+    @Select("SELECT * FROM MOVIES WHERE movie_id = #{MOVIE_ID}")
+    MovieVO selectOneMovie(@Param("MOVIE_ID") int MOVIE_ID);
 
     // 특정 영화의 태그 목록 조회
     @Select("""
-        SELECT t.t_no, t.t_name, t.t_type
-        FROM movie_tag_test mt
-        JOIN tag_test t ON mt.tag_no = t.t_no
-        WHERE mt.movie_no = #{m_no}
-        """)
-    List<TagVO> getTagsByMovieNo(int m_no);
+        SELECT t.tag_id, t.tag_name, t.tag_type
+        FROM MOVIE_TAGS mt
+        JOIN TAGS t ON mt.tag_id = t.tag_id
+        WHERE mt.movie_id = #{movie_id}
+    """)
+    List<TagVO> getTagsByMovieId(int movie_id);
 
-
-    // 선택된 태그들이 모두 포함된 영화만 조회 (AND 조건)
-    @SelectProvider(type = MovieSqlBuilder.class, method = "buildQueryByTags")
+    // 선택한 태그 ID들을 모두 포함한 영화 조회 (AND 조건)
+    @SelectProvider(type = MovieSqlBuilder.class, method = "buildQueryByTagIds")
     @Results({
-            @Result(property = "m_no", column = "m_no"),
-            @Result(property = "m_title", column = "m_title"),
-            @Result(property = "m_description", column = "m_description"),
-            @Result(property = "m_poster", column = "m_poster"),
-            @Result(property = "m_tagList", column = "m_no",
-                    many = @Many(select = "getTagsByMovieNo"))
+            @Result(property = "movie_id", column = "movie_id"),
+            @Result(property = "title", column = "title"),
+            @Result(property = "director", column = "director"),
+            @Result(property = "actor", column = "actor"),
+            @Result(property = "genre", column = "genre"),
+            @Result(property = "rating", column = "rating"),
+            @Result(property = "user_critic", column = "user_critic"),
+            @Result(property = "pro_critic", column = "pro_critic"),
+            @Result(property = "description", column = "description"),
+            @Result(property = "running_time", column = "running_time"),
+            @Result(property = "poster_url", column = "poster_url"),
+            @Result(property = "m_tagList", column = "movie_id",
+                    many = @Many(select = "getTagsByMovieId"))
     })
-    List<MovieVO> selectMoviesByTags(@Param("tags") List<String> tags, @Param("tagCount") int tagCount);
-
+    List<MovieVO> selectMoviesByTagIds(
+            @Param("tagIds") List<Integer> tagIds,
+            @Param("tagCount") int tagCount
+    );
 }

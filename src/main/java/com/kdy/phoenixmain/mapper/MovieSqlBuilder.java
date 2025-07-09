@@ -4,31 +4,47 @@ import java.util.List;
 import java.util.Map;
 
 public class MovieSqlBuilder {
-    public String buildQueryByTags(Map<String, Object> params) {
-        List<String> tags = (List<String>) params.get("tags");
+
+    public String buildQueryByTagIds(Map<String, Object> params) {
+        @SuppressWarnings("unchecked")
+        List<Integer> tagIds = (List<Integer>) params.get("tagIds");
         Integer tagCount = (Integer) params.get("tagCount");
 
-        StringBuilder sb = new StringBuilder();
-        sb.append("""
-            SELECT m.m_no, m.m_title, m.m_description, m.m_poster
-            FROM movie_test m
-            JOIN movie_tag_test mt ON m.m_no = mt.movie_no
-            JOIN tag_test t ON mt.tag_no = t.t_no
-            WHERE t.t_name IN 
+        StringBuilder sql = new StringBuilder();
+
+        // 기본 SELECT 문
+        sql.append("""
+            SELECT m.movie_id, m.title, m.director, m.actor, m.genre,
+                   m.rating, m.user_critic, m.pro_critic, m.description,
+                   m.running_time, m.poster_url
+            FROM movies m
+            JOIN movie_tags mt ON m.movie_id = mt.movie_id
+            JOIN tags t ON mt.tag_id = t.tag_id
+            WHERE
         """);
 
-        sb.append(" (");
-        for (int i = 0; i < tags.size(); i++) {
-            sb.append("#{tags[").append(i).append("]}");
-            if (i < tags.size() - 1) sb.append(", ");
+        // IN 절 구성
+        if (tagIds == null || tagIds.isEmpty()) {
+            sql.append(" 1 = 1 "); // 전체 조회 (태그 없으면 조건 제거)
+        } else {
+            sql.append(" t.tag_id IN (");
+            for (int i = 0; i < tagIds.size(); i++) {
+                sql.append("#{tagIds[").append(i).append("]}");
+                if (i < tagIds.size() - 1) {
+                    sql.append(", ");
+                }
+            }
+            sql.append(") ");
         }
-        sb.append(")");
 
-        sb.append("""
-            GROUP BY m.m_no, m.m_title, m.m_description, m.m_poster
-            HAVING COUNT(DISTINCT t.t_name) = #{tagCount}
+        // GROUP BY & HAVING (AND 조건 구현)
+        sql.append("""
+            GROUP BY m.movie_id, m.title, m.director, m.actor, m.genre,
+                     m.rating, m.user_critic, m.pro_critic, m.description,
+                     m.running_time, m.poster_url
+            HAVING COUNT(DISTINCT t.tag_id) = #{tagCount}
         """);
 
-        return sb.toString();
+        return sql.toString();
     }
 }

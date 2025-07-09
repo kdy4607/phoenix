@@ -25,10 +25,9 @@ public class MovieC {
 
     @GetMapping("/movie-all")
     public String movieAll(Model model){
-        model.addAttribute("movies",  movieService.getAllmovie() );
+        model.addAttribute("movies",  movieService.getAllMovie());
         List<TagVO> tagList = tagMapper.selectAllTag();
         model.addAttribute("tagList", tagList);
-
         return "movie/movie";
     }
 
@@ -42,14 +41,17 @@ public class MovieC {
     }
 
     @PostMapping("/movies/filter")
-    public String filterMovies(@RequestBody List<String> tags, Model model) {
-        System.out.println("선택된 태그: " + tags);
-
-        List<MovieVO> filteredMovies = movieService.findMoviesByTags(tags);
-        model.addAttribute("movies", filteredMovies);
-
-        return "movie/movie-fragment";  // ➜ partial JSP 경로 맞게 수정
+    public String filterMovies(@RequestBody(required = false) List<Integer> tagIds, Model model) {
+        try {
+            List<MovieVO> filteredMovies = movieService.findMoviesByTagIds(tagIds);
+            model.addAttribute("movies", filteredMovies);
+        } catch (Exception e) {
+            e.printStackTrace();
+            model.addAttribute("movies", List.of()); // 에러 시 빈 리스트
+        }
+        return "movie/movie-fragment";
     }
+
 
 
 
