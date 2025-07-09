@@ -9,11 +9,47 @@
 <%--    <link rel="stylesheet" href="resources/css/czcz.css">--%>
 </head>
 <body>
-<h1>index jsp</h1>
+<div class="container">
+    <div class="logo">🎬 Phoenix Cinema</div>
+    <div class="description">
+        영화의 모든 순간을 함께하는 프리미엄 시네마
+    </div>
 
-<a href="/movie-all">get all movie</a>
-<a href="/schedule">상영 시간표 (클릭)</a>
-<a href="/oneMovieDetail">상세페이지 바로가기</a>
+    <div class="menu-grid">
+        <a href="/movie-all" class="menu-item">
+            <span class="icon">🎭</span>
+            영화 목록
+        </a>
 
+        <a href="/schedule" class="menu-item">
+            <span class="icon">🎫</span>
+            상영시간표 & 예매
+        </a>
+
+        <a href="#" class="menu-item" onclick="alert('준비 중입니다!')">
+            <span class="icon">🏢</span>
+            극장 정보
+        </a>
+
+        <a href="#" class="menu-item" onclick="alert('준비 중입니다!')">
+            <span class="icon">🎉</span>
+            이벤트
+        </a>
+
+        <a href="#" class="menu-item" onclick="alert('준비 중입니다!')">
+            <span class="icon">🛍️</span>
+            스토어
+        </a>
+
+        <a href="#" class="menu-item" onclick="alert('준비 중입니다!')">
+            <span class="icon">👤</span>
+            마이페이지
+        </a>
+    </div>
+
+    <div style="margin-top: 40px; text-align: center; color: #999; font-size: 14px;">
+        © 2025 Phoenix Cinema. All rights reserved.
+    </div>
+</div>
 </body>
 </html>
