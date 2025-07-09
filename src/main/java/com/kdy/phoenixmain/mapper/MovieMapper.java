@@ -46,7 +46,7 @@ public interface MovieMapper {
                 t.t_type
             FROM movie_test m
             LEFT JOIN movie_tag_test mt ON m.m_no = mt.movie_no
-            LEFT JOIN tag_test t ON mt.tag_n o = t.t_no
+            LEFT JOIN tag_test t ON mt.tag_no = t.t_no
             ORDER BY m.m_no
             """)
     @Results(id = "movieWithTags", value = {
