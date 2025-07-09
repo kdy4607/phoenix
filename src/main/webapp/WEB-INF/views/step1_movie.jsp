@@ -4,7 +4,7 @@
 <html>
 <head>
   <title>영화 선택</title>
-  <link rel="stylesheet" href="/resources/css/sample.css">
+  <link rel="stylesheet" href="/resources/css/stepbar.css">
     </style>
 </head>
 <body>
@@ -20,10 +20,10 @@
   <div class="movie-grid">
     <c:forEach var="movie" items="${movies}">
       <div class="movie-card">
-        <!-- 포스터 이미지 경로: 영화제목 기반 -->
         <img src="/resources/posters/${movie.title}.jpg" alt="${movie.title}">
         <p>${movie.title}</p>
         <form action="/step2" method="post">
+          <input type="hidden" name="movie_id" value="${movie.movie_id}" />
           <input type="hidden" name="title" value="${movie.title}" />
           <button type="submit">예매하기</button>
         </form>

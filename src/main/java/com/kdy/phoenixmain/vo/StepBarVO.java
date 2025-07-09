@@ -8,8 +8,8 @@ import java.util.List; // List import 추가
 public class StepBarVO {
     private int currentStep;
     // Step 1: 영화 선택
-    private Integer movieId;
-    private String movieTitle;
+    private Integer movie_id;
+    private String title;
 
     // Step 2: 날짜 선택
     private String reservationDate; // YYYY-MM-DD 형식
