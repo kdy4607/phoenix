@@ -13,43 +13,47 @@ public class TagService {
     @Autowired
     private TagMapper tagMapper;
 
-
-
-    // 전체조회
-    public List<TagVO> getAllTag() {
+    // 전체 태그 조회
+    public List<TagVO> getAllTags() {
         List<TagVO> tags = tagMapper.selectAllTag();
-        System.out.println(tags);
+        System.out.println("[태그 전체 조회] → " + tags.size() + "건");
         return tags;
     }
 
-    // 상세조회
-    public TagVO detailTag(int num) {
-        TagVO tag = tagMapper.selectTag(num);
-        System.out.println(tag);
+    // 단일 태그 조회
+    public TagVO getTagDetail(int tagId) {
+        TagVO tag = tagMapper.selectTag(tagId);
+        System.out.println("[태그 조회] ID: " + tagId + " → " + tag);
         return tag;
     }
 
-
-
-    // 등록
+    // 태그 등록
     public void addTag(TagVO tagVO) {
-        if (tagMapper.insertTag(tagVO) == 1) {
-            System.out.println("add tag success");
-        }
-
-    }
-
-    public void delTag(int num) {
-        if (tagMapper.deleteTag(num) == 1) {
-            System.out.println("delete tag success");
+        int result = tagMapper.insertTag(tagVO);
+        if (result == 1) {
+            System.out.println("[태그 등록 성공] → " + tagVO);
+        } else {
+            System.out.println("[태그 등록 실패]");
         }
     }
 
-    public void modifyTag(TagVO tag) {
-        if (tagMapper.updateTag(tag) == 1) {
-            System.out.println("update tag success");
+    // 태그 삭제
+    public void deleteTag(int tagId) {
+        int result = tagMapper.deleteTag(tagId);
+        if (result == 1) {
+            System.out.println("[태그 삭제 성공] ID: " + tagId);
+        } else {
+            System.out.println("[태그 삭제 실패]");
         }
     }
 
-
+    // 태그 수정
+    public void updateTag(TagVO tagVO) {
+        int result = tagMapper.updateTag(tagVO);
+        if (result == 1) {
+            System.out.println("[태그 수정 성공] → " + tagVO);
+        } else {
+            System.out.println("[태그 수정 실패]");
+        }
+    }
 }
