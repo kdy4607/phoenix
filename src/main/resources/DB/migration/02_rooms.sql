@@ -1,0 +1,26 @@
+-- ========================================
+-- 2. 상영관 테이블 (ROOMS)
+-- ========================================
+
+-- 테이블 생성
+CREATE TABLE ROOMS (
+                       ROOM_ID NUMBER(2) PRIMARY KEY,     -- 최대 99개 상영관
+                       ROOM_NAME VARCHAR2(20) NOT NULL,
+                       TOTAL_SEATS NUMBER(3) NOT NULL     -- 최대 999석
+);
+
+-- 시퀀스 생성
+CREATE SEQUENCE SEQ_ROOM_ID START WITH 1 INCREMENT BY 1 MAXVALUE 99;
+
+-- 기본 데이터 삽입
+INSERT INTO ROOMS (ROOM_ID, ROOM_NAME, TOTAL_SEATS) VALUES (1, '1관', 60);
+INSERT INTO ROOMS (ROOM_ID, ROOM_NAME, TOTAL_SEATS) VALUES (2, '2관', 80);
+INSERT INTO ROOMS (ROOM_ID, ROOM_NAME, TOTAL_SEATS) VALUES (3, 'IMAX관', 100);
+INSERT INTO ROOMS (ROOM_ID, ROOM_NAME, TOTAL_SEATS) VALUES (4, '프리미엄관', 50);
+INSERT INTO ROOMS (ROOM_ID, ROOM_NAME, TOTAL_SEATS) VALUES (5, 'VIP관', 30);
+
+-- 커밋
+COMMIT;
+
+-- 확인 쿼리
+SELECT * FROM ROOMS ORDER BY ROOM_ID;
