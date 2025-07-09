@@ -1,11 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language = "java" contentType = "text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
 <!doctype html>
-<html lang="ko">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Phoenix Cinema</title>
-    <link rel="stylesheet" href="/resources/css/index.css">
+    <title>Document</title>
+<%--    <link rel="stylesheet" href="resources/css/czcz.css">--%>
 </head>
 <body>
 <div class="container">

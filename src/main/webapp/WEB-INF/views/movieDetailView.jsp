@@ -34,7 +34,6 @@
 <%--<p>include 경로: ${movieDetail}</p>--%>
 <div>
     <jsp:include page="${movieDetail}"></jsp:include>
-
 </div>
 
 <%--<c:if test="${not empty movieDetail}">--%>
