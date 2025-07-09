@@ -184,3 +184,7 @@ from movie_test;
 select *
 from TAG_TEST;
 
+SELECT m.m_no, m.m_title, t.t_no, t.t_name, t.t_type
+FROM movie_test m
+         LEFT JOIN movie_tag_test mt ON m.m_no = mt.movie_no
+         LEFT JOIN tag_test t ON mt.tag_no = t.t_no;

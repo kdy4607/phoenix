@@ -12,6 +12,7 @@
 <h1>index jsp</h1>
 
 <a href="/movie-all">get all movie</a>
+<a href="/schedule">상영 시간표 (클릭)</a>
 
 </form>
 </body>
