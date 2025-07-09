@@ -4,8 +4,8 @@ import lombok.*;
 
 @Data
 public class TagVO{
-    private int t_no;
-    private String t_name;
-    private String t_type;
+    private int tag_id;
+    private String  tag_name;
+    private String tag_type;
 
 }
