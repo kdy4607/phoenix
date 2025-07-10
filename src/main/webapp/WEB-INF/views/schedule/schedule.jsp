@@ -206,14 +206,13 @@
 
             <!-- 할인 쿠폰 -->
             <div>
-                <input type="checkbox" id="coupon-box" />
+                <input type="checkbox" id="coupon-box"/>
                 <label for="coupon-box"> 5,000원 쿠폰 적용 </label>
             </div>
             <!-- 결제 UI -->
             <div id="payment-method"></div>
             <!-- 이용약관 UI -->
             <div id="agreement"></div>
-
 
 
             <!-- 결제하기 버튼 -->
@@ -230,7 +229,6 @@
         <button class="payButton" onclick="location.href='/reservation/list'">예매 내역 보기</button>
 
     </div>
-
 
 
 </div>
@@ -500,8 +498,6 @@
     }
 
 
-
-
     /**
      * '결제하기' 버튼 클릭 시 최종 예약을 처리하는 함수
      */
@@ -666,7 +662,7 @@
                 variantKey: "DEFAULT",
             }),
             // ------  이용약관 UI 렌더링 ------
-            widgets.renderAgreement({ selector: "#agreement", variantKey: "AGREEMENT" }),
+            widgets.renderAgreement({selector: "#agreement", variantKey: "AGREEMENT"}),
         ]);
 
         // ------  주문서의 결제 금액이 변경되었을 경우 결제 금액 업데이트 ------
