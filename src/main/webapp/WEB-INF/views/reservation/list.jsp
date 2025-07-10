@@ -9,7 +9,6 @@
     <title>예약 내역 - Phoenix Cinema</title>
     <link rel="stylesheet" href="/resources/css/schedule.css">
     <link rel="stylesheet" href="/resources/css/reservation.css">
-
 </head>
 <body>
 <header class="header">
@@ -27,6 +26,16 @@
 
 <div class="reservation-container">
     <h1>예약 내역</h1>
+
+    <!-- 디버깅 정보 표시 (개발 중에만 사용) -->
+    <c:if test="${param.debug == 'true'}">
+        <div class="debug-info">
+            <strong>🔍 디버깅 정보:</strong><br>
+            예약 목록 크기: ${reservations != null ? reservations.size() : 'null'}<br>
+            통계 정보: ${stats != null ? 'exists' : 'null'}<br>
+            <button onclick="location.href='/reservation/debug/check'" class="btn-debug">전체 데이터 확인</button>
+        </div>
+    </c:if>
 
     <!-- 예약 통계 -->
     <c:if test="${not empty stats}">
@@ -54,7 +63,7 @@
 
     <!-- 오류 메시지 -->
     <c:if test="${not empty error}">
-        <div class="error-message" style="background-color: #ffebee; color: #c62828; padding: 15px; margin: 20px 0; border-radius: 4px;">
+        <div class="error-message">
                 ${error}
         </div>
     </c:if>
@@ -62,8 +71,8 @@
     <!-- 예약 목록 -->
     <c:choose>
         <c:when test="${not empty reservations}">
-            <c:forEach var="reservation" items="${reservations}">
-                <div class="reservation-card">
+            <c:forEach var="reservation" items="${reservations}" varStatus="status">
+                <div class="reservation-card" data-reservation-id="${reservation.reservation_id}">
                     <div class="reservation-header">
                         <div class="reservation-id">예약번호: ${reservation.reservation_id}</div>
                         <div class="reservation-status ${reservation.reservation_status == '예약완료' ? 'status-completed' : 'status-cancelled'}">
@@ -74,31 +83,80 @@
                     <div class="reservation-info">
                         <div class="movie-info">
                             <div class="movie-poster">
-                                <!-- 포스터 이미지가 있으면 표시 -->
-                                포스터
+                                🎬
                             </div>
                             <div class="movie-details">
                                 <h3>${reservation.movie_title}</h3>
-                                <p>상영일: <fmt:formatDate value="${reservation.run_date}" pattern="yyyy-MM-dd" /></p>
-                                <p>상영시간: ${reservation.start_time}</p>
-                                <p>상영관: ${reservation.room_name}</p>
+                                <p><strong>상영일:</strong> <fmt:formatDate value="${reservation.run_date}" pattern="yyyy-MM-dd (E)" /></p>
+                                <p><strong>상영시간:</strong> ${reservation.start_time}</p>
+                                <p><strong>상영관:</strong> ${reservation.room_name}</p>
+                                <p><strong>관람인원:</strong>
+                                    <c:if test="${reservation.adult > 0}">성인 ${reservation.adult}명</c:if>
+                                    <c:if test="${reservation.youth > 0}">
+                                        <c:if test="${reservation.adult > 0}">, </c:if>청소년 ${reservation.youth}명
+                                    </c:if>
+                                    <c:if test="${reservation.child > 0}">
+                                        <c:if test="${reservation.adult > 0 || reservation.youth > 0}">, </c:if>어린이 ${reservation.child}명
+                                    </c:if>
+                                </p>
                             </div>
                         </div>
 
                         <div class="reservation-details">
-                            <div class="seats">좌석: ${reservation.selected_seats}</div>
-                            <div class="price">
-                                <fmt:formatNumber value="${reservation.total_amount}" pattern="#,###" />원
-                            </div>
-                            <div class="reserved-date">
-                                예약일: <fmt:formatDate value="${reservation.reserved_at}" pattern="yyyy-MM-dd HH:mm" />
+                            <!-- 좌석 정보 표시 개선 -->
+                            <div class="seats-info">
+                                <strong>🪑 좌석:</strong>
+                                <c:choose>
+                                    <c:when test="${not empty reservation.selected_seats}">
+                                        <span class="seat-numbers">${reservation.selected_seats}</span>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <span class="no-seats">좌석 정보 없음</span>
+                                        <!-- 디버깅용 정보 -->
+                                        <c:if test="${param.debug == 'true'}">
+                                            <br><small class="debug-text">
+                                            (예약ID: ${reservation.reservation_id},
+                                            성인: ${reservation.adult},
+                                            청소년: ${reservation.youth},
+                                            어린이: ${reservation.child})
+                                        </small>
+                                        </c:if>
+                                    </c:otherwise>
+                                </c:choose>
                             </div>
 
-                            <c:if test="${reservation.reservation_status == '예약완료'}">
-                                <button class="cancel-btn" onclick="cancelReservation(${reservation.reservation_id})">
-                                    예약 취소
+                            <div class="price-info">
+                                <strong>💰 결제금액:</strong>
+                                <span class="price-amount">
+                                    <fmt:formatNumber value="${reservation.total_amount}" pattern="#,###" />원
+                                </span>
+                            </div>
+
+                            <div class="reserved-date">
+                                <strong>📝 예약일:</strong>
+                                <fmt:formatDate value="${reservation.reserved_at}" pattern="yyyy-MM-dd HH:mm" />
+                            </div>
+
+                            <!-- 액션 버튼들 -->
+                            <div class="action-buttons">
+                                <c:if test="${reservation.reservation_status == '예약완료'}">
+                                    <button class="cancel-btn" onclick="cancelReservation(${reservation.reservation_id})">
+                                        예약 취소
+                                    </button>
+                                </c:if>
+
+                                <!-- 상세 정보 버튼 -->
+                                <button class="detail-btn" onclick="showReservationDetail(${reservation.reservation_id})">
+                                    상세 정보
                                 </button>
-                            </c:if>
+
+                                <!-- 디버그 모드에서만 표시되는 추가 버튼 -->
+                                <c:if test="${param.debug == 'true'}">
+                                    <button class="debug-btn" onclick="showReservationDetailDebug(${reservation.reservation_id})">
+                                        🐛 디버그
+                                    </button>
+                                </c:if>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -113,35 +171,27 @@
             </div>
         </c:otherwise>
     </c:choose>
+
+    <!-- 디버깅 도구 (개발 중에만 표시) -->
+    <c:if test="${param.debug == 'true'}">
+        <div class="debug-tools">
+            <h4>🛠️ 디버깅 도구</h4>
+            <div class="debug-buttons">
+                <button onclick="location.href='/reservation/list?debug=false'" class="btn-secondary">디버그 끄기</button>
+                <button onclick="testReservationData()" class="btn-secondary">데이터 테스트</button>
+                <button onclick="testAllReservations()" class="btn-secondary">전체 예약 테스트</button>
+            </div>
+        </div>
+    </c:if>
+
+    <!-- 디버깅 링크 (개발 중에만 표시) -->
+    <c:if test="${param.debug != 'true'}">
+        <div class="debug-link">
+            <a href="/reservation/list?debug=true">🔍 디버깅 모드 켜기</a>
+        </div>
+    </c:if>
 </div>
 
-<script>
-    // 예약 취소 함수
-    function cancelReservation(reservationId) {
-        if (!confirm('정말로 예약을 취소하시겠습니까?')) {
-            return;
-        }
-
-        fetch('/reservation/' + reservationId + '/cancel', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('예약이 취소되었습니다.');
-                    location.reload();
-                } else {
-                    alert(data.message || '예약 취소 중 오류가 발생했습니다.');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('예약 취소 중 오류가 발생했습니다.');
-            });
-    }
-</script>
+<script src="/resources/js/reservation.js"></script>
 </body>
 </html>
