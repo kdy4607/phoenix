@@ -19,8 +19,8 @@
         <div class="header-right">
             <!-- 로그인 전 (기본 상태) -->
             <div class="auth-section" id="authSection">
-                <a href="#" class="auth-btn login-btn" onclick="showLoginModal()">로그인</a>
-                <a href="#" class="auth-btn signup-btn" onclick="showSignupModal()">회원가입</a>
+                <a href="/login" class="auth-btn login-btn" onclick="showLoginModal()">로그인</a>
+                <a href="/join/step1" class="auth-btn signup-btn" onclick="showSignupModal()">회원가입</a>
             </div>
 
             <!-- 로그인 후 (숨김 상태 - 나중에 JavaScript로 표시) -->
@@ -30,7 +30,7 @@
                 <div class="user-menu">
                     <button class="user-menu-btn" onclick="toggleUserMenu()">⋮</button>
                     <div class="user-dropdown" id="userDropdown">
-                        <a href="#" class="dropdown-item" onclick="alert('마이페이지 준비 중')">👤 마이페이지</a>
+                        <a href="/mypage" class="dropdown-item" onclick="alert('마이페이지 준비 중')">👤 마이페이지</a>
                         <a href="/reservation/list" class="dropdown-item">📋 예약내역</a>
                         <a href="#" class="dropdown-item" onclick="alert('설정 준비 중')">⚙️ 설정</a>
                         <div class="dropdown-divider"></div>
