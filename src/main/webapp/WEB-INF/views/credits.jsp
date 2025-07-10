@@ -14,7 +14,7 @@
         <a href="/" class="back-btn">
             <span>← 메인으로 돌아가기</span>
         </a>
-        <div class="cinema-logo">🎬 Phoenix Cinema</div>
+        <div class="cinema-logo">Phoenix Cinema</div>
     </div>
 
     <!-- 메인 크레딧 섹션 -->
@@ -27,110 +27,136 @@
         <!-- 팀 소개 -->
         <div class="team-intro">
             <div class="intro-text">
-                <h2>🎭 Team Phoenix</h2>
+                <h2> Team Phoenix</h2>
                 <p>5명의 열정적인 개발자들이 만든 영화관 예약 시스템</p>
-                <p>Spring Boot와 Oracle DB를 활용한 Full-Stack 웹 애플리케이션</p>
+                <p>기능별 팀 구성으로 체계적인 협업을 통해 완성된 Full-Stack 웹 애플리케이션</p>
+            </div>
+        </div>
+
+        <!-- 팀 구성 소개 -->
+        <div class="team-structure">
+            <div class="team-group">
+                <h3>🎫 영화 예매 기능팀</h3>
+                <p>김도연(팀장) + 김건오가 연계하여 예매 시스템 구현</p>
+            </div>
+            <div class="team-group">
+                <h3>🎬 영화 정보 기능팀</h3>
+                <p>이동주 + 한생명이 연계하여 영화 정보 시스템 구현</p>
+            </div>
+            <div class="team-group">
+                <h3>👤 사용자 관리팀</h3>
+                <p>최아영이 담당하여 로그인 및 회원 시스템 구현</p>
             </div>
         </div>
 
         <!-- 팀원 크레딧 -->
         <div class="team-members">
-            <!-- 팀장/백엔드 리더 -->
+            <!-- 팀장 - 김도연 -->
             <div class="member-card director">
-                <div class="role-badge">🎬 Project Director</div>
+                <div class="role-badge">🎬 Project Leader</div>
                 <div class="member-info">
-                    <h3>김도연 (KDY)</h3>
-                    <p class="position">Team Leader & Backend Developer</p>
+                    <h3>김도연</h3>
+                    <p class="position">Team Leader & 영화 예매 페이지 개발</p>
                     <div class="responsibilities">
-                        <span>• 프로젝트 총괄 관리</span>
-                        <span>• Spring Boot 아키텍처 설계</span>
-                        <span>• 데이터베이스 설계 및 최적화</span>
-                        <span>• 예약 시스템 핵심 로직 개발</span>
+                        <span>• 프로젝트 총괄 관리 및 일정 조율</span>
+                        <span>• 영화 예매 페이지 설계 및 구현</span>
+                        <span>• 좌석 선택 시스템 개발</span>
+                        <span>• 예약 프로세스 로직 구현</span>
+                        <span>• 김건오와 연계하여 예매 기능 완성</span>
                     </div>
                     <div class="tech-stack">
                         <span class="tech">Spring Boot</span>
+                        <span class="tech">JSP/JSTL</span>
+                        <span class="tech">JavaScript</span>
                         <span class="tech">Oracle DB</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 김건오 -->
+            <div class="member-card schedule">
+                <div class="role-badge">📅 Schedule & Main Developer</div>
+                <div class="member-info">
+                    <h3>김건오</h3>
+                    <p class="position">영화 상영 스케줄 & 메인 페이지 개발</p>
+                    <div class="responsibilities">
+                        <span>• 메인 페이지 설계 및 구현</span>
+                        <span>• 영화 상영시간표 시스템 개발</span>
+                        <span>• 날짜별 상영 스케줄 관리</span>
+                        <span>• 김도연과 연계하여 예매 시스템 연동</span>
+                        <span>• 사용자 인터페이스 최적화</span>
+                    </div>
+                    <div class="tech-stack">
+                        <span class="tech">Spring MVC</span>
+                        <span class="tech">HTML5/CSS3</span>
+                        <span class="tech">JavaScript</span>
                         <span class="tech">MyBatis</span>
                     </div>
                 </div>
             </div>
 
-            <!-- 프론트엔드 개발자 -->
-            <div class="member-card frontend">
-                <div class="role-badge">🎨 UI/UX Director</div>
+            <!-- 이동주 -->
+            <div class="member-card detail">
+                <div class="role-badge">🎥 Movie Detail Specialist</div>
                 <div class="member-info">
-                    <h3>김건오 (KGO)</h3>
-                    <p class="position">Frontend Developer</p>
+                    <h3>이동주</h3>
+                    <p class="position">영화 상세 페이지 개발</p>
                     <div class="responsibilities">
-                        <span>• 사용자 인터페이스 설계</span>
-                        <span>• 반응형 웹 디자인 구현</span>
-                        <span>• JavaScript 인터랙션 개발</span>
-                        <span>• CSS 애니메이션 및 스타일링</span>
+                        <span>• 영화 상세 정보 페이지 구현</span>
+                        <span>• 영화 정보 표시 시스템 개발</span>
+                        <span>• 평점 및 리뷰 시스템 구현</span>
+                        <span>• 한생명과 연계하여 영화 정보 연동</span>
+                        <span>• 상세 페이지 UI/UX 최적화</span>
                     </div>
                     <div class="tech-stack">
-                        <span class="tech">HTML5/CSS3</span>
-                        <span class="tech">JavaScript</span>
                         <span class="tech">JSP</span>
+                        <span class="tech">CSS3</span>
+                        <span class="tech">JavaScript</span>
+                        <span class="tech">AJAX</span>
                     </div>
                 </div>
             </div>
 
-            <!-- 백엔드 개발자 1 -->
-            <div class="member-card backend">
-                <div class="role-badge">⚙️ System Architect</div>
+            <!-- 한생명 -->
+            <div class="member-card movie">
+                <div class="role-badge">🎞️ Movie List Manager</div>
                 <div class="member-info">
-                    <h3>이동주 (LDJ)</h3>
-                    <p class="position">Backend Developer</p>
+                    <h3>한생명</h3>
+                    <p class="position">전체 영화 조회 페이지 개발</p>
                     <div class="responsibilities">
-                        <span>• REST API 설계 및 개발</span>
-                        <span>• 좌석 예약 시스템 구현</span>
-                        <span>• 보안 및 인증 시스템</span>
-                        <span>• 서버 성능 최적화</span>
+                        <span>• 전체 영화 목록 페이지 구현</span>
+                        <span>• 영화 검색 및 필터링 기능</span>
+                        <span>• 장르별 영화 분류 시스템</span>
+                        <span>• 이동주와 연계하여 상세 정보 연동</span>
+                        <span>• 영화 데이터 관리 및 표시</span>
+                    </div>
+                    <div class="tech-stack">
+                        <span class="tech">Spring Boot</span>
+                        <span class="tech">MyBatis</span>
+                        <span class="tech">JSP/JSTL</span>
+                        <span class="tech">Oracle SQL</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 최아영 -->
+            <div class="member-card user">
+                <div class="role-badge">👤 User System Developer</div>
+                <div class="member-info">
+                    <h3>최아영</h3>
+                    <p class="position">로그인 기능 & 유저정보 관리 개발</p>
+                    <div class="responsibilities">
+                        <span>• 회원가입 및 로그인 시스템 구현</span>
+                        <span>• 사용자 인증 및 세션 관리</span>
+                        <span>• 회원 정보 관리 페이지 개발</span>
+                        <span>• 보안 및 권한 관리 시스템</span>
+                        <span>• 마이페이지 및 예약 내역 관리</span>
                     </div>
                     <div class="tech-stack">
                         <span class="tech">Spring Security</span>
-                        <span class="tech">REST API</span>
-                        <span class="tech">JPA</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 백엔드 개발자 2 -->
-            <div class="member-card backend">
-                <div class="role-badge">📊 Data Specialist</div>
-                <div class="member-info">
-                    <h3>한생명 (HSM)</h3>
-                    <p class="position">Backend Developer & DBA</p>
-                    <div class="responsibilities">
-                        <span>• 데이터베이스 스키마 설계</span>
-                        <span>• 영화 정보 관리 시스템</span>
-                        <span>• 쿼리 성능 튜닝</span>
-                        <span>• 데이터 마이그레이션</span>
-                    </div>
-                    <div class="tech-stack">
-                        <span class="tech">Oracle SQL</span>
-                        <span class="tech">Database Design</span>
-                        <span class="tech">Performance Tuning</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- QA/테스터 -->
-            <div class="member-card qa">
-                <div class="role-badge">🔍 Quality Assurance</div>
-                <div class="member-info">
-                    <h3>최아영 (CAY)</h3>
-                    <p class="position">QA Engineer & Frontend Support</p>
-                    <div class="responsibilities">
-                        <span>• 전체 시스템 품질 관리</span>
-                        <span>• 사용자 테스트 시나리오 작성</span>
-                        <span>• 버그 발견 및 리포팅</span>
-                        <span>• 사용자 경험 개선 제안</span>
-                    </div>
-                    <div class="tech-stack">
-                        <span class="tech">Manual Testing</span>
-                        <span class="tech">User Experience</span>
-                        <span class="tech">Bug Tracking</span>
+                        <span class="tech">Session Management</span>
+                        <span class="tech">Oracle DB</span>
+                        <span class="tech">JSP</span>
                     </div>
                 </div>
             </div>
@@ -139,7 +165,7 @@
         <!-- 기술 스택 및 프로젝트 정보 -->
         <div class="project-info">
             <div class="tech-summary">
-                <h3>🛠 Technology Stack</h3>
+                <h3> Technology Stack</h3>
                 <div class="tech-categories">
                     <div class="tech-category">
                         <h4>Backend</h4>
@@ -166,15 +192,15 @@
             </div>
 
             <div class="project-stats">
-                <h3>📈 Project Statistics</h3>
+                <h3> Project Statistics</h3>
                 <div class="stats-grid">
                     <div class="stat-item">
                         <span class="stat-number">2025</span>
                         <span class="stat-label">개발 년도</span>
                     </div>
                     <div class="stat-item">
-                        <span class="stat-number">14</span>
-                        <span class="stat-label">개발 기간 (days)</span>
+                        <span class="stat-number">3</span>
+                        <span class="stat-label">개발 기간 (월)</span>
                     </div>
                     <div class="stat-item">
                         <span class="stat-number">50+</span>
@@ -193,7 +219,7 @@
             <h3>🙏 Special Thanks</h3>
             <p>이 프로젝트를 완성할 수 있도록 도움을 주신 모든 분들께 감사드립니다.</p>
             <div class="thanks-list">
-                <span>• 이명재 강사님의 세심한 가이드</span>
+                <span>• 지도 교수님의 세심한 가이드</span>
                 <span>• 동기들의 아이디어 제공과 피드백</span>
                 <span>• 테스트에 참여해주신 사용자분들</span>
                 <span>• Stack Overflow 커뮤니티</span>

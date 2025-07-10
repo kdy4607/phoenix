@@ -187,21 +187,54 @@ body {
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 
+/* 팀 구성 소개 */
+.team-structure {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-bottom: 60px;
+}
+
+.team-group {
+    background: rgba(255, 255, 255, 0.08);
+    padding: 25px;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+    backdrop-filter: blur(10px);
+}
+
+.team-group h3 {
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+    color: #FFB199;
+}
+
+.team-group p {
+    color: #e0e0e0;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
 /* 역할별 색상 */
 .member-card.director {
     border-left: 4px solid #FFD700;
 }
 
-.member-card.frontend {
-    border-left: 4px solid #FF6B6B;
-}
-
-.member-card.backend {
+.member-card.schedule {
     border-left: 4px solid #4ECDC4;
 }
 
-.member-card.qa {
+.member-card.detail {
+    border-left: 4px solid #FF6B6B;
+}
+
+.member-card.movie {
     border-left: 4px solid #95E1D3;
+}
+
+.member-card.user {
+    border-left: 4px solid #A8E6CF;
 }
 
 .role-badge {
@@ -476,6 +509,11 @@ body {
     .team-members {
         grid-template-columns: 1fr;
         gap: 30px;
+    }
+
+    .team-structure {
+        grid-template-columns: 1fr;
+        gap: 20px;
     }
 
     .member-card {
