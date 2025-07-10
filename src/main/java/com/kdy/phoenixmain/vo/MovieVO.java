@@ -16,8 +16,8 @@ public class MovieVO {
     private String actor;            // 주연 배우
     private String genre;            // 장르 (단일 문자열 컬럼)
     private String rating;           // 등급
-    private String user_critic;      // 유저 평점
-    private String pro_critic;       // 전문가 평점
+    private double user_critic;      // 유저 평점
+    private double pro_critic;       // 전문가 평점
     private String description;      // 줄거리 설명
     private int running_time;        // 상영 시간 (분 단위)
     private String poster_url;       // 포스터 이미지 URL
