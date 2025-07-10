@@ -94,7 +94,7 @@ public interface MovieMapper {
                     many = @Many(select = "getTagsByMovieId"))
     })
 
-    List<MovieVO> selectMoviesByTags(@Param("tags") List<String> tags, @Param("tagCount") int tagCount);
+    List<MovieVO> selectMoviesByTagIds(@Param("tags") List<Integer> tags, @Param("tagCount") int tagCount);
 
 }
 
