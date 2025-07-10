@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -73,31 +73,9 @@
                 </div>
             </div>
 
-            <!-- 김건오 -->
-            <div class="member-card schedule">
-                <div class="role-badge">📅 Schedule & Main Developer</div>
-                <div class="member-info">
-                    <h3>김건오</h3>
-                    <p class="position">영화 상영 스케줄 & 메인 페이지 개발</p>
-                    <div class="responsibilities">
-                        <span>• 메인 페이지 설계 및 구현</span>
-                        <span>• 영화 상영시간표 시스템 개발</span>
-                        <span>• 날짜별 상영 스케줄 관리</span>
-                        <span>• 김도연과 연계하여 예매 시스템 연동</span>
-                        <span>• 사용자 인터페이스 최적화</span>
-                    </div>
-                    <div class="tech-stack">
-                        <span class="tech">Spring MVC</span>
-                        <span class="tech">HTML5/CSS3</span>
-                        <span class="tech">JavaScript</span>
-                        <span class="tech">MyBatis</span>
-                    </div>
-                </div>
-            </div>
-
             <!-- 이동주 -->
             <div class="member-card detail">
-                <div class="role-badge">🎥 Movie Detail Specialist</div>
+                <div class="role-badge">🎥 Movie Detail</div>
                 <div class="member-info">
                     <h3>이동주</h3>
                     <p class="position">영화 상세 페이지 개발</p>
@@ -117,9 +95,55 @@
                 </div>
             </div>
 
+            <!-- 최아영 -->
+            <div class="member-card user">
+                <div class="role-badge">👤 User System</div>
+                <div class="member-info">
+                    <h3>최아영</h3>
+                    <p class="position">로그인 기능 & 유저정보 관리 개발</p>
+                    <div class="responsibilities">
+                        <span>• 회원가입 및 로그인 시스템 구현</span>
+                        <span>• 사용자 인증 및 세션 관리</span>
+                        <span>• 회원 정보 관리 페이지 개발</span>
+                        <span>• 보안 및 권한 관리 시스템</span>
+                        <span>• 마이페이지 및 예약 내역 관리</span>
+                    </div>
+                    <div class="tech-stack">
+                        <span class="tech">Spring Security</span>
+                        <span class="tech">Session Management</span>
+                        <span class="tech">Oracle DB</span>
+                        <span class="tech">JSP</span>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- 김건오 -->
+            <div class="member-card schedule">
+                <div class="role-badge">📅 Schedule & MainPage</div>
+                <div class="member-info">
+                    <h3>김건오</h3>
+                    <p class="position">영화 상영 스케줄 & 메인 페이지 개발</p>
+                    <div class="responsibilities">
+                        <span>• 메인 페이지 설계 및 구현</span>
+                        <span>• 영화 상영시간표 시스템 개발</span>
+                        <span>• 날짜별 상영 스케줄 관리</span>
+                        <span>• 김도연과 연계하여 예매 시스템 연동</span>
+                        <span>• 사용자 인터페이스 최적화</span>
+                    </div>
+                    <div class="tech-stack">
+                        <span class="tech">Spring MVC</span>
+                        <span class="tech">HTML5/CSS3</span>
+                        <span class="tech">JavaScript</span>
+                        <span class="tech">MyBatis</span>
+                    </div>
+                </div>
+            </div>
+
+
             <!-- 한생명 -->
             <div class="member-card movie">
-                <div class="role-badge">🎞️ Movie List Manager</div>
+                <div class="role-badge">🎞️ Movie List</div>
                 <div class="member-info">
                     <h3>한생명</h3>
                     <p class="position">전체 영화 조회 페이지 개발</p>
@@ -139,28 +163,9 @@
                 </div>
             </div>
 
-            <!-- 최아영 -->
-            <div class="member-card user">
-                <div class="role-badge">👤 User System Developer</div>
-                <div class="member-info">
-                    <h3>최아영</h3>
-                    <p class="position">로그인 기능 & 유저정보 관리 개발</p>
-                    <div class="responsibilities">
-                        <span>• 회원가입 및 로그인 시스템 구현</span>
-                        <span>• 사용자 인증 및 세션 관리</span>
-                        <span>• 회원 정보 관리 페이지 개발</span>
-                        <span>• 보안 및 권한 관리 시스템</span>
-                        <span>• 마이페이지 및 예약 내역 관리</span>
-                    </div>
-                    <div class="tech-stack">
-                        <span class="tech">Spring Security</span>
-                        <span class="tech">Session Management</span>
-                        <span class="tech">Oracle DB</span>
-                        <span class="tech">JSP</span>
-                    </div>
-                </div>
-            </div>
+
         </div>
+
 
         <!-- 기술 스택 및 프로젝트 정보 -->
         <div class="project-info">
@@ -199,8 +204,8 @@
                         <span class="stat-label">개발 년도</span>
                     </div>
                     <div class="stat-item">
-                        <span class="stat-number">3</span>
-                        <span class="stat-label">개발 기간 (월)</span>
+                        <span class="stat-number">14</span>
+                        <span class="stat-label">개발 기간 (days)</span>
                     </div>
                     <div class="stat-item">
                         <span class="stat-number">50+</span>
@@ -219,10 +224,8 @@
             <h3>🙏 Special Thanks</h3>
             <p>이 프로젝트를 완성할 수 있도록 도움을 주신 모든 분들께 감사드립니다.</p>
             <div class="thanks-list">
-                <span>• 지도 교수님의 세심한 가이드</span>
+                <span>• 이명재 강사님의 세심한 가이드</span>
                 <span>• 동기들의 아이디어 제공과 피드백</span>
-                <span>• 테스트에 참여해주신 사용자분들</span>
-                <span>• Stack Overflow 커뮤니티</span>
                 <span>• Spring Boot & Oracle 공식 문서</span>
             </div>
         </div>
@@ -243,7 +246,7 @@
     <!-- 푸터 -->
     <div class="credits-footer">
         <p>&copy; 2025 Phoenix Cinema Development Team. All rights reserved.</p>
-        <p>Made with ❤️ by Team Phoenix</p>
+        <p>Made by Team Phoenix</p>
     </div>
 </div>
 
