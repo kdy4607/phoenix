@@ -93,8 +93,10 @@ public interface MovieMapper {
             @Result(property = "m_tagList", column = "movie_id",
                     many = @Many(select = "getTagsByMovieId"))
     })
-
     List<MovieVO> selectMoviesByTagIds(@Param("tags") List<Integer> tags, @Param("tagCount") int tagCount);
 
+    // 상세페이지  영화 태그에서 하나만 겹쳐도 갖고오게 하는거
+    @SelectProvider(type = MovieSqlBuilder.class, method = "buildQueryByAnyTag")
+    List<MovieVO> selectMoviesByAnyTag(@Param("tags") List<Integer> tags, @Param("excludeId") int excludeId);
 }
 
