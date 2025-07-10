@@ -19,7 +19,7 @@
         <h1> Are you sure want to DELETE YOUR ACCOUNT ? </h1>
             <p> This action cannot be undone. Please check your password to verify your account. </p>
 
-        <form action="/mypage/deleteeAccount" method="post">
+        <form action="/mypage/deleteAccount" method="post">
             ID : <input type="text" name="u_id" value="${user.u_id}">
             PASSWORD : <input name="u_pw" type="text">
             <button> DELETE </button>

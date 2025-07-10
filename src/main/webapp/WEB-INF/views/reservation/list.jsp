@@ -15,7 +15,7 @@
 </head>
 <body>
 <!-- 헤더 포함 -->
-<jsp:include page="../header.jsp" />
+<jsp:include page="/WEB-INF/views/header.jsp" />
 
 <div class="reservation-container">
     <!-- 사용자 환영 메시지 -->

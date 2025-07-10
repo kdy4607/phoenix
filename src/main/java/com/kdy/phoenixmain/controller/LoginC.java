@@ -107,7 +107,8 @@ public class LoginC {
             return "redirect:/login?returnUrl=/mypage";
         }
 
-        model.addAttribute("content", "myPageMain.jsp");
+        // myPageMain.jsp가 아니라 myPageHome.jsp를 include해야 함
+        model.addAttribute("content", "myPageHome.jsp");
         model.addAttribute("user", user);
         return "myPage/myPageMain";
     }
@@ -147,7 +148,7 @@ public class LoginC {
             session.setAttribute("user", loginVO);
 
             model.addAttribute("message", "회원 정보가 성공적으로 수정되었습니다.");
-            model.addAttribute("content", "myPageMain.jsp");
+            model.addAttribute("content", "myPageHome.jsp");  // 수정 후 홈으로
             model.addAttribute("user", loginVO);
 
             System.out.println("✅ 회원 정보 수정 완료 - 사용자: " + loginVO.getU_name());
@@ -175,47 +176,6 @@ public class LoginC {
         model.addAttribute("content", "myPageDelete.jsp");
         model.addAttribute("user", user);
         return "myPage/myPageMain";
-    }
-
-    @PostMapping("/mypage/deleteAccount")
-    public String deleteAccount(@RequestParam("u_pw") String u_pw,
-                                HttpSession session,
-                                Model model) {
-
-        LoginVO user = (LoginVO) session.getAttribute("user");
-
-        if (user == null) {
-            return "redirect:/login";
-        }
-
-        try {
-            // 비밀번호 확인
-            if (user.getU_pw().equals(u_pw)) {
-                // 계정 삭제
-                loginService.deleteLogin(user.getU_id());
-
-                // 세션 무효화
-                session.invalidate();
-
-                System.out.println("✅ 계정 삭제 완료 - 사용자: " + user.getU_name());
-                return "login/deleteComplete";
-
-            } else {
-                // 비밀번호 불일치
-                model.addAttribute("errorMessage", "비밀번호가 일치하지 않습니다.");
-                model.addAttribute("content", "myPageDelete.jsp");
-                model.addAttribute("user", user);
-                return "myPage/myPageMain";
-            }
-
-        } catch (Exception e) {
-            System.err.println("❌ 계정 삭제 오류: " + e.getMessage());
-            e.printStackTrace();
-            model.addAttribute("errorMessage", "계정 삭제 중 오류가 발생했습니다.");
-            model.addAttribute("content", "myPageDelete.jsp");
-            model.addAttribute("user", user);
-            return "myPage/myPageMain";
-        }
     }
 
     // ===== 회원가입 관련 =====

@@ -14,20 +14,36 @@
 <div class="cay-main-wrap">
     <main class="cay-login-container">
         <div class="cay-login-content">
-            <form class="cay-login-wrap" action="/mypage" method="post">
-                <h1>Sign in or Creat Account </h1>
+            <!-- action을 /login으로 변경 -->
+            <form class="cay-login-wrap" action="/login" method="post">
+                <h1>Sign in or Create Account</h1>
+
+                <!-- 오류 메시지 표시 -->
+                <% if(request.getAttribute("errorMessage") != null) { %>
+                <div class="error-message" style="color: red; margin-bottom: 10px;">
+                    <%= request.getAttribute("errorMessage") %>
+                </div>
+                <% } %>
+
+                <!-- returnUrl을 hidden 필드로 전달 -->
+                <% if(request.getAttribute("returnUrl") != null) { %>
+                <input type="hidden" name="returnUrl" value="<%= request.getAttribute("returnUrl") %>">
+                <% } %>
+
                 <div class="cay-login-section">
                     <div class="cay-login-col1">
-                        <input type="text" placeholder="ID" name="u_id">
+                        <input type="text" placeholder="ID" name="u_id" required>
                     </div>
                     <div class="cay-login-col1">
-                        <input type="text" placeholder="Password" name="u_pw">
-                    </div></div>
-                <div class="cay-login-col2">
-                    <button> sign in </button>
-                    <button type="button" onclick="location.href='/join/step1'"> Creat Account</button>
+                        <!-- password 타입으로 변경 -->
+                        <input type="password" placeholder="Password" name="u_pw" required>
+                    </div>
                 </div>
-                <a href=""> Need help? </a>
+                <div class="cay-login-col2">
+                    <button type="submit">Sign in</button>
+                    <button type="button" onclick="location.href='/join/step1'">Create Account</button>
+                </div>
+                <a href="">Need help?</a>
             </form>
         </div>
     </main>
