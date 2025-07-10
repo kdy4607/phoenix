@@ -13,7 +13,7 @@ pageEncoding="UTF-8"%>
       <div class="logo">🎬 Phoenix Cinema</div>
       <div class="description">영화의 모든 순간을 함께하는 프리미엄 시네마</div>
 
-      < class="menu-grid">
+      <div class="menu-grid">
         <a href="/movie-all" class="menu-item">
           <span class="icon">🎭</span>
           영화 목록

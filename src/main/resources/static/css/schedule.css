@@ -580,3 +580,57 @@ body {
 .btn-secondary:hover {
     background-color: #545b62;
 }
+
+.payButton {
+    background-color: #FB4357;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.2s;
+    width: 100%;
+    max-width: 200px;
+
+}
+
+/* 모달 스타일 */
+.modal {
+    position: fixed;
+    z-index: 1000;
+    left: 0; top: 0; width: 200vw; height: 200vh;
+    background: rgba(0,0,0,0.5);
+    display: flex; align-items: center; justify-content: center;
+}
+
+.modal-content {
+    background: #fff;
+    padding: 40px 30px 30px 30px;
+    border-radius: 12px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.25);
+    min-width: 320px;
+    max-width: 95vw;
+    position: relative;
+    text-align: center;
+}
+
+.modal-content h2 {
+    margin-bottom: 16px;
+    font-size: 22px;
+    color: #FB4357;
+}
+
+.close {
+    position: absolute;
+    top: 20px; right: 24px;
+    font-size: 32px;
+    color: #bbb;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: #FB4357;
+}

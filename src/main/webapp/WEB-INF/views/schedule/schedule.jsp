@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
@@ -7,12 +7,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movie Schedule</title>
+    <script src="https://js.tosspayments.com/v2/standard"></script>
     <link rel="stylesheet" href="/resources/css/schedule.css">
 </head>
 <body>
 <header class="header">
     <div class="header-content">
-        <a href="/"><div class="logo">Phoenix</div></a>
+        <a href="/">
+            <div class="logo">Phoenix</div>
+        </a>
         <ul class="nav-menu">
             <li><a href="#">영화</a></li>
             <li><a href="#">예매</a></li>
@@ -48,7 +51,8 @@
 
     <!-- Error Message -->
     <c:if test="${not empty error}">
-        <div class="error-message" style="background-color: #ffebee; color: #c62828; padding: 10px; margin: 10px 0; border-radius: 4px;">
+        <div class="error-message"
+             style="background-color: #ffebee; color: #c62828; padding: 10px; margin: 10px 0; border-radius: 4px;">
                 ${error}
         </div>
     </c:if>
@@ -82,16 +86,16 @@
                 <c:choose>
                     <c:when test="${not empty movieRuntimes}">
                         <c:forEach var="movieEntry" items="${movieRuntimes}">
-                            <c:set var="movieTitle" value="${movieEntry.key}" />
-                            <c:set var="runtimes" value="${movieEntry.value}" />
-                            <c:set var="firstRuntime" value="${runtimes[0]}" />
+                            <c:set var="movieTitle" value="${movieEntry.key}"/>
+                            <c:set var="runtimes" value="${movieEntry.value}"/>
+                            <c:set var="firstRuntime" value="${runtimes[0]}"/>
 
                             <div class="movie-card">
                                 <div class="movie-poster">
                                     <c:choose>
                                         <c:when test="${not empty firstRuntime.poster_url}">
                                             <img src="${firstRuntime.poster_url}" alt="${movieTitle}"
-                                                 style="width: 100%; height: 100%; object-fit: cover;" />
+                                                 style="width: 100%; height: 100%; object-fit: cover;"/>
                                         </c:when>
                                         <c:otherwise>
                                             <div style="display: flex; align-items: center; justify-content: center; height: 100%; background: #f0f0f0; color: #666;">
@@ -106,7 +110,7 @@
                                     <div class="movie-rating">${firstRuntime.movie_rating}</div>
                                     <div class="showtimes-grid">
                                         <c:forEach var="runtime" items="${runtimes}">
-                                            <c:set var="isSoldOut" value="${soldOutStatus[runtime.runtime_id]}" />
+                                            <c:set var="isSoldOut" value="${soldOutStatus[runtime.runtime_id]}"/>
                                             <div class="showtime-btn ${isSoldOut ? 'full' : ''}"
                                                  data-runtime-id="${runtime.runtime_id}"
                                                  data-movie-title="${movieTitle}"
@@ -133,7 +137,8 @@
             </div>
 
             <!-- 선택된 상영시간 정보 -->
-            <div id="selectedShowtimeInfo" style="display: none; background: #f8f9fa; padding: 15px; margin-top: 20px; border-radius: 8px;">
+            <div id="selectedShowtimeInfo"
+                 style="display: none; background: #f8f9fa; padding: 15px; margin-top: 20px; border-radius: 8px;">
                 <h4>선택된 상영시간</h4>
                 <p id="selectedDetails"></p>
                 <button type="button" class="btn-primary" onclick="loadSeatSelection()">좌석 선택하기</button>
@@ -184,10 +189,50 @@
             <!-- Seat Buttons -->
             <div class="seat-buttons">
                 <button type="button" class="btn-secondary" onclick="cancelSeatSelection()">이전 단계</button>
-                <button type="button" class="btn-primary" id="confirmSeatsBtn" onclick="confirmSeats()" disabled>다음 단계</button>
+                <button type="button" class="btn-primary" id="confirmSeatsBtn" onclick="confirmSeats()" disabled>다음 단계
+                </button>
             </div>
         </div>
     </div>
+
+    <!-- ▼ 결제 섹션 시작 ▼ -->
+    <div class="section payment-section" id="paymentSection" style="display:none;">
+        <!-- 헤더 -->
+        <div class="section-header">결제</div>
+        <!-- 본문 -->
+        <div class="section-content">
+            <!-- 결제 요약 -->
+            <div id="paymentSummary" style="margin-bottom: 30px;"></div>
+
+            <!-- 할인 쿠폰 -->
+            <div>
+                <input type="checkbox" id="coupon-box" />
+                <label for="coupon-box"> 5,000원 쿠폰 적용 </label>
+            </div>
+            <!-- 결제 UI -->
+            <div id="payment-method"></div>
+            <!-- 이용약관 UI -->
+            <div id="agreement"></div>
+
+
+
+            <!-- 결제하기 버튼 -->
+            <button type="button" id="payment-button" class="btn-primary" disabled>
+                결제하기
+            </button>
+        </div>
+    </div>
+    <!-- ▲ 결제 섹션 끝 ▲ -->
+
+    <!-- 완료 섹션 -->
+    <div id="completeSection" style="display:none;">
+        <div id="completeMessage"></div>
+        <button class="payButton" onclick="location.href='/reservation/list'">예매 내역 보기</button>
+
+    </div>
+
+
+
 </div>
 
 <script>
@@ -406,37 +451,71 @@
     }
 
     // 좌석 선택 확인 - 실제 예약 생성
+    /**
+     * 좌석 선택을 마치고 결제 단계로 넘어가는 함수
+     */
     function confirmSeats() {
         if (selectedSeats.length === 0) {
             alert('좌석을 선택해주세요.');
             return;
         }
 
-        // 확인 메시지
-        const seatLabels = selectedSeats.map(seat => seat.seat_row + seat.seat_number).join(', ');
+        // 결제 단계로 넘어갈 준비
         const totalAmount = selectedSeats.length * seatPrice;
+        const seatLabels = selectedSeats.map(seat => seat.seat_row + seat.seat_number).join(', ');
 
-        const confirmMessage = '다음 내용으로 예약하시겠습니까?\n\n' +
-            '영화: ' + selectedShowtime.movieTitle + '\n' +
-            '상영시간: ' + selectedShowtime.startTime + '\n' +
-            '상영관: ' + selectedShowtime.roomName + '\n' +
-            '좌석: ' + seatLabels + '\n' +
-            '총 금액: ' + totalAmount.toLocaleString() + '원';
+        // 결제 섹션을 표시하는 함수 호출
+        showPaymentSection(totalAmount, seatLabels);
 
-        if (!confirm(confirmMessage)) {
-            return;
-        }
+        console.log('[confirmSeats] selectedShowtime', selectedShowtime);
+    }
 
-        // 좌석 ID를 정수로 변환
-        const selectedSeatIds = selectedSeats.map(seat => parseInt(seat.seat_id));
+    /**
+     * 결제 섹션을 설정하고 화면에 표시하는 함수
+     */
+    function showPaymentSection(amount, seatLabels) {
+        // 1. 결제 요약 정보 채우기
+        document.getElementById('paymentSummary').innerHTML = `
+            <div class="payment-summary-box">
+               <h3>최종 예매 내역 확인</h3>
+            <p><strong>영화:</strong> \${selectedShowtime.movieTitle}</p>
+            <p><strong>상영시간:</strong> \${selectedShowtime.startTime}</p>
+            <p><strong>상영관:</strong> \${selectedShowtime.roomName}</p>
+            <p><strong>좌석:</strong> \${seatLabels}</p>
+            <p><strong>최종 결제 금액:</strong> \${amount.toLocaleString()}원</p>
+            </div>
+        `;
+
+        // 2. 진행 단계(step)를 3단계 '결제'로 업데이트
+        updateSteps(3);
+
+        // 3. 이전 섹션 숨기고 결제 섹션 표시
+        document.getElementById('seatSelection').classList.remove('active');
+        document.getElementById('paymentSection').style.display = 'block';
+
+        // 4. '결제하기' 버튼 활성화 및 클릭 이벤트 연결
+        const paymentButton = document.getElementById('payment-button');
+        paymentButton.disabled = false; // 버튼 활성화
+        paymentButton.onclick = processPaymentAndReserve; // 실제 예약 처리 함수 연결
+    }
+
+
+
+
+    /**
+     * '결제하기' 버튼 클릭 시 최종 예약을 처리하는 함수
+     */
+    function processPaymentAndReserve() {
+        // 중복 클릭 방지를 위해 버튼 비활성화
+        document.getElementById('payment-button').disabled = true;
+
         const runtimeId = parseInt(selectedShowtime.runtimeId);
+        const selectedSeatIds = selectedSeats.map(seat => parseInt(seat.seat_id));
 
-        // 예약 생성 요청
+        // 서버에 예약 생성 요청 (기존 confirmSeats에 있던 로직)
         fetch('/seat/reserve', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
                 runtimeId: runtimeId,
                 selectedSeatIds: selectedSeatIds
@@ -445,38 +524,40 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    // 예약 완료 메시지 표시
-                    showReservationComplete(data.reservation);
+                    // 예약 성공 시 완료 화면 표시
                     updateSteps(4);
+                    document.getElementById('paymentSection').style.display = 'none'; // 결제 섹션 숨기기
+                    showReservationComplete(data.reservation);
                 } else {
+                    // 예약 실패 시
                     alert(data.message || '예약 중 오류가 발생했습니다.');
+                    document.getElementById('payment-button').disabled = false; // 다시 시도할 수 있도록 버튼 활성화
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert('예약 중 오류가 발생했습니다.');
+                alert('예약 처리 중 오류가 발생했습니다.');
+                document.getElementById('payment-button').disabled = false; // 버튼 활성화
             });
     }
 
+
     // 예약 완료 화면 표시
     function showReservationComplete(reservation) {
-        const message = '🎉 예약이 완료되었습니다!\n\n' +
-            '예약번호: ' + reservation.reservation_id + '\n' +
-            '영화: ' + reservation.movie_title + '\n' +
-            '상영시간: ' + reservation.start_time + '\n' +
-            '상영관: ' + reservation.room_name + '\n' +
-            '좌석: ' + reservation.selected_seats + '\n' +
-            '총 금액: ' + reservation.total_amount.toLocaleString() + '원\n\n' +
-            '예약 내역은 마이페이지에서 확인할 수 있습니다.';
+        const completeSection = document.getElementById('completeSection');
+        const completeMessage = document.getElementById('completeMessage');
 
-        alert(message);
+        completeMessage.innerHTML = `
+            <h2>예약이 완료되었습니다!</h2>
+            <p><strong>예약번호:</strong> \${reservation.reservation_id}</p>
+            <p><strong>영화:</strong> \${reservation.movie_title}</p>
+            <p><strong>상영시간:</strong> \${reservation.start_time}</p>
+            <p><strong>상영관:</strong> \${reservation.room_name}</p>
+            <p><strong>좌석:</strong> \${reservation.selected_seats}</p>
+            <p><strong>총 금액:</strong> \${reservation.total_amount.toLocaleString()}원</p>
+        `;
 
-        // 예약 내역 페이지로 이동할지 메인 페이지로 이동할지 선택
-        if (confirm('예약 내역을 확인하시겠습니까?')) {
-            window.location.href = '/reservation/list';
-        } else {
-            window.location.href = '/';
-        }
+        completeSection.style.display = 'block';
     }
 
     // 단계 업데이트
@@ -553,6 +634,73 @@
 
         movieGrid.innerHTML = html;
     }
+
+
+    // 토스페이
+    main();
+
+    async function main() {
+        const button = document.getElementById("payment-button");
+        const coupon = document.getElementById("coupon-box");
+        // ------  결제위젯 초기화 ------
+        const clientKey = "test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm";
+        const tossPayments = TossPayments(clientKey);
+        // 회원 결제
+        const customerKey = "qMATQmTPqT9RMvmO0EpQQ";
+        const widgets = tossPayments.widgets({
+            customerKey,
+        });
+        // 비회원 결제
+        // const widgets = tossPayments.widgets({ customerKey: TossPayments.ANONYMOUS });
+
+        // ------ 주문의 결제 금액 설정 ------
+        await widgets.setAmount({
+            currency: "KRW",
+            value: 50000,
+        });
+
+        await Promise.all([
+            // ------  결제 UI 렌더링 ------
+            widgets.renderPaymentMethods({
+                selector: "#payment-method",
+                variantKey: "DEFAULT",
+            }),
+            // ------  이용약관 UI 렌더링 ------
+            widgets.renderAgreement({ selector: "#agreement", variantKey: "AGREEMENT" }),
+        ]);
+
+        // ------  주문서의 결제 금액이 변경되었을 경우 결제 금액 업데이트 ------
+        coupon.addEventListener("change", async function () {
+            if (coupon.checked) {
+                await widgets.setAmount({
+                    currency: "KRW",
+                    value: 50000 - 5000,
+                });
+
+                return;
+            }
+
+            await widgets.setAmount({
+                currency: "KRW",
+                value: 50000,
+            });
+        });
+
+        // ------ '결제하기' 버튼 누르면 결제창 띄우기 ------
+        // button.addEventListener("click", async function () {
+        //     await widgets.requestPayment({
+        //         orderId: "ualqx-0Mvh-wmo9smOcnr",
+        //         orderName: "토스 티셔츠 외 2건",
+        //         successUrl: window.location.origin + "/success.html",
+        //         failUrl: window.location.origin + "/fail.html",
+        //         customerEmail: "customer123@gmail.com",
+        //         customerName: "김토스",
+        //         customerMobilePhone: "01012341234",
+        //     });
+        // });
+    }
+
+
 </script>
 </body>
 </html>
