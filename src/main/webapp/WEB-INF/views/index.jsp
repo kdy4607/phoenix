@@ -33,16 +33,6 @@
         </a>
 
         <a href="#" class="menu-item" onclick="alert('준비 중입니다!')">
-            <span class="icon">🎉</span>
-            이벤트
-        </a>
-
-        <a href="#" class="menu-item" onclick="alert('준비 중입니다!')">
-            <span class="icon">🛍️</span>
-            스토어
-        </a>
-
-        <a href="#" class="menu-item" onclick="alert('준비 중입니다!')">
             <span class="icon">👤</span>
             마이페이지
         </a>
