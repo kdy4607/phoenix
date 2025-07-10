@@ -115,10 +115,27 @@ public class ReservationService {
     }
 
     /**
-     * 사용자별 예약 목록 조회
+     * 사용자별 예약 목록 조회 (좌석 정보 포함)
      */
     public List<ReservationVO> getUserReservations(int userId) {
-        return reservationMapper.getReservationsByUser(userId);
+        try {
+            List<ReservationVO> reservations = reservationMapper.getReservationsByUser(userId);
+
+            // 로그 추가
+            System.out.println("사용자 " + userId + "의 예약 목록 조회: " + reservations.size() + "건");
+
+            // 각 예약의 좌석 정보 확인 (디버깅용)
+            for (ReservationVO reservation : reservations) {
+                System.out.println("예약 ID: " + reservation.getReservation_id() +
+                        ", 좌석: " + reservation.getSelected_seats());
+            }
+
+            return reservations;
+        } catch (Exception e) {
+            System.err.println("사용자별 예약 목록 조회 오류: " + e.getMessage());
+            e.printStackTrace();
+            throw new RuntimeException("예약 목록을 불러오는 중 오류가 발생했습니다: " + e.getMessage());
+        }
     }
 
     /**

@@ -112,7 +112,7 @@ public interface ReservationMapper {
     List<ReservationSeatVO> getReservationSeats(@Param("reservationId") int reservationId);
 
     /**
-     * 사용자별 예약 목록 조회
+     * 사용자별 예약 목록 조회 (좌석 정보 포함)
      */
     @Select("""
         SELECT 
@@ -130,13 +130,20 @@ public interface ReservationMapper {
             m.title as movie_title,
             rm.room_name,
             rt.run_date,
-            rt.start_time
+            rt.start_time,
+            LISTAGG(s.seat_row || s.seat_number, ', ') 
+                WITHIN GROUP (ORDER BY s.seat_row, s.seat_number) as selected_seats
         FROM reservations r
         JOIN users u ON r.u_id = u.u_id
         JOIN runtimes rt ON r.runtime_id = rt.runtime_id
         JOIN movies m ON rt.movie_id = m.movie_id
         JOIN rooms rm ON rt.room_id = rm.room_id
+        LEFT JOIN reservation_seats rs ON r.reservation_id = rs.reservation_id
+        LEFT JOIN seats s ON rs.seat_id = s.seat_id
         WHERE r.u_id = #{userId}
+        GROUP BY r.reservation_id, r.u_id, r.runtime_id, r.adult, r.youth, r.child,
+                 r.total_amount, r.reservation_status, r.reserved_at, u.u_nickname,
+                 u.u_name, m.title, rm.room_name, rt.run_date, rt.start_time
         ORDER BY r.reserved_at DESC
     """)
     @Results({
@@ -154,7 +161,8 @@ public interface ReservationMapper {
             @Result(property = "movie_title", column = "movie_title"),
             @Result(property = "room_name", column = "room_name"),
             @Result(property = "run_date", column = "run_date"),
-            @Result(property = "start_time", column = "start_time")
+            @Result(property = "start_time", column = "start_time"),
+            @Result(property = "selected_seats", column = "selected_seats")
     })
     List<ReservationVO> getReservationsByUser(@Param("userId") int userId);
 

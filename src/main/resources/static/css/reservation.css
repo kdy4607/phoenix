@@ -175,3 +175,51 @@
     text-decoration: none;
     color: white;
 }
+
+
+/* 좌석 정보 스타일 개선 */
+.seat-numbers {
+    background: #e7f3ff;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+    color: #0066cc;
+}
+
+.no-seats {
+    font-style: italic;
+}
+
+.action-buttons {
+    margin-top: 10px;
+}
+
+.detail-btn {
+    background: #6c757d;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    margin-top: 5px;
+    margin-left: 5px;
+}
+
+.detail-btn:hover {
+    background: #545b62;
+}
+
+.btn-secondary {
+    background: #6c757d;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.btn-secondary:hover {
+    background: #545b62;
+}
