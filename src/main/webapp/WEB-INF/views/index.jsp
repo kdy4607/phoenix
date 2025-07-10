@@ -45,6 +45,11 @@
             <span class="icon">👤</span>
             마이페이지
         </a>
+
+        <a href="/reservation/list" class="menu-item">
+            <span class="icon">📋</span>
+            예약 내역
+        </a>
     </div>
 
     <div style="margin-top: 40px; text-align: center; color: #999; font-size: 14px;">
