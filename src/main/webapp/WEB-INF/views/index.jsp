@@ -26,9 +26,9 @@
             상영시간표 & 예매
         </a>
 
-        <a href="#" class="menu-item" onclick="alert('준비 중입니다!')">
+        <a href="/credits" class="menu-item">
             <span class="icon">🏢</span>
-            극장 정보
+            개발팀 소개
         </a>
 
         <a href="#" class="menu-item" onclick="alert('준비 중입니다!')">
