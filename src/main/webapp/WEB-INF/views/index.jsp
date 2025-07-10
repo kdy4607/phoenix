@@ -51,9 +51,6 @@ pageEncoding="UTF-8"%>
         </a>
     </div>
 
-      <a href="/step1" class="start-button">예매 시작하기</a>
-      <a href="/oneMovieDetail">상세페이지 바로가기</a>
-
       <div
         style="
           margin-top: 40px;
