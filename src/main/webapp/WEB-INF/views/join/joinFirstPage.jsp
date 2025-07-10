@@ -30,8 +30,7 @@
 
 <form  class="cay-join-wrap" action="/join/step2" method="post">
     <div> Create Account </div>
-    <div> Enter Your New User Nickname </div>
-    <div> It will be used when you sign in</div>
+    <div> Enter Your New User ID </div>
     <input type="text" name="u_id">
     <div> Enter Your New Password </div>
     <input type="text" name="u_pw">

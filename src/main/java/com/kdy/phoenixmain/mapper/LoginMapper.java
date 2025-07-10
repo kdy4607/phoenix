@@ -18,7 +18,7 @@ public interface LoginMapper {
     int deleteLoginByID(String u_id);
 
     // 수정
-    @Update("update users set u_name = #{u_name}, u_birth = #{u_birth, jdbcType=DATE}, u_address = #{u_address, jdbcType=VARCHAR} where u_id = #{u_id}")
+    @Update("update users set u_pw= #{u_pw}, u_name = #{u_name}, u_birth = #{u_birth, jdbcType=DATE}, u_address = #{u_address, jdbcType=VARCHAR} where u_id = #{u_id}")
     int updateLoginByID(LoginVO loginVO);
 
     // 추가

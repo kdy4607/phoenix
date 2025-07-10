@@ -32,7 +32,7 @@
 <form class="cay-join-wrap" action="/join/complete" method="post">
     <div> Create Account</div>
     <div>
-        <div> Your Nickname</div>
+        <div> Your User ID</div>
         <input type="text" readonly name="u_id" value="${loginVO.u_id}">
     </div>
     <div>

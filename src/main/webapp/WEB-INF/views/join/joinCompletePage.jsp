@@ -32,7 +32,7 @@
 <form class="cay-join-wrap" action="/mypage">
     <div> Welcome! </div>
         <div>Now Start Reservation</div>
-        <button> Go to Main</button>
+        <button> Go to My Page</button>
 </form>
 </div>
 

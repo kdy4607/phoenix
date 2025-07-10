@@ -14,14 +14,7 @@
 </head>
 <body>
 
-<div class="cay-main-wrap">
-    <header class="cay-header">
-        <h1>header</h1>
-        <a href="/main"> Main </a>
-        <a href="/mypage"> MyPage </a>
-        <a onclick="logout()"> logout </a>
-    </header>
-    <nav class="cay-nav"><h1>Nav</h1></nav>
+<jsp:include page="/WEB-INF/views/header.jsp" />
     <main class="cay-myPage-container">
         <div class="cay-myPage-aside">
             <h1>aside</h1>

@@ -17,9 +17,8 @@
     <div class="cay-myPage-profile">
         <div> Your Account Information </div>
         <form action="/mypage/general-info/update" method="post">
-            <input type="hidden" value="${user.u_id}" name="u_id">
             <div>
-                <div> Your user Nickname</div>
+                <div> Your user ID</div>
                 <input type="text" name="u_id" readonly value="${user.u_id}">
             </div>
             <div>
@@ -44,7 +43,7 @@
             </div>
         </form>
         <form action="/mypage/DeleteAccount">
-            <input type="text" name="u_id" value="${sessionScope.user.u_id}"/>
+            <input type="hidden" name="u_id" value="${sessionScope.user.u_id}"/>
             <button> Delete account </button>
         </form>
     </div>

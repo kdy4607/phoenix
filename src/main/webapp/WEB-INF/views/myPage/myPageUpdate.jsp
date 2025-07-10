@@ -18,8 +18,7 @@
         <div> Update Account Information </div>
         <form action="/mypage/general-info/update/submit" method="post">
             <div>
-                <input type="hidden" name="u_id" value="${user.u_id}">
-                <div> Your user Nickname</div>
+                <div> Your user ID</div>
                 <input type="text" readonly name="u_id" value="${user.u_id}">
             </div>
             <div>
