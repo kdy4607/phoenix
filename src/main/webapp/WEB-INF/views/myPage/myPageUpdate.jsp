@@ -20,7 +20,7 @@
             <div>
                 <input type="hidden" name="u_id" value="${user.u_id}">
                 <div> Your user Nickname</div>
-                <input type="text" readonly name="u_nickname" value="${user.u_nickname}">
+                <input type="text" readonly name="u_id" value="${user.u_id}">
             </div>
             <div>
                 <div> Your user Password</div>

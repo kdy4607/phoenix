@@ -20,7 +20,7 @@
             <p> This action cannot be undone. Please check your password to verify your account. </p>
 
         <form action="/mypage/deleteeAccount" method="post">
-            ID : <input type="text" name="u_nickname" value="${user.u_nickname}">
+            ID : <input type="text" name="u_id" value="${user.u_id}">
             PASSWORD : <input name="u_pw" type="text">
             <button> DELETE </button>
         </form>

@@ -19,7 +19,7 @@
         <form action="/mypage">
             <div>
                 <div> Your user ID</div>
-                <input type="text" readonly name="u_nickname" value="${sessionScope.user.u_nickname}">
+                <input type="text" readonly name="u_id" value="${sessionScope.user.u_id}">
             </div>
             <div>
                 <div> Your Password </div>
@@ -31,7 +31,7 @@
             </div>
             <div>
                 <div> Your Nickname</div>
-                <input type="text" readonly name="u_nickname" value="${sessionScope.user.u_nickname}">
+                <input type="text" readonly name="u_id" value="${sessionScope.user.u_id}">
             </div>
             <div>
                 <div> Your Birth Date</div>

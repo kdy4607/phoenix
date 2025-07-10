@@ -66,7 +66,7 @@ public class LoginC {
 
         if (user == null) {
             return "redirect:/login";
-        } else if (user.getU_nickname() != null && !user.getU_nickname().isEmpty()) {
+        } else if (user.getU_id() != null && !user.getU_id().isEmpty()) {
             session.setAttribute("user", user);
             model.addAttribute("user", user);
             model.addAttribute("content", "myPageHome.jsp");
@@ -79,16 +79,16 @@ public class LoginC {
 
     @PostMapping("/mypage")
     public String myPagePost(@ModelAttribute(value = "user") LoginVO user,
-                             @RequestParam("u_nickname") String u_nickname,
+                             @RequestParam("u_id") String u_id,
                              @RequestParam("u_pw") String u_pw,
                              HttpSession session,
                              Model model) {
 
-        System.out.println(u_nickname);
+        System.out.println(u_id);
         System.out.println(u_pw);
-        user = loginService.selectLoginByNick(u_nickname);
+        user = loginService.selectLoginById(u_id);
 
-        if (user != null && user.getU_nickname() != null && user.getU_nickname().equals(u_nickname)
+        if (user != null && user.getU_id() != null && user.getU_id().equals(u_id)
                 && user.getU_pw() != null && user.getU_pw().equals(u_pw)) {
             session.setAttribute("user", user);
             model.addAttribute("user", user);
@@ -164,8 +164,8 @@ public class LoginC {
 
     @PostMapping("/mypage/general-info/update/submit")
     public String generalInfoCheck(@ModelAttribute("user") LoginVO user,
+                                   @RequestParam("u_id") String u_id,
                                    @RequestParam("u_pw") String u_pw,
-                                   @RequestParam("u_nickname") String u_nickname,
                                    @RequestParam("u_name") String u_name,
                                    @RequestParam("u_birth_before") String u_birth_before,
                                    @RequestParam(value = "u_birth", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date u_birth,
@@ -188,11 +188,11 @@ public class LoginC {
         }
 
         if (u_pw != null && !u_pw.isEmpty()
-                && u_nickname != null && !u_nickname.isEmpty()
+                && u_id != null && !u_id.isEmpty()
                 && u_name != null && !u_name.isEmpty()
         ) {
             user.setU_pw(u_pw);
-            user.setU_nickname(u_nickname);
+            user.setU_id(u_id);
             user.setU_name(u_name);
             user.setU_birth(finalUBirth);
             user.setU_address(u_address);
@@ -208,7 +208,7 @@ public class LoginC {
     }
 
     @GetMapping("/mypage/DeleteAccount")
-    public String deleteAccount(@RequestParam("u_nickname") String u_nickname,
+    public String deleteAccount(@RequestParam("u_id") String u_id,
                                 Model model) {
         model.addAttribute("content", "myPageDelete.jsp");
         return "myPage/myPageMain";
@@ -244,7 +244,7 @@ public class LoginC {
 
     @PostMapping("/join/step2")
     public String joinStep2(@ModelAttribute("loginVO") LoginVO loginVO, Model model) {
-        if (loginVO.getU_nickname() == null || loginVO.getU_nickname().isEmpty()
+        if (loginVO.getU_id() == null || loginVO.getU_id().isEmpty()
                 || loginVO.getU_pw() == null || loginVO.getU_pw().isEmpty()) {
             model.addAttribute("errorMessage", "아이디와 비밀번호는 필수 입력 사항입니다.");
             model.addAttribute("content", "joinFirstPage.jsp");
