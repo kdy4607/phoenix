@@ -2,36 +2,85 @@ body, html {
     margin: 0;
     padding: 0;
 }
-
+.logo {
+    font-size: 32px;
+    font-weight: bold;
+    color: #FB4357;
+}
 .head-info {
     display: flex;
     justify-content: space-around;
-    background-color: aqua;
-    border: 2px solid red;
+    background-color: #fff; /* 완전 흰색 박스 */
+    border: 1px solid #e5e5e5; /* 부드러운 회색 테두리 */
     margin-left: 20px;
     margin-right: 20px;
     margin-top: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05); /* 은은한 그림자 */
+    padding: 10px;
 }
 
 .nothing {
-    width:  100%;
-    border: 2px solid blue;
+    width: 100%;
+    border: none; /* 테두리 제거 */
 }
+
 .title-img {
     display: flex;
-    width:  100%;
-    justify-content: center; /* 가로 중앙 */
+    width: 100%;
+    justify-content: center;
     align-items: center;
-    border: 2px solid blue;
+    border: none; /* 테두리 제거 */
 }
-.login-status{
-    width:  100%;
-    border:  2px solid blue;
+
+.login-status {
+    width: 100%;
+    border: none; /* 테두리 제거 */
 }
+
 .login-status > div {
     margin-top: 10px;
     margin-right: 5px;
     margin-left: auto;
-    width: fit-content; /* 내용 크기만큼만 차지하게 */
-
+    width: fit-content;
+    font-weight: 500;
+    color: #333; /* 기본 텍스트 색상 */
 }
+/*.head-info {*/
+/*    display: flex;*/
+/*    justify-content: space-around;*/
+/*    background-color: #fff0f1; !* 기존 테마 연한 배경 *!*/
+/*    border: 2px solid #FB4357; !* 메인 포인트 컬러 *!*/
+/*    margin-left: 20px;*/
+/*    margin-right: 20px;*/
+/*    margin-top: 20px;*/
+/*    border-radius: 8px;*/
+/*    padding: 10px;*/
+/*}*/
+
+/*.nothing {*/
+/*    width: 100%;*/
+/*    border: 2px solid #f8f8f8; !* 흐릿한 회색 테두리 *!*/
+/*}*/
+
+/*.title-img {*/
+/*    display: flex;*/
+/*    width: 100%;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*    border: 2px solid #e5e5e5;*/
+/*}*/
+
+/*.login-status {*/
+/*    width: 100%;*/
+/*    border: 2px solid #f8f8f8;*/
+/*}*/
+
+/*.login-status > div {*/
+/*    margin-top: 10px;*/
+/*    margin-right: 5px;*/
+/*    margin-left: auto;*/
+/*    width: fit-content;*/
+/*    font-weight: 500;*/
+/*    color: #FB4357; !* 강조 색상 *!*/
+/*}*/
