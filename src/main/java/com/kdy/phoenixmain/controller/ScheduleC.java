@@ -118,39 +118,6 @@ public class ScheduleC {
     }
 
     /**
-     * 상영시간 선택 후 좌석 선택 페이지로 이동
-     */
-    @PostMapping("/schedule/select")
-    public String selectShowtime(@RequestParam int runtimeId, Model model) {
-        try {
-            RuntimeVO runtime = scheduleService.getRuntimeById(runtimeId);
-
-            if (runtime == null) {
-                model.addAttribute("error", "상영시간 정보를 찾을 수 없습니다.");
-                return "redirect:/schedule";
-            }
-
-            if (scheduleService.isSoldOut(runtime)) {
-                model.addAttribute("error", "선택하신 상영시간은 매진되었습니다.");
-                return "redirect:/schedule";
-            }
-
-            model.addAttribute("selectedRuntime", runtime);
-            System.out.println("선택된 상영시간: " + runtime.getMovie_title() + " " + runtime.getStart_time());
-
-            // 다음 단계 (좌석 선택) 페이지로 이동
-            // 여기서는 일단 스케줄 페이지로 리다이렉트 (추후 좌석 선택 페이지 구현 시 변경)
-            return "redirect:/schedule?selected=" + runtimeId;
-
-        } catch (Exception e) {
-            System.err.println("상영시간 선택 오류: " + e.getMessage());
-            e.printStackTrace();
-            model.addAttribute("error", "상영시간 선택 중 오류가 발생했습니다: " + e.getMessage());
-            return "redirect:/schedule";
-        }
-    }
-
-    /**
      * 현재 상영 중인 영화 목록 조회 (AJAX)
      */
     @GetMapping("/schedule/movies")
@@ -185,5 +152,37 @@ public class ScheduleC {
             e.printStackTrace();
             return new ArrayList<>();
         }
+    }
+
+    /**
+     * 예약 프로세스 시작 (좌석 선택 후)
+     */
+    @PostMapping("/schedule/booking")
+    @ResponseBody
+    public Map<String, Object> startBookingProcess(@RequestBody Map<String, Object> request) {
+        Map<String, Object> response = new HashMap<>();
+
+        try {
+            int runtimeId = (Integer) request.get("runtimeId");
+            @SuppressWarnings("unchecked")
+            List<Integer> selectedSeatIds = (List<Integer>) request.get("selectedSeatIds");
+
+            // 예약 프로세스 시작 (여기서는 세션에 저장하거나 임시 예약 테이블에 저장)
+            // 실제 구현에서는 사용자 정보, 결제 정보 등을 처리
+
+            response.put("success", true);
+            response.put("message", "예약이 시작되었습니다.");
+            response.put("nextStep", "payment"); // 다음 단계 지시
+
+            System.out.println("예약 프로세스 시작 - Runtime: " + runtimeId + ", 좌석 수: " + selectedSeatIds.size());
+
+        } catch (Exception e) {
+            System.err.println("예약 프로세스 시작 오류: " + e.getMessage());
+            e.printStackTrace();
+            response.put("success", false);
+            response.put("message", "예약 프로세스 시작 중 오류가 발생했습니다: " + e.getMessage());
+        }
+
+        return response;
     }
 }

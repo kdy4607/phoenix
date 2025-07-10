@@ -6,7 +6,6 @@
     <meta charset="UTF-8">
     <title>Movie List</title>
     <style>
-        /* 간단한 스타일 */
         .tag {
             display: inline-block;
             padding: 5px 10px;
@@ -18,17 +17,11 @@
             border: 2px solid #000;
             font-weight: bold;
         }
-        .tag-genre {
-            background-color: #f99;
-        }
 
-        .tag-studio {
-            background-color: #9cf;
-        }
-
-        .tag-country {
-            background-color: #9f9;
-        }
+        .tag-genre { background-color: #f99; }
+        .tag-studio { background-color: #9cf; }
+        .tag-country { background-color: #9f9; }
+        .tag-mood { background-color: #ff88be; }
 
         .movie-card {
             border: 1px solid #ccc;
@@ -44,32 +37,27 @@
             margin-right: 10px;
         }
 
-        .tag-group.genre .tag {
-            background-color: #f88;
-        }
-
-        .tag-group.studio .tag {
-            background-color: #9cf;
-        }
-
-        .tag-group.country .tag {
-            background-color: #8f8;
-        }
+        .tag-group.genre .tag { background-color: #f88; }
+        .tag-group.studio .tag { background-color: #9cf; }
+        .tag-group.country .tag { background-color: #8f8; }
+        .tag-group.mood .tag { background-color: #ff88be; }
     </style>
 </head>
 <body>
 <h1>🎬 Movie List</h1>
 
-<form onsubmit="searchMovies(); return false;">
-    <input type="text" id="keyword" name="keyword" placeholder="Movie Name"/>
-    <button type="submit">검색</button>
+<form action="/movie-keyword">
+    <input type="text" name="keyword" placeholder="Movie Name"/>
+    <button>검색</button>
 </form>
 
 <!-- Genre -->
 <div class="tag-group genre">
     <c:forEach var="tag" items="${tagList}">
-        <c:if test="${tag.t_type eq 'Genre'}">
-            <span class="tag" data-name="${tag.t_name}" onclick="toggleTag(this)">${tag.t_name}</span>
+        <c:if test="${tag.tag_type eq 'Genre'}">
+            <span class="tag" data-id="${tag.tag_id}" onclick="toggleTag(this)">
+                    ${tag.tag_name}
+            </span>
         </c:if>
     </c:forEach>
 </div>
@@ -77,8 +65,10 @@
 <!-- Studio -->
 <div class="tag-group studio">
     <c:forEach var="tag" items="${tagList}">
-        <c:if test="${tag.t_type eq 'Studio'}">
-            <span class="tag" data-name="${tag.t_name}" onclick="toggleTag(this)">${tag.t_name}</span>
+        <c:if test="${tag.tag_type eq 'Studio'}">
+            <span class="tag" data-id="${tag.tag_id}" onclick="toggleTag(this)">
+                    ${tag.tag_name}
+            </span>
         </c:if>
     </c:forEach>
 </div>
@@ -86,12 +76,24 @@
 <!-- Country -->
 <div class="tag-group country">
     <c:forEach var="tag" items="${tagList}">
-        <c:if test="${tag.t_type eq 'Country'}">
-            <span class="tag" data-name="${tag.t_name}" onclick="toggleTag(this)">${tag.t_name}</span>
+        <c:if test="${tag.tag_type eq 'Country'}">
+            <span class="tag" data-id="${tag.tag_id}" onclick="toggleTag(this)">
+                    ${tag.tag_name}
+            </span>
         </c:if>
     </c:forEach>
 </div>
 
+<!-- Mood -->
+<div class="tag-group mood">
+    <c:forEach var="tag" items="${tagList}">
+        <c:if test="${tag.tag_type eq 'Mood'}">
+            <span class="tag" data-id="${tag.tag_id}" onclick="toggleTag(this)">
+                    ${tag.tag_name}
+            </span>
+        </c:if>
+    </c:forEach>
+</div>
 
 <hr/>
 
@@ -99,34 +101,32 @@
     <jsp:include page="movie-fragment.jsp"/>
 </div>
 
-</body>
 <script>
     const selectedTags = new Set();
 
-
-
     function toggleTag(el) {
-        const tag = el.dataset.name;
+        const tagId = parseInt(el.dataset.id);
 
         if (el.classList.contains("selected")) {
             el.classList.remove("selected");
-            selectedTags.delete(tag);
+            selectedTags.delete(tagId);
         } else {
             el.classList.add("selected");
-            selectedTags.add(tag);
+            selectedTags.add(tagId);
         }
 
-        // AJAX 요청
         fetch("/movies/filter", {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify([...selectedTags])  // 배열로 변환
+            body: JSON.stringify([...selectedTags])
         })
-            .then(res => res.text()) // JSP fragment는 HTML로 받음
+            .then(res => res.text())
             .then(html => {
                 document.getElementById("movie-container").innerHTML = html;
             })
             .catch(err => console.error("필터링 실패:", err));
     }
 </script>
+
+</body>
 </html>

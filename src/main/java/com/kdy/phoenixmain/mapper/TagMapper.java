@@ -8,30 +8,37 @@ import java.util.List;
 @Mapper
 public interface TagMapper {
 
-    // 전체조회
-    @Select("select * from tag_test")
-    public List<TagVO> selectAllTag();
+    // 전체 조회
+    @Select("SELECT * FROM tags ORDER BY tag_id")
+    List<TagVO> selectAllTag();
 
-    // 하나조회
-    @Select("select * from tag_test where t_no=#{num}")
+    // 하나 조회
+    @Select("SELECT * FROM tags WHERE tag_id = #{num}")
     TagVO selectTag(int num);
 
     // 삭제
-    @Delete("delete tag_test where t_no=#{num}")
+    @Delete("DELETE FROM tags WHERE tag_id = #{num}")
     int deleteTag(int num);
 
     // 수정
     @Update("""
-        update tag_test
-        set t_name=#{t_name},
-            t_type=#{t_type}
-        where t_no=#{t_no}
+        UPDATE tags
+        SET tag_name = #{tag_name},
+            tag_type = #{tag_type}
+        WHERE tag_id = #{tag_id}
         """)
     int updateTag(TagVO tag);
 
+    // 등록 (Oracle용)
     @Insert("""
-        insert into tag_test (t_no, t_name, t_type)
-        values (tag_test_seq.nextval, #{t_name}, #{t_type})
+        INSERT INTO tags (tag_id, tag_name, tag_type)
+        VALUES (SEQ_TAGS.NEXTVAL, #{tag_name}, #{tag_type})
         """)
+    @SelectKey(
+            statement = "SELECT SEQ_TAGS.CURRVAL FROM dual",
+            keyProperty = "tag_id",
+            before = false,
+            resultType = int.class
+    )
     int insertTag(TagVO tagVO);
 }

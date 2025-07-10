@@ -418,3 +418,165 @@ body {
         min-height: 55px;
     }
 }
+
+/* 좌석 선택 관련 스타일 */
+.seat-selection {
+    display: none;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.seat-selection.active {
+    display: block;
+}
+
+.cinema-screen {
+    width: 100%;
+    height: 40px;
+    background: linear-gradient(90deg, #333, #666, #333);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+.seat-map {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 30px;
+}
+
+.seat-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.seat-row-label {
+    width: 30px;
+    text-align: center;
+    font-weight: bold;
+    color: #666;
+}
+
+.seat {
+    width: 35px;
+    height: 35px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    background-color: #f8f9fa;
+}
+
+.seat.available {
+    border-color: #28a745;
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.seat.available:hover {
+    background-color: #c3e6cb;
+    transform: scale(1.1);
+}
+
+.seat.selected {
+    border-color: #007bff;
+    background-color: #007bff;
+    color: white;
+}
+
+.seat.reserved {
+    border-color: #dc3545;
+    background-color: #f8d7da;
+    color: #721c24;
+    cursor: not-allowed;
+}
+
+.seat-legend {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 20px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.legend-seat {
+    width: 20px;
+    height: 20px;
+    border: 2px solid;
+    border-radius: 4px;
+}
+
+.legend-available {
+    border-color: #28a745;
+    background-color: #d4edda;
+}
+
+.legend-selected {
+    border-color: #007bff;
+    background-color: #007bff;
+}
+
+.legend-reserved {
+    border-color: #dc3545;
+    background-color: #f8d7da;
+}
+
+.seat-info {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.selected-seats {
+    display: none;
+    background-color: #e7f3ff;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.selected-seats.active {
+    display: block;
+}
+
+.seat-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.btn-secondary:hover {
+    background-color: #545b62;
+}

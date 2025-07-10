@@ -2,6 +2,7 @@ package com.kdy.phoenixmain.controller;
 
 import com.kdy.phoenixmain.service.SeatService;
 import com.kdy.phoenixmain.service.ScheduleService;
+import com.kdy.phoenixmain.service.ReservationService;
 import com.kdy.phoenixmain.vo.RuntimeVO;
 import com.kdy.phoenixmain.vo.SeatVO;
 import com.kdy.phoenixmain.vo.ReservationVO;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/seat")
