@@ -95,23 +95,58 @@ public class ReservationService {
      * 예약 상세 정보 조회
      */
     public ReservationVO getReservationDetail(int reservationId) {
-        ReservationVO reservation = reservationMapper.getReservationById(reservationId);
-        if (reservation != null) {
-            // 예약된 좌석 정보 조회
+        try {
+            System.out.println("🔍 예약 상세 정보 조회 시작 - ID: " + reservationId);
+
+            // 1. 기본 예약 정보 조회
+            ReservationVO reservation = reservationMapper.getReservationById(reservationId);
+
+            if (reservation == null) {
+                System.err.println("❌ 예약 정보를 찾을 수 없음 - ID: " + reservationId);
+                return null;
+            }
+
+            System.out.println("✅ 기본 예약 정보 조회 성공:");
+            System.out.println("   - 예약 ID: " + reservation.getReservation_id());
+            System.out.println("   - 영화: " + reservation.getMovie_title());
+            System.out.println("   - 상영관: " + reservation.getRoom_name());
+            System.out.println("   - 상영일: " + reservation.getRun_date());
+            System.out.println("   - 상영시간: " + reservation.getStart_time());
+            System.out.println("   - 예약상태: " + reservation.getReservation_status());
+            System.out.println("   - 총금액: " + reservation.getTotal_amount());
+
+            // 2. 예약된 좌석 정보 조회
             List<ReservationSeatVO> reservationSeats = reservationMapper.getReservationSeats(reservationId);
 
-            // 좌석 라벨 생성
-            StringBuilder seatLabels = new StringBuilder();
-            for (int i = 0; i < reservationSeats.size(); i++) {
-                ReservationSeatVO seat = reservationSeats.get(i);
-                seatLabels.append(seat.getSeat_row()).append(seat.getSeat_number());
-                if (i < reservationSeats.size() - 1) {
-                    seatLabels.append(", ");
+            System.out.println("🪑 좌석 정보 조회 결과: " + (reservationSeats != null ? reservationSeats.size() : 0) + "개");
+
+            if (reservationSeats != null && !reservationSeats.isEmpty()) {
+                // 좌석 라벨 생성
+                StringBuilder seatLabels = new StringBuilder();
+                for (int i = 0; i < reservationSeats.size(); i++) {
+                    ReservationSeatVO seat = reservationSeats.get(i);
+                    System.out.println("   - 좌석 " + (i+1) + ": " + seat.getSeat_row() + seat.getSeat_number());
+
+                    seatLabels.append(seat.getSeat_row()).append(seat.getSeat_number());
+                    if (i < reservationSeats.size() - 1) {
+                        seatLabels.append(", ");
+                    }
                 }
+                reservation.setSelected_seats(seatLabels.toString());
+                System.out.println("✅ 좌석 정보 설정 완료: " + reservation.getSelected_seats());
+            } else {
+                reservation.setSelected_seats("");
+                System.out.println("⚠️ 좌석 정보가 없음");
             }
-            reservation.setSelected_seats(seatLabels.toString());
+
+            System.out.println("🔍 예약 상세 정보 조회 완료");
+            return reservation;
+
+        } catch (Exception e) {
+            System.err.println("❌ 예약 상세 정보 조회 오류: " + e.getMessage());
+            e.printStackTrace();
+            return null;
         }
-        return reservation;
     }
 
     /**

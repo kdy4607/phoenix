@@ -40,32 +40,36 @@ public interface ReservationMapper {
     int insertReservationSeat(ReservationSeatVO reservationSeat);
 
     /**
-     * 예약 정보 조회
+     * 예약 정보 조회 (모든 관련 정보 포함)
      */
     @Select("""
-        SELECT 
-            r.reservation_id,
-            r.u_id,
-            r.runtime_id,
-            r.adult,
-            r.youth,
-            r.child,
-            r.total_amount,
-            r.reservation_status,
-            r.reserved_at,
-            u.u_nickname,
-            u.u_name,
-            m.title as movie_title,
-            rm.room_name,
-            rt.run_date,
-            rt.start_time
-        FROM reservations r
-        JOIN users u ON r.u_id = u.u_id
-        JOIN runtimes rt ON r.runtime_id = rt.runtime_id
-        JOIN movies m ON rt.movie_id = m.movie_id
-        JOIN rooms rm ON rt.room_id = rm.room_id
-        WHERE r.reservation_id = #{reservationId}
-    """)
+    SELECT 
+        r.reservation_id,
+        r.u_id,
+        r.runtime_id,
+        r.adult,
+        r.youth,
+        r.child,
+        r.total_amount,
+        r.reservation_status,
+        r.reserved_at,
+        u.u_nickname,
+        u.u_name,
+        m.title as movie_title,
+        m.genre as movie_genre,
+        m.rating as movie_rating,
+        m.running_time,
+        rm.room_name,
+        rt.run_date,
+        rt.start_time,
+        rt.price
+    FROM reservations r
+    JOIN users u ON r.u_id = u.u_id
+    JOIN runtimes rt ON r.runtime_id = rt.runtime_id
+    JOIN movies m ON rt.movie_id = m.movie_id
+    JOIN rooms rm ON rt.room_id = rm.room_id
+    WHERE r.reservation_id = #{reservationId}
+""")
     @Results({
             @Result(property = "reservation_id", column = "reservation_id"),
             @Result(property = "u_id", column = "u_id"),

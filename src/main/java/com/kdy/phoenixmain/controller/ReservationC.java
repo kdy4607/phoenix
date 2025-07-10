@@ -55,22 +55,40 @@ public class ReservationC {
         Map<String, Object> response = new HashMap<>();
 
         try {
+            System.out.println("🌐 REST API 호출 - 예약 ID: " + reservationId);
+
             ReservationVO reservation = reservationService.getReservationDetail(reservationId);
 
             if (reservation == null) {
+                System.err.println("❌ 예약 정보 없음 - ID: " + reservationId);
                 response.put("success", false);
                 response.put("message", "예약 정보를 찾을 수 없습니다.");
                 return response;
             }
 
+            // 응답 데이터 구성
             response.put("success", true);
             response.put("reservation", reservation);
 
+            // 디버깅을 위한 추가 정보
+            response.put("debug", Map.of(
+                    "reservationId", reservation.getReservation_id(),
+                    "movieTitle", reservation.getMovie_title() != null ? reservation.getMovie_title() : "NULL",
+                    "roomName", reservation.getRoom_name() != null ? reservation.getRoom_name() : "NULL",
+                    "runDate", reservation.getRun_date() != null ? reservation.getRun_date().toString() : "NULL",
+                    "startTime", reservation.getStart_time() != null ? reservation.getStart_time() : "NULL",
+                    "selectedSeats", reservation.getSelected_seats() != null ? reservation.getSelected_seats() : "NULL",
+                    "totalAmount", reservation.getTotal_amount(),
+                    "status", reservation.getReservation_status() != null ? reservation.getReservation_status() : "NULL"
+            ));
+
+            System.out.println("✅ REST API 응답 성공");
+
         } catch (Exception e) {
-            System.err.println("예약 상세 조회 오류: " + e.getMessage());
+            System.err.println("❌ REST API 오류: " + e.getMessage());
             e.printStackTrace();
             response.put("success", false);
-            response.put("message", "예약 정보를 불러오는 중 오류가 발생했습니다.");
+            response.put("message", "예약 정보를 불러오는 중 오류가 발생했습니다: " + e.getMessage());
         }
 
         return response;
