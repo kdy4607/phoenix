@@ -32,7 +32,7 @@
     <div> Create Account </div>
     <div> Enter Your New User Nickname </div>
     <div> It will be used when you sign in</div>
-    <input type="text" name="u_nickname">
+    <input type="text" name="u_id">
     <div> Enter Your New Password </div>
     <input type="text" name="u_pw">
     <div> Password must be at least <span> 0 </span> characters </div>

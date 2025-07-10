@@ -23,8 +23,8 @@ public class LoginService {
 
     // 조회 nickname
     @Transactional
-    public LoginVO selectLoginByNick(String u_nickname) {
-        LoginVO loginVO = (LoginVO) loginMapper.selectLoginByNick(u_nickname);
+    public LoginVO selectLoginById(String u_id) {
+        LoginVO loginVO = (LoginVO) loginMapper.selectLoginByNick(u_id);
 
         System.out.println("select user success");
         return loginVO;

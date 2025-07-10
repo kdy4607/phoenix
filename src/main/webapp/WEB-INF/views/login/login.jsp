@@ -9,23 +9,16 @@
     <script src="/resources/js/login.js"></script>
 </head>
 <body>
-
+<jsp:include page="/WEB-INF/views/header.jsp" />
 
 <div class="cay-main-wrap">
-    <header class="cay-header">
-        <h1>header</h1>
-        <a href="/main"> Main </a>
-        <a href="/mypage" onclick="login()"> MyPage </a>
-        <a href="/login"> login </a>
-    </header>
-    <nav class="cay-nav"><h1>Nav</h1></nav>
     <main class="cay-login-container">
         <div class="cay-login-content">
             <form class="cay-login-wrap" action="/mypage" method="post">
                 <h1>Sign in or Creat Account </h1>
                 <div class="cay-login-section">
                     <div class="cay-login-col1">
-                        <input type="text" placeholder="Nickname" name="u_nickname">
+                        <input type="text" placeholder="ID" name="u_id">
                     </div>
                     <div class="cay-login-col1">
                         <input type="text" placeholder="Password" name="u_pw">

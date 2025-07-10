@@ -20,7 +20,7 @@
             <input type="hidden" value="${user.u_id}" name="u_id">
             <div>
                 <div> Your user Nickname</div>
-                <input type="text" name="u_nickname" readonly value="${user.u_nickname}">
+                <input type="text" name="u_id" readonly value="${user.u_id}">
             </div>
             <div>
                 <div> Your user Password</div>
@@ -44,7 +44,7 @@
             </div>
         </form>
         <form action="/mypage/DeleteAccount">
-            <input type="text" name="u_nickname" value="${sessionScope.user.u_nickname}"/>
+            <input type="text" name="u_id" value="${sessionScope.user.u_id}"/>
             <button> Delete account </button>
         </form>
     </div>

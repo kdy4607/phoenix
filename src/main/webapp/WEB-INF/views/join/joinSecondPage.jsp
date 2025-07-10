@@ -31,7 +31,7 @@
 <form class="cay-join-wrap" action="/join/step3" method="post">
     <div> Create Account</div>
     <div>
-        <input type="hidden" name="u_nickname" value="${loginVO.u_nickname}">
+        <input type="hidden" name="u_id" value="${loginVO.u_id}">
         <input type="hidden" name="u_pw" value="${loginVO.u_pw}">
     </div>
     <div>

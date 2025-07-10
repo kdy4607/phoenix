@@ -19,8 +19,8 @@
         <div class="header-right">
             <!-- 로그인 전 (기본 상태) -->
             <div class="auth-section" id="authSection">
-                <a href="/login" class="auth-btn login-btn" onclick="showLoginModal()">로그인</a>
-                <a href="/join/step1" class="auth-btn signup-btn" onclick="showSignupModal()">회원가입</a>
+                <a href="/login" class="auth-btn login-btn">로그인</a>
+                <a href="/join/step1" class="auth-btn signup-btn">회원가입</a>
             </div>
 
             <!-- 로그인 후 (숨김 상태 - 나중에 JavaScript로 표시) -->

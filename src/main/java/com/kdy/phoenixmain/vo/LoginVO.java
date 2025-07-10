@@ -13,7 +13,6 @@ import java.util.Date;
 public class LoginVO {
     private String u_id;        // batis 를 통한 DB 자동 연결을 위해 테이블 컬럼과 일치 하도록 설정
     private String u_pw;
-    private String u_nickname;
     private String u_name;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")

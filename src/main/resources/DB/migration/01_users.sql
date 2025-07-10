@@ -2,32 +2,32 @@
 -- 1. 사용자 테이블 (USERS)
 -- ========================================
 
+drop table USERS;
+
 -- 테이블 생성
 CREATE TABLE USERS (
                        U_ID VARCHAR2(20) PRIMARY KEY,
                        u_pw VARCHAR2(100) NOT NULL,
-                       U_nickname VARCHAR2(50) NOT NULL UNIQUE,
-                       U_name VARCHAR2(50) NOT NULL UNIQUE,
+                       U_name VARCHAR2(50) NOT NULL,
                        u_birth DATE,
                        u_address VARCHAR2(500)
 );
 
--- 시퀀스 생성
-CREATE SEQUENCE SEQ_U_ID START WITH 1 INCREMENT BY 1;
-
 -- 기본 데이터 삽입
-INSERT INTO USERS (U_ID, u_pw, U_nickname, U_name, u_birth, u_address)
-VALUES (1, 'password123', 'testuser', '김테스트', DATE '1990-01-01', '서울시 강남구');
+INSERT INTO USERS (U_ID, u_pw, U_name, u_birth, u_address) VALUES
+    ('kim123', 'password123!', '김철수', TO_DATE('1990-03-15', 'YYYY-MM-DD'), '서울특별시 강남구 테헤란로 123');
 
-INSERT INTO USERS (U_ID, u_pw, U_nickname, U_name, u_birth, u_address)
-VALUES (2, 'password456', 'moviefan', '이영화', DATE '1985-05-15', '서울시 서초구');
+INSERT INTO USERS (U_ID, u_pw, U_name, u_birth, u_address) VALUES
+    ('lee456', 'mypassword456', '이영희', TO_DATE('1985-07-22', 'YYYY-MM-DD'), '부산광역시 해운대구 해운대해변로 456');
 
-INSERT INTO USERS (U_ID, u_pw, U_nickname, U_name, u_birth, u_address)
-VALUES (3, 'phoenix2025', 'cinephile', '박시네마', DATE '1992-03-20', '서울시 종로구');
+INSERT INTO USERS (U_ID, u_pw, U_name, u_birth, u_address) VALUES
+    ('park789', 'securepass789', '박민수', TO_DATE('1993-11-08', 'YYYY-MM-DD'), '대구광역시 중구 동성로 789');
 
-INSERT INTO USERS (U_ID, u_pw, U_nickname, U_name, u_birth, u_address)
-VALUES (4, 'movie1234', 'filmlovers', '최영화', DATE '1988-07-12', '경기도 수원시');
+INSERT INTO USERS (U_ID, u_pw, U_name, u_birth, u_address) VALUES
+    ('choi101', 'password2024!', '최지현', TO_DATE('1988-05-30', 'YYYY-MM-DD'), '인천광역시 연수구 송도국제대로 101');
 
+INSERT INTO USERS (U_ID, u_pw, U_name, u_birth, u_address) VALUES
+    ('jung202', 'mykey202pass', '정수빈', TO_DATE('1992-12-03', 'YYYY-MM-DD'), '광주광역시 서구 상무중앙로 202');
 -- 커밋
 COMMIT;
 

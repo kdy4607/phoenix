@@ -58,10 +58,8 @@
     </main>
     <footer class="cay-footer"><h1>footer</h1></footer>
 </div>
-
 <h1> id : ${user.u_id} </h1>
 <h1> pw : ${user.u_pw} </h1>
-<h1> u_nickname : ${user.u_nickname} </h1>
 <h1> u_name : ${user.u_name} </h1>
 <h1> u_birth : ${user.u_birth} </h1>
 <h1> u_address : ${user.u_address} </h1>

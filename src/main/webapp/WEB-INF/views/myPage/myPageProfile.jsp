@@ -18,7 +18,7 @@
         <form action="/mypage/general-info" method="post">
             <div> Enter Your Password to identify your Account</div>
             <input type="hidden" name="u_id" value="${u_id}" />
-            <div> Nickname : <input readonly value="${user.u_nickname}"> </div>
+            <div> Nickname : <input readonly value="${user.u_id}"> </div>
             <div> Password : <input type="text" name="u_pw"> </div>
             <button> Verify </button>
         </form>

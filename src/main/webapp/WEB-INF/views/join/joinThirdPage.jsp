@@ -33,7 +33,7 @@
     <div> Create Account</div>
     <div>
         <div> Your Nickname</div>
-        <input type="text" readonly name="u_nickname" value="${loginVO.u_nickname}">
+        <input type="text" readonly name="u_id" value="${loginVO.u_id}">
     </div>
     <div>
         <div> Your password </div>
