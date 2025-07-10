@@ -36,6 +36,11 @@
     </form>
 </div>
 <script>
+    document.getElementById("room_id").addEventListener("change", function () {
+        const selectedOption = this.options[this.selectedIndex];
+        document.getElementById("room_name_input").value = selectedOption.text;
+    });
+
     $(document).ready(function () {
         // '다음' 버튼 활성화/비활성화 함수
         function toggleNextButton() {

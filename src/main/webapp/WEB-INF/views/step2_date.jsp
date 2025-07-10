@@ -21,8 +21,8 @@
     <div>
         <h2>2. 날짜 선택</h2>
         <form action="/step3" method="post">
-            <input type="hidden" name="movie_id" value="${reservation.movie_id}">
-            <input type="hidden" name="title" value="${reservation.title}">
+                <input type="hidden" name="movie_id" value="${reservation.movie_id}"> <!-- ✅ 여기에 값 들어오는지 확인 -->
+                <input type="hidden" name="title" value="${reservation.title}">
 
             <label for="reservationDate">날짜 선택</label>
             <input type="date" id="reservationDate" name="reservationDate" required>

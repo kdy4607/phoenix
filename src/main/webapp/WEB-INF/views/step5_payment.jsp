@@ -1,108 +1,93 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<!DOCTYPE html>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <html>
 <head>
-    <title>결제 및 확인</title>
-    <link rel="stylesheet" href="/resources/css/sample.css">
-    <script src="https://js.tosspayments.com/v2/standard"></script>
+    <title>결제 페이지</title>
+    <link rel="stylesheet" href="/resources/css/stepbar.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        .container {
+            margin: 20px auto;
+            width: 600px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .info-list {
+            list-style: none;
+            padding: 0;
+            text-align: left;
+        }
+        .info-list li {
+            margin: 10px 0;
+        }
+        .payment-box {
+            margin-top: 30px;
+            text-align: center;
+        }
+        .btn-pay {
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn-pay:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
-    <h1>영화 예매</h1>
+    <h1>결제 정보 확인</h1>
 
     <jsp:include page="/WEB-INF/views/stepbar.jsp">
-        <jsp:param name="currentStep" value="${reservation.currentStep}"/>
+        <jsp:param name="currentStep" value="5"/>
     </jsp:include>
 
-    <h2>5. 예매 정보 확인</h2>
+    <h2>선택하신 정보:</h2>
+    <ul>
+        <li><strong>영화:</strong> ${reservation.title}</li>
+        <li><strong>상영관:</strong> ${reservation.theaterName}</li>
+        <li><strong>날짜:</strong> ${reservation.reservationDate}</li>
+        <li><strong>시간:</strong> ${reservation.start_time}</li>
 
-    <p><strong>영화:</strong> ${reservation.movieTitle}</p>
-    <p><strong>날짜:</strong> ${reservation.reservationDate}</p>
-    <p><strong>시간:</strong> ${reservation.startTime} (${reservation.theaterName})</p>
-    <p><strong>선택한 좌석:</strong>
-        <c:forEach var="seat" items="${reservation.selectedSeatNumbers}">
-            ${seat}&nbsp;
-        </c:forEach>
-    </p>
-    <p><strong>총 결제 금액:</strong> ₩${reservation.totalAmount}</p>
+        <li><strong>좌석:</strong>
+            <c:forEach var="seat" items="${selectedSeats}">
+                ${seat.seat_label}
+                <c:if test="${!fn:contains(selectedSeats[selectedSeats.size()-1].seat_label, seat.seat_label)}">, </c:if>
+            </c:forEach>
+        </li>
 
+        <li><strong>가격:</strong> ${totalPrice}원</li>
+    </ul>
 
+    <form action="/completeReservation" method="post">
+        <input type="hidden" name="movie_id" value="${reservation.movie_id}"/>
+        <input type="hidden" name="schedule_id" value="${reservation.scheduleId}"/>
+        <input type="hidden" name="reservationDate" value="${reservation.reservationDate}"/>
+        <input type="hidden" name="selectedSeats" value="${selectedSeats}"/>
 
-
-    <!-- 할인 쿠폰 -->
-    <div>
-        <input type="checkbox" id="coupon-box" />
-        <label for="coupon-box"> 5,000원 쿠폰 적용 </label>
-    </div>
-    <!-- 결제 UI -->
-    <div id="payment-method"></div>
-    <!-- 이용약관 UI -->
-    <div id="agreement"></div>
-    <!-- 결제하기 버튼 -->
-    <button class="button" id="payment-button" style="margin-top: 30px">결제하기</button>
-
-    <script>
-        main();
-
-        async function main() {
-            const button = document.getElementById("payment-button");
-            const coupon = document.getElementById("coupon-box");
-            // ------  결제위젯 초기화 ------
-            const clientKey = "test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm";
-            const tossPayments = TossPayments(clientKey);
-            // 회원 결제
-            const customerKey = "IE24EwNRGVJb7w3iHX4OH";
-            const widgets = tossPayments.widgets({
-                customerKey,
-            });
-            // 비회원 결제
-            // const widgets = tossPayments.widgets({ customerKey: TossPayments.ANONYMOUS });
-
-            // ------ 주문의 결제 금액 설정 ------
-            await widgets.setAmount({
-                currency: "KRW",
-                value: 50000,
-            });
-
-            await Promise.all([
-                // ------  결제 UI 렌더링 ------
-                widgets.renderPaymentMethods({
-                    selector: "#payment-method",
-                    variantKey: "DEFAULT",
-                }),
-                // ------  이용약관 UI 렌더링 ------
-                widgets.renderAgreement({ selector: "#agreement", variantKey: "AGREEMENT" }),
-            ]);
-
-            // ------  주문서의 결제 금액이 변경되었을 경우 결제 금액 업데이트 ------
-            coupon.addEventListener("change", async function () {
-                if (coupon.checked) {
-                    await widgets.setAmount({
-                        currency: "KRW",
-                        value: 50000 - 5000,
-                    });
-
-                    return;
-                }
-
-                await widgets.setAmount({
-                    currency: "KRW",
-                    value: 50000,
-                });
-            });
-
-            // ------ '결제하기' 버튼 누르면 결제창 띄우기 ------
-            button.addEventListener("click", async function () {
-                await widgets.requestPayment({
-                    orderId: "XqlVZpCpiyqxi1V42ScYi",
-                    orderName: "토스 티셔츠 외 2건",
-                    customerEmail: "customer123@gmail.com",
-                    customerName: "김토스",
-                    customerMobilePhone: "01012341234",
-                });
-            });
-        }
-    </script>
+        <div class="payment-box">
+            <h3>결제 수단 선택</h3>
+            <select name="paymentMethod" required>
+                <option value="">-- 결제 수단 선택 --</option>
+                <option value="credit">신용카드</option>
+                <option value="kakaopay">카카오페이</option>
+                <option value="naverpay">네이버페이</option>
+            </select>
+            <br><br>
+            <button type="submit" class="btn-pay">결제하기</button>
+        </div>
+    </form>
+</div>
 </body>
 </html>

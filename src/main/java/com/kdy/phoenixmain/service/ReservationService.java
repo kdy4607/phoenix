@@ -5,6 +5,7 @@ import com.kdy.phoenixmain.mapper.ReservationMapper;
 import com.kdy.phoenixmain.vo.MovieVO;
 import com.kdy.phoenixmain.vo.RoomVO;
 import com.kdy.phoenixmain.vo.RuntimeVO;
+import com.kdy.phoenixmain.vo.SeatVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,5 +34,23 @@ public class ReservationService {
         return reservationMapper.getRuntimeByRoomAndDate(roomId, reservationDate);
     }
 
+    //
+    public RuntimeVO getRuntimeById(int runtimeId) {
+        return reservationMapper.selectRuntimeById(runtimeId);
+    }
+
+    public RoomVO getRoomById(int roomId) {
+        return reservationMapper.getRoomById(roomId);
+    }
+
+    public List<SeatVO> getSeatsByRoomId(int roomId) {
+        return reservationMapper.getSeatsByRoomId(roomId);
+    }
+    public SeatVO getSeatByRoomRowNumber(int roomId, String row, int number) {
+        return reservationMapper.getSeatByRoomRowNumber(roomId, row, number);
+    }
+
+
+    
 }
 

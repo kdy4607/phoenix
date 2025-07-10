@@ -2,6 +2,7 @@ package com.kdy.phoenixmain.vo;
 
 import lombok.Data;
 
+import java.util.Date;
 import java.util.List; // List import 추가
 
 @Data
@@ -16,12 +17,20 @@ public class StepBarVO {
 
     // Step 3: 시간/상영관 선택
     private Integer scheduleId; // 스케줄 ID
-    private String startTime;   // 상영 시작 시간 (예: "14:30")
+    private String start_time;   // 상영 시작 시간 (예: "14:30")
     private String theaterName; // 상영관 이름 (예: "1관")
+    private int runtime_id;
+    private int room_id;
+    private Date run_date;
+    private int price;
+    private int available_seats;
+    private String room_name;
 
     // Step 4: 좌석 선택
-    private List<Integer> selectedSeatIds;    // 선택된 좌석 ID 목록 (DB PK)
-    private List<String> selectedSeatNumbers; // 선택된 좌석 번호 목록 (예: "A1", "A2") - 화면 표시용
+    private int seat_id;
+    private String seat_row;
+    private int seat_number;
+    private String status;
 
     // Step 5: 결제
     private double totalAmount; // 총 결제 금액

@@ -163,3 +163,6 @@ FROM ROOMS rm
          LEFT JOIN RUNTIMES r ON rm.ROOM_ID = r.ROOM_ID
 GROUP BY rm.ROOM_ID, rm.ROOM_NAME
 ORDER BY SHOWTIME_COUNT DESC;
+
+SELECT * FROM runtimes WHERE room_id = 1 AND run_date = '2025-07-09';
+select * from RUNTIMES;
