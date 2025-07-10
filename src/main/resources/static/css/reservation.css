@@ -1,0 +1,177 @@
+.reservation-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.reservation-stats {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+}
+
+.stat-item {
+    flex: 1;
+}
+
+.stat-number {
+    font-size: 24px;
+    font-weight: bold;
+    color: #FB4357;
+}
+
+.stat-label {
+    font-size: 14px;
+    color: #666;
+    margin-top: 5px;
+}
+
+.reservation-card {
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.reservation-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.reservation-id {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+
+.reservation-status {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.status-completed {
+    background: #d4edda;
+    color: #155724;
+}
+
+.status-cancelled {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.reservation-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.movie-info {
+    display: flex;
+    gap: 15px;
+}
+
+.movie-poster {
+    width: 80px;
+    height: 120px;
+    background: #f0f0f0;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    color: #666;
+}
+
+.movie-details h3 {
+    margin: 0 0 10px 0;
+    color: #333;
+}
+
+.movie-details p {
+    margin: 5px 0;
+    color: #666;
+    font-size: 14px;
+}
+
+.reservation-details {
+    text-align: right;
+}
+
+.seats {
+    font-size: 16px;
+    font-weight: bold;
+    color: #FB4357;
+    margin-bottom: 10px;
+}
+
+.price {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.reserved-date {
+    font-size: 12px;
+    color: #999;
+}
+
+.cancel-btn {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    margin-top: 10px;
+}
+
+.cancel-btn:hover {
+    background: #c82333;
+}
+
+.cancel-btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 80px 20px;
+    color: #999;
+}
+
+.empty-state .icon {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+.btn-primary {
+    background: #FB4357;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 4px;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 20px;
+}
+
+.btn-primary:hover {
+    background: #e63946;
+    text-decoration: none;
+    color: white;
+}

@@ -1,7 +1,7 @@
 package com.kdy.phoenixmain.controller;
 
+import com.kdy.phoenixmain.service.BookingService;
 import com.kdy.phoenixmain.vo.*;
-import com.kdy.phoenixmain.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,16 +12,16 @@ import java.util.List;
 
 @Controller
 @SessionAttributes("reservation")
-public class ReservationC {
+public class BookingC {
 
     @Autowired
-    ReservationService reservationService;
+    BookingService reservationService;
 
 
 
     @GetMapping("/step1")
     public String step1(Model model) {
-    StepBarVO reservation = new StepBarVO();
+        StepBarVO reservation = new StepBarVO();
         List<MovieVO> movies = reservationService.getAllMovies();
         model.addAttribute("movies", movies);
 

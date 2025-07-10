@@ -12,7 +12,7 @@ import org.apache.ibatis.annotations.Select;
 import java.util.List;
 
 @Mapper
-public interface ReservationMapper {
+public interface BookingMapper {
 
     @Select("SELECT title FROM movies")
     List<MovieVO> getAllMovies();

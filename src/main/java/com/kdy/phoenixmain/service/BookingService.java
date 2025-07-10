@@ -1,21 +1,18 @@
 package com.kdy.phoenixmain.service;
 
 
-import com.kdy.phoenixmain.mapper.ReservationMapper;
-import com.kdy.phoenixmain.vo.MovieVO;
-import com.kdy.phoenixmain.vo.RoomVO;
-import com.kdy.phoenixmain.vo.RuntimeVO;
-import com.kdy.phoenixmain.vo.SeatVO;
+import com.kdy.phoenixmain.mapper.BookingMapper;
+import com.kdy.phoenixmain.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class ReservationService {
+public class BookingService {
 
     @Autowired
-    ReservationMapper reservationMapper;
+    BookingMapper reservationMapper;
 
     // 전체 조회하는 일
     public List<MovieVO> getAllMovies() {
@@ -46,11 +43,14 @@ public class ReservationService {
     public List<SeatVO> getSeatsByRoomId(int roomId) {
         return reservationMapper.getSeatsByRoomId(roomId);
     }
+
     public SeatVO getSeatByRoomRowNumber(int roomId, String row, int number) {
         return reservationMapper.getSeatByRoomRowNumber(roomId, row, number);
     }
 
 
-    
+
+
 }
+
 
