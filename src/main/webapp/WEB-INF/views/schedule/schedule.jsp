@@ -11,20 +11,8 @@
     <link rel="stylesheet" href="/resources/css/schedule.css">
 </head>
 <body>
-<header class="header">
-    <div class="header-content">
-        <a href="/">
-            <div class="logo">Phoenix</div>
-        </a>
-        <ul class="nav-menu">
-            <li><a href="#">영화</a></li>
-            <li><a href="#">예매</a></li>
-            <li><a href="#">극장</a></li>
-            <li><a href="#">이벤트</a></li>
-            <li><a href="#">스토어</a></li>
-        </ul>
-    </div>
-</header>
+<!-- 공통 헤더 포함 -->
+<jsp:include page="/WEB-INF/views/header.jsp" />
 
 <div class="container">
     <!-- Booking Steps -->
