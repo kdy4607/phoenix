@@ -13,16 +13,16 @@
 <body>
 
 <div class="cay-myPage-content">
-  <h1>content</h1>
   <div class="cay-myPage-Home">
     <div class="cay-myPage-profile">
-      <img src="" alt="">
-      <p> Dummy data </p>
+      <div> Welcome! <p> Hello, ${user.u_name} ! </p> </div>
+      <div><a href="/mypage/profile?u_id=${user.u_id}">Update My Information</a></div>
+      <div> POINT : <span> 0 </span> </div>
     </div>
     <div class="cay-myPage-coupon">
-      <h1>My coupon</h1>
+      <h1>My reward</h1>
+      <div> Reward</div>
       <div> Discount Coupon</div>
-      <div> My Movie Ticket</div>
     </div>
     <div class="cay-myPage-point">
       <h1>My Point</h1>

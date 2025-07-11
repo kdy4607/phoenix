@@ -37,10 +37,10 @@
     <input type="text" name="u_id" placeholder="Enter User ID">
     <div> User ID must be 6-20 characters long, containing only lowercase letters and numbers</div>
     <div> Enter Your New Password</div>
-    <input type="text" name="u_pw" placeholder="Enter Password">
+    <input type="password" name="u_pw" placeholder="Enter Password">
     <div> Password must be at least <span> 0 </span> characters</div>
     <div> Re-enter Your Password</div>
-    <input type="text" name="u_ReEntered_pw" placeholder="Re-enter Password">
+    <input type="password" name="u_ReEntered_pw" placeholder="Re-enter Password">
     <div>
         <button type="submit"> Next !</button>
     </div>
