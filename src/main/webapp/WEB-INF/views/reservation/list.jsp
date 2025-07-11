@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>예약 내역 - Phoenix Cinema</title>
     <link rel="stylesheet" href="/resources/css/schedule.css">
+    <link rel="stylesheet" href="/resources/css/reservation.css">
 </head>
 <body>
 <!-- 헤더 포함 -->
@@ -17,7 +18,7 @@
     <!-- 페이지 헤더 -->
     <div class="page-header">
         <h1>예약 내역</h1>
-        <a href="/schedule" class="btn-primary">🎫 새 예매</a>
+        <a href="/schedule" class="btn-primary2">🎫 새 예매</a>
     </div>
 
     <!-- 사용자 환영 메시지 -->
@@ -83,7 +84,7 @@
                             <option value="amount">금액순</option>
                         </select>
 
-                        <button type="button" onclick="refreshReservations()" class="btn-primary">
+                        <button type="button" onclick="refreshReservations()" class="btn-primary2">
                             🔄 새로고침
                         </button>
                     </div>
@@ -166,7 +167,7 @@
                         <div class="empty-state-icon">🎬</div>
                         <h3>아직 예약 내역이 없습니다</h3>
                         <p>영화 예매를 통해 첫 예약을 만들어보세요!</p>
-                        <a href="/schedule" class="btn-primary">🎫 영화 예매하기</a>
+                        <a href="/schedule" class="btn-primary2">🎫 영화 예매하기</a>
                     </div>
                 </c:otherwise>
             </c:choose>
