@@ -443,8 +443,16 @@ body {
     display: block;
 }
 
+.person-number{
+    color: darkgray;
+    float: right;
+    font-size: medium;
+    padding: 9px;
+}
+
 .cinema-screen {
-    width: 100%;
+    justify-self: center;
+    width: 50%;
     height: 40px;
     background: linear-gradient(90deg, #333, #666, #333);
     border-radius: 20px;
@@ -784,4 +792,101 @@ body {
 .payment-summary-box .details p strong {
     color: #222;
 }
+
+/* ──────────────────────────────────────────────
+   예약 완료 메시지 카드 스타일
+────────────────────────────────────────────── */
+#completeSection {
+    place-self: center;
+    background-color: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    padding: 24px;
+    margin: 20px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    max-width: 600px;
+    width: 100%;
+}
+
+#completeSection h2 {
+    margin: 0 0 16px;
+    font-size: 20px;
+    font-weight: 600;
+    color: #FB4357;
+    border-left: 4px solid #FB4357;
+    padding-left: 8px;
+}
+
+#completeSection p {
+    margin: 8px 0;
+    font-size: 14px;
+    color: #333;
+    line-height: 1.5;
+}
+
+#completeSection p strong {
+    color: #222;
+}
+
+#completeSection .payButton {
+    display: block;
+    margin: 24px auto 0;
+    padding: 12px 32px;
+    font-size: 14px;
+    font-weight: 600;
+    background-color: #FB4357;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#completeSection .payButton:hover {
+    background-color: #e63946;
+}
+
+/* ── 상영정보 헤더 ───────────────────────── */
+/* 상영정보 전체 컨테이너 */
+.runtime-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* 왼쪽 블록: 제목 + 메타 */
+.runtime-details {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+}
+
+/* 영화 제목 */
+.movie-title {
+    font-size: 1.2rem;
+    color: #FB4357;
+}
+
+/* 시간 / 관람가 */
+.runtime-meta {
+    font-size: 1rem;      /* 키우고 */
+    font-weight: 600;     /* 굵게 */
+    color: #666;
+}
+
+/* ── 요금 리스트 ───────────────────────── */
+.price-list {
+    display: flex;
+    gap: 12px;
+}
+
+.price-item {
+    font-size: 0.95rem;
+    color: #333;
+}
+.price-item strong {
+    font-weight: 600;
+}
+.price-item.adult  { color: #222;    }
+.price-item.youth  { color: #0056b3; }
+.price-item.child  { color: #117a33; }
 

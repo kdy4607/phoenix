@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
@@ -12,7 +12,7 @@
 </head>
 <body>
 <!-- 공통 헤더 포함 -->
-<jsp:include page="/WEB-INF/views/header.jsp" />
+<jsp:include page="/WEB-INF/views/header.jsp"/>
 
 <div class="container">
     <!-- Booking Steps -->
@@ -138,8 +138,8 @@
     <!-- Seat Selection Section -->
     <div class="section seat-selection" id="seatSelection">
         <div class="section-header">인원/좌석 선택
-                    <span class="note">- 인원은 최대 8명까지 선택 가능합니다.</span>
-    </div>
+            <span class="person-number">인원은 최대 8명까지 선택 가능합니다</span>
+        </div>
         <div class="section-content">
             <!-- Runtime Info -->
             <div class="seat-info">
@@ -245,10 +245,9 @@
     <!-- ▲ 결제 섹션 끝 ▲ -->
 
     <!-- 완료 섹션 -->
-    <div id="completeSection" style="display:none;">
+    <div id="completeSection" style="display: none;">
         <div id="completeMessage"></div>
         <button class="payButton" onclick="location.href='/reservation/list'">예매 내역 보기</button>
-
     </div>
 
 
@@ -394,12 +393,44 @@
 
     // 좌석 선택 화면 표시
     function showSeatSelection(runtime, seats) {
+        // 1) 가격 계산
+        const priceAdult = runtime.price;
+        const priceYouth = priceAdult - 2000;
+        const priceChild = priceAdult - 4000;
         // 상영시간 정보 표시
-        document.getElementById('seatRuntimeInfo').innerHTML =
-            '<strong>' + runtime.movie_title + '</strong> | ' +
-            runtime.start_time + ' | ' +
-            runtime.room_name + ' | ' +
-            runtime.price.toLocaleString() + '원';
+        document.getElementById('seatRuntimeInfo').innerHTML = `
+      <div id="seatRuntimeInfo">
+  <div class="runtime-info">
+    <!-- 왼쪽 블록: 영화 제목 + 메타 정보 -->
+    <div class="runtime-details">
+      <strong class="movie-title">\${runtime.movie_title}</strong>
+      <div class="runtime-meta">
+        \${runtime.start_time} | \${runtime.room_name} | \${runtime.movie_rating}
+      </div>
+    </div>
+    <!-- 오른쪽 블록: 요금 리스트 -->
+    <div class="price-list">
+      <span class="price-item adult">
+        성인 <strong>\${priceAdult.toLocaleString()}원</strong>
+      </span>
+      <span class="price-item youth">
+        청소년 <strong>\${priceYouth.toLocaleString()}원</strong>
+      </span>
+      <span class="price-item child">
+        어린이 <strong>\${priceChild.toLocaleString()}원</strong>
+      </span>
+    </div>
+  </div>
+</div>
+    `;
+
+        // document.getElementById('seatRuntimeInfo').innerHTML =
+        //     '<strong>' + runtime.movie_title + '</strong> | ' +
+        //     runtime.start_time + ' | ' +
+        //     runtime.room_name + '<br/>' +
+        //     '성인 ' + priceAdult.toLocaleString() + '원' + ' | ' +
+        //     '청소년 ' + priceYouth.toLocaleString() + '원' + ' | ' +
+        //     '어린이 ' + priceChild.toLocaleString() + '원';
 
         // 좌석 맵 생성
         createSeatMap(seats);
@@ -478,33 +509,54 @@
         updateSelectedSeatsInfo();
     }
 
-    // 선택된 좌석 정보 업데이트
     function updateSelectedSeatsInfo() {
         const selectedSeatsInfo = document.getElementById('selectedSeatsInfo');
         const selectedSeatsList = document.getElementById('selectedSeatsList');
-        const totalPrice = document.getElementById('totalPrice');
         const confirmBtn = document.getElementById('confirmSeatsBtn');
 
-        if (selectedSeats.length > 0) {
-            selectedSeatsInfo.classList.add('active');
+        // 인원별 카운트 읽어오기
+        const adultCount = parseInt(document.getElementById('adultCount').textContent, 10);
+        const youthCount = parseInt(document.getElementById('youthCount').textContent, 10);
+        const childCount = parseInt(document.getElementById('childCount').textContent, 10);
 
-            const seatLabels = selectedSeats.map(seat =>
-                seat.seat_row + seat.seat_number
-            ).join(', ');
+        // 좌석 라벨 항상 갱신
+        const seatLabels = selectedSeats
+            .map(seat => seat.seat_row + seat.seat_number)
+            .join(', ');
+        selectedSeatsList.innerHTML = '<strong>선택된 좌석:</strong> ' + seatLabels;
 
-            selectedSeatsList.innerHTML =
-                '<strong>선택된 좌석:</strong> ' + seatLabels + '<br>' +
-                '<strong>좌석 수:</strong> ' + selectedSeats.length + '석';
+        // 선택된 좌석 수와 인원 수가 맞아야 인원·총금액 표시
+        const totalPeople = adultCount + youthCount + childCount;
+        if (selectedSeats.length === totalPeople && totalPeople > 0) {
+            // 요금 계산
+            const priceAdult = seatPrice;
+            const priceYouth = priceAdult - 2000;
+            const priceChild = priceAdult - 4000;
+            const totalAmount =
+                adultCount * priceAdult +
+                youthCount * priceYouth +
+                childCount * priceChild;
 
-            totalPrice.innerHTML =
-                '<strong>총 금액:</strong> ' + (selectedSeats.length * seatPrice).toLocaleString() + '원';
+            // 인원 & 총 금액 노출
+            selectedSeatsList.innerHTML +=
+                '<br><strong>좌석 수:</strong> 성인 ' + adultCount + '명, ' +
+                '청소년 ' + youthCount + '명, 어린이 ' + childCount + '명' +
+                '<br><strong>총 금액:</strong> ' + totalAmount.toLocaleString() + '원';
 
             confirmBtn.disabled = false;
         } else {
-            selectedSeatsInfo.classList.remove('active');
+            // 인원 맞추기 전이면 인원·총금액 제거, 버튼 비활성
             confirmBtn.disabled = true;
         }
+
+        // 정보 박스 보임/숨김
+        if (selectedSeats.length > 0) {
+            selectedSeatsInfo.classList.add('active');
+        } else {
+            selectedSeatsInfo.classList.remove('active');
+        }
     }
+
 
     // 좌석 선택 취소
     function cancelSeatSelection() {
@@ -524,20 +576,50 @@
             return;
         }
 
-        // 결제 단계로 넘어갈 준비
-        const totalAmount = selectedSeats.length * seatPrice;
-        const seatLabels = selectedSeats.map(seat => seat.seat_row + seat.seat_number).join(', ');
+        const adultCount = parseInt(document.getElementById('adultCount').textContent, 10);
+        const youthCount = parseInt(document.getElementById('youthCount').textContent, 10);
+        const childCount = parseInt(document.getElementById('childCount').textContent, 10);
 
-        // 결제 섹션을 표시하는 함수 호출
+        const seatLabels = selectedSeats.map(seat => seat.seat_row + seat.seat_number).join(', ');
+        const seatIds = selectedSeats.map(seat => parseInt(seat.seat_id, 10));
+
+        const totalAmount = adultCount * seatPrice
+            + youthCount * (seatPrice - 2000)
+            + childCount * (seatPrice - 4000);
+
         showPaymentSection(totalAmount, seatLabels);
 
-        console.log('[confirmSeats] selectedShowtime', selectedShowtime);
+        // 백엔드에 보낼 페이로드 미리 저장
+        window._reservationPayload = {
+            runtimeId: selectedShowtime.runtimeId,
+            adult: adultCount,
+            youth: youthCount,
+            child: childCount,
+            seats: seatIds
+        };
     }
+
+    // function confirmSeats() {
+    //     if (selectedSeats.length === 0) {
+    //         alert('좌석을 선택해주세요.');
+    //         return;
+    //     }
+    //
+    //     // 결제 단계로 넘어갈 준비
+    //     const totalAmount = selectedSeats.length * seatPrice;
+    //     const seatLabels = selectedSeats.map(seat => seat.seat_row + seat.seat_number).join(', ');
+    //
+    //     // 결제 섹션을 표시하는 함수 호출
+    //     showPaymentSection(totalAmount, seatLabels);
+    //
+    //     console.log('[confirmSeats] selectedShowtime', selectedShowtime);
+    // }
 
     /**
      * 결제 섹션을 설정하고 화면에 표시하는 함수
      */
     function showPaymentSection(amount, seatLabels) {
+
         // 1. 결제 요약 정보 채우기
         document.getElementById('paymentSummary').innerHTML = `
             <div class="payment-summary-box">
@@ -573,21 +655,15 @@
     /**
      * '결제하기' 버튼 클릭 시 최종 예약을 처리하는 함수
      */
-    function processPaymentAndReserve() {
-        // 중복 클릭 방지를 위해 버튼 비활성화
-        document.getElementById('payment-button').disabled = true;
+    async function processPaymentAndReserve() {
+        const btn = document.getElementById('payment-button');
+        btn.disabled = true;
 
-        const runtimeId = parseInt(selectedShowtime.runtimeId);
-        const selectedSeatIds = selectedSeats.map(seat => parseInt(seat.seat_id));
-
-        // 서버에 예약 생성 요청 (기존 confirmSeats에 있던 로직)
-        fetch('/seat/reserve', {
+        // 앞서 window._reservationPayload 에 저장된 데이터를 사용
+        fetch('/reservation/create', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                runtimeId: runtimeId,
-                selectedSeatIds: selectedSeatIds
-            })
+            body: JSON.stringify(window._reservationPayload)
         })
             .then(response => response.json())
             .then(data => {
@@ -599,13 +675,13 @@
                 } else {
                     // 예약 실패 시
                     alert(data.message || '예약 중 오류가 발생했습니다.');
-                    document.getElementById('payment-button').disabled = false; // 다시 시도할 수 있도록 버튼 활성화
+                    btn.disabled = false;
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
                 alert('예약 처리 중 오류가 발생했습니다.');
-                document.getElementById('payment-button').disabled = false; // 버튼 활성화
+                btn.disabled = false;
             });
     }
 
@@ -714,7 +790,7 @@
         const newCount = count + delta;
         if (newCount < 0) return;
         if (delta > 0 && total >= MAX_PEOPLE) {
-            alert(`최대 인원은 ${MAX_PEOPLE}명입니다.`);
+            alert(`최대 인원은 8명입니다.`);
             return;
         }
         el.textContent = newCount;
@@ -723,8 +799,8 @@
 
     // 현재 총 인원 계산
     function getTotalPeople() {
-        return ['adult','youth','child']
-            .reduce((sum, t) => sum + parseInt(document.getElementById(t + 'Count').textContent||0), 0);
+        return ['adult', 'youth', 'child']
+            .reduce((sum, t) => sum + parseInt(document.getElementById(t + 'Count').textContent || 0), 0);
     }
 
     // 좌석 클릭 시 선택/해제 후 상태 갱신
@@ -775,12 +851,15 @@
         const seatsByRow = {};
         seats.forEach(seat => (seatsByRow[seat.seat_row] = seatsByRow[seat.seat_row] || []).push(seat));
         Object.keys(seatsByRow).sort().forEach(row => {
-            const rowDiv = document.createElement('div'); rowDiv.className = 'seat-row';
-            const label = document.createElement('div'); label.className='seat-row-label'; label.textContent=row;
+            const rowDiv = document.createElement('div');
+            rowDiv.className = 'seat-row';
+            const label = document.createElement('div');
+            label.className = 'seat-row-label';
+            label.textContent = row;
             rowDiv.appendChild(label);
-            seatsByRow[row].sort((a,b)=>a.seat_number-b.seat_number).forEach(seat => {
+            seatsByRow[row].sort((a, b) => a.seat_number - b.seat_number).forEach(seat => {
                 const div = document.createElement('div');
-                div.className = seat.status==='예약됨'? 'seat reserved original-reserved':'seat available';
+                div.className = seat.status === '예약됨' ? 'seat reserved original-reserved' : 'seat available';
                 div.dataset.seatId = seat.seat_id;
                 div.textContent = seat.seat_number;
                 if (div.classList.contains('available')) div.onclick = () => toggleSeat(div, seat);
