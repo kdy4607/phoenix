@@ -3,13 +3,11 @@ package com.kdy.phoenixmain.controller;
 import com.kdy.phoenixmain.service.LoginService;
 import com.kdy.phoenixmain.vo.LoginVO;
 import jakarta.servlet.http.HttpSession;
-import org.apache.jasper.tagplugins.jstl.core.Redirect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
@@ -55,7 +53,7 @@ public class LoginC {
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
-        return "index";
+        return "redirect:/main";
     }
 
     // MY PAGE //
@@ -63,6 +61,7 @@ public class LoginC {
     @GetMapping("/mypage")
     public String myPageGet(HttpSession session,
                             Model model) {
+
         LoginVO user = (LoginVO) session.getAttribute("user");
 
         if (user == null) {
@@ -109,15 +108,18 @@ public class LoginC {
     }
 
     @GetMapping("/mypage/profile")
-    public String profile(@RequestParam("u_id") String u_id,
+    public String profile(@RequestParam(value = "u_id", required = false) String u_id,
                           HttpSession session,
+                          RedirectAttributes redirectAttributes ,
                           Model model) {
 
 
-        LoginVO user = loginService.selectLoginByID(u_id);
+        LoginVO user = (LoginVO) session.getAttribute("user");
 
-        System.out.println(u_id);
-        System.out.println(user.getU_id());
+        if (u_id == null || u_id.isEmpty()) {
+            redirectAttributes.addFlashAttribute("errorMessage", "You are logged out.");
+            return "redirect:/login";
+        }
 
         if (user != null) {
             if (user.getU_id().equals(u_id)) {
@@ -142,6 +144,12 @@ public class LoginC {
         System.out.println(u_id);
 
         LoginVO user = (LoginVO) session.getAttribute("user");
+
+        if (user == null) {
+            redirectAttributes.addFlashAttribute("errorMessage", "You are logged out.");
+            return "redirect:/login";
+        }
+
         session.setAttribute("user", user);
 
         if (user != null && user.getU_pw().equals(u_pw)) {
@@ -245,7 +253,7 @@ public class LoginC {
         return "myPage/myPageMain";
     }
 
-    @PostMapping("/mypage/deleteeAccount")
+    @PostMapping("/mypage/deleteAccount")
     public String deleted(@RequestParam("u_pw") String u_pw,
                           Model model,
                           RedirectAttributes redirectAttributes,
@@ -253,14 +261,19 @@ public class LoginC {
 
         LoginVO user = (LoginVO) session.getAttribute("user");
 
-        if (user != null && user.getU_pw().equals(u_pw)) {
+        if (user == null) {
+            redirectAttributes.addFlashAttribute("errorMessage", "You are logged out.");
+            return "redirect:/login"; // 세션 없으면 로그인 페이지로
+        }
+
+        if (user.getU_pw().equals(u_pw)) {
             loginService.deleteLogin(user.getU_id());
             session.invalidate();
             return "login/deleteComplete";
         } else {
+            redirectAttributes.addFlashAttribute("errorMessage", "Passwords do not match");
             model.addAttribute("user", user);
             session.setAttribute("user", user);
-            redirectAttributes.addFlashAttribute("errorMessage", "Passwords do not match");
             model.addAttribute("content", "myPageDelete.jsp");
             return "redirect:/mypage/deleteAccount?u_id=" + user.getU_id();
         }
@@ -332,7 +345,9 @@ public class LoginC {
 
     @PostMapping("join/complete")
     public String join(@ModelAttribute("loginVO") LoginVO user,
-                       HttpSession session, Model model) {
+                       HttpSession session,
+                       RedirectAttributes redirectAttributes,
+                       Model model) {
 
         if (user.getU_address() != null && user.getU_address().isEmpty()) {
             user.setU_address(null);
@@ -341,14 +356,13 @@ public class LoginC {
         if (user != null) {
             try {
                 loginService.insertLogin(user);
-                model.addAttribute("message", "회원 가입이 성공적으로 완료되었습니다!");
                 model.addAttribute("content", "joinCompletePage.jsp"); // 성공 페이지
                 session.setAttribute("user", user);
                 return "join/joinMain";
 
             } catch (Exception e) {
                 e.printStackTrace(); // 콘솔에 오류 로그 출력
-                model.addAttribute("errorMessage", "회원가입 중 오류가 발생했습니다. (이미 존재하는 아이디/닉네임 또는 기타 DB 문제)");
+                redirectAttributes.addFlashAttribute("errorMessage", "Failed to register");
                 return "redirect:/join/step1";
             }
         }
