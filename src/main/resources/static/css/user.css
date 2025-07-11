@@ -130,7 +130,6 @@ a {
 
 /* Join */
 .cay-join-container {
-    border: 2px solid;
     margin: auto;
     display: flex;
 }
@@ -142,11 +141,34 @@ a {
     text-align: center;
 }
 
+.cay-join-content > h1 {
+    width: 200px;
+    margin: 3rem auto;
+    font-size: 3rem;
+    border-bottom: 2px solid;
+    color: #FB4357;
+}
+
+
+.cay-join-wrap {
+    position: relative;
+    width: 550px;
+    height: 700px;
+    margin: 100px auto 100px auto;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    background-color: white;
+}
+
 .cay-join-process {
     width: 30rem;
     margin: auto;
+    padding: 3rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    background-color: white;
     text-align: center;
-    border: 2px solid;
 }
 
 .cay-join-process-step {
@@ -167,10 +189,13 @@ a {
 /* My Page Main */
 
 .cay-myPage-container {
-    border: 2px solid;
-    margin: auto;
+    width: 90%;
+    margin: 3rem auto;
     display: flex;
-
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    background-color: white;
+    justify-content: center;
 }
 
 .cay-myPage-profile {
@@ -187,19 +212,36 @@ a {
 
 .cay-myPage-content {
     border: 2px solid;
-    width: 80%;
+    width: 72.5%;
     height: 90%;
-    margin: 1rem auto;
+    margin: 1rem 1rem 1rem 0.5rem;
 
 }
 
 .cay-myPage-aside {
-    border: 2px solid;
-    width: 10%;
-    height: 90%;
-    margin: 1rem auto;
-
+    height: 30rem;
+    border-radius: 8px;
+    border: 2px solid #FB4357;
+    margin: 1rem 0.5rem 1rem 1rem;
 }
+
+.cay-myPage-aside > div:nth-child(1) {
+    width: 100%;
+    height: 20rem;
+    font-size: 2rem;
+    background-color: #FB4357;
+    text-align: center;
+}
+
+.cay-myPage-aside > ul > li {
+    padding: 3rem;
+}
+
+.cay-myPage-aside > div:nth-child(1) > a {
+    color: white;
+    text-decoration: none;
+}
+
 
 /* My page - Home */
 

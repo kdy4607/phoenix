@@ -20,8 +20,7 @@
 
     <main class="cay-myPage-container">
         <div class="cay-myPage-aside">
-            <h1>aside</h1>
-            <a href="/mypage"> My Page </a>
+            <div><a href="/mypage"> My Page </a></div>
             <ul>
                 <li>  <a href="/mypage/profile?u_id=${user.u_id}"> Profile </a>
                     <ul>
@@ -55,11 +54,6 @@
     <footer class="cay-footer"><h1>footer</h1></footer>
 </div>
 <button onclick="logout()"> logout </button>
-<h1> id : ${user.u_id} </h1>
-<h1> pw : ${user.u_pw} </h1>
-<h1> u_name : ${user.u_name} </h1>
-<h1> u_birth : ${user.u_birth} </h1>
-<h1> u_address : ${user.u_address} </h1>
 <script src="/resources/js/login.js"></script>
 </body>
 </html>

@@ -28,9 +28,10 @@
     </div>
 </div>
 
-<div>${errorMessage}</div>
+
 
 <form class="cay-join-wrap" action="/join/step2" method="post" onsubmit="return call();">
+    <div class="error-message">${errorMessage}</div>
     <div> Create Account</div>
     <div> Enter Your New User ID</div>
     <input type="text" name="u_id" placeholder="Enter User ID">
