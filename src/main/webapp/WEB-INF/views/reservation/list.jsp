@@ -178,11 +178,4 @@
 </div>
 
 <!-- JavaScript -->
-<script>
-
-</script>
-
-<!-- 모달 스타일 -->
-<style>
-
-</style>
+<script src="/resources/js/reservation.js"></script>
