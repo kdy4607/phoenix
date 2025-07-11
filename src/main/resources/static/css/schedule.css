@@ -76,7 +76,7 @@ body {
     padding: 20px;
     border-radius: 8px;
     margin-bottom: 20px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .steps {
@@ -116,7 +116,7 @@ body {
     margin-bottom: 20px;
     border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .section-header {
@@ -193,7 +193,7 @@ body {
 
 .movie-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 .movie-poster {
@@ -334,10 +334,9 @@ body {
     font-size: 16px;
     font-weight: 600;
     cursor: pointer;
-    margin-top: 20px;
     transition: background-color 0.2s;
     width: 100%;
-    max-width: 200px;
+    max-width: 140px;
 }
 
 .btn-primary:hover {
@@ -362,10 +361,18 @@ body {
 }
 
 @keyframes dots {
-    0%, 20% { content: '.'; }
-    40% { content: '..'; }
-    60% { content: '...'; }
-    80%, 100% { content: ''; }
+    0%, 20% {
+        content: '.';
+    }
+    40% {
+        content: '..';
+    }
+    60% {
+        content: '...';
+    }
+    80%, 100% {
+        content: '';
+    }
 }
 
 /* Empty State */
@@ -426,7 +433,7 @@ body {
     border-radius: 8px;
     padding: 20px;
     margin-top: 20px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .seat-selection.active {
@@ -444,7 +451,7 @@ body {
     color: white;
     font-weight: bold;
     margin-bottom: 30px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
 .seat-map {
@@ -567,6 +574,12 @@ body {
     justify-content: center;
 }
 
+.btn-primary {
+    min-width: 140px;
+    padding: 12px 0;
+    text-align: center;
+}
+
 .btn-secondary {
     background-color: #6c757d;
     color: white;
@@ -575,11 +588,14 @@ body {
     border-radius: 4px;
     cursor: pointer;
     font-size: 14px;
+    width: 100%;
+    max-width: 140px;
 }
 
 .btn-secondary:hover {
     background-color: #545b62;
 }
+
 
 .payButton {
     background-color: #FB4357;
@@ -595,5 +611,174 @@ body {
     width: 100%;
     max-width: 200px;
 
+}
+
+/* 인원 선택 스타일 */
+.person-selection {
+    margin: 20px 0;
+}
+
+.person-selection .section-header {
+    font-size: 18px;
+    font-weight: 700;
+    color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #eee;
+}
+
+.person-selection .note {
+    font-size: 14px;
+    color: #666;
+}
+
+.person-selection .section-content {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    padding-top: 16px;
+}
+
+.person-selection .people-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.person-selection .people-row .label {
+    width: 60px;
+    font-size: 16px;
+    color: #333;
+}
+
+.person-selection .people-row .counter {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.person-selection .people-row .counter button {
+    width: 32px;
+    height: 32px;
+    background: #fff;
+    border: none;
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.person-selection .people-row .counter span {
+    display: inline-block;
+    width: 40px;
+    text-align: center;
+    font-size: 16px;
+    color: #222;
+}
+
+.person-selection {
+    margin: 20px 0;
+}
+
+.person-selection .people-row {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-right: 24px;
+}
+
+.person-selection .label {
+    width: 60px;
+    font-size: 16px;
+    color: #333;
+}
+
+.person-selection .counter {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.person-selection .counter button {
+    width: 32px;
+    height: 32px;
+    background: #fff;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.person-selection .counter span {
+    width: 40px;
+    text-align: center;
+    font-size: 16px;
+}
+
+.limited-reserved {
+    /* 예약불가된 좌석 스타일: 기존 reserved 와 동일하게 설정 */
+    background-color: #ddd !important;
+    cursor: not-allowed !important;
+}
+
+
+/* 결제정보 카드 스타일 */
+.payment-summary-box {
+    display: grid;
+    grid-template-areas:
+    "header header"
+    "poster details";
+    grid-template-columns: auto 1fr;
+    gap: 20px;
+    background-color: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.payment-summary-box h3 {
+    grid-area: header;
+    margin: 0 0 12px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    border-left: 4px solid #FB4357;
+    padding-left: 8px;
+}
+
+.payment-summary-box .poster {
+    grid-area: poster;
+}
+
+.payment-summary-box .poster img {
+    display: block;
+    width: auto;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.payment-summary-box .details {
+    grid-area: details;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.payment-summary-box .details p {
+    margin: 0;
+    font-size: 14px;
+    color: #555;
+    line-height: 1.4;
+}
+
+.payment-summary-box .details p strong {
+    color: #222;
 }
 

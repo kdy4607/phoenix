@@ -146,15 +146,47 @@
         </div>
     </div>
 
+
     <!-- Seat Selection Section -->
     <div class="section seat-selection" id="seatSelection">
-        <div class="section-header">좌석 선택</div>
+        <div class="section-header">인원/좌석 선택
+                    <span class="note">- 인원은 최대 8명까지 선택 가능합니다.</span>
+    </div>
         <div class="section-content">
             <!-- Runtime Info -->
             <div class="seat-info">
                 <div id="seatRuntimeInfo"></div>
             </div>
 
+            <%-- 인원선택 --%>
+            <div class="section person-selection" id="peopleSelection">
+                <div class="section-content">
+                    <div class="people-row">
+                        <div class="label">성인</div>
+                        <div class="counter">
+                            <button type="button" onclick="changeCount('adult', -1)">−</button>
+                            <span id="adultCount">0</span>
+                            <button type="button" onclick="changeCount('adult', 1)">+</button>
+                        </div>
+                    </div>
+                    <div class="people-row">
+                        <div class="label">청소년</div>
+                        <div class="counter">
+                            <button type="button" onclick="changeCount('youth', -1)">−</button>
+                            <span id="youthCount">0</span>
+                            <button type="button" onclick="changeCount('youth', 1)">+</button>
+                        </div>
+                    </div>
+                    <div class="people-row">
+                        <div class="label">어린이</div>
+                        <div class="counter">
+                            <button type="button" onclick="changeCount('child', -1)">−</button>
+                            <span id="childCount">0</span>
+                            <button type="button" onclick="changeCount('child', 1)">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <!-- Seat Legend -->
             <div class="seat-legend">
                 <div class="legend-item">
@@ -171,6 +203,7 @@
                 </div>
             </div>
 
+
             <!-- Cinema Screen -->
             <div class="cinema-screen">SCREEN</div>
 
@@ -181,7 +214,6 @@
 
             <!-- Selected Seats Info -->
             <div class="selected-seats" id="selectedSeatsInfo">
-                <h4>선택된 좌석</h4>
                 <div id="selectedSeatsList"></div>
                 <div id="totalPrice"></div>
             </div>
@@ -198,10 +230,11 @@
     <!-- ▼ 결제 섹션 시작 ▼ -->
     <div class="section payment-section" id="paymentSection" style="display:none;">
         <!-- 헤더 -->
-        <div class="section-header">결제</div>
+        <div class="section-header">결제하기</div>
         <!-- 본문 -->
         <div class="section-content">
             <!-- 결제 요약 -->
+
             <div id="paymentSummary" style="margin-bottom: 30px;"></div>
 
             <!-- 할인 쿠폰 -->
@@ -476,11 +509,17 @@
         document.getElementById('paymentSummary').innerHTML = `
             <div class="payment-summary-box">
                <h3>최종 예매 내역 확인</h3>
+            <div class="poster">
+            <img src="/resources/images/escape.jpg"/>
+<!--        <img src="\${selectedShowtime.posterUrl}"/>-->
+            </div>
+            <div class="details">
             <p><strong>영화:</strong> \${selectedShowtime.movieTitle}</p>
             <p><strong>상영시간:</strong> \${selectedShowtime.startTime}</p>
             <p><strong>상영관:</strong> \${selectedShowtime.roomName}</p>
             <p><strong>좌석:</strong> \${seatLabels}</p>
             <p><strong>최종 결제 금액:</strong> \${amount.toLocaleString()}원</p>
+            </div>
             </div>
         `;
 
@@ -629,6 +668,94 @@
         }
 
         movieGrid.innerHTML = html;
+    }
+
+    // 인원선택
+    const MAX_PEOPLE = 8;
+
+    // 변경된 count에 따라 좌석 제한 상태 갱신
+    function changeCount(type, delta) {
+        const el = document.getElementById(type + 'Count');
+        let count = parseInt(el.textContent);
+        const total = getTotalPeople();
+        const newCount = count + delta;
+        if (newCount < 0) return;
+        if (delta > 0 && total >= MAX_PEOPLE) {
+            alert(`최대 인원은 ${MAX_PEOPLE}명입니다.`);
+            return;
+        }
+        el.textContent = newCount;
+        refreshSeatStates();
+    }
+
+    // 현재 총 인원 계산
+    function getTotalPeople() {
+        return ['adult','youth','child']
+            .reduce((sum, t) => sum + parseInt(document.getElementById(t + 'Count').textContent||0), 0);
+    }
+
+    // 좌석 클릭 시 선택/해제 후 상태 갱신
+    function toggleSeat(seatDiv, seat) {
+        const seatId = parseInt(seatDiv.dataset.seatId);
+        if (seatDiv.classList.contains('selected')) {
+            // 선택 해제
+            seatDiv.classList.remove('selected');
+            seatDiv.classList.add('available');
+            selectedSeats = selectedSeats.filter(s => s.seat_id !== seatId);
+        } else if (selectedSeats.length < getTotalPeople()) {
+            // 선택
+            seatDiv.classList.remove('available');
+            seatDiv.classList.add('selected');
+            selectedSeats.push(seat);
+        }
+        updateSelectedSeatsInfo();
+        refreshSeatStates();
+    }
+
+    // 클릭 가능한 잔여 좌석과 예약 불가 좌석 표시
+    function refreshSeatStates() {
+        const total = getTotalPeople();
+        const seats = document.querySelectorAll('#seatMap .seat');
+        seats.forEach(div => {
+            // 원래 예약된 좌석(original-reserved) 및 현재 선택된 좌석(selected)은 건드리지 않음
+            if (div.classList.contains('original-reserved') || div.classList.contains('selected')) return;
+            if (selectedSeats.length >= total && total > 0) {
+                // 최대에 도달했으면 나머지는 예약불가
+                div.classList.remove('available');
+                div.classList.add('limited-reserved');
+                div.onclick = null;
+            } else {
+                // 인원 미달 상태에서는 예약불가 해제
+                div.classList.remove('limited-reserved');
+                div.classList.add('available');
+                const seatObj = allSeats.find(s => s.seat_id == div.dataset.seatId);
+                div.onclick = () => toggleSeat(div, seatObj);
+            }
+        });
+    }
+
+    // 좌석 로드 후 초기화 시, 원래 예약된 좌석 구분
+    function createSeatMap(seats) {
+        allSeats = seats;
+        const seatMap = document.getElementById('seatMap');
+        seatMap.innerHTML = '';
+        const seatsByRow = {};
+        seats.forEach(seat => (seatsByRow[seat.seat_row] = seatsByRow[seat.seat_row] || []).push(seat));
+        Object.keys(seatsByRow).sort().forEach(row => {
+            const rowDiv = document.createElement('div'); rowDiv.className = 'seat-row';
+            const label = document.createElement('div'); label.className='seat-row-label'; label.textContent=row;
+            rowDiv.appendChild(label);
+            seatsByRow[row].sort((a,b)=>a.seat_number-b.seat_number).forEach(seat => {
+                const div = document.createElement('div');
+                div.className = seat.status==='예약됨'? 'seat reserved original-reserved':'seat available';
+                div.dataset.seatId = seat.seat_id;
+                div.textContent = seat.seat_number;
+                if (div.classList.contains('available')) div.onclick = () => toggleSeat(div, seat);
+                rowDiv.appendChild(div);
+            });
+            seatMap.appendChild(rowDiv);
+        });
+        refreshSeatStates();
     }
 
 
