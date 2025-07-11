@@ -7,13 +7,13 @@ import com.kdy.phoenixmain.mapper.TagMapper;
 import com.kdy.phoenixmain.service.MovieService;
 import com.kdy.phoenixmain.vo.MovieVO;
 import com.kdy.phoenixmain.vo.TagVO;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 public class MovieC {
@@ -34,7 +34,10 @@ public class MovieC {
 
 
     @GetMapping("/oneMovieDetail")
-    public String movieDetailOne(@RequestParam("MOVIE_ID") int MOVIE_ID, Model model) {
+    public String movieDetailOne(@RequestParam("MOVIE_ID") int MOVIE_ID, Model model,  HttpSession session) {
+        //이전 세션값 저장용
+        session.setAttribute("lastMovieId", MOVIE_ID);
+
         //별개수 출력
         MovieVO movie = movieService.selectOneMovie(MOVIE_ID);
         //model.addAttribute("movieStar", movie);
@@ -77,6 +80,9 @@ public class MovieC {
         }
         return "movie/movie-fragment";
     }
+
+
+
 
 
 }

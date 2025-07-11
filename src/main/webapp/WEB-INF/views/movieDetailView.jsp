@@ -3,7 +3,7 @@
 <html>
 <head>
     <title>Title</title>
-    <link rel="stylesheet" href="/resources/css/logoin.css">
+    <link rel="stylesheet" href="/resources/css/detailmovie-menu-logoin.css">
     <link rel="stylesheet" href="/resources/css/menuCon.css">
 </head>
 <body>
@@ -12,10 +12,22 @@
     <%-- 공간을 맞춰주기위해 빈 div 넣었습니다. --%>
     <div class="nothing"></div>
     <div class="title-img">
-        <a href="/"><div class="logo">Movie Information</div></a>
+        <a href="/">
+            <div class="logo">Movie Information</div>
+        </a>
     </div>
     <div class="login-status">
-        <div>로그인상태창.</div>
+        <c:choose>
+            <c:when test="${not empty sessionScope.username}">
+                <div>${sessionScope.username}님 로그인 되었습니다</div>
+                <form action="/logout" method="post">
+                    <button>로그아웃</button>
+                </form>
+            </c:when>
+            <c:otherwise>
+                <div><a href="/login">로그인</a></div>
+            </c:otherwise>
+        </c:choose>
     </div>
 </div>
 
