@@ -318,38 +318,27 @@
         }
     }
 
-    // 좌석 선택 화면 로드 (수정된 버전)
+    // JSP 파일 내부의 loadSeatSelection 함수를 이것으로 교체하세요
     function loadSeatSelection() {
-        console.log('🪑 좌석 선택 화면 로드 시작');
-
         if (!selectedShowtime) {
             alert('상영시간을 먼저 선택해주세요.');
             return;
         }
 
-        // Runtime ID 재검증
-        const runtimeId = selectedShowtime.runtimeId;
-        if (!runtimeId || isNaN(runtimeId)) {
-            console.error('❌ Runtime ID가 유효하지 않습니다:', runtimeId);
-            alert('상영시간 정보에 오류가 있습니다. 다시 선택해주세요.');
-            return;
-        }
-
-        console.log('📡 좌석 정보 요청 - Runtime ID:', runtimeId);
-
         // 단계 표시 업데이트
         updateSteps(2);
 
-        // 올바른 엔드포인트로 좌석 정보 로드
-        const url = `/seat/${runtimeId}/seats`;
-        console.log('🔗 요청 URL:', url);
+        // runtimeId를 정수로 변환
+        const runtimeId = parseInt(selectedShowtime.runtimeId);
 
-        fetch(url)
+        // 디버깅 로그
+        console.log('🔍 좌석 선택 화면 로드 - Runtime ID:', runtimeId);
+        console.log('📋 selectedShowtime:', selectedShowtime);
+
+        // ✅ 올바른 엔드포인트 사용
+        fetch(`/seat/\${runtimeId}/seats`)
             .then(response => {
                 console.log('📡 응답 상태:', response.status);
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-                }
                 return response.json();
             })
             .then(data => {
@@ -359,20 +348,15 @@
                     allSeats = data.seats;
                     seatPrice = data.runtime.price || 12000;
 
-                    console.log('✅ 좌석 정보 로드 성공:', {
-                        좌석수: allSeats.length,
-                        가격: seatPrice
-                    });
-
                     // 좌석 선택 화면 표시
                     showSeatSelection(data.runtime, data.seats);
+                    console.log('✅ 좌석 정보 로드 성공:', data.seats.length + '석');
                 } else {
-                    console.error('❌ 서버 오류:', data.message);
                     alert(data.message || '좌석 정보를 불러올 수 없습니다.');
                 }
             })
             .catch(error => {
-                console.error('❌ 네트워크 오류:', error);
+                console.error('❌ 좌석 정보 로드 오류:', error);
                 alert('좌석 정보를 불러오는 중 오류가 발생했습니다: ' + error.message);
             });
     }
