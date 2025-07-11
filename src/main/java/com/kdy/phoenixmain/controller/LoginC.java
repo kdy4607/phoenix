@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 import java.text.ParseException;
@@ -72,7 +73,7 @@ public class LoginC {
             model.addAttribute("content", "myPageHome.jsp");
             return "myPage/myPageMain";
         } else {
-            return "login/login";
+            return "redirect:/login";
         }
     }
 
@@ -82,11 +83,17 @@ public class LoginC {
                              @RequestParam("u_id") String u_id,
                              @RequestParam("u_pw") String u_pw,
                              HttpSession session,
-                             Model model) {
+                             Model model,
+                             RedirectAttributes redirectAttributes) {
 
         System.out.println(u_id);
         System.out.println(u_pw);
         user = loginService.selectLoginById(u_id);
+
+        if (u_id.isEmpty() || u_pw.isEmpty()) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Please enter <br> both your ID and Password.");
+            return "redirect:/login";
+        }
 
         if (user != null && user.getU_id() != null && user.getU_id().equals(u_id)
                 && user.getU_pw() != null && user.getU_pw().equals(u_pw)) {
@@ -95,6 +102,7 @@ public class LoginC {
             model.addAttribute("content", "myPageHome.jsp");
             return "myPage/myPageMain";
         } else {
+            redirectAttributes.addFlashAttribute("errorMessage", "Account does not exist, <br> Or entered the wrong ID or password");
             return "redirect:/login";
         }
 
@@ -136,6 +144,7 @@ public class LoginC {
         session.setAttribute("user", user);
 
         if (user != null && user.getU_pw().equals(u_pw)) {
+            model.addAttribute("errorMessage", "Password is not valid");
             model.addAttribute("content", "myPageGeneralInfo.jsp");
         } else {
             model.addAttribute("content", "myPageProfile.jsp");
@@ -237,18 +246,35 @@ public class LoginC {
 
     @GetMapping("/join/step1")
     public String joinStep1(Model model) {
-        model.addAttribute("loginVO", new LoginVO());
         model.addAttribute("content", "joinFirstPage.jsp");
         return "join/joinMain";
     }
 
+    @GetMapping("/join/step2")
+    public String joinStep2(HttpSession session,
+                            Model model) {
+        LoginVO loginVO = (LoginVO) session.getAttribute("loginVO");
+        model.addAttribute("loginVO", loginVO);
+        model.addAttribute("content", "joinSecondPage.jsp");
+        return "join/joinMain";
+    }
+
     @PostMapping("/join/step2")
-    public String joinStep2(@ModelAttribute("loginVO") LoginVO loginVO, Model model) {
+    public String joinStep2(@ModelAttribute("loginVO") LoginVO loginVO,
+                            @RequestParam("u_ReEntered_pw")  String u_ReEntered_pw,
+                            RedirectAttributes redirectAttributes,
+                            Model model) {
+
+        if(u_ReEntered_pw == null || u_ReEntered_pw.isEmpty() || !u_ReEntered_pw.equals(loginVO.getU_pw())) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Passwords do not match");
+            return "redirect:/join/step1";
+        }
+
         if (loginVO.getU_id() == null || loginVO.getU_id().isEmpty()
                 || loginVO.getU_pw() == null || loginVO.getU_pw().isEmpty()) {
-            model.addAttribute("errorMessage", "아이디와 비밀번호는 필수 입력 사항입니다.");
+            redirectAttributes.addFlashAttribute("errorMessage", "Please fill all the fields");
             model.addAttribute("content", "joinFirstPage.jsp");
-            return "join/joinMain";
+            return "redirect:/join/step1";
         }
         model.addAttribute("loginVO", loginVO);
         model.addAttribute("content", "joinSecondPage.jsp");
@@ -257,12 +283,21 @@ public class LoginC {
     }
 
     @PostMapping("join/step3")
-    public String joinStep3(@ModelAttribute("loginVO") LoginVO loginVO, Model model) {
+    public String joinStep3(@ModelAttribute("loginVO") LoginVO loginVO,
+                            HttpSession session,
+                            Model model) {
+
+        if (loginVO.getU_address().length() > 500) {
+            model.addAttribute("content", "joinSecondPage.jsp");
+            session.setAttribute("loginVO", loginVO);
+            return  "redirect:/join/step2";
+        }
 
         if (loginVO.getU_name() == null || loginVO.getU_name().isEmpty()) {
             model.addAttribute("errorMessage", "성함을 입력해주세요.");
             model.addAttribute("content", "joinSecondPage.jsp");
-            return "join/joinMain";
+            session.setAttribute("loginVO", loginVO);
+            return "redirect:/join/step2";
         }
 
         model.addAttribute("loginVO", loginVO);

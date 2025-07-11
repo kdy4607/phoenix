@@ -29,7 +29,7 @@
     </div>
 </div>
 
-<form class="cay-join-wrap" action="/join/complete" method="post">
+<form class="cay-join-wrap" action="/join/complete" method="post" onsubmit="return call();">
     <div> Create Account</div>
     <div>
         <div> Your User ID</div>
@@ -53,7 +53,7 @@
         <input type="text" readonly name="u_address" value="${loginVO.u_address}">
     </div>
     <div>
-        <button> Next !</button>
+        <button type="submit"> Next !</button>
     </div>
 </form>
 </div>

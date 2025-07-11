@@ -11,11 +11,15 @@
 <body>
 <jsp:include page="/WEB-INF/views/header.jsp" />
 
+
+
 <div class="cay-main-wrap">
     <main class="cay-login-container">
         <div class="cay-login-content">
+
             <form class="cay-login-wrap" action="/mypage" method="post">
-                <h1>Sign in or Creat Account </h1>
+                <div class="error-message"> ${errorMessage}</div>
+                <h2>Sign in <div>or</div> Creat Account ! </h2>
                 <div class="cay-login-section">
                     <div class="cay-login-col1">
                         <input type="text" placeholder="ID" name="u_id">
@@ -31,7 +35,7 @@
             </form>
         </div>
     </main>
-    <footer class="cay-footer"><h1>footer</h1></footer>
+    <footer class="cay-footer">© 2025 Phoenix Cinema. All rights reserved.</footer>
 </div>
 
 </body>
