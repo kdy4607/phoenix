@@ -33,7 +33,7 @@
       예약 내역
     </a>
 
-    <a href="/mypage" class="menu-item" onclick="alert('준비 중입니다!')">
+    <a href="/mypage" class="menu-item">
       <span class="icon">👤</span>
       마이페이지
     </a>

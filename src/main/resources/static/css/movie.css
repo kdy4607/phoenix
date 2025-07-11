@@ -1,0 +1,55 @@
+
+.tag {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin: 3px;
+}
+
+.tag.selected {
+    border: 2px solid #000;
+    font-weight: bold;
+}
+
+.tag-genre { background-color: #f99; }
+.tag-studio { background-color: #9cf; }
+.tag-country { background-color: #9f9; }
+.tag-mood { background-color: #ff88be; }
+
+.movie-container{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.movie-card {
+    border: 1px solid #ccc;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 8px;
+    display: flex;
+    width: calc(48% - 10px);
+    box-sizing: border-box;
+}
+
+.movie-card img {
+    width: 100px;
+    height: 150px;
+    margin-right: 10px;
+}
+
+.tag-group.genre .tag { background-color: #f88; }
+.tag-group.studio .tag { background-color: #9cf; }
+.tag-group.country .tag { background-color: #8f8; }
+.tag-group.mood .tag { background-color: #ff88be; }
+
+.movie-rating {
+    display: inline-block;
+    background-color: #FB4357;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}

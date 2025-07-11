@@ -5,50 +5,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Movie List</title>
-    <style>
-        .tag {
-            display: inline-block;
-            padding: 5px 10px;
-            border-radius: 5px;
-            margin: 3px;
-        }
-
-        .tag.selected {
-            border: 2px solid #000;
-            font-weight: bold;
-        }
-
-        .tag-genre { background-color: #f99; }
-        .tag-studio { background-color: #9cf; }
-        .tag-country { background-color: #9f9; }
-        .tag-mood { background-color: #ff88be; }
-
-        .movie-card {
-            border: 1px solid #ccc;
-            margin: 10px;
-            padding: 10px;
-            border-radius: 8px;
-            display: flex;
-        }
-
-        .movie-card img {
-            width: 100px;
-            height: 150px;
-            margin-right: 10px;
-        }
-
-        .tag-group.genre .tag { background-color: #f88; }
-        .tag-group.studio .tag { background-color: #9cf; }
-        .tag-group.country .tag { background-color: #8f8; }
-        .tag-group.mood .tag { background-color: #ff88be; }
-    </style>
+    <link rel="stylesheet" href="/resources/css/movie.css">
 </head>
 <body>
 <h1>🎬 Movie List</h1>
 
-<form action="/movie-keyword">
-    <input type="text" name="keyword" placeholder="Movie Name"/>
-    <button>검색</button>
+<form id="searchForm" onsubmit="return handleSearch(event);">
+    <input type="text" name="title" placeholder="Movie Name"/>
+    <button type="submit">검색</button>
 </form>
 
 <!-- Genre -->
@@ -97,7 +61,7 @@
 
 <hr/>
 
-<div id="movie-container">
+<div id="movie-container" class="movie-container">
     <jsp:include page="movie-fragment.jsp"/>
 </div>
 
@@ -106,19 +70,27 @@
 
     function toggleTag(el) {
         const tagId = parseInt(el.dataset.id);
+        el.classList.toggle("selected");
+        selectedTags.has(tagId) ? selectedTags.delete(tagId) : selectedTags.add(tagId);
+        submitFilter(); // 태그 변경 시 바로 전송
+    }
 
-        if (el.classList.contains("selected")) {
-            el.classList.remove("selected");
-            selectedTags.delete(tagId);
-        } else {
-            el.classList.add("selected");
-            selectedTags.add(tagId);
-        }
+    function handleSearch(event) {
+        event.preventDefault(); // 기본 submit 막기
+        submitFilter(); // fetch 호출
+        return false;
+    }
+
+    function submitFilter() {
+        const title = document.querySelector('input[name="title"]').value;
 
         fetch("/movies/filter", {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify([...selectedTags])
+            body: JSON.stringify({
+                title: title,
+                tagIds: [...selectedTags]
+            })
         })
             .then(res => res.text())
             .then(html => {
@@ -127,6 +99,7 @@
             .catch(err => console.error("필터링 실패:", err));
     }
 </script>
+
 
 </body>
 </html>
