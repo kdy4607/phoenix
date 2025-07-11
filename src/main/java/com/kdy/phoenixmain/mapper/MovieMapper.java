@@ -9,20 +9,9 @@ import java.util.List;
 @Mapper
 public interface MovieMapper {
 
-    // 전체 영화 조회 + 태그 리스트 포함
+    // 전체 영화 조회 (태그 리스트 포함)
     @Select("SELECT * FROM MOVIES")
     @Results({
-            @Result(property = "movie_id", column = "movie_id"),
-            @Result(property = "title", column = "title"),
-            @Result(property = "director", column = "director"),
-            @Result(property = "actor", column = "actor"),
-            @Result(property = "genre", column = "genre"),
-            @Result(property = "rating", column = "rating"),
-            @Result(property = "user_critic", column = "user_critic"),
-            @Result(property = "pro_critic", column = "pro_critic"),
-            @Result(property = "description", column = "description"),
-            @Result(property = "running_time", column = "running_time"),
-            @Result(property = "poster_url", column = "poster_url"),
             @Result(property = "m_tagList", column = "movie_id",
                     many = @Many(select = "getTagsByMovieId"))
     })
@@ -44,17 +33,6 @@ public interface MovieMapper {
     // 선택한 태그 ID들을 모두 포함한 영화 조회 (AND 조건)
     @SelectProvider(type = MovieSqlBuilder.class, method = "buildQueryByTagIds")
     @Results({
-            @Result(property = "movie_id", column = "movie_id"),
-            @Result(property = "title", column = "title"),
-            @Result(property = "director", column = "director"),
-            @Result(property = "actor", column = "actor"),
-            @Result(property = "genre", column = "genre"),
-            @Result(property = "rating", column = "rating"),
-            @Result(property = "user_critic", column = "user_critic"),
-            @Result(property = "pro_critic", column = "pro_critic"),
-            @Result(property = "description", column = "description"),
-            @Result(property = "running_time", column = "running_time"),
-            @Result(property = "poster_url", column = "poster_url"),
             @Result(property = "m_tagList", column = "movie_id",
                     many = @Many(select = "getTagsByMovieId"))
     })
@@ -62,4 +40,34 @@ public interface MovieMapper {
             @Param("tagIds") List<Integer> tagIds,
             @Param("tagCount") int tagCount
     );
+
+    // 제목으로 영화 검색
+    @Select("SELECT * FROM MOVIES WHERE title LIKE '%' || #{title} || '%'")
+    @Results({
+            @Result(property = "m_tagList", column = "movie_id",
+                    many = @Many(select = "getTagsByMovieId"))
+    })
+    List<MovieVO> findByTitle(@Param("title") String title);
+
+    // 제목 + 태그로 영화 검색
+    @SelectProvider(type = MovieSqlBuilder.class, method = "buildQueryByTagsAndTitle")
+    @Results({
+            @Result(property = "m_tagList", column = "movie_id",
+                    many = @Many(select = "getTagsByMovieId"))
+    })
+    List<MovieVO> selectMoviesByTagsAndTitle(
+            @Param("tagIds") List<Integer> tagIds,
+            @Param("tagCount") int tagCount,
+            @Param("title") String title
+    );
+
+    // 태그명으로 영화 검색
+    @Select("""
+        SELECT m.movie_id, m.title, m.poster_url
+        FROM MOVIES m
+        JOIN MOVIE_TAGS mt ON m.movie_id = mt.movie_id
+        JOIN TAGS t ON mt.tag_id = t.tag_id
+        WHERE t.tag_name = #{tagName}
+    """)
+    List<MovieVO> findMoviesByTagName(@Param("tagName") String tagName);
 }

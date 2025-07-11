@@ -8,7 +8,7 @@
 </head>
 <body>
 <body>
-<button onclick="location.href='/all-movie'">전부 보는거</button>
+<button onclick="location.href='/movie-all'">전부 보는거</button>
 <%-- 메뉴 로고 및 로그인 창 입니다--%>
 <div class="head-info">
     <%-- 공간을 맞춰주기위해 빈 div 넣었습니다. --%>
