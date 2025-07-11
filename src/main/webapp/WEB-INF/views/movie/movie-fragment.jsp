@@ -3,7 +3,10 @@
 
 <c:forEach var="movie" items="${movies}">
     <div class="movie-card">
-        <img src="${movie.poster_url}" alt="포스터"/>
+        <div> <img src="${movie.poster_url}" alt="포스터"/>
+            <div>${movie.user_critic}</div>
+        <div class="movie-rating">${movie.rating}</div>
+        </div>
         <div>
             <h2>${movie.title}</h2>
             <p>${movie.description}</p>
@@ -28,6 +31,10 @@
                     </c:choose>
                 </c:forEach>
             </div>
+        </div>
+        <div>
+            <div>movie_id: ${movie.movie_id}</div>
+        <button onclick="location.href='oneMovieDetail?movie_id=${movie.movie_id}'">상세페이지</button>
         </div>
     </div>
 </c:forEach>
