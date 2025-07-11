@@ -42,7 +42,7 @@ public class MovieC {
 
     // 단일 영화 상세 페이지
     @GetMapping("/oneMovieDetail")
-    public String movieDetailOne(@RequestParam("MOVIE_ID") int movieId, Model model) {
+    public String movieDetailOne(@RequestParam("movie_id") int movieId, Model model) {
         model.addAttribute("movieDetail", "movie-detail.jsp");
         model.addAttribute("movieDetail2", movieService.selectOneMovie(movieId));
         return "movieDetailView";

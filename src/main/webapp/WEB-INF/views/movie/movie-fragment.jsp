@@ -33,8 +33,8 @@
             </div>
         </div>
         <div>
-
-        <button onclick="location.href='oneMovieDetail?MOVIE_ID=${movie.movie_id}'">상세페이지</button>
+            <div>movie_id: ${movie.movie_id}</div>
+        <button onclick="location.href='oneMovieDetail?movie_id=${movie.movie_id}'">상세페이지</button>
         </div>
     </div>
 </c:forEach>

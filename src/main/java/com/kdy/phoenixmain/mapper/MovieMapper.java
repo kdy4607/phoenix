@@ -12,14 +12,16 @@ public interface MovieMapper {
     // 전체 영화 조회 (태그 리스트 포함)
     @Select("SELECT * FROM MOVIES")
     @Results({
+            @Result(property = "movie_id", column = "MOVIE_ID"),
+            @Result(property = "running_time", column = "RUNNING_TIME"),
             @Result(property = "m_tagList", column = "movie_id",
                     many = @Many(select = "getTagsByMovieId"))
     })
     List<MovieVO> selectAllMovie();
 
     // 단일 영화 조회 (태그 제외)
-    @Select("SELECT * FROM MOVIES WHERE movie_id = #{MOVIE_ID}")
-    MovieVO selectOneMovie(@Param("MOVIE_ID") int MOVIE_ID);
+    @Select("SELECT * FROM MOVIES WHERE MOVIE_ID = #{movie_id}")
+    MovieVO selectOneMovie(@Param("movie_id") int movie_id);
 
     // 특정 영화의 태그 목록 조회
     @Select("""
@@ -61,7 +63,7 @@ public interface MovieMapper {
             @Param("title") String title
     );
 
-    // 태그명으로 영화 검색
+    // 태그명으로 영화 검색(상세페이지에서 쓰는듯)
     @Select("""
         SELECT m.movie_id, m.title, m.poster_url
         FROM MOVIES m
