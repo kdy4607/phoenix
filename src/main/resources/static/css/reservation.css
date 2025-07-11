@@ -272,7 +272,7 @@ body {
     font-size: 14px;
 }
 
-.seat-info, .ticket-info, .amount-info, .reservation-date {
+.seat-info2, .ticket-info, .amount-info, .reservation-date {
     padding: 5px 0;
 }
 
@@ -283,10 +283,9 @@ body {
 
 .reservation-actions {
     display: flex;
+    justify-content: end;
     gap: 10px;
     padding: 15px 20px;
-    background-color: #f8f9fa;
-    border-top: 1px solid #e5e5e5;
     flex-wrap: wrap;
 }
 

@@ -121,7 +121,7 @@
 
                                     <div class="reservation-details">
                                         <c:if test="${not empty reservation.selected_seats}">
-                                            <div class="seat-info">
+                                            <div class="seat-info2">
                                                 🪑 좌석: ${reservation.selected_seats}
                                             </div>
                                         </c:if>
@@ -146,14 +146,14 @@
                                     <button type="button"
                                             onclick="viewReservationDetail(${reservation.reservation_id})"
                                             class="btn-detail">
-                                        📋 상세보기
+                                        상세보기
                                     </button>
 
                                     <c:if test="${reservation.reservation_status == '예약완료'}">
                                         <button type="button"
                                                 onclick="cancelReservation(${reservation.reservation_id})"
                                                 class="btn-cancel">
-                                            ❌ 예약취소
+                                            예약취소
                                         </button>
                                     </c:if>
                                 </div>
