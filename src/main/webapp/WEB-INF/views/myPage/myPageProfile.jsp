@@ -12,6 +12,8 @@
 </head>
 <body>
 
+<div> ${errorMessage} </div>
+
 <div class="cay-myPage-content">
     <div class="cay-myPage-profile">
         <div> Check Your Account</div>

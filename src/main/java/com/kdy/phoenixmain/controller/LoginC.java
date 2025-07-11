@@ -135,6 +135,7 @@ public class LoginC {
     @PostMapping("/mypage/general-info")
     public String generalInfo(@RequestParam("u_pw") String u_pw,
                               @RequestParam("u_id") String u_id,
+                              RedirectAttributes redirectAttributes,
                               HttpSession session,
                               Model model) {
 
@@ -144,11 +145,11 @@ public class LoginC {
         session.setAttribute("user", user);
 
         if (user != null && user.getU_pw().equals(u_pw)) {
-            model.addAttribute("errorMessage", "Password is not valid");
             model.addAttribute("content", "myPageGeneralInfo.jsp");
         } else {
+            redirectAttributes.addFlashAttribute("errorMessage", "Password is not valid");
             model.addAttribute("content", "myPageProfile.jsp");
-            return "myPage/myPageMain";
+            return "redirect:/mypage/profile?u_id=" + u_id;
         }
 
 
@@ -165,6 +166,14 @@ public class LoginC {
 
     }
 
+    @GetMapping("/mypage/general-info/update")
+    public String generalInfoUpdate(HttpSession session,
+                                    Model model) {
+        LoginVO user = (LoginVO) session.getAttribute("user");
+        model.addAttribute("content", "myPageUpdate.jsp");
+        return "myPage/myPageMain";
+    }
+
     @PostMapping("/mypage/general-info/update")
     public String generalInfoUpdate(@ModelAttribute("user") LoginVO user, Model model) {
         model.addAttribute("content", "myPageUpdate.jsp");
@@ -179,8 +188,21 @@ public class LoginC {
                                    @RequestParam("u_birth_before") String u_birth_before,
                                    @RequestParam(value = "u_birth", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date u_birth,
                                    @RequestParam("u_address") String u_address,
+                                   RedirectAttributes redirectAttributes,
                                    HttpSession session,
                                    Model model) {
+
+        if (u_pw == null || u_pw.isEmpty()) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Please fill the password and name");
+            model.addAttribute("user", user);
+            return "redirect:/mypage/general-info/update";
+        }
+
+        if (u_address.length() > 500) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Address must be less than 500 characters");
+            model.addAttribute("user", user);
+            return "redirect:/mypage/general-info/update";
+        }
 
         Date finalUBirth = null;
         if (u_birth != null) {
@@ -210,13 +232,13 @@ public class LoginC {
             model.addAttribute("user", user);
             model.addAttribute("content", "myPageCheck.jsp");
         } else {
-            return "login/login";
+            return "redirect:/mypage/general-info/update";
         }
 
         return "myPage/myPageMain";
     }
 
-    @GetMapping("/mypage/DeleteAccount")
+    @GetMapping("/mypage/deleteAccount")
     public String deleteAccount(@RequestParam("u_id") String u_id,
                                 Model model) {
         model.addAttribute("content", "myPageDelete.jsp");
@@ -226,6 +248,7 @@ public class LoginC {
     @PostMapping("/mypage/deleteeAccount")
     public String deleted(@RequestParam("u_pw") String u_pw,
                           Model model,
+                          RedirectAttributes redirectAttributes,
                           HttpSession session) {
 
         LoginVO user = (LoginVO) session.getAttribute("user");
@@ -235,9 +258,11 @@ public class LoginC {
             session.invalidate();
             return "login/deleteComplete";
         } else {
-            model.addAttribute("content", "myPageDelete.jsp");
             model.addAttribute("user", user);
-            return "myPage/myPageMain";
+            session.setAttribute("user", user);
+            redirectAttributes.addFlashAttribute("errorMessage", "Passwords do not match");
+            model.addAttribute("content", "myPageDelete.jsp");
+            return "redirect:/mypage/deleteAccount?u_id=" + user.getU_id();
         }
 
     }
@@ -261,11 +286,11 @@ public class LoginC {
 
     @PostMapping("/join/step2")
     public String joinStep2(@ModelAttribute("loginVO") LoginVO loginVO,
-                            @RequestParam("u_ReEntered_pw")  String u_ReEntered_pw,
+                            @RequestParam("u_ReEntered_pw") String u_ReEntered_pw,
                             RedirectAttributes redirectAttributes,
                             Model model) {
 
-        if(u_ReEntered_pw == null || u_ReEntered_pw.isEmpty() || !u_ReEntered_pw.equals(loginVO.getU_pw())) {
+        if (u_ReEntered_pw == null || u_ReEntered_pw.isEmpty() || !u_ReEntered_pw.equals(loginVO.getU_pw())) {
             redirectAttributes.addFlashAttribute("errorMessage", "Passwords do not match");
             return "redirect:/join/step1";
         }
@@ -290,7 +315,7 @@ public class LoginC {
         if (loginVO.getU_address().length() > 500) {
             model.addAttribute("content", "joinSecondPage.jsp");
             session.setAttribute("loginVO", loginVO);
-            return  "redirect:/join/step2";
+            return "redirect:/join/step2";
         }
 
         if (loginVO.getU_name() == null || loginVO.getU_name().isEmpty()) {

@@ -52,15 +52,15 @@ function call() {
         alert("Your ID must be between 6 and 20 characters, using only English letters (uppercase and lowercase), numbers, and special symbols (@_.)")
         u_id.value = "";
         u_id.focus();
-        return;
+        return false;
     }
 
-    // Password Check - At least 8 letters / Fewer than 100 letters / Containable English, case letters, numbers, special symbol ( !@#$%^&*-_+= )
-    const charset = /^[A-Za-z0-9!@#$%^&*-_+=]*$/;
-    if (lessThan(u_pw, 8) || moreThan(u_pw, 100) || !charset.test(u_pw.value)) {
+    // Password Check - At least 8 letters / Fewer than 100 letters / Must contain English, case letters, numbers, special symbol ( !@#$%^&*-_+= )
+    const charset = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_+=-])[A-Za-z0-9!@#$%^&*_+=-]{8,100}$/;
+    if (!charset.test(u_pw.value)) {
         alert("Password must be 8-100 characters long, containing only English letters, numbers, and special symbols (!@#$%^&*-_+=)")
         u_pw.focus();
-        return;
+        return false;
     }
 
     // Name Check - At least 2 letters / Fewer than 50 letters // Containable English, case letters, Korean
@@ -69,14 +69,17 @@ function call() {
         alert("Name must be 2-50 characters long, containing only English letters or Korean characters");
         u_name.value = "";
         u_name.focus();
-        return;
+        return false;
     }
 
     // Address Check - Fewer than 500 letters
     if(moreThan(u_address, 500)) {
         alert("Address must be less than 500 characters")
+        u_address.value = "";
         u_address.focus();
-        return;
+        return false;
     }
+
+    return true;
 
 }

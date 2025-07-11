@@ -13,17 +13,19 @@
 </head>
 <body>
 
+<div> ${errorMessage} </div>
+
 <div class="cay-myPage-content">
     <div class="cay-myPage-profile">
         <div> Update Account Information </div>
-        <form action="/mypage/general-info/update/submit" method="post">
+        <form action="/mypage/general-info/update/submit" method="post" onsubmit="return call();">
             <div>
                 <div> Your user ID</div>
                 <input type="text" readonly name="u_id" value="${user.u_id}">
             </div>
             <div>
                 <div> Your user Password</div>
-                <input type="text"name="u_pw" value="${user.u_pw}">
+                <input type="text"name="u_pw">
             </div>
             <div>
                 <div> Your Name</div>
@@ -41,7 +43,7 @@
             </div>
             <div>
                 <div> Are you sure you want to change your account information? </div>
-                <button> Submit </button>
+                <button type="submit"> Submit </button>
                 <button type="button" onclick="history.back()"> Cancel </button>
             </div>
         </form>

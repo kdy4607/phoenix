@@ -30,10 +30,6 @@
                 <input type="text" readonly name="u_name" value="${sessionScope.user.u_name}">
             </div>
             <div>
-                <div> Your Nickname</div>
-                <input type="text" readonly name="u_id" value="${sessionScope.user.u_id}">
-            </div>
-            <div>
                 <div> Your Birth Date</div>
                 <input type="text" readonly name="u_birth"
                        value="<fmt:formatDate value='${sessionScope.user.u_birth}' pattern='yyyy-MM-dd'/>">

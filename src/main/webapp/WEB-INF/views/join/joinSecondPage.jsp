@@ -31,8 +31,8 @@
 <form class="cay-join-wrap" action="/join/step3" method="post" onsubmit="return call();">
     <div> Create Account</div>
     <div>
-        <input type="text" name="u_id" value="${loginVO.u_id}">
-        <input type="text" name="u_pw" value="${loginVO.u_pw}">
+        <input type="hidden" name="u_id" value="${loginVO.u_id}">
+        <input type="hidden" name="u_pw" value="${loginVO.u_pw}">
     </div>
     <div>
         <div> Your Name</div>

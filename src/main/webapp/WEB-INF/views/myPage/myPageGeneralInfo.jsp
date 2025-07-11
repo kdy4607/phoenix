@@ -42,7 +42,7 @@
                 <button> Update Account Information </button>
             </div>
         </form>
-        <form action="/mypage/DeleteAccount">
+        <form action="/mypage/deleteAccount">
             <input type="hidden" name="u_id" value="${sessionScope.user.u_id}"/>
             <button> Delete account </button>
         </form>
