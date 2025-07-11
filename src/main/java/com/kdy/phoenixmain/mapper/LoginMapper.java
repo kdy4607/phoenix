@@ -55,18 +55,18 @@ public interface LoginMapper {
     @Insert("insert into users values (#{u_id}, #{u_pw}, #{u_name}, #{u_birth, jdbcType=DATE}, #{u_address, jdbcType=VARCHAR})")
     int insertLogin(LoginVO loginVO);
 
-    /**
-     * 회원 정보 수정
-     */
-    @Update("""
-        UPDATE USERS
-        SET u_pw = #{u_pw},
-            u_name = #{u_name},
-            u_birth = #{u_birth},
-            u_address = #{u_address}
-        WHERE u_id = #{u_id}
-    """)
-    int updateLogin(LoginVO loginVO);
+//    /**
+//     * 회원 정보 수정
+//     */
+//    @Update("""
+//        UPDATE USERS
+//        SET u_pw = #{u_pw},
+//            u_name = #{u_name},
+//            u_birth = #{u_birth, jdbcType=DATE},
+//            u_address = #{u_address, jdbcType=VARCHAR}
+//        WHERE u_id = #{u_id}
+//    """)
+//    int updateLogin(LoginVO loginVO);
 
     /**
      * 회원 삭제

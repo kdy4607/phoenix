@@ -5,12 +5,16 @@ import com.kdy.phoenixmain.vo.LoginVO;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import jakarta.servlet.http.HttpSession;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -74,13 +78,13 @@ public class LoginC {
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
-        return "redirect:/main";
+        return "redirect:/";
     }
 
     // ===== 마이페이지 관련 =====
 
     @GetMapping("/mypage")
-    public String myPageGet(HttpSession session,Model model) {
+    public String myPageGet(HttpSession session, Model model) {
 
         LoginVO user = (LoginVO) session.getAttribute("user");
 
@@ -90,24 +94,26 @@ public class LoginC {
 
         try {
             // 기존 사용자 ID 유지
-            loginVO.setU_id(user.getU_id());
+            user.setU_id(user.getU_id());
 
             // 사용자 정보 업데이트
-            loginService.updateLogin(loginVO);
+            loginService.updateLogin(user);
 
             // 세션 정보 업데이트
-            session.setAttribute("user", loginVO);
+            session.setAttribute("user", user);
 
             model.addAttribute("message", "회원 정보가 성공적으로 수정되었습니다.");
             model.addAttribute("content", "myPageHome.jsp");  // 수정 후 홈으로
-            model.addAttribute("user", loginVO);
+            model.addAttribute("user", user);
 
-            System.out.println("✅ 회원 정보 수정 완료 - 사용자: " + loginVO.getU_name());
+            System.out.println("✅ 회원 정보 수정 완료 - 사용자: " + user.getU_name());
 
             return "myPage/myPageMain";
-        } else {
-            return "redirect:/login";
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        return "redirect:/login";
+
     }
 
 
@@ -121,7 +127,7 @@ public class LoginC {
 
         System.out.println(u_id);
         System.out.println(u_pw);
-        user = loginService.selectLoginById(u_id);
+        user = loginService.findById(u_id);
 
         if (u_id.isEmpty() || u_pw.isEmpty()) {
             redirectAttributes.addFlashAttribute("errorMessage", "Please enter <br> both your ID and Password.");
@@ -132,6 +138,7 @@ public class LoginC {
                 && user.getU_pw() != null && user.getU_pw().equals(u_pw)) {
             session.setAttribute("user", user);
             model.addAttribute("user", user);
+            model.addAttribute("content", "myPageHome.jsp");
             return "myPage/myPageMain";
         } else {
             redirectAttributes.addFlashAttribute("errorMessage", "Account does not exist, <br> Or entered the wrong ID or password");
@@ -142,7 +149,7 @@ public class LoginC {
     @GetMapping("/mypage/profile")
     public String profile(@RequestParam(value = "u_id", required = false) String u_id,
                           HttpSession session,
-                          RedirectAttributes redirectAttributes ,
+                          RedirectAttributes redirectAttributes,
                           Model model) {
 
 
@@ -267,7 +274,7 @@ public class LoginC {
             user.setU_name(u_name);
             user.setU_birth(finalUBirth);
             user.setU_address(u_address);
-            loginService.updateLogins(user);
+            loginService.updateLogin(user);
             session.setAttribute("user", user);
             model.addAttribute("user", user);
             model.addAttribute("content", "myPageCheck.jsp");
@@ -280,7 +287,11 @@ public class LoginC {
 
     @GetMapping("/mypage/deleteAccount")
     public String deleteAccount(@RequestParam("u_id") String u_id,
+                                HttpSession session,
                                 Model model) {
+
+        LoginVO user = (LoginVO) session.getAttribute("user");
+
         model.addAttribute("content", "myPageDelete.jsp");
         model.addAttribute("user", user);
         return "myPage/myPageMain";
@@ -412,6 +423,7 @@ public class LoginC {
                 return "redirect:/join/step1";
             }
         }
+        return "redirect:/join/step1";
     }
 
     // ===== 유틸리티 메서드 =====
