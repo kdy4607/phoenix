@@ -1,27 +1,28 @@
-body, html {
-    margin: 0;
-    padding: 0;
-}
-.clickTap {
+.tap-outBox{
     display: flex;
-    background-color: lightcoral;
-    border: 2px solid black;
-    margin-left: 20px;
-    margin-right: 60px;
-    margin-bottom: 100px;
-    height: 60px;
-    justify-content: space-evenly;
-}
-.clickTap > div {
-    border: 2px solid red;
-    width: 80%;
-    display: flex;
-    justify-content: center;
+    width: 90%;
     align-items: center;
+    justify-self: center;
+    justify-content: space-evenly;
+    margin-top: 30px;
+    margin-left: 20px;
+    margin-right: 20px;
+    padding-left: 15px;
+    padding-right: 15px;
 }
+.tap-inBox{
+    display: flex;
+    flex-direction: column;
+    padding-left: 40px;
+    padding-right: 50px;
+    width: 100%;
+    box-sizing: border-box;
 
-/* -------------------- */
+
+}
 .tab {
+    text-align: center;
+    width: 100%;
     display: inline-block;
     padding: 10px 20px;
     background: #eee;
@@ -29,16 +30,34 @@ body, html {
     border: 1px solid #ccc;
     margin-right: 5px;
 }
+.tab:last-child {
+    border-right: 1px solid #ccc; /* 마지막 탭만 다시 추가 */
+}
 .tab.active {
     background: #fff;
     font-weight: bold;
 }
 .content {
+    height: 280px;
     display: none;
+    width: 100%;               /* 전체 너비 채움 */
     border: 1px solid #ccc;
     padding: 20px;
     margin-top: 10px;
+    box-sizing: border-box;    /* 패딩 포함해서 너비 계산 */
+    margin-bottom: 40px;
 }
 .content.active {
     display: block;
+}
+.related-movie-wrap {
+    display: flex;
+    justify-content: center;   /* 가로 가운데 정렬 */
+    gap: 20px;                 /* 영화 간 간격 */
+    flex-wrap: wrap;           /* 넘치면 줄바꿈 */
+    align-items: center;
+}
+
+.related-movie {
+    text-align: center;
 }

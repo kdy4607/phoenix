@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 public class MovieC {
@@ -40,15 +41,40 @@ public class MovieC {
         return "movie/movie";
     }
 
-    // 단일 영화 상세 페이지
+
     @GetMapping("/oneMovieDetail")
-    public String movieDetailOne(@RequestParam("movie_id") int movieId, Model model) {
+    public String movieDetailOne(@RequestParam("movie_id") int movie_id, Model model) {
+        //별개수 출력
+        MovieVO movie = movieService.selectOneMovie(movie_id);
+        //model.addAttribute("movieStar", movie);
+        int proStar = (int) Math.floor(movie.getPro_critic());
+        int userStar = (int) Math.floor(movie.getUser_critic());
+        int plusStar = (proStar + userStar) / 2;
+        model.addAttribute("proStar", proStar);
+        model.addAttribute("userStar", userStar);
+        model.addAttribute("plusStar", plusStar);
+        //페이지 출력
+        System.out.println(movie_id);
+        //페이지출력 - 인클루드1 - 영화1개선택시 보이는 세부화면
         model.addAttribute("movieDetail", "movie-detail.jsp");
-        model.addAttribute("movieDetail2", movieService.selectOneMovie(movieId));
+        //인클루드1의 데이터주는곳
+        model.addAttribute("movieDetail2", movieService.selectOneMovie(movie_id));
+        //페이지 출력 - 인클루드2 -무비 탭 클릭부분
+        model.addAttribute("movieTapClic", "movie-detail-tap.jsp");
+        System.out.println(model.getAttribute("movieDetail"));
+
+        // tap 중에서 뭐더라 그 음... 추천영화..
+        List<TagVO> tagList = movieService.getTagsByMovieId(movie_id);
+        List<Integer> tagIds = tagList.stream()
+                .map(TagVO::getTag_id)
+                .toList();
+        List<MovieVO> relatedMovies = movieService.selectMoviesByAnyTag(tagIds, movie_id); // 자기 자신 제외
+        model.addAttribute("relatedMovies", relatedMovies);
+
         return "movieDetailView";
     }
 
-    // 태그 및 제목을 활용한 비동기 필터링
+
     @PostMapping("/movies/filter")
     public String filterMovies(@RequestBody Map<String, Object> payload, Model model) {
         String title = (String) payload.get("title");

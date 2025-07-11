@@ -2,12 +2,12 @@ body, html {
     margin: 0;
     padding: 0;
 }
+
 .M-detail {
     display: flex;
-    border: red 2px solid;
     justify-content: center;
-    margin-right: 60px;
-    margin-left: 20px;
+    margin-right: 80px;
+    margin-left: 70px;
     margin-top: 20px;
     min-width: 500px;
 }
@@ -15,74 +15,214 @@ body, html {
 .detail-img-res {
     flex: 1;
     margin: 10px;
-    border: blue 2px solid;
-    /*display: block;*/
-    justify-items: center;
+    display: flex;
+    justify-content: center;
 }
-#img{
-    width: 300px;
-    height: 450px;
-    overflow: hidden; /* 이미지가 넘칠 경우 자름 */
-    border: 1px solid gray; /* 확인용 */
+
+#img {
+    width: 340px;
+    height: auto;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.6); /* 섀도우 강조 */
+    background-color: #000;
 }
+
 #img img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* or contain */
+    object-fit: cover;
 }
+
 #check {
     margin-top: 10px;
+    color: #bbb;
 }
 
 .detail-info {
     flex: 2;
     margin: 10px;
-    border: blue 2px solid;
+    padding: 15px;
+    background-color: #1f1f1f;
+    border-radius: 8px;
 }
+
 .info-title {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
-    height: auto;
     min-height: 50px;
-    border-bottom: black 2px solid;
-    background-color: bisque;
+    border-bottom: 1px solid #333;
+    background-color: #1f1f1f;
+    padding: 1px 15px;
+    border-radius: 8px 8px 0 0;
 }
-.info-title-t{
+
+.info-title-t {
+    font-size: 40pt;
     flex: 1;
-    font-size: 18px;
     font-weight: bold;
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis; /* 너무 길면 ... 처리 */
-    border: blue 2px solid;
-
+    text-overflow: ellipsis;
+    color: #fff;
 }
+
 .bookmark-icon {
     margin: 10px;
-    border: blue 2px solid;
     cursor: pointer;
+    color: #FB4357;
+    font-size: 20px;
 }
+
 .info-plusStar {
     margin-top: 10px;
-    height: 30px;
-    border: red 2px solid;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: #FFD700; /* 별은 금색 느낌 */
+    font-size: 20px;
 }
+
 .info-ather {
-    height: 150px;
-    margin-top: 210px;
-    margin-bottom: 20px;
-    border: blue 2px solid;
+    margin-top: 170px;
+    padding: 15px;
+    background-color: #1f1f1f;
+    border-radius: 8px;
+    width: 70%;
 }
+
+.row {
+    display: flex;
+    margin-bottom: 10px;
+    align-items: center;
+}
+
+.label {
+    width: 100px;
+    font-weight: bold;
+    text-align: right;
+    margin-right: 10px;
+    color: #aaa;
+}
+
+.value {
+    flex: 1;
+    color: #eee;
+}
+
 .side-bar {
     position: fixed;
-    top: 290px;         /* 상단에서 100px 내려간 위치 (원하는 값으로 조절) */
-    right: 0;            /* 화면의 왼쪽에 고정 */
-    width: 40px;       /* 원하는 사이드바 폭 */
-    height: 250px;       /* 내용에 따라 높이 조절 */
-    background-color: lightgray; /* 배경 색 (확인용) */
-    border: 1px solid #ccc;      /* 테두리 (확인용) */
+    top: 270px;
+    right: 0;
+    width: 30px;
+    height: 250px;
+    background-color: #2c2c2c;
+    border: none;
+    border-radius: 4px 0 0 4px;
+    box-shadow: -2px 2px 10px rgba(0,0,0,0.4);
     padding: 10px;
 }
+/*.M-detail {*/
+/*    display: flex;*/
+/*    border: red 2px solid;*/
+/*    justify-content: center;*/
+/*    margin-right: 60px;*/
+/*    margin-left: 20px;*/
+/*    margin-top: 20px;*/
+/*    min-width: 500px;*/
+/*}*/
+
+/*.detail-img-res {*/
+/*    flex: 1;*/
+/*    margin: 10px;*/
+/*    border: blue 2px solid;*/
+/*    !*display: block;*!*/
+/*    justify-items: center;*/
+/*}*/
+/*#img{*/
+/*    width: 300px;*/
+/*    height: 450px;*/
+/*    overflow: hidden; !* 이미지가 넘칠 경우 자름 *!*/
+/*    border: 1px solid gray; !* 확인용 *!*/
+/*}*/
+/*#img img {*/
+/*    width: 100%;*/
+/*    height: 100%;*/
+/*    object-fit: cover; !* or contain *!*/
+/*}*/
+/*#check {*/
+/*    margin-top: 10px;*/
+/*}*/
+
+/*.detail-info {*/
+/*    flex: 2;*/
+/*    margin: 10px;*/
+/*    border: blue 2px solid;*/
+/*}*/
+/*.info-title {*/
+/*    display: flex;*/
+/*    justify-content: space-between;*/
+/*    align-items: center;*/
+/*    width: 100%;*/
+/*    height: auto;*/
+/*    min-height: 50px;*/
+/*    border-bottom: black 2px solid;*/
+/*    background-color: bisque;*/
+/*}*/
+/*.info-title-t{*/
+/*    flex: 1;*/
+/*    font-size: 18px;*/
+/*    font-weight: bold;*/
+/*    white-space: nowrap;*/
+/*    overflow: hidden;*/
+/*    text-overflow: ellipsis; !* 너무 길면 ... 처리 *!*/
+/*    border: blue 2px solid;*/
+
+/*}*/
+/*.bookmark-icon {*/
+/*    margin: 10px;*/
+/*    border: blue 2px solid;*/
+/*    cursor: pointer;*/
+/*}*/
+/*.info-plusStar {*/
+/*    margin-top: 10px;*/
+/*    height: 30px;*/
+/*    border: red 2px solid;*/
+/*}*/
+/*.info-ather {*/
+/*    height: auto;*/
+/*    margin-top: 170px;*/
+/*    margin-bottom: 20px;*/
+/*    border: blue 2px solid;*/
+/*}*/
+/*.row {*/
+/*    display: flex;*/
+/*    margin-bottom: 6px;*/
+/*    align-items: center;*/
+/*}*/
+
+/*.label {*/
+/*    width: 100px; !* 고정 너비로 줄 맞춤 *!*/
+/*    font-weight: bold;*/
+/*    display: inline-block;*/
+/*    text-align: right;*/
+/*    margin-right: 10px;*/
+/*}*/
+
+/*.value {*/
+/*    flex: 1;*/
+/*}*/
+/*.side-bar {*/
+/*    position: fixed;*/
+/*    top: 270px;*/
+/*    right: 0;*/
+/*    width: 30px;    !* 원하는 사이드바 폭 *!*/
+/*    height: 250px;       !* 내용에 따라 높이 조절 *!*/
+/*    background-color: lightgray; !* 배경 색 (확인용) *!*/
+/*    border: 1px solid #ccc;      !* 테두리 (확인용) *!*/
+/*    padding: 10px;*/
+/*}*/
+
 

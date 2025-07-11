@@ -2,6 +2,7 @@ package com.kdy.phoenixmain.service;
 
 import com.kdy.phoenixmain.mapper.MovieMapper;
 import com.kdy.phoenixmain.vo.MovieVO;
+import com.kdy.phoenixmain.vo.TagVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -63,4 +64,18 @@ public class MovieService {
     }
 
 
+
+    public List<TagVO> getTagsbyMovieId(int movieId) {
+    return movieMapper.getTagsByMovieId(movieId);
+    }
+
+
+    public List<TagVO> getTagsByMovieId(int movieId) {
+       return movieMapper.getTagsByMovieId(movieId);
+    }
+
+        // 하나라도 걸리면 보여주는 곳입니다. tap
+    public List<MovieVO> selectMoviesByAnyTag(List<Integer> tagIds, int movieId) {
+        return movieMapper.selectMoviesByAnyTag(tagIds, movieId);
+    }
 }

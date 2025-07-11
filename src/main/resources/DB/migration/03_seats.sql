@@ -45,10 +45,15 @@ END LOOP;
 END;
 /
 
+-- ========================================
+-- 비어있는 상영관의 좌석 데이터 추가
+-- ========================================
+
 -- 3관 IMAX관 좌석 데이터 (A~J행, 각 10석, 총 100석)
+-- SEAT_ID 141부터 시작
 DECLARE
-v_seat_id NUMBER(3) := 141;  -- 1,2관 다음부터 시작
-    v_room_id NUMBER(2) := 3;
+v_seat_id NUMBER(3) := 141;  -- 기존 데이터 다음부터 시작
+    v_room_id NUMBER(2) := 3;    -- IMAX관
 BEGIN
 FOR row_num IN 1..10 LOOP  -- A~J행
         FOR seat_num IN 1..10 LOOP  -- 1~10번 좌석
@@ -60,12 +65,13 @@ END LOOP;
 END;
 /
 
--- 4관 프리미엄관 좌석 데이터 (A~E행, 각 10석, 총 50석)
+-- 4관 좌석 데이터 (A~J행, 각 10석, 총 100석)
+-- SEAT_ID 241부터 시작
 DECLARE
-v_seat_id NUMBER(3) := 241;  -- 1,2,3관 다음부터 시작
-    v_room_id NUMBER(2) := 4;
+v_seat_id NUMBER(3) := 241;  -- IMAX관 다음부터 시작
+    v_room_id NUMBER(2) := 4;    -- 4관
 BEGIN
-FOR row_num IN 1..5 LOOP  -- A~E행
+FOR row_num IN 1..10 LOOP  -- A~J행
         FOR seat_num IN 1..10 LOOP  -- 1~10번 좌석
             INSERT INTO SEATS (SEAT_ID, ROOM_ID, SEAT_ROW, SEAT_NUMBER, STATUS)
             VALUES (v_seat_id, v_room_id, CHR(64 + row_num), seat_num, '사용가능');
@@ -75,12 +81,13 @@ END LOOP;
 END;
 /
 
--- 5관 VIP관 좌석 데이터 (A~C행, 각 10석, 총 30석)
+-- 5관 PR관 좌석 데이터 (A~E행, 각 10석, 총 50석)
+-- SEAT_ID 341부터 시작
 DECLARE
-v_seat_id NUMBER(3) := 291;  -- 앞선 관들 다음부터 시작
-    v_room_id NUMBER(2) := 5;
+v_seat_id NUMBER(3) := 341;  -- 4관 다음부터 시작
+    v_room_id NUMBER(2) := 5;    -- PR관
 BEGIN
-FOR row_num IN 1..3 LOOP  -- A~C행
+FOR row_num IN 1..5 LOOP  -- A~E행
         FOR seat_num IN 1..10 LOOP  -- 1~10번 좌석
             INSERT INTO SEATS (SEAT_ID, ROOM_ID, SEAT_ROW, SEAT_NUMBER, STATUS)
             VALUES (v_seat_id, v_room_id, CHR(64 + row_num), seat_num, '사용가능');
@@ -93,14 +100,59 @@ END;
 -- 커밋
 COMMIT;
 
+-- ========================================
 -- 확인 쿼리
-SELECT ROOM_ID, COUNT(*) as SEAT_COUNT
+-- ========================================
+
+-- 상영관별 좌석 수 확인
+SELECT
+    r.ROOM_ID,
+    r.ROOM_NAME,
+    r.TOTAL_SEATS as "정의된_좌석수",
+    COUNT(s.SEAT_ID) as "실제_좌석수",
+    CASE
+        WHEN r.TOTAL_SEATS = COUNT(s.SEAT_ID) THEN 'OK'
+        ELSE 'ERROR'
+        END as "상태"
+FROM ROOMS r
+         LEFT JOIN SEATS s ON r.ROOM_ID = s.ROOM_ID
+GROUP BY r.ROOM_ID, r.ROOM_NAME, r.TOTAL_SEATS
+ORDER BY r.ROOM_ID;
+
+-- 새로 추가된 좌석 확인 (IMAX관)
+SELECT ROOM_ID, SEAT_ROW, COUNT(*) as SEATS_PER_ROW
+FROM SEATS
+WHERE ROOM_ID = 3
+GROUP BY ROOM_ID, SEAT_ROW
+ORDER BY SEAT_ROW;
+
+-- 새로 추가된 좌석 확인 (4관)
+SELECT ROOM_ID, SEAT_ROW, COUNT(*) as SEATS_PER_ROW
+FROM SEATS
+WHERE ROOM_ID = 4
+GROUP BY ROOM_ID, SEAT_ROW
+ORDER BY SEAT_ROW;
+
+-- 새로 추가된 좌석 확인 (PR관)
+SELECT ROOM_ID, SEAT_ROW, COUNT(*) as SEATS_PER_ROW
+FROM SEATS
+WHERE ROOM_ID = 5
+GROUP BY ROOM_ID, SEAT_ROW
+ORDER BY SEAT_ROW;
+
+-- 전체 좌석 범위 확인
+SELECT
+    MIN(SEAT_ID) as "최소_좌석ID",
+    MAX(SEAT_ID) as "최대_좌석ID",
+    COUNT(*) as "총_좌석수"
+FROM SEATS;
+
+-- 상영관별 좌석 ID 범위 확인
+SELECT
+    ROOM_ID,
+    MIN(SEAT_ID) as "시작_ID",
+    MAX(SEAT_ID) as "끝_ID",
+    COUNT(*) as "좌석수"
 FROM SEATS
 GROUP BY ROOM_ID
 ORDER BY ROOM_ID;
-
--- 상영관별 좌석 배치 확인
-SELECT ROOM_ID, SEAT_ROW, COUNT(*) as SEATS_PER_ROW
-FROM SEATS
-GROUP BY ROOM_ID, SEAT_ROW
-ORDER BY ROOM_ID, SEAT_ROW;

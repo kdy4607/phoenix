@@ -1,0 +1,155 @@
+/* 기존 CSS는 그대로 유지하시고, 아래 스텝바 관련 CSS를 대체 또는 추가하세요 */
+body {
+    font-family: sans-serif;
+    margin: 0;
+    background-color: #f4f4f4;
+    /* ⭐ 새로운 스타일: 상하좌우에 최소한의 여백 추가 ⭐ */
+    padding: 20px; /* body 자체에 최소 여백 */
+    box-sizing: border-box; /* 패딩이 전체 너비에 포함되도록 */
+}
+
+.container {
+    width: 80%;
+    max-width: 800px;
+    /* ⭐ 수정된 스타일: margin-top과 margin-bottom을 50px로 유지하고, 좌우는 auto로 중앙 정렬 ⭐ */
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    /* ⭐ 필요시 min-height 추가하여 내용이 적어도 레이아웃 유지 ⭐ */
+    min-height: calc(100vh - 100px - 40px); /* 화면 높이에서 위아래 margin과 body padding을 뺀 값 */
+    box-sizing: border-box; /* 패딩이 너비에 포함되도록 */
+}
+
+
+.step-bar-container { margin-bottom: 30px; }
+.step-bar {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+    background-color: #f9f9f9; /* 기본 배경색 */
+}
+.step-bar li {
+    flex: 1;
+    text-align: center;
+    padding: 15px 0;
+    color: #888;
+    position: relative;
+    font-weight: bold;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    display: flex; /* 내부 요소를 수평 정렬하기 위해 flexbox 사용 */
+    flex-direction: column; /* 세로로 정렬 */
+    align-items: center; /* 가운데 정렬 */
+    justify-content: center;
+}
+
+/* 스텝 사이의 구분선 (화살표 대신 세로선으로 변경, 더 깔끔) */
+.step-bar li:not(:last-child) {
+    border-right: 1px solid #eee; /* 스텝 사이에 구분선 추가 */
+}
+
+/* 스텝 활성화 시 배경색과 텍스트 색상 변경 */
+.step-bar li.active {
+    background-color: #007bff; /* 활성 단계 색상 */
+    color: white;
+}
+
+/* 스텝 번호 원형 디자인 */
+.step-circle {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #ccc; /* 비활성 스텝 번호 배경색 */
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1em;
+    margin-bottom: 5px; /* 원형과 텍스트 사이 간격 */
+    transition: background-color 0.3s ease;
+}
+
+/* 활성 스텝의 번호 원형 색상 */
+.step-bar li.active .step-circle {
+    background-color: #0056b3; /* 활성 단계 번호 색상 */
+}
+
+/* 스텝 텍스트 스타일 */
+.step-text {
+    font-size: 0.9em;
+}
+
+/*
+    기존 화살표 (▶) 관련 CSS는 제거합니다.
+    .step-bar li:not(:last-child)::after { ... }
+    .step-bar li.active:not(:last-child)::after { ... }
+*/
+
+/* 나머지 폼 스타일링 등은 그대로 유지 */
+form {
+    text-align: center;
+    margin-top: 30px;
+    padding: 20px;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    background-color: #fdfdfd;
+}
+select {
+    padding: 10px 15px;
+    margin-right: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1em;
+    min-width: 200px;
+}
+button[type="submit"] {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+button[type="submit"]:hover {
+    background-color: #218838;
+}
+
+.button {
+    display: block;               /* 블록 요소로 만들어 중앙 정렬 가능하게 */
+    margin: 40px auto;            /* 위아래 여백 + 가운데 정렬 */
+    padding: 14px 28px;           /* 내부 여백 */
+    background-color: #65a2e7;    /* 연두색 배경 */
+    color: #1d1d1d;               /* 글자 색 (어두운 회색) */
+    font-size: 18px;              /* 글자 크기 */
+    font-weight: bold;
+    border: none;                 /* 테두리 제거 */
+    border-radius: 12px;          /* 둥글게 */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15); /* 약간의 그림자 */
+    cursor: pointer;             /* 마우스 올렸을 때 손가락 커서 */
+    transition: all 0.3s ease;   /* 부드러운 효과 */
+}
+
+.button:hover {
+    background-color: #a4e444;    /* 호버 시 살짝 진한 연두색 */
+    transform: scale(1.05);       /* 약간 확대 */
+}
+
+.screen {
+    width: 80%;
+    height: 30px;
+    background-color: #5d5b5b; /* 연한 회색 */
+    margin: 30px auto 20px auto; /* 위아래 여백 + 가운데 정렬 */
+    border-radius: 10px; /* 양 끝 둥글게 */
+    text-align: center;
+    line-height: 30px;
+    font-weight: bold;
+    color: #333;
+}

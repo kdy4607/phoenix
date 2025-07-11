@@ -2,6 +2,10 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.4.7'
     id 'io.spring.dependency-management' version '1.1.7'
+    // 웹 애플리케이션 빌드를 위한 'war' 플러그인 추가 (JAR로 빌드 시에는 필요 없음)
+    // jar로 빌드하고 내장 톰캣을 쓴다면 사실 war 플러그인은 필요 없습니다.
+    // 하지만 webapp 폴더 인식을 위해 추가하는 경우가 많습니다.
+    id 'war' // <-- 이 줄 추가
 }
 
 group = 'com.kdy'
@@ -35,17 +39,40 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.4'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
     // jsp 구동하기 위함. & jstl
     implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
-    implementation 'jakarta.servlet:jakarta.servlet-api'
-    implementation 'jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api'
-    implementation 'org.glassfish.web:jakarta.servlet.jsp.jstl'
+    // jakarta.servlet-api와 JSTL API는 'providedRuntime' 또는 'compileOnly'로 변경
+    // 이는 런타임 환경(톰캣)이 이미 해당 라이브러리를 제공하기 때문입니다.
+    // providedRuntime은 WAR 배포 시 포함되지 않고, compileOnly는 컴파일 시에만 사용됩니다.
+    // Spring Boot 3.x (Jakarta EE 9+)에서는 'jakarta.servlet'으로 시작하는 API를 사용합니다.
+    // 스프링 부트 3.x에서는 내장 톰캣이 Jakarta Servlet API를 제공하므로 'providedRuntime'이 적절합니다.
+    providedRuntime 'jakarta.servlet:jakarta.servlet-api' // <-- 이 줄 변경
+    providedRuntime 'jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api' // <-- 이 줄 변경
+    providedRuntime 'org.glassfish.web:jakarta.servlet.jsp.jstl' // <-- 이 줄 변경
+
     // oracle cloud
     implementation 'com.oracle.database.security:oraclepki:21.5.0.0'
     implementation 'com.oracle.database.security:osdt_cert:21.5.0.0'
     implementation 'com.oracle.database.security:osdt_core:21.5.0.0'
 }
 
+// src/main/webapp 폴더를 웹 애플리케이션 리소스 루트로 인식시키기 위한 설정 추가
+// 'war' 플러그인을 추가하면 이 설정은 자동으로 적용될 수 있지만, 명시적으로 추가하여 확실히 합니다.
+sourceSets {
+    main {
+        resources {
+            srcDirs "src/main/resources"
+        }
+    }
+}
+
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+tasks.processResources {
+    // 중복된 파일이 있을 경우, 처음 발견된 파일을 사용하고 나머지는 무시합니다.
+    // 만약 나중에 발견된 파일로 덮어쓰려면 DuplicatesStrategy.REPLACE를 사용하세요.
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
