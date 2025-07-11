@@ -637,3 +637,7 @@ body {
 .close:hover {
     color: #FB4357;
 }
+
+button {
+    margin-top: 0;
+}
