@@ -1,0 +1,558 @@
+/* src/main/resources/static/css/credits.css */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    color: #ffffff;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* 전체 컨테이너 */
+.credits-container {
+    min-height: 100vh;
+    position: relative;
+}
+
+/* 배경 애니메이션 */
+.credits-container::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:
+            radial-gradient(circle at 20% 50%, rgba(251, 67, 87, 0.1) 0%, transparent 50%),
+            radial-gradient(circle at 80% 20%, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
+            radial-gradient(circle at 40% 80%, rgba(255, 177, 153, 0.1) 0%, transparent 50%);
+    animation: backgroundFloat 20s ease-in-out infinite;
+    z-index: -1;
+}
+
+@keyframes backgroundFloat {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+}
+
+/* 헤더 */
+.credits-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 40px;
+    background: rgba(26, 26, 46, 0.95);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.back-btn {
+    color: #ffffff;
+    text-decoration: none;
+    padding: 10px 20px;
+    border: 1px solid rgba(251, 67, 87, 0.5);
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    background: rgba(251, 67, 87, 0.1);
+}
+
+.back-btn:hover {
+    background: rgba(251, 67, 87, 0.3);
+    border-color: #FB4357;
+    transform: translateX(-5px);
+}
+
+.cinema-logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #FB4357;
+    text-shadow: 0 0 20px rgba(251, 67, 87, 0.5);
+}
+
+/* 메인 컨텐츠 */
+.credits-content {
+    padding: 120px 40px 60px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* 크레딧 타이틀 */
+.credits-title {
+    text-align: center;
+    margin-bottom: 80px;
+    animation: fadeInUp 1s ease-out;
+}
+
+.credits-title h1 {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    background: linear-gradient(45deg, #FB4357, #7877C6, #FFB199);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientShift 4s ease-in-out infinite;
+    text-shadow: 0 0 30px rgba(251, 67, 87, 0.3);
+}
+
+.credits-title p {
+    font-size: 1.2rem;
+    color: #cccccc;
+    opacity: 0.8;
+}
+
+@keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+/* 팀 소개 */
+.team-intro {
+    text-align: center;
+    margin-bottom: 80px;
+    padding: 40px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.intro-text h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #FFB199;
+}
+
+.intro-text p {
+    font-size: 1.1rem;
+    color: #e0e0e0;
+    margin-bottom: 10px;
+}
+
+/* 팀원 카드들 */
+.team-members {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 40px;
+    margin-bottom: 80px;
+}
+
+.member-card {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    transition: all 0.5s ease;
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(50px);
+}
+
+.member-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.member-card:hover::before {
+    left: 100%;
+}
+
+.member-card.animate {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.member-card:hover {
+    transform: translateY(-10px);
+    border-color: rgba(251, 67, 87, 0.5);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* 팀 구성 소개 */
+.team-structure {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-bottom: 60px;
+}
+
+.team-group {
+    background: rgba(255, 255, 255, 0.08);
+    padding: 25px;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+    backdrop-filter: blur(10px);
+}
+
+.team-group h3 {
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+    color: #FFB199;
+}
+
+.team-group p {
+    color: #e0e0e0;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+/* 역할별 색상 */
+.member-card.director {
+    border-left: 4px solid #FFD700;
+}
+
+.member-card.schedule {
+    border-left: 4px solid #4ECDC4;
+}
+
+.member-card.detail {
+    border-left: 4px solid #FF6B6B;
+}
+
+.member-card.movie {
+    border-left: 4px solid #95E1D3;
+}
+
+.member-card.user {
+    border-left: 4px solid #A8E6CF;
+}
+
+.role-badge {
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    background: rgba(251, 67, 87, 0.2);
+    border: 1px solid rgba(251, 67, 87, 0.5);
+}
+
+.member-info h3 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    color: #ffffff;
+}
+
+.position {
+    font-size: 1.1rem;
+    color: #FFB199;
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
+.responsibilities {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.responsibilities span {
+    color: #e0e0e0;
+    font-size: 0.95rem;
+    padding-left: 10px;
+    position: relative;
+}
+
+.responsibilities span::before {
+    content: '▸';
+    position: absolute;
+    left: -5px;
+    color: #FB4357;
+}
+
+.tech-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 15px;
+}
+
+.tech {
+    padding: 6px 12px;
+    background: rgba(120, 119, 198, 0.3);
+    border-radius: 15px;
+    font-size: 0.85rem;
+    color: #ffffff;
+    border: 1px solid rgba(120, 119, 198, 0.5);
+}
+
+/* 프로젝트 정보 */
+.project-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 80px;
+}
+
+.tech-summary, .project-stats {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 30px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tech-summary h3, .project-stats h3 {
+    font-size: 1.5rem;
+    margin-bottom: 25px;
+    color: #FFB199;
+}
+
+.tech-categories {
+    display: grid;
+    gap: 20px;
+}
+
+.tech-category h4 {
+    color: #FB4357;
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+}
+
+.tech-category span {
+    display: inline-block;
+    padding: 4px 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    margin: 2px;
+    font-size: 0.9rem;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.stat-item {
+    text-align: center;
+    padding: 20px;
+    background: rgba(251, 67, 87, 0.1);
+    border-radius: 15px;
+}
+
+.stat-number {
+    display: block;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #FB4357;
+    margin-bottom: 5px;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: #cccccc;
+}
+
+/* 감사 인사 */
+.thanks-section {
+    text-align: center;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 40px;
+    border-radius: 20px;
+    margin-bottom: 60px;
+}
+
+.thanks-section h3 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #FFB199;
+}
+
+.thanks-section p {
+    font-size: 1.1rem;
+    margin-bottom: 25px;
+    color: #e0e0e0;
+}
+
+.thanks-list {
+    display: grid;
+    gap: 10px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.thanks-list span {
+    color: #cccccc;
+    font-size: 1rem;
+    padding: 8px;
+}
+
+/* 마무리 메시지 */
+.closing-message {
+    text-align: center;
+    padding: 60px 40px;
+    background: linear-gradient(135deg, rgba(251, 67, 87, 0.2), rgba(120, 119, 198, 0.2));
+    border-radius: 30px;
+    margin-bottom: 60px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.closing-message h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #ffffff;
+}
+
+.closing-message p {
+    font-size: 1.3rem;
+    margin-bottom: 30px;
+    color: #e0e0e0;
+}
+
+.closing-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn-home, .btn-booking {
+    padding: 15px 30px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    min-width: 160px;
+}
+
+.btn-home {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.btn-home:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.btn-booking {
+    background: linear-gradient(45deg, #FB4357, #e63946);
+    color: #ffffff;
+}
+
+.btn-booking:hover {
+    background: linear-gradient(45deg, #e63946, #d62839);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(251, 67, 87, 0.4);
+}
+
+/* 푸터 */
+.credits-footer {
+    text-align: center;
+    padding: 40px;
+    background: rgba(0, 0, 0, 0.3);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.credits-footer p {
+    color: #999999;
+    margin-bottom: 5px;
+}
+
+/* 애니메이션 */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .credits-header {
+        padding: 15px 20px;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .cinema-logo {
+        font-size: 20px;
+    }
+
+    .credits-content {
+        padding: 140px 20px 40px;
+    }
+
+    .credits-title h1 {
+        font-size: 2.5rem;
+    }
+
+    .team-members {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .team-structure {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .member-card {
+        padding: 20px;
+    }
+
+    .project-info {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .closing-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .closing-message h2 {
+        font-size: 2rem;
+    }
+
+    .team-intro .intro-text h2 {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .credits-title h1 {
+        font-size: 2rem;
+    }
+
+    .member-info h3 {
+        font-size: 1.5rem;
+    }
+
+    .closing-message {
+        padding: 40px 20px;
+    }
+}

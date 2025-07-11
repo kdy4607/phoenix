@@ -38,14 +38,26 @@
     font-weight: bold;
 }
 .content {
-    height: 200px;
+    height: 280px;
     display: none;
     width: 100%;               /* 전체 너비 채움 */
     border: 1px solid #ccc;
     padding: 20px;
     margin-top: 10px;
     box-sizing: border-box;    /* 패딩 포함해서 너비 계산 */
+    margin-bottom: 40px;
 }
 .content.active {
     display: block;
+}
+.related-movie-wrap {
+    display: flex;
+    justify-content: center;   /* 가로 가운데 정렬 */
+    gap: 20px;                 /* 영화 간 간격 */
+    flex-wrap: wrap;           /* 넘치면 줄바꿈 */
+    align-items: center;
+}
+
+.related-movie {
+    text-align: center;
 }

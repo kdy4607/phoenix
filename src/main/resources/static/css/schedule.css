@@ -15,6 +15,7 @@ body {
     background-color: #fff;
     border-bottom: 1px solid #e5e5e5;
     padding: 10px 0;
+    text-decoration-line: none;
 }
 
 .header-content {
@@ -24,12 +25,14 @@ body {
     align-items: center;
     justify-content: space-between;
     padding: 0 20px;
+    text-decoration-line: none;
 }
 
 .logo {
     font-size: 32px;
     font-weight: bold;
     color: #FB4357;
+    text-decoration-line:  none;
 }
 
 .nav-menu {

@@ -14,17 +14,13 @@
                 src="${movieDetail2.poster_url}"
                 alt="${movieDetail2.title}">
         </div>
-        <div id="check">
-            <button style="width: 200px; height: 30px"
-                    onclick="예매사이트">예매
-            </button>
-        </div>
+
     </div>
     <%--   밑에는 이외의 정보들이 들었습니다.  --%>
     <div class="detail-info">
         <div class="info-title">
 
-            <div class="info-title-t">${movieDetail2.title}</div>
+            <div class="info-title-t"><span class="value">${movieDetail2.title}</span></div>
             <div class="bookmark-icon" onclick="toggleBookmark(this)">
                 <!-- 여기에 SVG 코드 직접 넣기 -->
                 <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
@@ -44,9 +40,10 @@
                 </svg>
             </div>
         </div>
-        <div class="info-plusStar">총 별점: <c:forEach begin="1" end="${plusStar}">
-            ⭐
-        </c:forEach>
+        <div class="info-plusStar"><span class="label">총 별점:</span>
+            <span class="value">
+        <c:forEach begin="1" end="${plusStar}">⭐</c:forEach>
+            </span>
         </div>
         <div class="info-ather">
             <div class="row"><span class="label">영화감독:</span>
@@ -71,6 +68,11 @@
                 <span class="value"><c:forEach begin="1" end="${userStar}">
                     ⭐
                 </c:forEach></span></div>
+        </div>
+        <div id="check">
+            <button style="width: 200px; height: 30px"
+                    onclick="예매사이트">예매
+            </button>
         </div>
     </div>
 </div>

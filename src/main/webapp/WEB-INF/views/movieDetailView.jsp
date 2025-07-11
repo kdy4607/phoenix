@@ -7,15 +7,12 @@
     <link rel="stylesheet" href="/resources/css/menuCon.css">
 </head>
 <body>
-<body>
 <%-- 메뉴 로고 및 로그인 창 입니다--%>
 <div class="head-info">
     <%-- 공간을 맞춰주기위해 빈 div 넣었습니다. --%>
     <div class="nothing"></div>
     <div class="title-img">
-        <img style="width: 200px"
-             src=""
-             alt="">
+        <a href="/"><div class="logo">Movie Information</div></a>
     </div>
     <div class="login-status">
         <div>로그인상태창.</div>
@@ -24,10 +21,18 @@
 
 <%-- 메뉴 선택 창입니다. --%>
 <div class="menu-sel">
-    <div>menu1</div>
-    <div>menu2</div>
-    <div>menu3</div>
-    <div>menu4</div>
+    <div onclick="location.href='/movie-all'">
+        <span class="icon">🎭</span>영화 목록
+    </div>
+    <div onclick="location.href='/schedule'">
+        <span class=" icon">🎫</span>상영시간표 & 예매
+    </div>
+    <div onclick="alert('준비 중입니다!')">
+        <span class="icon">🏢</span>극장 정보
+    </div>
+    <div onclick="alert('준비 중입니다!')">
+        <span class="icon">🎉</span>이벤트
+    </div>
 </div>
 
 <%--<p>include 경로: ${movieDetail}</p>--%>
