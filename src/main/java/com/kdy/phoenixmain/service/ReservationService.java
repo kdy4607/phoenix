@@ -46,9 +46,14 @@ public class ReservationService {
                 throw new RuntimeException("선택한 좌석 중 이미 예약된 좌석이 있습니다.");
             }
 
-            // 3. 예약 기본 정보 생성
+            // 3. ✅ 예약 ID 먼저 생성 (이 부분이 누락되었음!)
+            int reservationId = reservationMapper.getNextReservationId();
+            System.out.println("🎫 생성된 예약 ID: " + reservationId);
+
+            // 4. 예약 기본 정보 생성
             ReservationVO reservation = new ReservationVO();
-            reservation.setU_id(userId);  // String 타입으로 설정
+            reservation.setReservation_id(reservationId);  // ✅ ID 설정 추가!
+            reservation.setU_id(userId);
             reservation.setRuntime_id(runtimeId);
             reservation.setAdult(seatIds.size()); // 임시로 좌석 수만큼 성인으로 설정
             reservation.setYouth(0);
@@ -57,33 +62,50 @@ public class ReservationService {
             reservation.setReservation_status("예약완료");
             reservation.setReserved_at(new Date());
 
-            // 4. 예약 정보 저장
-            reservationMapper.insertReservation(reservation);
-            int reservationId = reservation.getReservation_id();
+            // 5. 예약 정보 저장
+            int insertResult = reservationMapper.insertReservation(reservation);
+            if (insertResult <= 0) {
+                throw new RuntimeException("예약 정보 저장에 실패했습니다.");
+            }
 
             System.out.println("✅ 예약 기본 정보 저장 완료 - ID: " + reservationId);
 
-            // 5. 예약 좌석 정보 저장
+            // 6. 예약 좌석 정보 저장
             for (Integer seatId : seatIds) {
                 ReservationSeatVO reservationSeat = new ReservationSeatVO();
                 reservationSeat.setReservation_id(reservationId);
                 reservationSeat.setSeat_id(seatId);
-                reservationMapper.insertReservationSeat(reservationSeat);
+
+                int seatInsertResult = reservationMapper.insertReservationSeat(reservationSeat);
+                if (seatInsertResult <= 0) {
+                    throw new RuntimeException("좌석 정보 저장에 실패했습니다. 좌석 ID: " + seatId);
+                }
             }
 
-            // 6. 상영시간 잔여 좌석 수 업데이트
+            System.out.println("✅ 예약 좌석 정보 저장 완료 - " + seatIds.size() + "개");
+
+            // 7. 상영시간 잔여 좌석 수 업데이트
             int newAvailableSeats = runtime.getAvailable_seats() - seatIds.size();
-            runtimeMapper.updateAvailableSeats(runtimeId, newAvailableSeats);
+            int updateResult = runtimeMapper.updateAvailableSeats(runtimeId, newAvailableSeats);
+            if (updateResult <= 0) {
+                throw new RuntimeException("잔여 좌석 수 업데이트에 실패했습니다.");
+            }
 
-            // 7. 예약 완료 정보 조회하여 반환
+            System.out.println("✅ 잔여 좌석 수 업데이트 완료: " + newAvailableSeats + "석");
+
+            // 8. 예약 완료 정보 조회하여 반환
             ReservationVO completedReservation = getReservationDetail(reservationId);
+            if (completedReservation == null) {
+                // 기본 정보라도 반환
+                completedReservation = reservation;
+            }
 
-            System.out.println("예약 완료 - ID: " + reservationId + ", 좌석 수: " + seatIds.size());
+            System.out.println("🎉 예약 완료 - ID: " + reservationId + ", 좌석 수: " + seatIds.size());
 
             return completedReservation;
 
         } catch (Exception e) {
-            System.err.println("예약 생성 오류: " + e.getMessage());
+            System.err.println("❌ 예약 생성 오류: " + e.getMessage());
             e.printStackTrace();
             throw new RuntimeException("예약 생성 중 오류가 발생했습니다: " + e.getMessage());
         }

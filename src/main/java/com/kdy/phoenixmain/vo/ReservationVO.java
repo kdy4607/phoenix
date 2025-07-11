@@ -24,6 +24,7 @@ public class ReservationVO {
     private Date reserved_at;
 
     // 조인된 정보 (뷰나 조인 쿼리에서 사용)
+    private String u_name;            // ✅ 이 줄을 추가하세요!
     private String movie_title;       // 영화 제목
     private String room_name;         // 상영관 이름
     private Date run_date;            // 상영 날짜

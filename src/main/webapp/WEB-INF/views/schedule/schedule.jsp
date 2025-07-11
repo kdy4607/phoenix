@@ -252,23 +252,55 @@
             });
     }
 
-    // 상영시간 선택
+    // 상영시간 선택 (DOM 엘리먼트 방식)
     function selectShowtime(element) {
+        console.log('🎬 상영시간 선택 시작');
+
+        // 이전 선택 해제
         document.querySelectorAll('.showtime-btn').forEach(btn => {
             btn.classList.remove('selected');
         });
+
+        // 현재 선택 표시
         element.classList.add('selected');
 
+        // 데이터 추출 및 검증
+        const runtimeId = element.dataset.runtimeId;
+        const movieTitle = element.dataset.movieTitle;
+        const startTime = element.dataset.startTime;
+        const roomName = element.dataset.roomName;
+        const availableSeats = element.dataset.availableSeats;
+
+        console.log('📋 추출된 데이터:', {
+            runtimeId: runtimeId,
+            movieTitle: movieTitle,
+            startTime: startTime,
+            roomName: roomName,
+            availableSeats: availableSeats
+        });
+
+        // Runtime ID 검증
+        if (!runtimeId || runtimeId === 'undefined' || runtimeId === 'null') {
+            console.error('❌ Runtime ID가 유효하지 않습니다:', runtimeId);
+            alert('상영시간 정보에 오류가 있습니다. 페이지를 새로고침해주세요.');
+            return;
+        }
+
+        // selectedShowtime 객체 생성
         selectedShowtime = {
-            runtimeId: parseInt(element.dataset.runtimeId), // 정수로 변환
-            movieTitle: element.dataset.movieTitle,
-            startTime: element.dataset.startTime,
-            roomName: element.dataset.roomName,
-            availableSeats: parseInt(element.dataset.availableSeats) // 정수로 변환
+            runtimeId: parseInt(runtimeId), // 정수로 변환
+            movieTitle: movieTitle,
+            startTime: startTime,
+            roomName: roomName,
+            availableSeats: parseInt(availableSeats) // 정수로 변환
         };
 
+        console.log('✅ selectedShowtime 설정 완료:', selectedShowtime);
+
+        // 선택된 상영시간 정보 표시
         showSelectedInfo();
     }
+
 
     // 선택된 상영시간 정보 표시
     function showSelectedInfo() {
@@ -276,14 +308,17 @@
             const infoDiv = document.getElementById('selectedShowtimeInfo');
             const detailsP = document.getElementById('selectedDetails');
 
-            detailsP.innerHTML = '<strong>' + selectedShowtime.movieTitle + '</strong><br>' +
-                selectedShowtime.startTime + ' | ' + selectedShowtime.roomName + ' | 잔여좌석: ' + selectedShowtime.availableSeats + '석';
+            if (infoDiv && detailsP) {
+                detailsP.innerHTML = '<strong>' + selectedShowtime.movieTitle + '</strong><br>' +
+                    selectedShowtime.startTime + ' | ' + selectedShowtime.roomName + ' | 잔여좌석: ' + selectedShowtime.availableSeats + '석';
 
-            infoDiv.style.display = 'block';
+                infoDiv.style.display = 'block';
+                console.log('✅ 선택된 상영시간 정보 표시 완료');
+            }
         }
     }
 
-    // 좌석 선택 화면 로드
+    // JSP 파일 내부의 loadSeatSelection 함수를 이것으로 교체하세요
     function loadSeatSelection() {
         if (!selectedShowtime) {
             alert('상영시간을 먼저 선택해주세요.');
@@ -296,23 +331,33 @@
         // runtimeId를 정수로 변환
         const runtimeId = parseInt(selectedShowtime.runtimeId);
 
-        // 좌석 정보 로드
-        fetch('/seat/runtime/' + runtimeId)
-            .then(response => response.json())
+        // 디버깅 로그
+        console.log('🔍 좌석 선택 화면 로드 - Runtime ID:', runtimeId);
+        console.log('📋 selectedShowtime:', selectedShowtime);
+
+        // ✅ 올바른 엔드포인트 사용
+        fetch(`/seat/\${runtimeId}/seats`)
+            .then(response => {
+                console.log('📡 응답 상태:', response.status);
+                return response.json();
+            })
             .then(data => {
+                console.log('📦 받은 데이터:', data);
+
                 if (data.success) {
                     allSeats = data.seats;
                     seatPrice = data.runtime.price || 12000;
 
                     // 좌석 선택 화면 표시
                     showSeatSelection(data.runtime, data.seats);
+                    console.log('✅ 좌석 정보 로드 성공:', data.seats.length + '석');
                 } else {
                     alert(data.message || '좌석 정보를 불러올 수 없습니다.');
                 }
             })
             .catch(error => {
-                console.error('Error:', error);
-                alert('좌석 정보를 불러오는 중 오류가 발생했습니다.');
+                console.error('❌ 좌석 정보 로드 오류:', error);
+                alert('좌석 정보를 불러오는 중 오류가 발생했습니다: ' + error.message);
             });
     }
 
