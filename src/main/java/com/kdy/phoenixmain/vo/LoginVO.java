@@ -1,24 +1,24 @@
 package com.kdy.phoenixmain.vo;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
-//@NoArgsConstructor
-//@AllArgsConstructor
-//@Getter
-//@Setter
-@Data // = getter, setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+@Data
 public class LoginVO {
-    private String u_id;        // batis 를 통한 DB 자동 연결을 위해 테이블 컬럼과 일치 하도록 설정
-    private String u_pw;
-    private String u_name;
+    private String u_id;        // INT에서 VARCHAR2(20)로 변경
+    private String u_pw;        // VARCHAR2(100)
+    private String u_name;      // VARCHAR2(50)
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date u_birth;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")  // 날짜 포맷 지정
+    private Date u_birth;       // DATE
 
-    private String u_address;
+    private String u_address;   // VARCHAR2(500)
 }
-
-// Data = View 에서 전달 받은 param 을  자동 으로 기본 생성자 에 setter를 통해 값을 세팅해 줌.
