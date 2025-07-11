@@ -9,63 +9,23 @@ import java.util.List;
 @Mapper
 public interface MovieMapper {
 
-    // 전체 영화 조회 + 태그 리스트 포함
-    @Select("SELECT * FROM MOVIES")
-    @Results({
-            @Result(property = "movie_id", column = "movie_id"),
-            @Result(property = "title", column = "title"),
-            @Result(property = "director", column = "director"),
-            @Result(property = "actor", column = "actor"),
-            @Result(property = "genre", column = "genre"),
-            @Result(property = "rating", column = "rating"),
-            @Result(property = "user_critic", column = "user_critic"),
-            @Result(property = "pro_critic", column = "pro_critic"),
-            @Result(property = "description", column = "description"),
-            @Result(property = "running_time", column = "running_time"),
-            @Result(property = "poster_url", column = "poster_url"),
-            @Result(property = "m_tagList", column = "movie_id",
+    // 공통 매핑 정의
+    @Results(id = "movieMap", value = {
+            @Result(property = "movie_id", column = "MOVIE_ID"),
+            @Result(property = "running_time", column = "RUNNING_TIME"),
+            @Result(property = "user_critic", column = "USER_CRITIC"),
+            @Result(property = "pro_critic", column = "PRO_CRITIC"),
+            @Result(property = "m_tagList", column = "MOVIE_ID",
                     many = @Many(select = "getTagsByMovieId"))
     })
+
+    // 전체 영화 조회
+    @Select("SELECT * FROM MOVIES")
     List<MovieVO> selectAllMovie();
 
-    // 단일 영화 조회
-    @Select("select * from movies where MOVIE_ID=#{MOVIE_ID}")
-    public MovieVO selectOneMovie(@Param("MOVIE_ID") int MOVIE_ID);
-
-    // 영화 삭제
-
-
-    // 영화 수정
-
-
-    // 영화 등록
-
-
-
-    @Select("""
-            SELECT
-                m.m_no,
-                m.m_title,
-                m.m_description,
-                m.m_poster,
-                t.t_no,
-                t.t_name,
-                t.t_type
-            FROM movie_test m
-            LEFT JOIN movie_tag_test mt ON m.m_no = mt.movie_no
-            LEFT JOIN tag_test t ON mt.tag_no = t.t_no
-            ORDER BY m.m_no
-            """)
-    @Results(id = "movieWithTags", value = {
-            @Result(column = "m_no", property = "m_no", id = true),
-            @Result(column = "m_title", property = "m_title"),
-            @Result(column = "m_description", property = "m_description"),
-            @Result(column = "m_poster", property = "m_poster"),
-            @Result(property = "m_tagList", column = "m_no",
-                    many = @Many(select = "getTagsByMovieNo"))
-    })
-    List<MovieVO> selectMovieWithTags();
-
+    // 단일 영화 조회 (태그 제외)
+    @Select("SELECT * FROM MOVIES WHERE MOVIE_ID = #{movie_id}")
+    MovieVO selectOneMovie(@Param("movie_id") int movie_id);
 
     // 특정 영화의 태그 목록 조회
     @Select("""
@@ -78,25 +38,41 @@ public interface MovieMapper {
 
     // 선택한 태그 ID들을 모두 포함한 영화 조회 (AND 조건)
     @SelectProvider(type = MovieSqlBuilder.class, method = "buildQueryByTagIds")
-    @Results({
-            @Result(property = "movie_id", column = "movie_id"),
-            @Result(property = "title", column = "title"),
-            @Result(property = "director", column = "director"),
-            @Result(property = "actor", column = "actor"),
-            @Result(property = "genre", column = "genre"),
-            @Result(property = "rating", column = "rating"),
-            @Result(property = "user_critic", column = "user_critic"),
-            @Result(property = "pro_critic", column = "pro_critic"),
-            @Result(property = "description", column = "description"),
-            @Result(property = "running_time", column = "running_time"),
-            @Result(property = "poster_url", column = "poster_url"),
-            @Result(property = "m_tagList", column = "movie_id",
-                    many = @Many(select = "getTagsByMovieId"))
-    })
-    List<MovieVO> selectMoviesByTagIds(@Param("tags") List<Integer> tags, @Param("tagCount") int tagCount);
+    @ResultMap("movieMap")
+    List<MovieVO> selectMoviesByTagIds(
+            @Param("tagIds") List<Integer> tagIds,
+            @Param("tagCount") int tagCount
+    );
 
-    // 상세페이지  영화 태그에서 하나만 겹쳐도 갖고오게 하는거
+    // 제목으로 영화 검색
+    @Select("SELECT * FROM MOVIES WHERE title LIKE '%' || #{title} || '%'")
+    @ResultMap("movieMap")
+    List<MovieVO> findByTitle(@Param("title") String title);
+
+    // 제목 + 태그로 영화 검색
+    @SelectProvider(type = MovieSqlBuilder.class, method = "buildQueryByTagsAndTitle")
+    @ResultMap("movieMap")
+    List<MovieVO> selectMoviesByTagsAndTitle(
+            @Param("tagIds") List<Integer> tagIds,
+            @Param("tagCount") int tagCount,
+            @Param("title") String title
+    );
+
+    // 태그명으로 영화 검색 (상세페이지용)
+    @Select("""
+        SELECT m.movie_id, m.title, m.poster_url
+        FROM MOVIES m
+        JOIN MOVIE_TAGS mt ON m.movie_id = mt.movie_id
+        JOIN TAGS t ON mt.tag_id = t.tag_id
+        WHERE t.tag_name = #{tagName}
+    """)
+    @Results({
+            @Result(property = "movie_id", column = "MOVIE_ID")
+    })
+    List<MovieVO> findMoviesByTagName(@Param("tagName") String tagName);
+
+    // 상세페이지 관련: 하나라도 태그 겹치는 영화 조회 (AND 아님)
     @SelectProvider(type = MovieSqlBuilder.class, method = "buildQueryByAnyTag")
+    @ResultMap("movieMap")
     List<MovieVO> selectMoviesByAnyTag(@Param("tags") List<Integer> tags, @Param("excludeId") int excludeId);
 }
-
