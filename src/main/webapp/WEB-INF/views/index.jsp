@@ -14,7 +14,10 @@
 <jsp:include page="/WEB-INF/views/header.jsp" />
 
 <div class="container">
-  <div class="main-logo">🎬 Phoenix Cinema</div>
+  <div class="main-logo">
+    <img src="/resources/images/logo.png" alt="Phoenix Cinema Logo" class="main-logo-image">
+    <span class="main-logo-text">Phoenix Cinema</span>
+  </div>
   <div class="description">Premium Cinema System made by Soldesk</div>
 
   <div class="menu-grid">
