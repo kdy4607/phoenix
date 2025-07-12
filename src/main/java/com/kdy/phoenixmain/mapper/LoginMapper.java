@@ -43,38 +43,29 @@ public interface LoginMapper {
     })
     LoginVO findById(@Param("u_id") String u_id);
 
-    // 삭제
-    @Delete("delete users where u_id = #{u_id}")
-    int deleteLoginByID(String u_id);
-
-    // 수정
-    @Update("update users set u_pw= #{u_pw}, u_name = #{u_name}, u_birth = #{u_birth, jdbcType=DATE}, u_address = #{u_address, jdbcType=VARCHAR} where u_id = #{u_id}")
-    int updateLoginByID(LoginVO loginVO);
-
-    // 추가
-    @Insert("insert into users values (#{u_id}, #{u_pw}, #{u_name}, #{u_birth, jdbcType=DATE}, #{u_address, jdbcType=VARCHAR})")
+    /**
+     * 회원 가입
+     */
+    @Insert("INSERT INTO USERS VALUES (#{u_id}, #{u_pw}, #{u_name}, #{u_birth, jdbcType=DATE}, #{u_address, jdbcType=VARCHAR})")
     int insertLogin(LoginVO loginVO);
 
-//    /**
-//     * 회원 정보 수정
-//     */
-//    @Update("""
-//        UPDATE USERS
-//        SET u_pw = #{u_pw},
-//            u_name = #{u_name},
-//            u_birth = #{u_birth, jdbcType=DATE},
-//            u_address = #{u_address, jdbcType=VARCHAR}
-//        WHERE u_id = #{u_id}
-//    """)
-//    int updateLogin(LoginVO loginVO);
+    /**
+     * 회원 정보 수정
+     */
+    @Update("""
+        UPDATE USERS
+        SET u_pw = #{u_pw},
+            u_name = #{u_name},
+            u_birth = #{u_birth, jdbcType=DATE},
+            u_address = #{u_address, jdbcType=VARCHAR}
+        WHERE u_id = #{u_id}
+    """)
+    int updateLogin(LoginVO loginVO);
 
     /**
      * 회원 삭제
      */
-    @Delete("""
-        DELETE FROM USERS
-        WHERE u_id = #{u_id}
-    """)
+    @Delete("DELETE FROM USERS WHERE u_id = #{u_id}")
     int deleteLogin(@Param("u_id") String u_id);
 
     /**
@@ -208,104 +199,17 @@ public interface LoginMapper {
     @Select("SELECT COUNT(*) > 0 FROM USERS WHERE u_id = #{u_id}")
     boolean existsById(@Param("u_id") String u_id);
 
-    /**
-     * 활성 사용자 수 조회 (예약이 있는 사용자)
-     */
-    @Select("""
-        SELECT COUNT(DISTINCT u.u_id) 
-        FROM USERS u 
-        JOIN RESERVATIONS r ON u.u_id = r.u_id 
-        WHERE r.reservation_status = '예약완료'
-    """)
-    int getActiveUserCount();
+    // ===== 기존 메서드들 (하위 호환성을 위해 유지) =====
 
     /**
-     * 사용자 정보 부분 업데이트 (비밀번호 제외)
+     * 삭제 (기존 메서드명)
      */
-    @Update("""
-        UPDATE USERS
-        SET u_name = #{u_name},
-            u_birth = #{u_birth},
-            u_address = #{u_address}
-        WHERE u_id = #{u_id}
-    """)
-    int updateUserInfo(LoginVO loginVO);
+    @Delete("DELETE FROM USERS WHERE u_id = #{u_id}")
+    int deleteLoginByID(String u_id);
 
     /**
-     * 사용자 통계 정보 조회
+     * 수정 (기존 메서드명)
      */
-    @Select("""
-        SELECT 
-            u.u_id,
-            u.u_name,
-            COUNT(r.reservation_id) as total_reservations,
-            SUM(CASE WHEN r.reservation_status = '예약완료' THEN 1 ELSE 0 END) as active_reservations,
-            SUM(CASE WHEN r.reservation_status = '예약완료' THEN r.total_amount ELSE 0 END) as total_spent
-        FROM USERS u
-        LEFT JOIN RESERVATIONS r ON u.u_id = r.u_id
-        WHERE u.u_id = #{u_id}
-        GROUP BY u.u_id, u.u_name
-    """)
-    @Results({
-            @Result(property = "u_id", column = "u_id"),
-            @Result(property = "u_name", column = "u_name"),
-            @Result(property = "adult", column = "total_reservations"),     // 총 예약 수
-            @Result(property = "youth", column = "active_reservations"),    // 활성 예약 수
-            @Result(property = "total_amount", column = "total_spent")      // 총 결제 금액
-    })
-    LoginVO getUserStats(@Param("u_id") String u_id);
-
-    /**
-     * 모든 사용자 통계 조회 (관리자용)
-     */
-    @Select("""
-        SELECT 
-            u.u_id,
-            u.u_name,
-            u.u_birth,
-            COUNT(r.reservation_id) as total_reservations,
-            SUM(CASE WHEN r.reservation_status = '예약완료' THEN 1 ELSE 0 END) as active_reservations,
-            SUM(CASE WHEN r.reservation_status = '예약완료' THEN r.total_amount ELSE 0 END) as total_spent
-        FROM USERS u
-        LEFT JOIN RESERVATIONS r ON u.u_id = r.u_id
-        GROUP BY u.u_id, u.u_name, u.u_birth
-        ORDER BY total_spent DESC
-    """)
-    List<java.util.Map<String, Object>> getAllUsersStats();
-
-    /**
-     * 특정 기간 내 가입자 조회
-     */
-    @Select("""
-        SELECT u_id, u_pw, u_name, u_birth, u_address
-        FROM USERS
-        WHERE u_id IN (
-            SELECT u_id FROM USERS WHERE ROWNUM <= #{limit}
-        )
-        ORDER BY u_id DESC
-    """)
-    @Results({
-            @Result(property = "u_id", column = "u_id"),
-            @Result(property = "u_pw", column = "u_pw"),
-            @Result(property = "u_name", column = "u_name"),
-            @Result(property = "u_birth", column = "u_birth"),
-            @Result(property = "u_address", column = "u_address")
-    })
-    List<LoginVO> getRecentJoiners(@Param("limit") int limit);
-
-    /**
-     * 사용자 프로필 요약 정보 조회 (비밀번호 제외)
-     */
-    @Select("""
-        SELECT u_id, u_name, u_birth, u_address
-        FROM USERS
-        WHERE u_id = #{u_id}
-    """)
-    @Results({
-            @Result(property = "u_id", column = "u_id"),
-            @Result(property = "u_name", column = "u_name"),
-            @Result(property = "u_birth", column = "u_birth"),
-            @Result(property = "u_address", column = "u_address")
-    })
-    LoginVO getUserProfile(@Param("u_id") String u_id);
+    @Update("UPDATE USERS SET u_pw= #{u_pw}, u_name = #{u_name}, u_birth = #{u_birth, jdbcType=DATE}, u_address = #{u_address, jdbcType=VARCHAR} WHERE u_id = #{u_id}")
+    int updateLoginByID(LoginVO loginVO);
 }
