@@ -16,7 +16,9 @@
 <header class="phoenix-header">
     <div class="header-content">
         <div class="header-left">
-            <a href="/" class="header-logo">🎬 Phoenix</a>
+            <a href="/" class="header-logo">
+                <img src="/resources/images/logo.png" alt="Phoenix Cinema Logo" class="logo-image">
+            </a>
             <nav>
                 <ul class="nav-menu">
                     <li><a href="/movie-all">Movies</a></li>
