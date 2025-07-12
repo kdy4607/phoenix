@@ -26,12 +26,12 @@ function toggleUserMenu() {
     }
 }
 
-// 로그아웃 함수
+// 통합된 로그아웃 함수 (header.js와 login.js에서 모두 사용 가능)
 function logout() {
     if (confirm('로그아웃하시겠습니까?')) {
         console.log('로그아웃 처리 시작');
 
-        // 서버에 로그아웃 요청
+        // 서버에 로그아웃 요청 (POST 방식)
         fetch('/logout', {
             method: 'POST',
             headers: {
@@ -39,27 +39,74 @@ function logout() {
             }
         })
             .then(response => {
-                if (response.ok) {
+                // 응답이 성공적이거나 리다이렉트인 경우
+                if (response.ok || response.redirected) {
                     console.log('로그아웃 성공');
                     alert('로그아웃 되었습니다.');
                     // 메인 페이지로 이동
                     window.location.href = '/';
                 } else {
-                    console.error('로그아웃 실패');
-                    alert('로그아웃 중 오류가 발생했습니다.');
+                    console.warn('로그아웃 응답 상태:', response.status);
+                    // 상태가 200이 아니어도 로그아웃 처리 (서버에서 리다이렉트할 수 있음)
+                    alert('로그아웃 되었습니다.');
+                    window.location.href = '/';
                 }
             })
             .catch(error => {
-                console.error('로그아웃 오류:', error);
-                // 오류가 발생해도 로그아웃 처리
+                console.error('로그아웃 요청 오류:', error);
+                // 네트워크 오류가 발생해도 로그아웃 처리
                 alert('로그아웃 되었습니다.');
                 window.location.href = '/';
             });
     }
 }
 
+// 영어 버전 (기존 코드와의 호환성을 위해)
+function logoutEn() {
+    if (confirm('Are you sure you want to logout?')) {
+        console.log('로그아웃 처리 시작');
+
+        fetch('/logout', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => {
+                if (response.ok || response.redirected) {
+                    console.log('로그아웃 성공');
+                    alert('Logout complete.');
+                    window.location.href = '/';
+                } else {
+                    console.warn('로그아웃 응답 상태:', response.status);
+                    alert('Logout complete.');
+                    window.location.href = '/';
+                }
+            })
+            .catch(error => {
+                console.error('로그아웃 요청 오류:', error);
+                alert('Logout complete.');
+                window.location.href = '/';
+            });
+    }
+}
+
+// 로그인 체크 함수 (로그인이 필요한 기능에 사용)
+function checkLoginStatus() {
+    return fetch('/user/check')
+        .then(response => response.json())
+        .then(data => data.isLoggedIn)
+        .catch(error => {
+            console.error('로그인 상태 확인 오류:', error);
+            return false;
+        });
+}
+
 // 예약내역 버튼 클릭 시 로그인 체크
 function checkLoginForReservation(event) {
+    // 현재 로그인 상태 확인 (서버에서 전달받은 정보 사용)
+    const isLoggedIn = typeof window.currentUser !== 'undefined' && window.currentUser !== null;
+
     if (!isLoggedIn) {
         event.preventDefault();
         if (confirm('예약내역을 확인하려면 로그인이 필요합니다.\n로그인 페이지로 이동하시겠습니까?')) {
