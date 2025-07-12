@@ -1,53 +1,46 @@
 /* Main Setting */
-* {
+
+body {
+    font-family: 'Malgun Gothic', sans-serif;
+    background-color: #f8f8f8;
+    height: 100%;
     margin: 0;
-    top: 0;
+    padding: 0;
 }
 
 ul, li {
     list-style-type: none;
 }
 
-html, body, .cay-login-main-wrap {
+a {
+    color: #666;
+}
+
+.cay-login-main-wrap {
     max-width: 1200px;
     min-width: 1000px;
     height: 100%;
     margin: auto;
 }
 
-/* Header */
-.cay-header {
-    border: 2px solid;
-    height: 5rem;
-    display: flex;
-    justify-content: space-between;
-}
-
-/* Nav */
-.cay-nav {
-    border: 2px solid;
-    height: 5rem;
-}
-
 /* footer */
 .cay-footer {
-    border: 2px solid;
-
-    height: 10rem;
+    height: 100%;
     margin: auto;
+    padding: 50px 0;
+    color: #999;
+    text-align: center;
 }
 
 /* Main */
 
 /* login */
 .cay-login-container {
-    border: 2px solid;
     margin: auto;
     display: flex;
 }
 
 .cay-login-content {
-    border: 2px solid;
     width: 100%;
     height: 100%;
     margin: auto;
@@ -55,19 +48,47 @@ html, body, .cay-login-main-wrap {
 }
 
 .cay-login-wrap {
-    border: 2px solid;
-    width: 450px;
-    height: 600px;
+    position: relative;
+    width: 550px;
+    height: 700px;
     margin: 100px auto 100px auto;
     padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    background-color: white;
 }
 
-.cay-login-wrap > h1 {
-    margin: 7.5rem 0 2.5rem;
+.error-message {
+    position: absolute;
+    top: -90px;
+    width: 30rem;
+    height: 2rem;
+    margin: 10px;
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #FB4357;
+    animation: shake 0.5s;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    30% { transform: translateX(3px); }
+    50% { transform: translateX(1px); }
+    80% { transform: translateX(3px); }
+}
+
+.cay-login-wrap > h2 {
+    margin: 3.5rem 0 3.5rem;
+    font-size: 2.5rem;
+    color: #666;
+}
+.cay-login-wrap > h2 > div {
+    margin-top: 0.25rem;
+    font-size: 1.5rem;
 }
 
 .cay-login-section {
-    margin: 1rem 0;
+    margin: 0.5rem 0;
 }
 
 
@@ -76,18 +97,39 @@ html, body, .cay-login-main-wrap {
 }
 
 .cay-login-col1 > input {
-    width: 25rem;
+    width: 20rem;
     height: 4.5rem;
+    padding: 1.5rem;
+    font-size: 20px;
+    border: none;
+    border-radius: 8px;
+    color: #575757;
+    background-color: #efefef;
 }
 
 .cay-login-col2 {
-
     padding: 1.5rem;
+}
+
+.cay-login-col2 > button {
+    width: 9rem;
+    height: 3.5rem;
+    margin: 0.5rem 0.5rem;
+    border: 2px solid #FB4357;
+    border-radius: 45px;
+    font-size: 18px;
+    color: #FB4357;
+    background-color: white;
+}
+
+.cay-login-col2 > button:hover {
+    color: white;
+    transition: ease-in-out 0.3s;
+    background-color: #FB4357;
 }
 
 /* Join */
 .cay-join-container {
-    border: 2px solid;
     margin: auto;
     display: flex;
 }
@@ -99,11 +141,34 @@ html, body, .cay-login-main-wrap {
     text-align: center;
 }
 
+.cay-join-content > h1 {
+    width: 200px;
+    margin: 3rem auto;
+    font-size: 3rem;
+    border-bottom: 2px solid;
+    color: #FB4357;
+}
+
+
+.cay-join-wrap {
+    position: relative;
+    width: 550px;
+    height: 700px;
+    margin: 100px auto 100px auto;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    background-color: white;
+}
+
 .cay-join-process {
     width: 30rem;
     margin: auto;
+    padding: 3rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    background-color: white;
     text-align: center;
-    border: 2px solid;
 }
 
 .cay-join-process-step {
@@ -124,10 +189,13 @@ html, body, .cay-login-main-wrap {
 /* My Page Main */
 
 .cay-myPage-container {
-    border: 2px solid;
-    margin: auto;
+    width: 90%;
+    margin: 3rem auto;
     display: flex;
-
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    background-color: white;
+    justify-content: center;
 }
 
 .cay-myPage-profile {
@@ -144,19 +212,36 @@ html, body, .cay-login-main-wrap {
 
 .cay-myPage-content {
     border: 2px solid;
-    width: 80%;
+    width: 72.5%;
     height: 90%;
-    margin: 1rem auto;
+    margin: 1rem 1rem 1rem 0.5rem;
 
 }
 
 .cay-myPage-aside {
-    border: 2px solid;
-    width: 10%;
-    height: 90%;
-    margin: 1rem auto;
-
+    height: 30rem;
+    border-radius: 8px;
+    border: 2px solid #FB4357;
+    margin: 1rem 0.5rem 1rem 1rem;
 }
+
+.cay-myPage-aside > div:nth-child(1) {
+    width: 100%;
+    height: 20rem;
+    font-size: 2rem;
+    background-color: #FB4357;
+    text-align: center;
+}
+
+.cay-myPage-aside > ul > li {
+    padding: 3rem;
+}
+
+.cay-myPage-aside > div:nth-child(1) > a {
+    color: white;
+    text-decoration: none;
+}
+
 
 /* My page - Home */
 

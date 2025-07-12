@@ -43,13 +43,16 @@ public interface LoginMapper {
     })
     LoginVO findById(@Param("u_id") String u_id);
 
-    /**
-     * 회원 가입
-     */
-    @Insert("""
-        INSERT INTO USERS (u_id, u_pw, u_name, u_birth, u_address)
-        VALUES (#{u_id}, #{u_pw}, #{u_name}, #{u_birth}, #{u_address})
-    """)
+    // 삭제
+    @Delete("delete users where u_id = #{u_id}")
+    int deleteLoginByID(String u_id);
+
+    // 수정
+    @Update("update users set u_pw= #{u_pw}, u_name = #{u_name}, u_birth = #{u_birth, jdbcType=DATE}, u_address = #{u_address, jdbcType=VARCHAR} where u_id = #{u_id}")
+    int updateLoginByID(LoginVO loginVO);
+
+    // 추가
+    @Insert("insert into users values (#{u_id}, #{u_pw}, #{u_name}, #{u_birth, jdbcType=DATE}, #{u_address, jdbcType=VARCHAR})")
     int insertLogin(LoginVO loginVO);
 
     /**

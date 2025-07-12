@@ -28,7 +28,7 @@
     </div>
 </div>
 
-<form class="cay-join-wrap" action="/join/step3" method="post">
+<form class="cay-join-wrap" action="/join/step3" method="post" onsubmit="return call();">
     <div> Create Account</div>
     <div>
         <input type="hidden" name="u_id" value="${loginVO.u_id}">
@@ -45,13 +45,13 @@
     <div>
         <div> Your Address</div>
         <input type="text" name="u_address">
-        <button> Next !</button>
+        <button type="submit"> Next !</button>
     </div>
 </form>
 </div>
 
 
 </div>
-
+<script src="/resources/js/login.js"></script>
 </body>
 </html>
