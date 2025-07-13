@@ -110,6 +110,7 @@
                                                  data-start-time="${runtime.start_time}"
                                                  data-room-name="${runtime.room_name}"
                                                  data-available-seats="${runtime.available_seats}"
+                                                 data-poster-url="${runtime.poster_url}"
                                                  onclick="${isSoldOut ? '' : 'selectShowtime(this)'}">
                                                     ${runtime.start_time}
                                                 <br><small>${runtime.room_name}</small>
@@ -314,13 +315,15 @@
             const startTime = element.dataset.startTime;
             const roomName = element.dataset.roomName;
             const availableSeats = element.dataset.availableSeats;
+            const posterUrl = element.dataset.posterUrl;
 
             console.log('📋 추출된 데이터:', {
                 runtimeId: runtimeId,
                 movieTitle: movieTitle,
                 startTime: startTime,
                 roomName: roomName,
-                availableSeats: availableSeats
+                availableSeats: availableSeats,
+                posterUrl: posterUrl
             });
 
             // Runtime ID 검증
@@ -336,7 +339,8 @@
                 movieTitle: movieTitle,
                 startTime: startTime,
                 roomName: roomName,
-                availableSeats: parseInt(availableSeats) // 정수로 변환
+                availableSeats: parseInt(availableSeats), // 정수로 변환
+                posterUrl: posterUrl
             };
 
             console.log('✅ selectedShowtime 설정 완료:', selectedShowtime);
@@ -639,8 +643,7 @@
             <div class="payment-summary-box">
                <h3>최종 예매 내역 확인</h3>
             <div class="poster">
-            <img src="/resources/images/escape.jpg"/>
-<!--        <img src="\${selectedShowtime.posterUrl}"/>-->
+            <img src="\${selectedShowtime.posterUrl}"/>
             </div>
             <div class="details">
             <p><strong>영화:</strong> \${selectedShowtime.movieTitle}</p>
@@ -960,6 +963,7 @@
                         customerEmail: "customer123@gmail.com",
                         customerName: "김토스",
                         customerMobilePhone: "01012341234",
+
                     });
 
                     // 결제 성공 시: 예약 생성 API 호출

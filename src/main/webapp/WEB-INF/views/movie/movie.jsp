@@ -6,8 +6,12 @@
     <meta charset="UTF-8">
     <title>Movie List</title>
     <link rel="stylesheet" href="/resources/css/movie.css">
+
 </head>
 <body>
+<!-- 공통 헤더 포함 -->
+<jsp:include page="/WEB-INF/views/header.jsp"/>
+
 <h1>🎬 Movie List</h1>
 
 <form id="searchForm" onsubmit="return handleSearch(event);">
