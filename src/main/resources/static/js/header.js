@@ -1,5 +1,5 @@
 // 현재 로그인 상태 (서버에서 전달받은 정보)
-const isLoggedIn = /${not empty sessionScope.user ? 'true' : 'false'};
+const isLoggedIn = /${not empty sessionScope.user ? 'true' : 'false'}/;
 const currentUser = isLoggedIn ? {
     id: '${sessionScope.user.u_id}',
     name: '${sessionScope.user.u_name}',

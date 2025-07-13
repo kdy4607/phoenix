@@ -24,7 +24,7 @@
             </li>
             <li><a href="" onclick="alert('준비 중입니다!')">My Tickets</a>
                 <ul>
-                    <li><a href="" onclick="alert('준비 중입니다!')">My Reservation</a></li>
+                    <li><a href="/reservation/list">My Reservation</a></li>
                     <li><a href="" onclick="alert('준비 중입니다!')">My History</a></li>
                 </ul>
             </li>
@@ -55,9 +55,9 @@
     </div>
     <jsp:include page="${content}"></jsp:include>
 </main>
-<footer class="cay-footer"><h1>footer</h1></footer>
-</div>
-<button onclick="logout()"> logout</button>
+<footer class="cay-footer">
+    © 2025 Phoenix Cinema. All rights reserved.
+</footer>
 <script src="/resources/js/login.js"></script>
 </body>
 </html>

@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>Title</title>
@@ -13,66 +14,103 @@
 <body>
 
 <div class="cay-myPage-content">
-  <div class="cay-myPage-Home">
-    <div class="cay-myPage-profile">
-      <div> Welcome! <p> Hello, ${user.u_name} ! </p> </div>
-      <div><a href="/mypage/profile?u_id=${user.u_id}">Update My Information</a></div>
-      <div> POINT : <span> 0 </span> </div>
+    <div class="cay-myPage-home">
+        <div class="cay-myPage-top">
+            <div> W</div>
+            <div>
+                <div><h1>Hello, ${homeName}</h1></div>
+                <div>
+                    <a href="/mypage/profile?u_id=${user.u_id}">Update My Information</a>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <div>POINT</div>
+                    <span id="point-ctn"> 0 </span></div>
+                <div>
+                    <div>MEMBERSHIP</div>
+                    <span id="membership-ctn"> A </span></div>
+            </div>
+        </div>
+        <div class="cay-myPage-bottom">
+
+            <div class="cay-myPage-history">
+                <h1>My History</h1>
+                <div>
+                    <a href="">
+                        <span> 0 </span>
+                        <div> Watch</div>
+                    </a>
+                    <a href="">
+                        <span> 0 </span>
+                        <div> Review</div>
+                    </a>
+                    <a href="">
+                        <span> 0 </span>
+                        <div> Wishlist</div>
+                    </a>
+                </div>
+            </div>
+            <div class="cay-myPage-genre">
+                <h1>Favorite Genre</h1>
+                <div>
+                    <a href="/movie-all">
+                        <c:forEach var="tag" items="${tagList}">
+                            <c:choose>
+                                <c:when test="${tag.tag_type eq 'Genre'}">
+                                    <div class="tag tag-genre">${tag.tag_name}</div>
+                                </c:when>
+                            </c:choose>
+                        </c:forEach>
+                    </a>
+                </div>
+            </div>
+            <div class="cay-myPage-order">
+                <h1>My Order History</h1>
+                <%-- JSTL 로 반복문 사용 --%>
+                <div>
+                    <span> Your recent reservation details do not exist.  </span>
+                </div>
+            </div>
+            <div class="cay-myPage-event">
+                <h1>My Event History</h1>
+                <%-- JSTL 로 반복문 사용 --%>
+                <div>
+                    <span> No events participated.  </span>
+                </div>
+            </div>
+            <div class="cay-myPage-reward">
+                <h1>My reward</h1>
+                <div>
+                    <div><h4>Reward</h4></div>
+                    <div>
+                        <table>
+                            <tr>
+                                <td>Birthday Cinema Ticket</td>
+                                <td> 12,000 ₩</td>
+                            </tr>
+                            <tr>
+                                <td>Lady's Day Cinema Ticket</td>
+                                <td> 12,000 ₩</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div>
+                    <div><h4>Coupon</h4></div>
+                    <div>
+                        <table>
+                            <tr>
+                                <td>Welcome Discount Coupon</td>
+                                <td> 50 %</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="cay-myPage-coupon">
-      <h1>My reward</h1>
-      <div> Reward</div>
-      <div> Discount Coupon</div>
-    </div>
-    <div class="cay-myPage-point">
-      <h1>My Point</h1>
-      <div> 0,000 p</div>
-    </div>
-    <div class="cay-myPage-theatre">
-      <h1>My Favorite theatre</h1>
-      <%-- JSTL 로 반복문 사용 --%>
-      <span> A </span>
-    </div>
-  </div>
-  <div class="cay-myPage-myInfo">
-    <div class="cay-myPage-history">
-        <h1>My History</h1>
-      <a href="">
-        <span> Num </span>
-        <div> Watched Movie </div>
-      </a>
-      <a href="">
-        <span> Num </span>
-        <div> Review </div>
-      </a>
-      <a href="">
-        <span> Num </span>
-        <div> Wishlist </div>
-      </a>
-    </div>
-    <div class="cay-myPage-favorite">
-        <h1>Favorite Genre</h1>
-      <a href="">
-        <%-- JSTL 로 반복문 사용 --%>
-        <span> genre tag </span>
-          <span> dummy </span>
-          <span> dummy </span>
-          <span> dummy </span>
-          <span> dummy </span>
-          <span> dummy </span>
-      </a>
-    </div>
-    <div class="cay-myPage-order">
-      <h1>My Order History</h1>
-      <%-- JSTL 로 반복문 사용 --%>
-      <span> Your recent reservation details do not exist.  </span>
-    </div>
-    <div class="cay-myPage-event">
-      <h1>My Event History</h1>
-      <%-- JSTL 로 반복문 사용 --%>
-      <span> No events participated.  </span>
-    </div>
-  </div>
+</div>
 
 </body>
 </html>

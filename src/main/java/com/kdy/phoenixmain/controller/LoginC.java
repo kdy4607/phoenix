@@ -1,7 +1,9 @@
 package com.kdy.phoenixmain.controller;
 
+import com.kdy.phoenixmain.mapper.TagMapper;
 import com.kdy.phoenixmain.service.LoginService;
 import com.kdy.phoenixmain.vo.LoginVO;
+import com.kdy.phoenixmain.vo.TagVO;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,11 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import jakarta.servlet.http.HttpSession;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -22,6 +22,9 @@ public class LoginC {
 
     @Autowired
     private LoginService loginService;
+
+    @Autowired
+    private TagMapper tagMapper;
 
     // ===== 로그인 관련 =====
 
@@ -96,6 +99,12 @@ public class LoginC {
         if (user == null) {
             return "redirect:/login";
         }
+
+        String homeName = user.getU_name().substring(0, 3);
+        model.addAttribute("homeName", homeName);
+
+        List<TagVO> tagList = tagMapper.selectAllTag();
+        model.addAttribute("tagList", tagList);
 
         model.addAttribute("user", user);
         model.addAttribute("content", "myPageHome.jsp");
