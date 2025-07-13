@@ -17,7 +17,7 @@
             <h1> Your Account Has Been Deleted Successfully </h1>
             <img src="" alt="">
             <button onclick="location.href='/join/step1'"> Creat Account</button>
-            <button onclick="location.href='/main'"> Go To Main </button>
+            <button onclick="location.href='/'"> Go To Main </button>
 
         </div>
     </main>

@@ -1,59 +1,63 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: user
-  Date: 2025-07-03
-  Time: 오후 6:21
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>마이페이지 - Phoenix Cinema</title>
     <link rel="stylesheet" href="/resources/css/user.css">
-    <script src="/resources/js/login.js"></script>
+    <!-- header.js 사용 (login.js 대신) -->
+    <script src="/resources/js/header.js"></script>
 </head>
 <body>
 
-<jsp:include page="/WEB-INF/views/header.jsp" />
+<jsp:include page="/WEB-INF/views/header.jsp"/>
 
 <button onclick="logout()"></button>
 
-    <main class="cay-myPage-container">
-        <div class="cay-myPage-aside">
-            <div><a href="/mypage"> My Page </a></div>
-            <ul>
-                <li>  <a href="/mypage/profile?u_id=${user.u_id}"> Profile </a>
-                    <ul>
-                        <li><a href="/mypage/profile?u_id=${user.u_id}">General Info</a></li>
-                        <li> Favorite Theatres</li>
-                        <li> Communications</li>
-                    </ul>
-                </li>
-                <li>My Tickets
-                    <ul>
-                        <li> My Reservation </li>
-                        <li> My History </li>
-                    </ul>
-                </li>
-                <li> Point & Rewards
-                    <ul>
-                        <li> Point</li>
-                        <li> Reward Coupon</li>
-                    </ul>
-                </li>
-                <%-- 필요한가? --%>
-                <li> Event</li>
-                <%-- 결제 시스템을 구현할 것인가? --%>
-                <li> Wallet</li>
-                <%-- 회원 정보에 포함 시킬 것인가? --%>
-                <li> Movie Reminder (찜)</li>
-            </ul>
-        </div>
-        <jsp:include page="${content}"></jsp:include>
-    </main>
-    <footer class="cay-footer"><h1>footer</h1></footer>
-</div>
-<button onclick="logout()"> logout </button>
+<main class="cay-myPage-container">
+    <div class="cay-myPage-aside">
+        <div><a href="/mypage"> My Page </a></div>
+        <ul>
+            <li><a href="/mypage/profile?u_id=${user.u_id}"> Profile </a>
+                <ul>
+                    <li><a href="/mypage/profile?u_id=${user.u_id}">General Info</a></li>
+                    <li><a href="" onclick="alert('준비 중입니다!')">Favorite Theatres</a></li>
+                </ul>
+            </li>
+            <li><a href="" onclick="alert('준비 중입니다!')">My Tickets</a>
+                <ul>
+                    <li><a href="/reservation/list">My Reservation</a></li>
+                    <li><a href="" onclick="alert('준비 중입니다!')">My History</a></li>
+                </ul>
+            </li>
+            <li><a href="" onclick="alert('준비 중입니다!')">Point & Rewards</a>
+                <ul>
+                    <li><a href="" onclick="alert('준비 중입니다!')">Point</a></li>
+                    <li><a href="" onclick="alert('준비 중입니다!')">Reward Coupon</a></li>
+                </ul>
+            </li>
+            <li><a href="" onclick="alert('준비 중입니다!')">Event</a>
+                <ul>
+                    <li><a href="" onclick="alert('준비 중입니다!')">My Events History</a></li>
+                </ul>
+            </li>
+            <li><a href="" onclick="alert('준비 중입니다!')">Wallet</a>
+                <ul>
+                    <li><a href="" onclick="alert('준비 중입니다!')">Credit/Debit Cards</a></li>
+                    <li><a href="" onclick="alert('준비 중입니다!')">Gift Cards</a></li>
+                </ul>
+            </li>
+            <li><a href="" onclick="alert('준비 중입니다!')">Movie Reminder</a>
+                <ul>
+                    <li><a href="" onclick="alert('준비 중입니다!')">My Movie Reminders</a></li>
+                    <li><a href="" onclick="alert('준비 중입니다!')">Wishlist</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <jsp:include page="${content}"></jsp:include>
+</main>
+<footer class="cay-footer">
+    © 2025 Phoenix Cinema. All rights reserved.
+</footer>
 <script src="/resources/js/login.js"></script>
 </body>
 </html>

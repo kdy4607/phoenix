@@ -1,3 +1,93 @@
+/* 사용자 정보 영역 (로그인 후 표시) */
+.user-info {
+    display: flex; /* 중요: none에서 flex로 변경 */
+    align-items: center;
+    gap: 15px;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #FB4357;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.user-name {
+    color: #333;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.user-menu {
+    position: relative;
+}
+
+.user-menu-btn {
+    background: none;
+    border: none;
+    color: #666;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 8px;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+}
+
+.user-menu-btn:hover {
+    background-color: #f8f9fa;
+}
+
+.user-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    padding: 8px 0;
+    min-width: 180px;
+    z-index: 1000;
+    display: none;
+}
+
+.user-dropdown.show {
+    display: block;
+}
+
+.dropdown-item {
+    display: block;
+    padding: 12px 16px;
+    color: #333;
+    text-decoration: none;
+    font-size: 14px;
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.dropdown-item:hover {
+    background-color: #f8f9fa;
+    color: #FB4357;
+    text-decoration: none;
+}
+
+.dropdown-divider {
+    height: 1px;
+    background-color: #eee;
+    margin: 8px 0;
+}
+
+/* 기존 CSS 유지 */
 * {
     margin: 0;
     padding: 0;
@@ -129,136 +219,106 @@
     color: white;
 }
 
-/* 사용자 정보 영역 (로그인 후 표시) */
-.user-info {
-    display: none; /* 로그인 전에는 숨김 */
-    align-items: center;
-    gap: 15px;
-}
-
-.user-avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: #FB4357;
-    color: white;
+/* Logo styles */
+.header-logo {
     display: flex;
     align-items: center;
-    justify-content: center;
+    gap: 5px;
+    font-size: 28px;
     font-weight: bold;
-    font-size: 16px;
+    color: #FB4357;
+    text-decoration: none;
+    transition: all 0.3s ease;
 }
 
-.user-name {
-    color: #333;
-    font-weight: 600;
+.header-logo:hover {
+    color: #e63946;
+    text-decoration: none;
+    transform: translateY(-1px);
+}
+
+.logo-image {
+    height: 40px;
+    width: auto;
+    transition: transform 0.3s ease;
+    /*filter: drop-shadow(0 2px 4px rgba(251, 67, 87, 0.2));*/
+}
+
+.header-logo:hover .logo-image {
+    transform: scale(1.1);
+}
+
+.logo-text {
+    font-family: 'Arial', sans-serif;
+    letter-spacing: 1px;
+}
+
+/* Authentication buttons */
+.auth-buttons {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.btn-login, .btn-signup {
+    padding: 8px 16px;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: all 0.3s ease;
     font-size: 14px;
 }
 
-.user-menu {
-    position: relative;
-}
-
-.user-menu-btn {
-    background: none;
-    border: none;
-    color: #666;
-    cursor: pointer;
-    font-size: 18px;
-    padding: 8px;
-    border-radius: 50%;
-    transition: background-color 0.3s ease;
-}
-
-.user-menu-btn:hover {
-    background-color: #f8f9fa;
-}
-
-.user-dropdown {
-    display: none;
-    position: absolute;
-    top: 100%;
-    right: 0;
-    background-color: white;
-    border: 1px solid #e5e5e5;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    min-width: 150px;
-    z-index: 1001;
-    margin-top: 5px;
-}
-
-.user-dropdown.show {
-    display: block;
-}
-
-.dropdown-item {
-    display: block;
-    padding: 12px 16px;
-    text-decoration: none;
+.btn-login {
     color: #333;
-    font-size: 14px;
-    transition: background-color 0.3s ease;
-    border: none;
-    width: 100%;
-    text-align: left;
-    background: none;
-    cursor: pointer;
+    border: 1px solid #ddd;
+    background: white;
 }
 
-.dropdown-item:hover {
-    background-color: #f8f9fa;
+.btn-login:hover {
+    background: #f8f9fa;
+    color: #FB4357;
     text-decoration: none;
-    color: #333;
 }
 
-.dropdown-divider {
-    height: 1px;
-    background-color: #e5e5e5;
-    margin: 5px 0;
+.btn-signup {
+    background: #FB4357;
+    color: white;
+    border: 1px solid #FB4357;
 }
 
-/* 반응형 디자인 */
+.btn-signup:hover {
+    background: #e63946;
+    border-color: #e63946;
+    text-decoration: none;
+    color: white;
+}
+
+/* Responsive design */
 @media (max-width: 768px) {
     .header-content {
-        flex-direction: column;
-        gap: 15px;
-        padding: 15px;
-    }
-
-    .header-left {
-        flex-direction: column;
-        gap: 15px;
-        width: 100%;
-    }
-
-    .nav-menu {
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 20px;
-    }
-
-    .auth-section {
-        justify-content: center;
+        padding: 15px 15px;
     }
 
     .header-logo {
-        font-size: 28px;
+        font-size: 24px;
+        gap: 8px;
     }
-}
 
-@media (max-width: 480px) {
+    .logo-image {
+        height: 32px;
+    }
+
     .nav-menu {
-        gap: 15px;
+        display: none;
     }
 
-    .nav-menu a {
-        font-size: 14px;
+    .auth-buttons {
+        gap: 8px;
     }
 
-    .auth-btn {
-        padding: 8px 16px;
+    .btn-login, .btn-signup {
+        padding: 6px 12px;
         font-size: 13px;
-        min-width: 70px;
     }
 }

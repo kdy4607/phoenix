@@ -14,38 +14,41 @@
 <jsp:include page="/WEB-INF/views/header.jsp" />
 
 <div class="container">
-  <div class="main-logo">🎬 Phoenix Cinema</div>
-  <div class="description">영화의 모든 순간을 함께하는 프리미엄 시네마</div>
+  <div class="main-logo">
+    <img src="/resources/images/logo.png" alt="Phoenix Cinema Logo" class="main-logo-image">
+    <span class="main-logo-text">Phoenix Cinema</span>
+  </div>
+  <div class="description">Premium Cinema System made by Soldesk</div>
 
   <div class="menu-grid">
     <a href="/movie-all" class="menu-item">
       <span class="icon">🎭</span>
-      영화 목록
+      Movie List
     </a>
 
     <a href="/schedule" class="menu-item">
       <span class="icon">🎫</span>
-      상영시간표 & 예매
+      Schedule & Book
     </a>
 
     <a href="/reservation/list" class="menu-item">
       <span class="icon">📋</span>
-      예약 내역
+      Booking history
     </a>
 
-    <a href="/mypage" class="menu-item" onclick="alert('준비 중입니다!')">
+    <a href="/mypage" class="menu-item">
       <span class="icon">👤</span>
-      마이페이지
+      My Page
     </a>
 
     <a href="/credits" class="menu-item">
       <span class="icon">🏢</span>
-      개발팀 소개
+      Credits
     </a>
 
     <a href="#" class="menu-item" onclick="alert('준비 중입니다!')">
       <span class="icon">🎉</span>
-      이벤트
+      Events
     </a>
   </div>
 
