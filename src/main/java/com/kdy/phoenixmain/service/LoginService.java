@@ -87,7 +87,7 @@ public class LoginService {
             }
 
             // 회원 정보 업데이트
-            loginMapper.updateLogin(loginVO);
+            loginMapper.updateLoginByID(loginVO);
 
             System.out.println("✅ 회원 정보 수정 완료 - ID: " + loginVO.getU_id());
 

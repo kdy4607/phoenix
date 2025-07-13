@@ -25,7 +25,7 @@ a {
 
 /* footer */
 .cay-footer {
-    height: 100%;
+    height: 30%;
     margin: auto;
     padding: 50px 0;
     color: #999;
@@ -54,7 +54,7 @@ a {
     margin: 100px auto 100px auto;
     padding: 1.5rem;
     border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     background-color: white;
 }
 
@@ -71,10 +71,18 @@ a {
 }
 
 @keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    30% { transform: translateX(3px); }
-    50% { transform: translateX(1px); }
-    80% { transform: translateX(3px); }
+    0%, 100% {
+        transform: translateX(0);
+    }
+    30% {
+        transform: translateX(3px);
+    }
+    50% {
+        transform: translateX(1px);
+    }
+    80% {
+        transform: translateX(3px);
+    }
 }
 
 .cay-login-wrap > h2 {
@@ -82,6 +90,7 @@ a {
     font-size: 2.5rem;
     color: #666;
 }
+
 .cay-login-wrap > h2 > div {
     margin-top: 0.25rem;
     font-size: 1.5rem;
@@ -157,7 +166,7 @@ a {
     margin: 100px auto 100px auto;
     padding: 1.5rem;
     border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     background-color: white;
 }
 
@@ -166,7 +175,7 @@ a {
     margin: auto;
     padding: 3rem;
     border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     background-color: white;
     text-align: center;
 }
@@ -189,74 +198,275 @@ a {
 /* My Page Main */
 
 .cay-myPage-container {
-    width: 90%;
-    margin: 3rem auto;
+    width: 100%;
+    max-width: 1200px;
+    min-width: 1200px;
+    margin: 1rem auto;
+    padding: 3rem 0;
     display: flex;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    background-color: white;
     justify-content: center;
 }
 
-.cay-myPage-profile {
-    border: 2px solid;
-    margin: auto;
-    display: flex;
-}
-
-.cay-myPage-profile > img {
-    border : 2px solid;
-    width: 100px;
-    height: 100px;
-}
-
-.cay-myPage-content {
-    border: 2px solid;
-    width: 72.5%;
-    height: 90%;
-    margin: 1rem 1rem 1rem 0.5rem;
-
-}
-
 .cay-myPage-aside {
-    height: 30rem;
-    border-radius: 8px;
-    border: 2px solid #FB4357;
+    width: 250px;
+    height: 50%;
     margin: 1rem 0.5rem 1rem 1rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .cay-myPage-aside > div:nth-child(1) {
     width: 100%;
-    height: 20rem;
+    height: 5rem;
+    padding-top: 1rem;
     font-size: 2rem;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
     background-color: #FB4357;
     text-align: center;
 }
 
 .cay-myPage-aside > ul > li {
-    padding: 3rem;
+    margin: 1rem 0;
+    padding: 1rem 2rem;
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.cay-myPage-aside > ul > li > ul {
+    padding: 1rem;
+    display: none;
+}
+
+.cay-myPage-aside > ul > li > ul > li {
+    padding: 0.5rem;
+}
+
+.cay-myPage-aside > ul > li:hover > ul {
+    display: block;
 }
 
 .cay-myPage-aside > div:nth-child(1) > a {
     color: white;
+    font-weight: bolder;
     text-decoration: none;
 }
 
+.cay-myPage-aside ul > li > a,
+.cay-myPage-aside ul > li > ul > li > a {
+    font-size: 1.25rem;
+    font-weight: bold;
+    text-decoration: none;
+    transition: color 0.1s ease;
+    color: #333;
+    position: relative;
+}
+
+.cay-myPage-aside ul > li > a:hover,
+.cay-myPage-aside ul > li > ul > li > a:hover {
+    color: #FB4357;
+}
+
+.cay-myPage-aside ul > li > a:after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #FB4357;
+    transition: width 0.1s ease;
+}
+
+.cay-myPage-aside ul > li > a:hover:after {
+    width: 100%;
+}
+
+.cay-myPage-content {
+    width: 950px;
+    height: 90%;
+    /*margin: 1rem 1rem 1rem 0.5rem;*/
+    /*padding: 2rem;*/
+    border-radius: 8px;
+}
 
 /* My page - Home */
 
-.cay-myPage-Home {
-    border: 2px solid;
+.cay-myPage-home {
     width: 90%;
     height: 90%;
     margin: 1rem auto;
 }
 
-/* My Page - Profile */
+.cay-myPage-top {
+    width: 97.5%;
+    padding: 1.5rem;
+    margin: 1rem auto;
+    border-left: 4px solid #FB4357;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    display: flex;
+}
+
+.cay-myPage-top > div:nth-child(1) {
+    width: 17.5%;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    margin-right: 1rem;
+    font-size: 2.5rem;
+    border-radius: 8px;
+    border: 2px solid #FB4357;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    text-align: center;
+}
+
+.cay-myPage-top > div:nth-child(2) {
+    width: 45%;
+    margin: auto 1rem;
+    padding: 0.5rem;
+}
+
+.cay-myPage-top > div:nth-child(2) > div:nth-child(1) {
+    margin-bottom: 0.5rem;
+}
+
+.cay-myPage-top > div:nth-child(3) {
+    margin: auto 1rem;
+    padding: 0.5rem;
+}
+
+.cay-myPage-top > div:nth-child(3) {
+    margin: auto 1rem;
+    padding: 0.5rem;
+    font-size: 1.25rem;
+    font-weight: bold;
+    display: flex;
+    text-align: center;
+}
+
+.cay-myPage-top > div:nth-child(3) > div {
+    margin: auto 2.5rem;
+}
+
+#point-ctn, #membership-ctn {
+    font-size: 2rem;
+    color: #FB4357;
+}
+
+.cay-myPage-bottom {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.cay-myPage-bottom > div {
+    width: 47.5%;
+    margin: 1rem auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.cay-myPage-bottom > div > h1 {
+    padding: 15px 20px;
+    font-size: 1.25rem;
+    border-top: solid 4px #FB4357;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.cay-myPage-bottom a {
+    color: black;
+    text-decoration: none;
+}
+
+.cay-myPage-bottom > div > div:nth-child(2),
+.cay-myPage-bottom > div > div:nth-child(3) {
+    width: 95%;
+    padding: 1.5rem;
+    margin: auto;
+    border-top: 2px solid;
+    display: flex;
+}
+
+.cay-myPage-history > div:nth-child(2) {
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.cay-myPage-history a {
+    width: 33%;
+}
+
+.cay-myPage-history a > span {;
+    font-size: 2rem;
+    color: #FB4357;
+}
+
+.cay-myPage-history a > div {;
+    font-weight: bold;
+    margin-top: 1rem;
+}
+
+.cay-myPage-genre > div:nth-child(2) {
+    padding: 1.5rem;
+}
+
+.cay-myPage-genre > div > a {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.cay-myPage-genre > div > a > div {
+    margin: 0.25rem;
+    padding: 0.5rem;
+    font-weight: bold;
+    border-radius: 8px;
+    background-color: #FB4357;
+    color: white;
+}
+
+.cay-myPage-order,
+.cay-myPage-event,
+.cay-myPage-reward {
+    width: 97.5% !important;
+}
+
+.cay-myPage-reward h4 {
+    margin: 0.5rem auto;
+}
+
+.cay-myPage-reward > div:nth-child(2),
+.cay-myPage-reward > div:nth-child(3){
+    display: block !important;
+}
+
+.cay-myPage-reward table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.cay-myPage-reward tr {
+    border-top: 1px solid #333333;
+    border-bottom: 1px solid #333333;
+}
+
+.cay-myPage-reward td {
+    padding: 1.5rem;
+}
+
+.cay-myPage-reward td:first-child {
+    width: 40%;
+    border-right : 1px solid #333333;
+}
+
+.cay-myPage-reward td:last-child {
+    width: 60%;
+}
+    /* My Page - Profile */
 .cay-myPage-profile {
-    display: block;
     width: 90%;
     height: 90%;
     margin: 1rem auto;
+    display: block;
 }
 

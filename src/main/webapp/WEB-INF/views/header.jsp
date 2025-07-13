@@ -3,15 +3,15 @@
 <link rel="stylesheet" href="/resources/css/header.css">
 
 <!-- 디버깅용 정보 표시 -->
-<div style="background-color: yellow; padding: 10px; font-size: 12px;">
-    <strong>디버깅 정보:</strong><br>
-    세션 사용자: ${sessionScope.user}<br>
-    사용자 이름: ${sessionScope.user.u_name}<br>
-    사용자 ID: ${sessionScope.user.u_id}<br>
-    세션 존재 여부: ${not empty sessionScope.user}<br>
-    사용자 객체: ${user}<br>
-    사용자 이름2: ${user.u_name}
-</div>
+<%--<div style="background-color: yellow; padding: 10px; font-size: 12px;">--%>
+<%--    <strong>디버깅 정보:</strong><br>--%>
+<%--    세션 사용자: ${sessionScope.user}<br>--%>
+<%--    사용자 이름: ${sessionScope.user.u_name}<br>--%>
+<%--    사용자 ID: ${sessionScope.user.u_id}<br>--%>
+<%--    세션 존재 여부: ${not empty sessionScope.user}<br>--%>
+<%--    사용자 객체: ${user}<br>--%>
+<%--    사용자 이름2: ${user.u_name}--%>
+<%--</div>--%>
 
 <header class="phoenix-header">
     <div class="header-content">
