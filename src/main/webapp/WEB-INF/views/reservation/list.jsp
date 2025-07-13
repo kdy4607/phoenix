@@ -100,11 +100,12 @@
                                  data-reservation-id="${reservation.reservation_id}"
                                  data-status="${reservation.reservation_status}"
                                  data-amount="${reservation.total_amount}"
-                                 data-date="${reservation.run_date}">
+                                 data-reserved-date="<fmt:formatDate value='${reservation.reserved_at}' pattern='yyyy-MM-dd HH:mm:ss' />"
+                                 data-run-date="${reservation.run_date}">
 
                                 <div class="reservation-header">
                                     <div class="reservation-id">예약번호: ${reservation.reservation_id}</div>
-                                    <div class="reservation-status ${reservation.reservation_status == '예약완료' ? 'active' : 'canceled'}">
+                                    <div class="reservation-status ${reservation.reservation_status == '예약완료' ? 'status-completed' : 'status-cancelled'}">
                                             ${reservation.reservation_status}
                                     </div>
                                 </div>
@@ -259,14 +260,28 @@
         const container = document.getElementById('reservationList');
         const cards = Array.from(container.querySelectorAll('.reservation-card'));
 
+        console.log('🔄 정렬 시작:', sortOrder);
+
         cards.sort((a, b) => {
             switch (sortOrder) {
                 case 'recent':
-                    return new Date(b.getAttribute('data-date')) - new Date(a.getAttribute('data-date'));
+                    // 실제 예약 날짜 기준으로 최신순 정렬
+                    const dateA = new Date(a.getAttribute('data-reserved-date'));
+                    const dateB = new Date(b.getAttribute('data-reserved-date'));
+                    return dateB - dateA; // 최신이 먼저
+
                 case 'old':
-                    return new Date(a.getAttribute('data-date')) - new Date(b.getAttribute('data-date'));
+                    // 실제 예약 날짜 기준으로 오래된순 정렬
+                    const oldDateA = new Date(a.getAttribute('data-reserved-date'));
+                    const oldDateB = new Date(b.getAttribute('data-reserved-date'));
+                    return oldDateA - oldDateB; // 오래된 것이 먼저
+
                 case 'amount':
-                    return parseInt(b.getAttribute('data-amount')) - parseInt(a.getAttribute('data-amount'));
+                    // 금액순 정렬 (높은 금액부터)
+                    const amountA = parseInt(a.getAttribute('data-amount')) || 0;
+                    const amountB = parseInt(b.getAttribute('data-amount')) || 0;
+                    return amountB - amountA;
+
                 default:
                     return 0;
             }
@@ -274,6 +289,8 @@
 
         // 정렬된 카드들을 다시 컨테이너에 추가
         cards.forEach(card => container.appendChild(card));
+
+        console.log('✅ 정렬 완료:', sortOrder);
     }
 
     // 새로고침 함수
