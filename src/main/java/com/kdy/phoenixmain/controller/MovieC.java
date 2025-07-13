@@ -1,10 +1,8 @@
 package com.kdy.phoenixmain.controller;
 
-// servlet -> url 파일을 다수로 운용.
-// url 매핑 / 흐름 제어
-
 import com.kdy.phoenixmain.mapper.TagMapper;
 import com.kdy.phoenixmain.service.MovieService;
+import com.kdy.phoenixmain.service.TagService;
 import com.kdy.phoenixmain.vo.MovieVO;
 import com.kdy.phoenixmain.vo.TagVO;
 import jakarta.servlet.http.HttpSession;
@@ -14,32 +12,44 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 public class MovieC {
 
-    @Autowired          // 의존성 주입   DI
+    @Autowired
     private MovieService movieService;
+
+    @Autowired
+    private TagService tagService;
+
     @Autowired
     private TagMapper tagMapper;
 
-
+    // 전체 영화 목록 or 검색어 기반 목록 출력
     @GetMapping("/movie-all")
-    public String movieAll(Model model) {
-        model.addAttribute("movies", movieService.getAllMovie());
+    public String movieAll(@RequestParam(value = "title", required = false) String title, Model model) {
+        List<MovieVO> movies = (title != null && !title.isBlank())
+                ? movieService.findMoviesBySearch(title)
+                : movieService.getAllMovie();
+
         List<TagVO> tagList = tagMapper.selectAllTag();
+
+        model.addAttribute("movies", movies);
         model.addAttribute("tagList", tagList);
+
         return "movie/movie";
     }
 
 
     @GetMapping("/oneMovieDetail")
-    public String movieDetailOne(@RequestParam("MOVIE_ID") int MOVIE_ID, Model model,  HttpSession session) {
+    public String movieDetailOne(@RequestParam("movie_id") int movie_id, Model model, HttpSession session) {
         //이전 세션값 저장용
-        session.setAttribute("lastMovieId", MOVIE_ID);
+        session.setAttribute("lastMovieId", movie_id);
 
         //별개수 출력
-        MovieVO movie = movieService.selectOneMovie(MOVIE_ID);
+        MovieVO movie = movieService.selectOneMovie(movie_id);
         //model.addAttribute("movieStar", movie);
         int proStar = (int) Math.floor(movie.getPro_critic());
         int userStar = (int) Math.floor(movie.getUser_critic());
@@ -48,21 +58,21 @@ public class MovieC {
         model.addAttribute("userStar", userStar);
         model.addAttribute("plusStar", plusStar);
         //페이지 출력
-        System.out.println(MOVIE_ID);
+        System.out.println(movie_id);
         //페이지출력 - 인클루드1 - 영화1개선택시 보이는 세부화면
         model.addAttribute("movieDetail", "movie-detail.jsp");
         //인클루드1의 데이터주는곳
-        model.addAttribute("movieDetail2", movieService.selectOneMovie(MOVIE_ID));
+        model.addAttribute("movieDetail2", movieService.selectOneMovie(movie_id));
         //페이지 출력 - 인클루드2 -무비 탭 클릭부분
         model.addAttribute("movieTapClic", "movie-detail-tap.jsp");
         System.out.println(model.getAttribute("movieDetail"));
 
         // tap 중에서 뭐더라 그 음... 추천영화..
-        List<TagVO> tagList = movieService.getTagsByMovieId(MOVIE_ID);
+        List<TagVO> tagList = movieService.getTagsByMovieId(movie_id);
         List<Integer> tagIds = tagList.stream()
                 .map(TagVO::getTag_id)
                 .toList();
-        List<MovieVO> relatedMovies = movieService.selectMoviesByAnyTag(tagIds, MOVIE_ID); // 자기 자신 제외
+        List<MovieVO> relatedMovies = movieService.selectMoviesByAnyTag(tagIds, movie_id); // 자기 자신 제외
         model.addAttribute("relatedMovies", relatedMovies);
 
         return "movieDetailView";
@@ -70,19 +80,24 @@ public class MovieC {
 
 
     @PostMapping("/movies/filter")
-    public String filterMovies(@RequestBody(required = false) List<Integer> tagIds, Model model) {
-        try {
-            List<MovieVO> filteredMovies = movieService.findMoviesByTagIds(tagIds);
-            model.addAttribute("movies", filteredMovies);
-        } catch (Exception e) {
-            e.printStackTrace();
-            model.addAttribute("movies", List.of()); // 에러 시 빈 리스트
+    public String filterMovies(@RequestBody Map<String, Object> payload, Model model) {
+        String title = (String) payload.get("title");
+        @SuppressWarnings("unchecked")
+        List<Integer> tagIds = (List<Integer>) payload.get("tagIds");
+
+        List<MovieVO> filteredMovies;
+
+        if (tagIds == null || tagIds.isEmpty()) {
+            filteredMovies = (title == null || title.isBlank())
+                    ? movieService.getAllMovie()
+                    : movieService.findMoviesBySearch(title);
+        } else if (title != null && !title.isBlank()) {
+            filteredMovies = movieService.findMoviesByTagsAndTitle(tagIds, title);
+        } else {
+            filteredMovies = movieService.findMoviesByTagIds(tagIds);
         }
+
+        model.addAttribute("movies", filteredMovies);
         return "movie/movie-fragment";
     }
-
-
-
-
-
 }
