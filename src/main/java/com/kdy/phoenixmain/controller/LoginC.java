@@ -188,7 +188,7 @@ public class LoginC {
 
     // ===== 회원정보 수정 관련 =====
 
-    @GetMapping("/mypage/general-info/update")
+    @PostMapping("/mypage/general-info/update")
     public String generalInfoUpdate(HttpSession session, Model model) {
         LoginVO user = (LoginVO) session.getAttribute("user");
 
