@@ -20,12 +20,12 @@
         <c:choose>
             <c:when test="${not empty sessionScope.username}">
                 <div>${sessionScope.username}님 로그인 되었습니다</div>
-                <form action="/logout" method="post">
+                <form action="/logoutx21" method="post">
                     <button>로그아웃</button>
                 </form>
             </c:when>
             <c:otherwise>
-                <div><a href="/login">로그인</a></div>
+                <div><a href="/loginx21">로그인</a></div>
             </c:otherwise>
         </c:choose>
     </div>

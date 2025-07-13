@@ -9,7 +9,7 @@
 <body>
 <h2>로그인 페이지</h2>
 
-<form action="/login" method="post">
+<form action="/loginx21" method="post">
   <label for="username">아이디:</label>
   <input type="text" id="username" name="username" required>
   <br><br>

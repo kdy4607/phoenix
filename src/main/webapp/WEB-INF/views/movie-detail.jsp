@@ -5,7 +5,7 @@
     <title>(사진, 타이틀, 총 별점, 감독,주연,관객별점, 전문가 평점, 북마크)
         값을 사용하는 기준으로 같이 묶음.) </title>
     <link rel="stylesheet" href="/resources/css/movie-detail.css">
-    <link rel="stylesheet" href="/resources/css/detailBookMark.js">
+    <script src="/js/detailBookMark.js"></script>
 </head>
 <body>
 <div class="M-detail">
