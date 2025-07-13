@@ -51,12 +51,12 @@
     </c:if>
 
     <!-- Current Theater -->
-    <div class="section">
-        <div class="section-header">Phoenix 종각점</div>
-        <div class="section-content">
-            <p style="color: #666; font-size: 14px;">서울특별시 종로구 종로12길 15</p>
-        </div>
-    </div>
+<%--    <div class="section">--%>
+<%--        <div class="section-header">Phoenix 종각점</div>--%>
+<%--        <div class="section-content">--%>
+<%--            <p style="color: #666; font-size: 14px;">서울특별시 종로구 종로12길 15</p>--%>
+<%--        </div>--%>
+<%--    </div>--%>
 
     <!-- Movie Schedule Section -->
     <div class="section" id="scheduleSection">
