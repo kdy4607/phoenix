@@ -38,6 +38,33 @@ public class MovieService {
         return result;
     }
 
+
+    public List<MovieVO> findMoviesBySearch(String title) {
+        return movieMapper.findByTitle(title);
+    }
+
+    public List<MovieVO> findMoviesByTagsAndTitle(List<Integer> tagIds, String title) {
+        // 아무것도 없으면 전체 조회
+        if ((tagIds == null || tagIds.isEmpty()) && (title == null || title.isBlank())) {
+            return getAllMovie();
+        }
+
+        // 태그 없이 검색어만 있는 경우
+        if (tagIds == null || tagIds.isEmpty()) {
+            return findMoviesBySearch(title);
+        }
+
+        // 검색어 없이 태그만 있는 경우
+        if (title == null || title.isBlank()) {
+            return findMoviesByTagIds(tagIds);
+        }
+
+        // 검색어 + 태그 둘 다 있는 경우
+        return movieMapper.selectMoviesByTagsAndTitle(tagIds, tagIds.size(), title);
+    }
+
+
+
     public List<TagVO> getTagsbyMovieId(int movieId) {
     return movieMapper.getTagsByMovieId(movieId);
     }

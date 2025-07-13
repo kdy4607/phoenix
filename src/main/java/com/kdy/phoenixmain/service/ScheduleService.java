@@ -20,15 +20,15 @@ public class ScheduleService {
 
     // 특정 날짜의 상영시간 조회
 
-    public List<RuntimeVO> getRuntimesByDate(Date date) {
-        return runtimeMapper.getRuntimesByDate(date);
-    }
+//    public List<RuntimeVO> getRuntimesByDate(Date date) {
+//        return runtimeMapper.getRuntimesByDate(date);
+//    }
 
     // 현재부터 7일간의 상영시간 조회
 
-    public List<RuntimeVO> getUpcomingRuntimes() {
-        return runtimeMapper.getUpcomingRuntimes();
-    }
+//    public List<RuntimeVO> getUpcomingRuntimes() {
+//        return runtimeMapper.getUpcomingRuntimes();
+//    }
 
     // 영화별로 그룹화된 상영시간 조회
 
