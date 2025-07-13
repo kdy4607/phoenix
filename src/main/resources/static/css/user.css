@@ -1,0 +1,177 @@
+/* Main Setting */
+* {
+    margin: 0;
+    top: 0;
+}
+
+ul, li {
+    list-style-type: none;
+}
+
+html, body, .cay-login-main-wrap {
+    max-width: 1200px;
+    min-width: 1000px;
+    height: 100%;
+    margin: auto;
+}
+
+/* Header */
+.cay-header {
+    border: 2px solid;
+    height: 5rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Nav */
+.cay-nav {
+    border: 2px solid;
+    height: 5rem;
+}
+
+/* footer */
+.cay-footer {
+    border: 2px solid;
+
+    height: 10rem;
+    margin: auto;
+}
+
+/* Main */
+
+/* login */
+.cay-login-container {
+    border: 2px solid;
+    margin: auto;
+    display: flex;
+}
+
+.cay-login-content {
+    border: 2px solid;
+    width: 100%;
+    height: 100%;
+    margin: auto;
+    text-align: center;
+}
+
+.cay-login-wrap {
+    border: 2px solid;
+    width: 450px;
+    height: 600px;
+    margin: 100px auto 100px auto;
+    padding: 1.5rem;
+}
+
+.cay-login-wrap > h1 {
+    margin: 7.5rem 0 2.5rem;
+}
+
+.cay-login-section {
+    margin: 1rem 0;
+}
+
+
+.cay-login-col1 {
+    margin: 1rem;
+}
+
+.cay-login-col1 > input {
+    width: 25rem;
+    height: 4.5rem;
+}
+
+.cay-login-col2 {
+
+    padding: 1.5rem;
+}
+
+/* Join */
+.cay-join-container {
+    border: 2px solid;
+    margin: auto;
+    display: flex;
+}
+
+.cay-join-content {
+    width: 100%;
+    height: 100%;
+    margin: auto;
+    text-align: center;
+}
+
+.cay-join-process {
+    width: 30rem;
+    margin: auto;
+    text-align: center;
+    border: 2px solid;
+}
+
+.cay-join-process-step {
+    display: flex;
+    justify-content: space-between;
+}
+
+.cay-join-process-bar {
+    display: flex;
+    justify-content: space-between;
+}
+
+.cay-join-process-txt {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* My Page Main */
+
+.cay-myPage-container {
+    border: 2px solid;
+    margin: auto;
+    display: flex;
+
+}
+
+.cay-myPage-profile {
+    border: 2px solid;
+    margin: auto;
+    display: flex;
+}
+
+.cay-myPage-profile > img {
+    border : 2px solid;
+    width: 100px;
+    height: 100px;
+}
+
+.cay-myPage-content {
+    border: 2px solid;
+    width: 80%;
+    height: 90%;
+    margin: 1rem auto;
+
+}
+
+.cay-myPage-aside {
+    border: 2px solid;
+    width: 10%;
+    height: 90%;
+    margin: 1rem auto;
+
+}
+
+/* My page - Home */
+
+.cay-myPage-Home {
+    border: 2px solid;
+    width: 90%;
+    height: 90%;
+    margin: 1rem auto;
+}
+
+/* My Page - Profile */
+.cay-myPage-profile {
+    display: block;
+    width: 90%;
+    height: 90%;
+    margin: 1rem auto;
+}
+
