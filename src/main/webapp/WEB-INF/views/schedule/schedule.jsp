@@ -51,12 +51,12 @@
     </c:if>
 
     <!-- Current Theater -->
-    <div class="section">
-        <div class="section-header">Phoenix 종각점</div>
-        <div class="section-content">
-            <p style="color: #666; font-size: 14px;">서울특별시 종로구 종로12길 15</p>
-        </div>
-    </div>
+<%--    <div class="section">--%>
+<%--        <div class="section-header">Phoenix 종각점</div>--%>
+<%--        <div class="section-content">--%>
+<%--            <p style="color: #666; font-size: 14px;">서울특별시 종로구 종로12길 15</p>--%>
+<%--        </div>--%>
+<%--    </div>--%>
 
     <!-- Movie Schedule Section -->
     <div class="section" id="scheduleSection">
@@ -368,45 +368,61 @@
 
         // JSP 파일 내부의 loadSeatSelection 함수를 이것으로 교체하세요
         function loadSeatSelection() {
+
             if (!selectedShowtime) {
                 alert('상영시간을 먼저 선택해주세요.');
                 return;
             }
 
-            // 단계 표시 업데이트
-            updateSteps(2);
+            checkLoginStatus().then(isLoggedIn => {
+                if (!isLoggedIn) {
+                    console.log('❌ 로그인이 필요합니다');
+                    requireLogin();
+                    return;
+                } else {
+                    // ✅ 로그인된 경우 좌석 선택 진행
+                    console.log('✅ 로그인 확인 완료 - 좌석 선택 진행');
 
-            // runtimeId를 정수로 변환
-            const runtimeId = parseInt(selectedShowtime.runtimeId);
+                    // 단계 표시 업데이트
+                    updateSteps(2);
 
-            // 디버깅 로그
-            console.log('🔍 좌석 선택 화면 로드 - Runtime ID:', runtimeId);
-            console.log('📋 selectedShowtime:', selectedShowtime);
+                    // runtimeId를 정수로 변환
+                    const runtimeId = parseInt(selectedShowtime.runtimeId);
 
-            // ✅ 올바른 엔드포인트 사용
-            fetch(`/seat/\${runtimeId}/seats`)
-                .then(response => {
-                    console.log('📡 응답 상태:', response.status);
-                    return response.json();
-                })
-                .then(data => {
-                    console.log('📦 받은 데이터:', data);
+                    // 디버깅 로그
+                    console.log('🔍 좌석 선택 화면 로드 - Runtime ID:', runtimeId);
+                    console.log('📋 selectedShowtime:', selectedShowtime);
 
-                    if (data.success) {
-                        allSeats = data.seats;
-                        seatPrice = data.runtime.price || 12000;
+                    // ✅ 올바른 엔드포인트 사용
+                    fetch(`/seat/\${runtimeId}/seats`)
+                        .then(response => {
+                            console.log('📡 응답 상태:', response.status);
+                            return response.json();
+                        })
+                        .then(data => {
+                            console.log('📦 받은 데이터:', data);
 
-                        // 좌석 선택 화면 표시
-                        showSeatSelection(data.runtime, data.seats);
-                        console.log('✅ 좌석 정보 로드 성공:', data.seats.length + '석');
-                    } else {
-                        alert(data.message || '좌석 정보를 불러올 수 없습니다.');
-                    }
-                })
-                .catch(error => {
-                    console.error('❌ 좌석 정보 로드 오류:', error);
-                    alert('좌석 정보를 불러오는 중 오류가 발생했습니다: ' + error.message);
-                });
+                            if (data.success) {
+                                allSeats = data.seats;
+                                seatPrice = data.runtime.price || 12000;
+
+                                // 좌석 선택 화면 표시
+                                showSeatSelection(data.runtime, data.seats);
+                                console.log('✅ 좌석 정보 로드 성공:', data.seats.length + '석');
+                            } else {
+                                alert(data.message || '좌석 정보를 불러올 수 없습니다.');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('❌ 좌석 정보 로드 오류:', error);
+                            alert('좌석 정보를 불러오는 중 오류가 발생했습니다: ' + error.message);
+                        });
+                }
+
+
+            });
+
+
         }
 
         // 좌석 선택 화면 표시
@@ -996,6 +1012,33 @@
                 return window.btoa(Math.random()).slice(0, 20);
             }
         }
+
+        // ========================================
+        // 로그인 상태 확인 함수
+        // ========================================
+        function checkLoginStatus() {
+            return fetch('/user/check')
+                .then(response => response.json())
+                .then(data => {
+                    return data.isLoggedIn;
+                })
+                .catch(error => {
+                    console.error('로그인 상태 확인 오류:', error);
+                    return false;
+                });
+        }
+
+        // ========================================
+        // 로그인 필요 알림 함수
+        // ========================================
+        function requireLogin() {
+            if (confirm('좌석 선택을 위해 로그인이 필요합니다.\n로그인 페이지로 이동하시겠습니까?')) {
+                const currentUrl = encodeURIComponent(window.location.pathname + window.location.search);
+                window.location.href = '/login?returnUrl=' + currentUrl;
+            }
+        }
+
+
 
     </script>
 </body>
