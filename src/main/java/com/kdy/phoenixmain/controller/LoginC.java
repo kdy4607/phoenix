@@ -2,13 +2,18 @@ package com.kdy.phoenixmain.controller;
 
 import com.kdy.phoenixmain.service.LoginService;
 import com.kdy.phoenixmain.vo.LoginVO;
+import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import jakarta.servlet.http.HttpSession;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,7 +29,7 @@ public class LoginC {
     public String loginForm(@RequestParam(required = false) String returnUrl, Model model) {
         System.out.println("🔐 로그인 폼 요청 - returnUrl: " + returnUrl);
         model.addAttribute("returnUrl", returnUrl);
-        return "login/login";  // login/login.jsp로 통일
+        return "login/login";
     }
 
     @PostMapping("/login")
@@ -57,7 +62,7 @@ public class LoginC {
                 System.out.println("❌ 로그인 실패 - 잘못된 인증 정보");
                 model.addAttribute("errorMessage", "아이디 또는 비밀번호가 올바르지 않습니다.");
                 model.addAttribute("returnUrl", returnUrl);
-                return "login/login";  // 실패 시에도 login/login.jsp로 통일
+                return "login/login";
             }
 
         } catch (Exception e) {
@@ -65,111 +70,191 @@ public class LoginC {
             e.printStackTrace();
             model.addAttribute("errorMessage", "로그인 중 오류가 발생했습니다.");
             model.addAttribute("returnUrl", returnUrl);
-            return "login/login";  // 오류 시에도 login/login.jsp로 통일
+            return "login/login";
         }
     }
 
+    // 로그아웃 (GET과 POST 둘 다 지원)
+    @GetMapping("/logout")
+    public String logoutGet(HttpSession session) {
+        session.invalidate();
+        return "redirect:/";
+    }
+
     @PostMapping("/logout")
-    @ResponseBody
-    public Map<String, Object> logout(HttpSession session) {
-        Map<String, Object> response = new HashMap<>();
-
-        try {
-            LoginVO user = (LoginVO) session.getAttribute("user");
-            if (user != null) {
-                System.out.println("🚪 로그아웃 처리 - 사용자: " + user.getU_name());
-            }
-
-            // 세션 무효화
-            session.invalidate();
-
-            response.put("success", true);
-            response.put("message", "로그아웃이 완료되었습니다.");
-            System.out.println("✅ 로그아웃 완료");
-
-        } catch (Exception e) {
-            System.err.println("❌ 로그아웃 오류: " + e.getMessage());
-            e.printStackTrace();
-            response.put("success", false);
-            response.put("message", "로그아웃 중 오류가 발생했습니다.");
-        }
-
-        return response;
+    public String logoutPost(HttpSession session) {
+        session.invalidate();
+        return "redirect:/";
     }
 
     // ===== 마이페이지 관련 =====
 
     @GetMapping("/mypage")
-    public String myPage(HttpSession session, Model model) {
-        LoginVO user = (LoginVO) session.getAttribute("user");
-
-        if (user == null) {
-            return "redirect:/login?returnUrl=/mypage";
-        }
-
-        // myPageMain.jsp가 아니라 myPageHome.jsp를 include해야 함
-        model.addAttribute("content", "myPageHome.jsp");
-        model.addAttribute("user", user);
-        return "myPage/myPageMain";
-    }
-
-    @GetMapping("/mypage/edit")
-    public String myPageEdit(HttpSession session, Model model) {
-        LoginVO user = (LoginVO) session.getAttribute("user");
-
-        if (user == null) {
-            return "redirect:/login?returnUrl=/mypage/edit";
-        }
-
-        model.addAttribute("content", "myPageEdit.jsp");
-        model.addAttribute("user", user);
-        return "myPage/myPageMain";
-    }
-
-    @PostMapping("/mypage/update")
-    public String updateUser(@ModelAttribute("loginVO") LoginVO loginVO,
-                             HttpSession session,
-                             Model model) {
-
+    public String myPageGet(HttpSession session, Model model) {
         LoginVO user = (LoginVO) session.getAttribute("user");
 
         if (user == null) {
             return "redirect:/login";
         }
 
-        try {
-            // 기존 사용자 ID 유지
-            loginVO.setU_id(user.getU_id());
+        model.addAttribute("user", user);
+        model.addAttribute("content", "myPageHome.jsp");
+        return "myPage/myPageMain";
+    }
 
-            // 사용자 정보 업데이트
-            loginService.updateLogin(loginVO);
+    @PostMapping("/mypage")
+    public String myPagePost(@RequestParam("u_id") String u_id,
+                             @RequestParam("u_pw") String u_pw,
+                             HttpSession session,
+                             Model model,
+                             RedirectAttributes redirectAttributes) {
 
-            // 세션 정보 업데이트
-            session.setAttribute("user", loginVO);
+        if (u_id.isEmpty() || u_pw.isEmpty()) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Please enter both your ID and Password.");
+            return "redirect:/login";
+        }
 
-            model.addAttribute("message", "회원 정보가 성공적으로 수정되었습니다.");
-            model.addAttribute("content", "myPageHome.jsp");  // 수정 후 홈으로
-            model.addAttribute("user", loginVO);
+        LoginVO user = loginService.findById(u_id); // 올바른 메서드 사용
 
-            System.out.println("✅ 회원 정보 수정 완료 - 사용자: " + loginVO.getU_name());
-
-            return "myPage/myPageMain";
-
-        } catch (Exception e) {
-            System.err.println("❌ 회원 정보 수정 오류: " + e.getMessage());
-            e.printStackTrace();
-            model.addAttribute("errorMessage", "회원 정보 수정 중 오류가 발생했습니다.");
-            model.addAttribute("content", "myPageEdit.jsp");
+        if (user != null && user.getU_pw().equals(u_pw)) {
+            session.setAttribute("user", user);
             model.addAttribute("user", user);
             return "myPage/myPageMain";
+        } else {
+            redirectAttributes.addFlashAttribute("errorMessage", "Account does not exist, or entered the wrong ID or password");
+            return "redirect:/login";
         }
     }
 
-    @GetMapping("/mypage/delete")
-    public String myPageDelete(HttpSession session, Model model) {
+    // ===== 마이페이지 프로필 관련 =====
+
+    @GetMapping("/mypage/profile")
+    public String profile(@RequestParam(value = "u_id", required = false) String u_id,
+                          HttpSession session,
+                          RedirectAttributes redirectAttributes,
+                          Model model) {
+
         LoginVO user = (LoginVO) session.getAttribute("user");
 
         if (user == null) {
+            redirectAttributes.addFlashAttribute("errorMessage", "You are logged out.");
+            return "redirect:/login";
+        }
+
+        if (u_id == null || u_id.isEmpty() || !user.getU_id().equals(u_id)) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Invalid access.");
+            return "redirect:/login";
+        }
+
+        model.addAttribute("user", user);
+        model.addAttribute("content", "myPageProfile.jsp");
+        return "myPage/myPageMain";
+    }
+
+    @PostMapping("/mypage/general-info")
+    public String generalInfo(@RequestParam("u_pw") String u_pw,
+                              @RequestParam("u_id") String u_id,
+                              RedirectAttributes redirectAttributes,
+                              HttpSession session,
+                              Model model) {
+
+        LoginVO user = (LoginVO) session.getAttribute("user");
+
+        if (user == null) {
+            redirectAttributes.addFlashAttribute("errorMessage", "You are logged out.");
+            return "redirect:/login";
+        }
+
+        if (user.getU_pw().equals(u_pw)) {
+            model.addAttribute("user", user);
+            model.addAttribute("content", "myPageGeneralInfo.jsp");
+        } else {
+            redirectAttributes.addFlashAttribute("errorMessage", "Password is not valid");
+            return "redirect:/mypage/profile?u_id=" + u_id;
+        }
+
+        return "myPage/myPageMain";
+    }
+
+    // ===== 회원정보 수정 관련 =====
+
+    @GetMapping("/mypage/general-info/update")
+    public String generalInfoUpdate(HttpSession session, Model model) {
+        LoginVO user = (LoginVO) session.getAttribute("user");
+
+        if (user == null) {
+            return "redirect:/login";
+        }
+
+        model.addAttribute("user", user);
+        model.addAttribute("content", "myPageUpdate.jsp");
+        return "myPage/myPageMain";
+    }
+
+    @PostMapping("/mypage/general-info/update/submit")
+    public String generalInfoUpdateSubmit(@ModelAttribute("user") LoginVO userForm,
+                                          @RequestParam("u_id") String u_id,
+                                          @RequestParam("u_pw") String u_pw,
+                                          @RequestParam("u_name") String u_name,
+                                          @RequestParam(value = "u_birth", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date u_birth,
+                                          @RequestParam("u_address") String u_address,
+                                          RedirectAttributes redirectAttributes,
+                                          HttpSession session,
+                                          Model model) {
+
+        LoginVO sessionUser = (LoginVO) session.getAttribute("user");
+
+        if (sessionUser == null) {
+            return "redirect:/login";
+        }
+
+        if (u_pw == null || u_pw.isEmpty()) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Please fill the password");
+            return "redirect:/mypage/general-info/update";
+        }
+
+        if (u_address != null && u_address.length() > 500) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Address must be less than 500 characters");
+            return "redirect:/mypage/general-info/update";
+        }
+
+        try {
+            // 업데이트할 사용자 정보 설정
+            LoginVO updateUser = new LoginVO();
+            updateUser.setU_id(sessionUser.getU_id()); // 세션의 ID 사용 (보안)
+            updateUser.setU_pw(u_pw);
+            updateUser.setU_name(u_name);
+            updateUser.setU_birth(u_birth);
+            updateUser.setU_address(u_address);
+
+            // 회원 정보 업데이트
+            loginService.updateLogin(updateUser); // 올바른 메서드 사용
+
+            // 세션 정보 업데이트
+            session.setAttribute("user", updateUser);
+
+            model.addAttribute("user", updateUser);
+            model.addAttribute("content", "myPageCheck.jsp");
+            model.addAttribute("message", "회원 정보가 성공적으로 수정되었습니다.");
+
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "정보 수정 중 오류가 발생했습니다.");
+            return "redirect:/mypage/general-info/update";
+        }
+
+        return "myPage/myPageMain";
+    }
+
+    // ===== 회원탈퇴 관련 =====
+
+    @GetMapping("/mypage/deleteAccount")
+    public String deleteAccount(@RequestParam("u_id") String u_id,
+                                HttpSession session,
+                                Model model) {
+
+        LoginVO user = (LoginVO) session.getAttribute("user");
+
+        if (user == null || !user.getU_id().equals(u_id)) {
             return "redirect:/login";
         }
 
@@ -178,25 +263,69 @@ public class LoginC {
         return "myPage/myPageMain";
     }
 
+    @PostMapping("/mypage/deleteAccount")
+    public String deleteAccountSubmit(@RequestParam("u_pw") String u_pw,
+                                      Model model,
+                                      RedirectAttributes redirectAttributes,
+                                      HttpSession session) {
+
+        LoginVO user = (LoginVO) session.getAttribute("user");
+
+        if (user == null) {
+            redirectAttributes.addFlashAttribute("errorMessage", "You are logged out.");
+            return "redirect:/login";
+        }
+
+        if (user.getU_pw().equals(u_pw)) {
+            try {
+                loginService.deleteLogin(user.getU_id());
+                session.invalidate();
+                return "login/deleteComplete";
+            } catch (Exception e) {
+                redirectAttributes.addFlashAttribute("errorMessage", "회원탈퇴 중 오류가 발생했습니다.");
+                return "redirect:/mypage/deleteAccount?u_id=" + user.getU_id();
+            }
+        } else {
+            redirectAttributes.addFlashAttribute("errorMessage", "Passwords do not match");
+            return "redirect:/mypage/deleteAccount?u_id=" + user.getU_id();
+        }
+    }
+
     // ===== 회원가입 관련 =====
 
     @GetMapping("/join/step1")
     public String joinStep1(Model model) {
-        model.addAttribute("loginVO", new LoginVO());
         model.addAttribute("content", "joinFirstPage.jsp");
         return "join/joinMain";
     }
 
+    @GetMapping("/join/step2")
+    public String joinStep2(HttpSession session, Model model) {
+        LoginVO loginVO = (LoginVO) session.getAttribute("loginVO");
+        model.addAttribute("loginVO", loginVO);
+        model.addAttribute("content", "joinSecondPage.jsp");
+        return "join/joinMain";
+    }
+
     @PostMapping("/join/step2")
-    public String joinStep2(@ModelAttribute("loginVO") LoginVO loginVO, Model model) {
-        if (loginVO.getU_id() == null || loginVO.getU_id().isEmpty()
-                || loginVO.getU_pw() == null || loginVO.getU_pw().isEmpty()) {
-            model.addAttribute("errorMessage", "아이디와 비밀번호는 필수 입력 사항입니다.");
-            model.addAttribute("content", "joinFirstPage.jsp");
-            return "join/joinMain";
+    public String joinStep2Post(@ModelAttribute("loginVO") LoginVO loginVO,
+                                @RequestParam("u_ReEntered_pw") String u_ReEntered_pw,
+                                RedirectAttributes redirectAttributes,
+                                HttpSession session,
+                                Model model) {
+
+        if (u_ReEntered_pw == null || u_ReEntered_pw.isEmpty() || !u_ReEntered_pw.equals(loginVO.getU_pw())) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Passwords do not match");
+            return "redirect:/join/step1";
         }
 
-        // 아이디 중복 체크 (선택사항)
+        if (loginVO.getU_id() == null || loginVO.getU_id().isEmpty()
+                || loginVO.getU_pw() == null || loginVO.getU_pw().isEmpty()) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Please fill all the fields");
+            return "redirect:/join/step1";
+        }
+
+        // 아이디 중복 체크
         try {
             LoginVO existingUser = loginService.findById(loginVO.getU_id());
             if (existingUser != null) {
@@ -208,19 +337,29 @@ public class LoginC {
             // 사용자가 없으면 정상 (가입 가능)
         }
 
+        session.setAttribute("loginVO", loginVO);
         model.addAttribute("loginVO", loginVO);
         model.addAttribute("content", "joinSecondPage.jsp");
         return "join/joinMain";
     }
 
     @PostMapping("/join/step3")
-    public String joinStep3(@ModelAttribute("loginVO") LoginVO loginVO, Model model) {
-        if (loginVO.getU_name() == null || loginVO.getU_name().isEmpty()) {
-            model.addAttribute("errorMessage", "성함을 입력해주세요.");
-            model.addAttribute("content", "joinSecondPage.jsp");
-            return "join/joinMain";
+    public String joinStep3(@ModelAttribute("loginVO") LoginVO loginVO,
+                            HttpSession session,
+                            Model model) {
+
+        if (loginVO.getU_address() != null && loginVO.getU_address().length() > 500) {
+            session.setAttribute("loginVO", loginVO);
+            return "redirect:/join/step2";
         }
 
+        if (loginVO.getU_name() == null || loginVO.getU_name().isEmpty()) {
+            model.addAttribute("errorMessage", "성함을 입력해주세요.");
+            session.setAttribute("loginVO", loginVO);
+            return "redirect:/join/step2";
+        }
+
+        session.setAttribute("loginVO", loginVO);
         model.addAttribute("loginVO", loginVO);
         model.addAttribute("content", "joinThirdPage.jsp");
         return "join/joinMain";
@@ -229,6 +368,7 @@ public class LoginC {
     @PostMapping("/join/complete")
     public String joinComplete(@ModelAttribute("loginVO") LoginVO user,
                                HttpSession session,
+                               RedirectAttributes redirectAttributes,
                                Model model) {
 
         // 주소가 빈 문자열인 경우 null로 설정
@@ -237,25 +377,14 @@ public class LoginC {
         }
 
         try {
-            System.out.println("🆕 회원가입 시도 - ID: " + user.getU_id() + ", 이름: " + user.getU_name());
-
-            // 회원 정보 저장
             loginService.insertLogin(user);
-
-            // 회원가입 성공 시 자동 로그인
-            session.setAttribute("user", user);
-
-            model.addAttribute("message", "회원 가입이 성공적으로 완료되었습니다!");
             model.addAttribute("content", "joinCompletePage.jsp");
-
-            System.out.println("✅ 회원가입 완료 - 사용자: " + user.getU_name());
-
+            session.setAttribute("user", user);
             return "join/joinMain";
 
         } catch (Exception e) {
-            System.err.println("❌ 회원가입 오류: " + e.getMessage());
             e.printStackTrace();
-            model.addAttribute("errorMessage", "회원가입 중 오류가 발생했습니다. (이미 존재하는 아이디/닉네임 또는 기타 DB 문제)");
+            redirectAttributes.addFlashAttribute("errorMessage", "Failed to register");
             return "redirect:/join/step1";
         }
     }

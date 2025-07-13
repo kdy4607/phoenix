@@ -256,4 +256,61 @@ public class ReservationService {
     public ReservationVO getReservationStats(String userId) {  // int -> String 변경
         return reservationMapper.getReservationStatsByUser(userId);
     }
+
+    @Transactional
+    public ReservationVO createReservation(
+            int runtimeId,
+            List<Integer> seatIds,
+            int adultCount,
+            int youthCount,
+            int childCount,
+            String userId
+    ) {
+        // 1) 상영시간 정보 조회
+        RuntimeVO runtime = runtimeMapper.getRuntimeById(runtimeId);
+        if (runtime == null) throw new RuntimeException("상영시간을 찾을 수 없습니다.");
+
+        // 2) 가격 계산
+        int priceAdult = runtime.getPrice();
+        int priceYouth = priceAdult - 2000;
+        int priceChild = priceAdult - 4000;
+        int totalAmount =
+                adultCount * priceAdult +
+                        youthCount * priceYouth +
+                        childCount * priceChild;
+
+        // 3) 다음 PK 가져오기
+        int reservationId = reservationMapper.getNextReservationId();
+
+        // 4) VO 세팅
+        ReservationVO reservation = new ReservationVO();
+        reservation.setReservation_id(reservationId);
+        reservation.setU_id(userId);
+        reservation.setRuntime_id(runtimeId);
+        reservation.setAdult(adultCount);
+        reservation.setYouth(youthCount);
+        reservation.setChild(childCount);
+        reservation.setTotal_amount(totalAmount);
+        reservation.setReservation_status("예약완료");
+        reservation.setReserved_at(new Date());
+
+        // 5) 저장
+        reservationMapper.insertReservation(reservation);
+        for (Integer seatId : seatIds) {
+            ReservationSeatVO rs = new ReservationSeatVO();
+            rs.setReservation_id(reservationId);
+            rs.setSeat_id(seatId);
+            reservationMapper.insertReservationSeat(rs);
+        }
+
+        // 6) 잔여석 업데이트
+        int newAvailable = runtime.getAvailable_seats() - seatIds.size();
+        runtimeMapper.updateAvailableSeats(runtimeId, newAvailable);
+
+        // 7) 완성된 VO 리턴
+        return getReservationDetail(reservationId);
+    }
+
+
+
 }

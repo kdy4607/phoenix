@@ -16,14 +16,16 @@
 <header class="phoenix-header">
     <div class="header-content">
         <div class="header-left">
-            <a href="/" class="header-logo">🎬 Phoenix</a>
+            <a href="/" class="header-logo">
+                <img src="/resources/images/logo.png" alt="Phoenix Cinema Logo" class="logo-image">
+            </a>
             <nav>
                 <ul class="nav-menu">
-                    <li><a href="/movie-all">영화</a></li>
-                    <li><a href="/schedule">예매</a></li>
-                    <li><a href="/reservation/list">예약내역</a></li>
-                    <li><a href="#" onclick="alert('준비 중입니다!')">극장</a></li>
-                    <li><a href="#" onclick="alert('준비 중입니다!')">이벤트</a></li>
+                    <li><a href="/movie-all">Movies</a></li>
+                    <li><a href="/schedule">Schedule</a></li>
+                    <li><a href="/reservation/list">Booked</a></li>
+                    <li><a href="#" onclick="alert('준비 중입니다!')">Theater</a></li>
+                    <li><a href="#" onclick="alert('준비 중입니다!')">Events</a></li>
                 </ul>
             </nav>
         </div>
@@ -52,11 +54,11 @@
                         <div class="user-menu">
                             <button class="user-menu-btn" onclick="toggleUserMenu()">⋮</button>
                             <div class="user-dropdown" id="userDropdown">
-                                <a href="/mypage" class="dropdown-item">👤 마이페이지</a>
-                                <a href="/reservation/list" class="dropdown-item">📋 예약내역</a>
-                                <a href="#" class="dropdown-item" onclick="alert('설정 준비 중')">⚙️ 설정</a>
+                                <a href="/mypage" class="dropdown-item">👤 MyPage</a>
+                                <a href="/reservation/list" class="dropdown-item">📋 Book History</a>
+                                <a href="#" class="dropdown-item" onclick="alert('설정 준비 중')">⚙️ Setting</a>
                                 <div class="dropdown-divider"></div>
-                                <button class="dropdown-item" onclick="logout()">🚪 로그아웃</button>
+                                <button class="dropdown-item" onclick="logout()">🚪 Logout</button>
                             </div>
                         </div>
                     </div>
@@ -64,8 +66,8 @@
                 <c:otherwise>
                     <!-- 로그인 전 상태 -->
                     <div class="auth-section" id="authSection">
-                        <a href="/login" class="auth-btn login-btn">로그인</a>
-                        <a href="/join/step1" class="auth-btn signup-btn">회원가입</a>
+                        <a href="/login" class="auth-btn login-btn">Sign in</a>
+                        <a href="/join/step1" class="auth-btn signup-btn">Sign up</a>
                     </div>
                 </c:otherwise>
             </c:choose>
@@ -107,7 +109,7 @@
 
     // 로그아웃 함수
     function logout() {
-        if (confirm('로그아웃하시겠습니까?')) {
+        if (confirm('want to logout?')) {
             console.log('로그아웃 처리 시작');
 
             // 서버에 로그아웃 요청
@@ -120,18 +122,18 @@
                 .then(response => {
                     if (response.ok) {
                         console.log('로그아웃 성공');
-                        alert('로그아웃 되었습니다.');
+                        alert('logout complete.');
                         // 메인 페이지로 이동
                         window.location.href = '/';
                     } else {
                         console.error('로그아웃 실패');
-                        alert('로그아웃 중 오류가 발생했습니다.');
+                        alert('there is error during logout.');
                     }
                 })
                 .catch(error => {
                     console.error('로그아웃 오류:', error);
                     // 오류가 발생해도 로그아웃 처리
-                    alert('로그아웃 되었습니다.');
+                    alert('logout complete.');
                     window.location.href = '/';
                 });
         }

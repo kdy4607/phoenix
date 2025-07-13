@@ -79,7 +79,7 @@ body {
     padding: 20px;
     border-radius: 8px;
     margin-bottom: 20px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .steps {
@@ -119,7 +119,7 @@ body {
     margin-bottom: 20px;
     border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .section-header {
@@ -196,7 +196,7 @@ body {
 
 .movie-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 .movie-poster {
@@ -337,10 +337,9 @@ body {
     font-size: 16px;
     font-weight: 600;
     cursor: pointer;
-    margin-top: 20px;
     transition: background-color 0.2s;
     width: 100%;
-    max-width: 200px;
+    max-width: 140px;
 }
 
 .btn-primary:hover {
@@ -365,10 +364,18 @@ body {
 }
 
 @keyframes dots {
-    0%, 20% { content: '.'; }
-    40% { content: '..'; }
-    60% { content: '...'; }
-    80%, 100% { content: ''; }
+    0%, 20% {
+        content: '.';
+    }
+    40% {
+        content: '..';
+    }
+    60% {
+        content: '...';
+    }
+    80%, 100% {
+        content: '';
+    }
 }
 
 /* Empty State */
@@ -429,15 +436,23 @@ body {
     border-radius: 8px;
     padding: 20px;
     margin-top: 20px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .seat-selection.active {
     display: block;
 }
 
+.person-number{
+    color: darkgray;
+    float: right;
+    font-size: medium;
+    padding: 9px;
+}
+
 .cinema-screen {
-    width: 100%;
+    justify-self: center;
+    width: 50%;
     height: 40px;
     background: linear-gradient(90deg, #333, #666, #333);
     border-radius: 20px;
@@ -447,7 +462,7 @@ body {
     color: white;
     font-weight: bold;
     margin-bottom: 30px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
 .seat-map {
@@ -570,6 +585,12 @@ body {
     justify-content: center;
 }
 
+.btn-primary {
+    min-width: 140px;
+    padding: 12px 0;
+    text-align: center;
+}
+
 .btn-secondary {
     background-color: #6c757d;
     color: white;
@@ -578,11 +599,14 @@ body {
     border-radius: 4px;
     cursor: pointer;
     font-size: 14px;
+    width: 100%;
+    max-width: 140px;
 }
 
 .btn-secondary:hover {
     background-color: #545b62;
 }
+
 
 .payButton {
     background-color: #FB4357;
@@ -600,40 +624,268 @@ body {
 
 }
 
-/* 모달 스타일 */
-.modal {
-    position: fixed;
-    z-index: 1000;
-    left: 0; top: 0; width: 200vw; height: 200vh;
-    background: rgba(0,0,0,0.5);
-    display: flex; align-items: center; justify-content: center;
+/* 인원 선택 스타일 */
+.person-selection {
+    margin: 20px 0;
 }
 
-.modal-content {
+.person-selection .section-header {
+    font-size: 18px;
+    font-weight: 700;
+    color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #eee;
+}
+
+.person-selection .note {
+    font-size: 14px;
+    color: #666;
+}
+
+.person-selection .section-content {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    padding-top: 16px;
+}
+
+.person-selection .people-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.person-selection .people-row .label {
+    width: 60px;
+    font-size: 16px;
+    color: #333;
+}
+
+.person-selection .people-row .counter {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.person-selection .people-row .counter button {
+    width: 32px;
+    height: 32px;
     background: #fff;
-    padding: 40px 30px 30px 30px;
-    border-radius: 12px;
-    box-shadow: 0 2px 16px rgba(0,0,0,0.25);
-    min-width: 320px;
-    max-width: 95vw;
-    position: relative;
-    text-align: center;
-}
-
-.modal-content h2 {
-    margin-bottom: 16px;
-    font-size: 22px;
-    color: #FB4357;
-}
-
-.close {
-    position: absolute;
-    top: 20px; right: 24px;
-    font-size: 32px;
-    color: #bbb;
+    border: none;
+    font-size: 20px;
+    line-height: 1;
     cursor: pointer;
 }
 
-.close:hover {
+.person-selection .people-row .counter span {
+    display: inline-block;
+    width: 40px;
+    text-align: center;
+    font-size: 16px;
+    color: #222;
+}
+
+.person-selection {
+    margin: 20px 0;
+}
+
+.person-selection .people-row {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-right: 24px;
+}
+
+.person-selection .label {
+    width: 60px;
+    font-size: 16px;
+    color: #333;
+}
+
+.person-selection .counter {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.person-selection .counter button {
+    width: 32px;
+    height: 32px;
+    background: #fff;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.person-selection .counter span {
+    width: 40px;
+    text-align: center;
+    font-size: 16px;
+}
+
+.limited-reserved {
+    /* 예약불가된 좌석 스타일: 기존 reserved 와 동일하게 설정 */
+    background-color: #ddd !important;
+    cursor: not-allowed !important;
+}
+
+
+/* 결제정보 카드 스타일 */
+.payment-summary-box {
+    display: grid;
+    grid-template-areas:
+    "header header"
+    "poster details";
+    grid-template-columns: auto 1fr;
+    gap: 20px;
+    background-color: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.payment-summary-box h3 {
+    grid-area: header;
+    margin: 0 0 12px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    border-left: 4px solid #FB4357;
+    padding-left: 8px;
+}
+
+.payment-summary-box .poster {
+    grid-area: poster;
+}
+
+.payment-summary-box .poster img {
+    display: block;
+    width: auto;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.payment-summary-box .details {
+    grid-area: details;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.payment-summary-box .details p {
+    margin: 0;
+    font-size: 14px;
+    color: #555;
+    line-height: 1.4;
+}
+
+.payment-summary-box .details p strong {
+    color: #222;
+}
+
+/* ──────────────────────────────────────────────
+   예약 완료 메시지 카드 스타일
+────────────────────────────────────────────── */
+#completeSection {
+    place-self: center;
+    background-color: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    padding: 24px;
+    margin: 20px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    max-width: 600px;
+    width: 100%;
+}
+
+#completeSection h2 {
+    margin: 0 0 16px;
+    font-size: 20px;
+    font-weight: 600;
+    color: #FB4357;
+    border-left: 4px solid #FB4357;
+    padding-left: 8px;
+}
+
+#completeSection p {
+    margin: 8px 0;
+    font-size: 14px;
+    color: #333;
+    line-height: 1.5;
+}
+
+#completeSection p strong {
+    color: #222;
+}
+
+#completeSection .payButton {
+    display: block;
+    margin: 24px auto 0;
+    padding: 12px 32px;
+    font-size: 14px;
+    font-weight: 600;
+    background-color: #FB4357;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#completeSection .payButton:hover {
+    background-color: #e63946;
+}
+
+/* ── 상영정보 헤더 ───────────────────────── */
+/* 상영정보 전체 컨테이너 */
+.runtime-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* 왼쪽 블록: 제목 + 메타 */
+.runtime-details {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+}
+
+/* 영화 제목 */
+.movie-title {
+    font-size: 1.2rem;
     color: #FB4357;
 }
+
+/* 시간 / 관람가 */
+.runtime-meta {
+    font-size: 1rem;      /* 키우고 */
+    font-weight: 600;     /* 굵게 */
+    color: #666;
+}
+
+/* ── 요금 리스트 ───────────────────────── */
+.price-list {
+    display: flex;
+    gap: 12px;
+}
+
+.price-item {
+    font-size: 0.95rem;
+    color: #333;
+}
+.price-item strong {
+    font-weight: 600;
+}
+.price-item.adult  { color: #222;    }
+.price-item.youth  { color: #0056b3; }
+.price-item.child  { color: #117a33; }

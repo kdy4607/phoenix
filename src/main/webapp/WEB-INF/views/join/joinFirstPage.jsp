@@ -15,11 +15,11 @@
         <div> Step 3</div>
     </div>
     <div class="cay-join-process-bar">
-        <div> 1 </div>
-        <div> - </div>
-        <div> 1 </div>
-        <div> - </div>
-        <div> 1 </div>
+        <div> 1</div>
+        <div> -</div>
+        <div> 1</div>
+        <div> -</div>
+        <div> 1</div>
     </div>
     <div class="cay-join-process-txt">
         <div> Enter User ID And Password</div>
@@ -28,25 +28,23 @@
     </div>
 </div>
 
-<form  class="cay-join-wrap" action="/join/step2" method="post">
-    <div> Create Account </div>
-    <div> Enter Your New User Nickname </div>
-    <div> It will be used when you sign in</div>
-    <input type="text" name="u_id">
-    <div> Enter Your New Password </div>
-    <input type="text" name="u_pw">
-    <div> Password must be at least <span> 0 </span> characters </div>
-    <div> Re-enter Your Password </div>
-    <input type="text">
+
+
+<form class="cay-join-wrap" action="/join/step2" method="post" onsubmit="return call();">
+    <div class="error-message">${errorMessage}</div>
+    <div> Create Account</div>
+    <div> Enter Your New User ID</div>
+    <input type="text" name="u_id" placeholder="Enter User ID">
+    <div> User ID must be 6-20 characters long, containing only lowercase letters and numbers</div>
+    <div> Enter Your New Password</div>
+    <input type="text" name="u_pw" placeholder="Enter Password">
+    <div> Password must be at least <span> 0 </span> characters</div>
+    <div> Re-enter Your Password</div>
+    <input type="text" name="u_ReEntered_pw" placeholder="Re-enter Password">
     <div>
-        <button> Next !</button>
+        <button type="submit"> Next !</button>
     </div>
 </form>
-
-</div>
-
-
-</div>
 
 </body>
 </html>

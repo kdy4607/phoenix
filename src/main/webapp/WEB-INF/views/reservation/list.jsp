@@ -9,15 +9,18 @@
     <title>예약 내역 - Phoenix Cinema</title>
     <link rel="stylesheet" href="/resources/css/schedule.css">
     <link rel="stylesheet" href="/resources/css/reservation.css">
-    <style>
-
-    </style>
 </head>
 <body>
 <!-- 헤더 포함 -->
 <jsp:include page="/WEB-INF/views/header.jsp" />
 
 <div class="reservation-container">
+    <!-- 페이지 헤더 -->
+    <div class="page-header">
+        <h1>예약 내역</h1>
+        <a href="/schedule" class="btn-primary2">🎫 새 예매</a>
+    </div>
+
     <!-- 사용자 환영 메시지 -->
     <c:if test="${not empty user}">
         <div class="user-welcome">
@@ -57,115 +60,123 @@
         </div>
     </c:if>
 
-    <!-- 예약 필터 -->
-    <c:if test="${not empty reservations}">
-        <div class="reservation-filters">
-            <div class="filter-group">
-                <label for="statusFilter">예약 상태:</label>
-                <select id="statusFilter" onchange="filterReservations()">
-                    <option value="all">전체</option>
-                    <option value="예약완료">예약완료</option>
-                    <option value="예약취소">예약취소</option>
-                </select>
-
-                <label for="sortOrder">정렬:</label>
-                <select id="sortOrder" onchange="sortReservations()">
-                    <option value="recent">최신순</option>
-                    <option value="old">오래된순</option>
-                    <option value="amount">금액순</option>
-                </select>
-
-                <button type="button" onclick="refreshReservations()" class="btn-primary">
-                    🔄 새로고침
-                </button>
-            </div>
+    <!-- 예약 내역 섹션 -->
+    <div class="section">
+        <div class="section-header">
+            예약 내역 관리
         </div>
-    </c:if>
+        <div class="section-content">
+            <!-- 예약 필터 -->
+            <c:if test="${not empty reservations}">
+                <div class="reservation-filters">
+                    <div class="filter-group">
+                        <label for="statusFilter">예약 상태:</label>
+                        <select id="statusFilter" onchange="filterReservations()">
+                            <option value="all">전체</option>
+                            <option value="예약완료">예약완료</option>
+                            <option value="예약취소">예약취소</option>
+                        </select>
 
-    <!-- 예약 목록 -->
-    <c:choose>
-        <c:when test="${not empty reservations}">
-            <div id="reservationList">
-                <c:forEach var="reservation" items="${reservations}" varStatus="status">
-                    <div class="reservation-card"
-                         data-reservation-id="${reservation.reservation_id}"
-                         data-status="${reservation.reservation_status}"
-                         data-amount="${reservation.total_amount}"
-                         data-date="${reservation.run_date}">
+                        <label for="sortOrder">정렬:</label>
+                        <select id="sortOrder" onchange="sortReservations()">
+                            <option value="recent">최신순</option>
+                            <option value="old">오래된순</option>
+                            <option value="amount">금액순</option>
+                        </select>
 
-                        <div class="reservation-header">
-                            <div class="reservation-id">예약번호: ${reservation.reservation_id}</div>
-                            <div class="reservation-status ${reservation.reservation_status == '예약완료' ? 'active' : 'canceled'}">
-                                    ${reservation.reservation_status}
-                            </div>
-                        </div>
-
-                        <div class="reservation-content">
-                            <div class="movie-info">
-                                <h3 class="movie-title">${reservation.movie_title}</h3>
-                                <div class="screening-info">
-                                    📅 ${reservation.run_date} |
-                                    🕐 ${reservation.start_time} |
-                                    🏢 ${reservation.room_name}
-                                </div>
-                            </div>
-
-                            <div class="reservation-details">
-                                <c:if test="${not empty reservation.selected_seats}">
-                                    <div class="seat-info">
-                                        🪑 좌석: ${reservation.selected_seats}
-                                    </div>
-                                </c:if>
-
-                                <div class="ticket-info">
-                                    👥 성인 ${reservation.adult}명
-                                    <c:if test="${reservation.youth > 0}"> | 청소년 ${reservation.youth}명</c:if>
-                                    <c:if test="${reservation.child > 0}"> | 어린이 ${reservation.child}명</c:if>
-                                </div>
-
-                                <div class="amount-info">
-                                    💰 총 금액: <fmt:formatNumber value="${reservation.total_amount}" pattern="#,###" />원
-                                </div>
-
-                                <div class="reservation-date">
-                                    📝 예약일시: <fmt:formatDate value="${reservation.reservation_date}" pattern="yyyy-MM-dd HH:mm" />
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="reservation-actions">
-                            <button type="button"
-                                    onclick="viewReservationDetail(${reservation.reservation_id})"
-                                    class="btn-detail">
-                                📋 상세보기
-                            </button>
-
-                            <c:if test="${reservation.reservation_status == '예약완료'}">
-                                <button type="button"
-                                        onclick="cancelReservation(${reservation.reservation_id})"
-                                        class="btn-cancel">
-                                    ❌ 예약취소
-                                </button>
-                            </c:if>
-                        </div>
+                        <button type="button" onclick="refreshReservations()" class="btn-primary2">
+                            🔄 새로고침
+                        </button>
                     </div>
-                </c:forEach>
-            </div>
-        </c:when>
-        <c:otherwise>
-            <!-- 예약 내역이 없는 경우 -->
-            <div class="empty-state">
-                <div class="empty-state-icon">🎬</div>
-                <h3>아직 예약 내역이 없습니다</h3>
-                <p>영화 예매를 통해 첫 예약을 만들어보세요!</p>
-                <a href="/schedule" class="btn-primary">🎫 영화 예매하기</a>
-            </div>
-        </c:otherwise>
-    </c:choose>
+                </div>
+            </c:if>
+
+            <!-- 예약 목록 -->
+            <c:choose>
+                <c:when test="${not empty reservations}">
+                    <div id="reservationList">
+                        <c:forEach var="reservation" items="${reservations}" varStatus="status">
+                            <div class="reservation-card"
+                                 data-reservation-id="${reservation.reservation_id}"
+                                 data-status="${reservation.reservation_status}"
+                                 data-amount="${reservation.total_amount}"
+                                 data-date="${reservation.run_date}">
+
+                                <div class="reservation-header">
+                                    <div class="reservation-id">예약번호: ${reservation.reservation_id}</div>
+                                    <div class="reservation-status ${reservation.reservation_status == '예약완료' ? 'active' : 'canceled'}">
+                                            ${reservation.reservation_status}
+                                    </div>
+                                </div>
+
+                                <div class="reservation-content">
+                                    <div class="movie-info">
+                                        <h3 class="movie-title">${reservation.movie_title}</h3>
+                                        <div class="screening-info">
+                                            📅 <fmt:formatDate value="${reservation.run_date}" pattern="yyyy년 MM월 dd일 (E)" /> |
+                                            🕐 ${reservation.start_time} |
+                                            🏢 ${reservation.room_name}
+                                        </div>
+                                    </div>
+
+                                    <div class="reservation-details">
+                                        <c:if test="${not empty reservation.selected_seats}">
+                                            <div class="seat-info2">
+                                                🪑 좌석: ${reservation.selected_seats}
+                                            </div>
+                                        </c:if>
+
+                                        <div class="ticket-info">
+                                            👥 성인 ${reservation.adult}명
+                                            <c:if test="${reservation.youth > 0}"> | 청소년 ${reservation.youth}명</c:if>
+                                            <c:if test="${reservation.child > 0}"> | 어린이 ${reservation.child}명</c:if>
+                                        </div>
+
+                                        <div class="amount-info">
+                                            💰 총 금액: <fmt:formatNumber value="${reservation.total_amount}" pattern="#,###" />원
+                                        </div>
+
+                                        <div class="reservation-date">
+                                            📝 예약일시: <fmt:formatDate value="${reservation.reservation_date}" pattern="yyyy-MM-dd HH:mm" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="reservation-actions">
+                                    <button type="button"
+                                            onclick="viewReservationDetail(${reservation.reservation_id})"
+                                            class="btn-detail">
+                                        상세보기
+                                    </button>
+
+                                    <c:if test="${reservation.reservation_status == '예약완료'}">
+                                        <button type="button"
+                                                onclick="cancelReservation(${reservation.reservation_id})"
+                                                class="btn-cancel">
+                                            예약취소
+                                        </button>
+                                    </c:if>
+                                </div>
+                            </div>
+                        </c:forEach>
+                    </div>
+                </c:when>
+                <c:otherwise>
+                    <!-- 예약 내역이 없는 경우 -->
+                    <div class="empty-state">
+                        <div class="empty-state-icon">🎬</div>
+                        <h3>아직 예약 내역이 없습니다</h3>
+                        <p>영화 예매를 통해 첫 예약을 만들어보세요!</p>
+                        <a href="/schedule" class="btn-primary2">🎫 영화 예매하기</a>
+                    </div>
+                </c:otherwise>
+            </c:choose>
+        </div>
+    </div>
 
     <!-- 디버깅 정보 (개발 중에만 표시) -->
     <c:if test="${param.debug == 'true'}">
-        <div class="debug-info" style="background: #f8f9fa; padding: 20px; margin-top: 20px; border-radius: 8px;">
+        <div class="debug-info">
             <strong>🔍 디버깅 정보:</strong><br>
             로그인 사용자: ${user != null ? user.u_name : 'null'} (ID: ${user != null ? user.u_id : 'null'})<br>
             예약 목록 크기: ${reservations != null ? reservations.size() : 'null'}<br>
@@ -227,48 +238,14 @@
             });
     }
 
-    // 예약 상세 모달 표시 함수
-    function showReservationModal(reservation) {
-        // JSP에서는 백틱 대신 문자열 연결 사용
-        var modal = '<div class="modal-overlay" onclick="closeModal()">' +
-            '<div class="modal-content" onclick="event.stopPropagation()">' +
-            '<div class="modal-header">' +
-            '<h3>예약 상세 정보</h3>' +
-            '<button onclick="closeModal()" class="modal-close">×</button>' +
-            '</div>' +
-            '<div class="modal-body">' +
-            '<p><strong>예약번호:</strong> ' + reservation.reservation_id + '</p>' +
-            '<p><strong>영화:</strong> ' + reservation.movie_title + '</p>' +
-            '<p><strong>상영관:</strong> ' + reservation.room_name + '</p>' +
-            '<p><strong>상영일:</strong> ' + reservation.run_date + '</p>' +
-            '<p><strong>상영시간:</strong> ' + reservation.start_time + '</p>' +
-            '<p><strong>좌석:</strong> ' + (reservation.selected_seats || '정보 없음') + '</p>' +
-            '<p><strong>관람인원:</strong> 성인 ' + reservation.adult + '명, 청소년 ' + reservation.youth + '명, 어린이 ' + reservation.child + '명</p>' +
-            '<p><strong>총 금액:</strong> ' + reservation.total_amount.toLocaleString() + '원</p>' +
-            '<p><strong>예약상태:</strong> ' + reservation.reservation_status + '</p>' +
-            '</div>' +
-            '</div>' +
-            '</div>';
-
-        document.body.insertAdjacentHTML('beforeend', modal);
-    }
-
-    // 모달 닫기 함수
-    function closeModal() {
-        var modal = document.querySelector('.modal-overlay');
-        if (modal) {
-            modal.remove();
-        }
-    }
-
     // 예약 필터링 함수
     function filterReservations() {
-        var filter = document.getElementById('statusFilter').value;
-        var cards = document.querySelectorAll('.reservation-card');
+        const statusFilter = document.getElementById('statusFilter').value;
+        const cards = document.querySelectorAll('.reservation-card');
 
-        cards.forEach(function(card) {
-            var status = card.getAttribute('data-status');
-            if (filter === 'all' || status === filter) {
+        cards.forEach(card => {
+            const status = card.getAttribute('data-status');
+            if (statusFilter === 'all' || status === statusFilter) {
                 card.style.display = 'block';
             } else {
                 card.style.display = 'none';
@@ -278,16 +255,16 @@
 
     // 예약 정렬 함수
     function sortReservations() {
-        var sortOrder = document.getElementById('sortOrder').value;
-        var container = document.getElementById('reservationList');
-        var cards = Array.from(container.children);
+        const sortOrder = document.getElementById('sortOrder').value;
+        const container = document.getElementById('reservationList');
+        const cards = Array.from(container.querySelectorAll('.reservation-card'));
 
-        cards.sort(function(a, b) {
-            switch(sortOrder) {
+        cards.sort((a, b) => {
+            switch (sortOrder) {
                 case 'recent':
-                    return parseInt(b.getAttribute('data-reservation-id')) - parseInt(a.getAttribute('data-reservation-id'));
+                    return new Date(b.getAttribute('data-date')) - new Date(a.getAttribute('data-date'));
                 case 'old':
-                    return parseInt(a.getAttribute('data-reservation-id')) - parseInt(b.getAttribute('data-reservation-id'));
+                    return new Date(a.getAttribute('data-date')) - new Date(b.getAttribute('data-date'));
                 case 'amount':
                     return parseInt(b.getAttribute('data-amount')) - parseInt(a.getAttribute('data-amount'));
                 default:
@@ -295,28 +272,40 @@
             }
         });
 
-        cards.forEach(function(card) {
-            container.appendChild(card);
-        });
+        // 정렬된 카드들을 다시 컨테이너에 추가
+        cards.forEach(card => container.appendChild(card));
     }
 
-    // 예약 목록 새로고침 함수
+    // 새로고침 함수
     function refreshReservations() {
-        console.log('🔄 예약 목록 새로고침');
         location.reload();
     }
 
-    // 페이지 로드 시 초기화
+    // 예약 상세 모달 표시 함수
+    function showReservationModal(reservation) {
+        // 모달 구현은 프로젝트의 모달 시스템에 맞게 조정
+        alert('예약 상세 정보:\n' +
+            '영화: ' + reservation.movie_title + '\n' +
+            '상영일: ' + reservation.run_date + '\n' +
+            '금액: ' + reservation.total_amount + '원');
+    }
+
+    // 페이지 로드 시 실행
     document.addEventListener('DOMContentLoaded', function() {
-        console.log('예약 내역 페이지 초기화 완료');
+        console.log('예약 내역 페이지 로드 완료');
 
-        // 함수 정의 확인
-        console.log('viewReservationDetail 함수:', typeof viewReservationDetail);
-        console.log('cancelReservation 함수:', typeof cancelReservation);
+        // 카드 호버 효과
+        document.querySelectorAll('.reservation-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.borderColor = '#FB4357';
+            });
 
-        // 초기 정렬 (최신순)
-        if (document.getElementById('sortOrder')) {
-            sortReservations();
-        }
+            card.addEventListener('mouseleave', function() {
+                this.style.borderColor = '#e5e5e5';
+            });
+        });
     });
 </script>
+
+</body>
+</html>

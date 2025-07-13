@@ -264,4 +264,68 @@ public class ReservationC {
 
         return response;
     }
+
+
+
+    /**
+     * 예약 생성 (AJAX)
+     * 요청 JSON 예시:
+     * {
+     *   "runtimeId": 123,
+     *   "adult": 2,
+     *   "youth": 1,
+     *   "child": 1,
+     *   "seats": [45, 46, 47, 48]
+     * }
+     */
+    @PostMapping("/create")
+    @ResponseBody
+    public Map<String, Object> createReservation(
+            @RequestBody Map<String, Object> payload,
+            HttpSession session
+    ) {
+        Map<String, Object> response = new HashMap<>();
+
+        // 1) 로그인 검증
+        LoginVO user = (LoginVO) session.getAttribute("user");
+        if (user == null) {
+            response.put("success", false);
+            response.put("message", "로그인이 필요합니다.");
+            return response;
+        }
+
+        try {
+            // 2) 요청 파라미터 추출
+            int runtimeId    = (int) payload.get("runtimeId");
+            int adultCount   = (int) payload.get("adult");
+            int youthCount   = (int) payload.get("youth");
+            int childCount   = (int) payload.get("child");
+            @SuppressWarnings("unchecked")
+            List<Integer> seatIds = (List<Integer>) payload.get("seats");
+
+            // 3) 서비스 호출
+            ReservationVO reservation = reservationService.createReservation(
+                    runtimeId,
+                    seatIds,
+                    adultCount,
+                    youthCount,
+                    childCount,
+                    user.getU_id()
+            );
+
+            // 4) 응답 구성
+            response.put("success", true);
+            response.put("reservation", reservation);
+        } catch (Exception e) {
+            response.put("success", false);
+            response.put("message", e.getMessage());
+        }
+        return response;
+    }
+
+
 }
+
+
+
+

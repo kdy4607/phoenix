@@ -10,12 +10,8 @@
 <body>
 
 <div class="cay-main-wrap">
-    <header class="cay-header">
-        <h1>header</h1>
-        <a href="/mypage"> MyPage </a>
-        <a href="/login"> login </a>
-    </header>
-    <nav class="cay-nav"><h1>Nav</h1></nav>
+
+    <jsp:include page="/WEB-INF/views/header.jsp" />
 
     <main class="cay-join-container">
         <div class="cay-join-content">
@@ -29,6 +25,6 @@
 
 
 </div>
-
+<script src="/resources/js/login.js"></script>
 </body>
 </html>

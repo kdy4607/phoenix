@@ -8,15 +8,13 @@
 </head>
 <body>
 
-<div class="cay-main-wrap">
-    <!-- 공통 헤더 사용 -->
-    <jsp:include page="/WEB-INF/views/header.jsp" />
+<jsp:include page="/WEB-INF/views/header.jsp" />
 
-    <nav class="cay-nav"><h1>Nav</h1></nav>
+<button onclick="logout()"></button>
+
     <main class="cay-myPage-container">
         <div class="cay-myPage-aside">
-            <h1>aside</h1>
-            <a href="/mypage"> My Page </a>
+            <div><a href="/mypage"> My Page </a></div>
             <ul>
                 <li><a href="/mypage/profile?u_id=${user.u_id}"> Profile </a>
                     <ul>
@@ -46,15 +44,7 @@
     </main>
     <footer class="cay-footer"><h1>footer</h1></footer>
 </div>
-
-<!-- 디버깅용 사용자 정보 표시 -->
-<div style="margin-top: 20px; padding: 15px; background-color: #f8f9fa; border-radius: 5px;">
-    <h3>사용자 정보 (디버깅용)</h3>
-    <p>ID: ${user.u_id}</p>
-    <p>Name: ${user.u_name}</p>
-    <p>Birth: ${user.u_birth}</p>
-    <p>Address: ${user.u_address}</p>
-</div>
-
+<button onclick="logout()"> logout </button>
+<script src="/resources/js/login.js"></script>
 </body>
 </html>

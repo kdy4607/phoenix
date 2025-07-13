@@ -12,13 +12,14 @@
 </head>
 <body>
 
+<div> ${errorMessage} </div>
+
 <div class="cay-myPage-content">
     <div class="cay-myPage-profile">
         <div> Check Your Account</div>
         <form action="/mypage/general-info" method="post">
             <div> Enter Your Password to identify your Account</div>
-            <input type="hidden" name="u_id" value="${u_id}" />
-            <div> Nickname : <input readonly value="${user.u_id}"> </div>
+            <div> ID : <input readonly type="text" value="${user.u_id}" name="u_id"> </div>
             <div> Password : <input type="text" name="u_pw"> </div>
             <button> Verify </button>
         </form>
