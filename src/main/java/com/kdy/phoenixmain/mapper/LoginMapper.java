@@ -102,6 +102,92 @@ public interface LoginMapper {
     int getUserCount();
 
     /**
+     * 사용자 이름으로 검색
+     */
+    @Select("""
+        SELECT u_id, u_pw, u_name, u_birth, u_address
+        FROM USERS
+        WHERE u_name LIKE '%' || #{u_name} || '%'
+    """)
+    @Results({
+            @Result(property = "u_id", column = "u_id"),
+            @Result(property = "u_pw", column = "u_pw"),
+            @Result(property = "u_name", column = "u_name"),
+            @Result(property = "u_birth", column = "u_birth"),
+            @Result(property = "u_address", column = "u_address")
+    })
+    List<LoginVO> findByName(@Param("u_name") String u_name);
+
+    /**
+     * 최근 가입자 조회
+     */
+    @Select("""
+        SELECT u_id, u_pw, u_name, u_birth, u_address
+        FROM USERS
+        ORDER BY u_id DESC
+        FETCH FIRST #{limit} ROWS ONLY
+    """)
+    @Results({
+            @Result(property = "u_id", column = "u_id"),
+            @Result(property = "u_pw", column = "u_pw"),
+            @Result(property = "u_name", column = "u_name"),
+            @Result(property = "u_birth", column = "u_birth"),
+            @Result(property = "u_address", column = "u_address")
+    })
+    List<LoginVO> getRecentUsers(@Param("limit") int limit);
+
+    /**
+     * 생년월일로 검색
+     */
+    @Select("""
+        SELECT u_id, u_pw, u_name, u_birth, u_address
+        FROM USERS
+        WHERE u_birth BETWEEN #{startDate} AND #{endDate}
+    """)
+    @Results({
+            @Result(property = "u_id", column = "u_id"),
+            @Result(property = "u_pw", column = "u_pw"),
+            @Result(property = "u_name", column = "u_name"),
+            @Result(property = "u_birth", column = "u_birth"),
+            @Result(property = "u_address", column = "u_address")
+    })
+    List<LoginVO> findByBirthDate(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
+
+    /**
+     * 주소로 검색
+     */
+    @Select("""
+        SELECT u_id, u_pw, u_name, u_birth, u_address
+        FROM USERS
+        WHERE u_address LIKE '%' || #{address} || '%'
+    """)
+    @Results({
+            @Result(property = "u_id", column = "u_id"),
+            @Result(property = "u_pw", column = "u_pw"),
+            @Result(property = "u_name", column = "u_name"),
+            @Result(property = "u_birth", column = "u_birth"),
+            @Result(property = "u_address", column = "u_address")
+    })
+    List<LoginVO> findByAddress(@Param("address") String address);
+
+    /**
+     * 이메일로 사용자 검색 (확장 기능)
+     */
+    @Select("""
+        SELECT u_id, u_pw, u_name, u_birth, u_address
+        FROM USERS
+        WHERE u_id LIKE '%@%' AND u_id = #{email}
+    """)
+    @Results({
+            @Result(property = "u_id", column = "u_id"),
+            @Result(property = "u_pw", column = "u_pw"),
+            @Result(property = "u_name", column = "u_name"),
+            @Result(property = "u_birth", column = "u_birth"),
+            @Result(property = "u_address", column = "u_address")
+    })
+    LoginVO findByEmail(@Param("email") String email);
+
+    /**
      * 아이디 중복 확인
      */
     @Select("SELECT COUNT(*) FROM USERS WHERE u_id = #{u_id}")
