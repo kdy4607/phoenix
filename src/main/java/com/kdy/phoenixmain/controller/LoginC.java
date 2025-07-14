@@ -435,7 +435,6 @@ public class LoginC {
 
     @PostMapping("/mypage/deleteAccount")
     public String deleteAccountSubmit(@RequestParam("u_pw") String u_pw,
-                                      Model model,
                                       RedirectAttributes redirectAttributes,
                                       HttpSession session) {
 
@@ -487,13 +486,12 @@ public class LoginC {
                                 Model model) {
 
         if (u_ReEntered_pw == null || u_ReEntered_pw.isEmpty() || !u_ReEntered_pw.equals(loginVO.getU_pw())) {
-            redirectAttributes.addAttribute("errorMessage", "Passwords do not match");
+            redirectAttributes.addFlashAttribute("errorMessage", "Passwords do not match");
             return "redirect:/join/step1";
         }
 
         if (loginVO.getU_id() == null || loginVO.getU_id().isEmpty()
                 || loginVO.getU_pw() == null || loginVO.getU_pw().isEmpty()) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Please fill all the fields");
             return "redirect:/join/step1";
         }
 
@@ -502,7 +500,6 @@ public class LoginC {
             LoginVO existingUser = loginService.findById(loginVO.getU_id());
             if (existingUser != null) {
                 redirectAttributes.addFlashAttribute("errorMessage", "This ID is already in use.");
-                model.addAttribute("content", "joinFirstPage.jsp");
                 return "redirect:/join/step1";
             }
         } catch (Exception e) {
@@ -511,28 +508,34 @@ public class LoginC {
 
         session.setAttribute("loginVO", loginVO);
         model.addAttribute("loginVO", loginVO);
+        model.addAttribute("fontColor", "#FB4357");
+        model.addAttribute("color", "#C8E465");
         model.addAttribute("content", "joinSecondPage.jsp");
         return "join/joinMain";
     }
 
     @PostMapping("/join/step3")
     public String joinStep3(@ModelAttribute("loginVO") LoginVO loginVO,
+                            RedirectAttributes redirectAttributes,
                             HttpSession session,
                             Model model) {
 
         if (loginVO.getU_address() != null && loginVO.getU_address().length() > 500) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Address Must be less than 500 characters.");
             session.setAttribute("loginVO", loginVO);
             return "redirect:/join/step2";
         }
 
         if (loginVO.getU_name() == null || loginVO.getU_name().isEmpty()) {
-            model.addAttribute("errorMessage", "Please enter your name.");
+            redirectAttributes.addFlashAttribute("errorMessage", "Please enter your name.");
             session.setAttribute("loginVO", loginVO);
             return "redirect:/join/step2";
         }
 
         session.setAttribute("loginVO", loginVO);
         model.addAttribute("loginVO", loginVO);
+        model.addAttribute("fontColor", "#FB4357");
+        model.addAttribute("color", "#C8E465");
         model.addAttribute("content", "joinThirdPage.jsp");
         return "join/joinMain";
     }
@@ -550,8 +553,8 @@ public class LoginC {
 
         try {
             loginService.insertLogin(user);
-            model.addAttribute("content", "joinCompletePage.jsp");
             session.setAttribute("user", user);
+            model.addAttribute("content", "joinCompletePage.jsp");
             return "join/joinMain";
 
         } catch (Exception e) {
