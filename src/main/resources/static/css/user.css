@@ -152,31 +152,38 @@ a {
 
 .cay-join-content > h1 {
     width: 200px;
-    margin: 3rem auto;
+    margin: 2rem auto 1rem;
     font-size: 3rem;
-    border-bottom: 2px solid;
+    border-bottom: 4px solid;
     color: #FB4357;
 }
-
 
 .cay-join-wrap {
     position: relative;
     width: 550px;
     height: 700px;
-    margin: 100px auto 100px auto;
+    margin: 1rem auto 3rem auto;
     padding: 1.5rem;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     background-color: white;
 }
 
+.cay-join-wrap > div:first-child {
+    position: absolute;
+    top: -50px;
+    left: 245px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #FB4357;
+    animation: shake 0.5s;
+}
+
 .cay-join-process {
-    width: 30rem;
+    width: 35rem;
     margin: auto;
     padding: 3rem;
     border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    background-color: white;
     text-align: center;
 }
 
@@ -185,14 +192,70 @@ a {
     justify-content: space-between;
 }
 
+.cay-join-process-step > div {
+    font-size: 2rem;
+    font-weight: bolder;
+}
+
 .cay-join-process-bar {
+    position: relative;
     display: flex;
     justify-content: space-between;
 }
 
+.cay-join-process-bar > div:nth-child(1),
+.cay-join-process-bar > div:nth-child(3),
+.cay-join-process-bar > div:nth-child(5) {
+    width: 2rem;
+    margin: 1rem 2rem 0;
+    border: 5px solid #FB4357;
+    border-radius: 50%;
+    background-color: white;
+}
+
+.cay-join-process-bar > div:nth-child(2) {
+    position: absolute;
+    top: 30px;
+    left:  60px;
+    width: 10rem;
+    height: 0;
+    border: 3px solid #FB4357;
+}
+
+.cay-join-process-bar > div:nth-child(4) {
+    position: absolute;
+    top: 30px;
+    left: 245px;
+    width: 10rem;
+    height: 0;
+    border: 3px solid #FB4357;
+}
+
+
 .cay-join-process-txt {
     display: flex;
     justify-content: space-between;
+}
+
+.cay-join-process-txt > div:nth-child(1) {
+    width: 6rem;
+    margin: 0.5rem 0;
+    font-size: 1.25rem;
+    font-weight: bolder;
+}
+
+.cay-join-process-txt > div:nth-child(2) {
+    width: 6rem;
+    margin: 0.5rem 0rem;
+    font-size: 1.25rem;
+    font-weight: bolder;
+}
+
+.cay-join-process-txt > div:nth-child(3) {
+    width: 6rem;
+    margin: 0.5rem 0rem;
+    font-size: 1.25rem;
+    font-weight: bolder;
 }
 
 /* My Page Main */
@@ -591,4 +654,45 @@ div:nth-child(1) {
 .chk-btn {
     width: 1rem !important;
     height: 1rem !important;
+}
+
+/* My Page - Delete Complete */
+
+.cay-deleteComplete-container {
+    margin: auto;
+    display: flex;
+}
+
+.cay-deleteComplete-content {
+    position: relative;
+    width: 600px;
+    height: 300px;
+    margin: 100px auto 100px auto;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    background-color: white;
+    text-align: center;
+}
+
+.cay-deleteComplete-content h1 {
+    margin: 2.5rem auto 2rem;
+    font-size: 2rem;
+}
+
+.cay-deleteComplete-content button {
+    width: 9rem;
+    height: 3.5rem;
+    margin: 0.5rem 0.5rem;
+    border: 2px solid #FB4357;
+    border-radius: 45px;
+    font-size: 18px;
+    color: #FB4357;
+    background-color: white;
+}
+
+.cay-deleteComplete-content button:hover {
+    color: white;
+    transition: ease-in-out 0.3s;
+    background-color: #FB4357;
 }

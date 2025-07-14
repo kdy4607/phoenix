@@ -22,21 +22,17 @@
                     <li><a href="/mypage/theatres?u_id=${user.u_id}">Favorite Theatres</a></li>
                 </ul>
             </li>
-            <li><a href="/reservation/list">My Tickets</a>
+            <li><a href="/mypage/history?u_id=${user.u_id}">My History</a>
                 <ul>
-                    <li><a href="/reservation/list">My Reservation</a></li>
                     <li><a href="/mypage/history?u_id=${user.u_id}">My History</a></li>
+                    <li><a href="" onclick="alert('준비 중입니다!')">My Events History</a></li>
+                    <li><a href="/reservation/list">My Reservation</a></li>
                 </ul>
             </li>
             <li><a href="/mypage/reward?u_id=${user.u_id}">My Rewards</a>
                 <ul>
                     <li><a href="/mypage/reward/point?u_id=${user.u_id}">Point</a></li>
                     <li><a href="/mypage/reward/coupon?u_id=${user.u_id}">Coupon</a></li>
-                </ul>
-            </li>
-            <li><a href="" onclick="alert('준비 중입니다!')">Event</a>
-                <ul>
-                    <li><a href="" onclick="alert('준비 중입니다!')">My Events History</a></li>
                 </ul>
             </li>
             <li><a href="" onclick="alert('준비 중입니다!')">Wallet</a>

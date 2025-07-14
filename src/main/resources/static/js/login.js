@@ -82,20 +82,20 @@ function checkLoginStatus() {
       });
 }
 
-// 예약내역 버튼 클릭 시 로그인 체크
-function checkLoginForReservation(event) {
-  // 현재 로그인 상태 확인 (서버에서 전달받은 정보 사용)
-  const isLoggedIn = typeof window.currentUser !== 'undefined' && window.currentUser !== null;
-
-  if (!isLoggedIn) {
-    event.preventDefault();
-    if (confirm('예약내역을 확인하려면 로그인이 필요합니다.\n로그인 페이지로 이동하시겠습니까?')) {
-      window.location.href = '/login?returnUrl=' + encodeURIComponent('/reservation/list');
-    }
-    return false;
-  }
-  return true;
-}
+// // 예약내역 버튼 클릭 시 로그인 체크
+// function checkLoginForReservation(event) {
+//   // 현재 로그인 상태 확인 (서버에서 전달받은 정보 사용)
+//   const isLoggedIn = typeof window.currentUser !== 'undefined' && window.currentUser !== null;
+//
+//   if (!isLoggedIn) {
+//     event.preventDefault();
+//     if (confirm('예약내역을 확인하려면 로그인이 필요합니다.\n로그인 페이지로 이동하시겠습니까?')) {
+//       window.location.href = '/login?returnUrl=' + encodeURIComponent('/reservation/list');
+//     }
+//     return false;
+//   }
+//   return true;
+// }
 
 // Join Valid Check
 
