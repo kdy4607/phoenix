@@ -22,6 +22,8 @@ public class MovieVO {
     private int running_time;        // 상영 시간 (분 단위)
     private String poster_url;       // 포스터 이미지 URL
 
+
+
     // 연결된 태그 리스트 (다대다 관계)
     private List<TagVO> m_tagList;
 }
