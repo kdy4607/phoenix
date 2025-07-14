@@ -24,7 +24,7 @@ public class ReservationVO {
     private Date reserved_at;
 
     // 조인된 정보 (뷰나 조인 쿼리에서 사용)
-    private String u_name;            // ✅ 이 줄을 추가하세요!
+    private String u_name;
     private String movie_title;       // 영화 제목
     private String room_name;         // 상영관 이름
     private Date run_date;            // 상영 날짜
@@ -32,12 +32,14 @@ public class ReservationVO {
     private String selected_seats;    // 선택된 좌석 정보 (예: "A1, A2, A3")
     private Date reservation_date;    // 예약 날짜 (reserved_at와 동일)
 
+    // ✅ 포스터 URL 필드 추가
+    private String poster_url;        // 영화 포스터 URL
+
     // 통계용 필드들
     private int total_reservations;   // 총 예약 수
     private int completed_reservations; // 완료된 예약 수
     private int cancelled_reservations; // 취소된 예약 수
     private int total_revenue;        // 총 수익
-
 
     // 총 관람 인원 계산
     public int getTotalPeople() {
