@@ -71,7 +71,7 @@ public interface MovieMapper {
     })
     List<MovieVO> findMoviesByTagName(@Param("tagName") String tagName);
 
-    // 상세페이지 관련: 하나라도 태그 겹치는 영화 조회 (AND 아님)
+    // 상세페이지 관련: 하나라도 태그 겹치는 영화 조회
     @SelectProvider(type = MovieSqlBuilder.class, method = "buildQueryByAnyTag")
     @ResultMap("movieMap")
     List<MovieVO> selectMoviesByAnyTag(@Param("tags") List<Integer> tags, @Param("excludeId") int excludeId);

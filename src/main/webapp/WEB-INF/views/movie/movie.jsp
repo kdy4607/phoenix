@@ -7,6 +7,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
     <meta charset="UTF-8" />
     <title>Movie List</title>
     <link rel="stylesheet" href="/resources/css/movie.css" />
+    <script src="/resources/js/movie.js"></script>
   </head>
   <body>
     <jsp:include page="/WEB-INF/views/header.jsp" />
@@ -28,12 +29,14 @@ uri="http://java.sun.com/jsp/jstl/core" %>
           placeholder="Movie Name"
           class="search-input"
         />
-        <button type="submit" class="search-button">검색</button>
+        <button type="submit" class="search-button">Search</button>
       </form>
 
       <div class="tag-container">
         <!-- 🎭 태그 그룹 - 장르 -->
         <div class="tag-group genre tag-group-genre">
+          <div class="tag-group-name">Genre</div>
+          <div class="tags-group">
           <c:forEach var="tag" items="${tagList}">
             <c:if test="${tag.tag_type eq 'Genre'}">
               <span
@@ -45,10 +48,13 @@ uri="http://java.sun.com/jsp/jstl/core" %>
               </span>
             </c:if>
           </c:forEach>
+          </div>
         </div>
 
         <!-- 🎥 태그 그룹 - 제작사 -->
         <div class="tag-group studio tag-group-studio">
+          <div class="tag-group-name">Studio</div>
+          <div class="tags-group">
           <c:forEach var="tag" items="${tagList}">
             <c:if test="${tag.tag_type eq 'Studio'}">
               <span
@@ -60,10 +66,13 @@ uri="http://java.sun.com/jsp/jstl/core" %>
               </span>
             </c:if>
           </c:forEach>
+          </div>
         </div>
 
         <!-- 🌍 태그 그룹 - 국가 -->
         <div class="tag-group country tag-group-country">
+          <div class="tag-group-name">Country</div>
+          <div class="tags-group">
           <c:forEach var="tag" items="${tagList}">
             <c:if test="${tag.tag_type eq 'Country'}">
               <span
@@ -75,10 +84,18 @@ uri="http://java.sun.com/jsp/jstl/core" %>
               </span>
             </c:if>
           </c:forEach>
+          </div>
         </div>
-
+<%--         상영중 전체 미개봉--%>
+        <div class="movie-tab">
+          <a href="/movie-tab?status=all" class="${status == 'all' ? 'active' : ''}">Showing Movies</a>
+          <a href="/movie-tab?status=showing" class="${status == 'showing' ? 'active' : ''}">All Movies</a>
+          <a href="/movie-tab?status=upcoming" class="${status == 'upcoming' ? 'active' : ''}">Upcoming Movies</a>
+        </div>
         <!-- 😎 태그 그룹 - 분위기 -->
         <div class="tag-group mood tag-group-mood">
+          <div class="tag-group-name">Mood</div>
+          <div class="tags-group">
           <c:forEach var="tag" items="${tagList}">
             <c:if test="${tag.tag_type eq 'Mood'}">
               <span
@@ -90,6 +107,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
               </span>
             </c:if>
           </c:forEach>
+          </div>
         </div>
       </div>
 
@@ -98,49 +116,6 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         <jsp:include page="movie-fragment.jsp" />
       </div>
     </div>
-    <script>
-      const selectedTags = new Set();
 
-      function toggleTag(el) {
-        const tagId = parseInt(el.dataset.id);
-        el.classList.toggle("selected");
-        selectedTags.has(tagId)
-          ? selectedTags.delete(tagId)
-          : selectedTags.add(tagId);
-        submitFilter();
-      }
-
-      function handleSearch(event) {
-        event.preventDefault();
-        submitFilter();
-        return false;
-      }
-
-      function submitFilter() {
-        const title = document.querySelector('input[name="title"]').value;
-
-        fetch("/movies/filter", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            title: title,
-            tagIds: [...selectedTags],
-          }),
-        })
-          .then((res) => res.text())
-          .then((html) => {
-            document.getElementById("movie-container").innerHTML = html;
-          })
-          .catch((err) => console.error("필터링 실패:", err));
-      }
-
-      // 태그 접기펴기
-      function toggleTags() {
-        const container = document.querySelector(".tag-container");
-        container.classList.toggle("collapsed");
-      }
-
-      // 기존 코드 그대로 유지…
-    </script>
   </body>
 </html>
