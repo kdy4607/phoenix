@@ -12,11 +12,11 @@ uri="http://java.sun.com/jsp/jstl/fmt" %>
         <div>Your Account Information</div>
         <form action="/mypage/general-info/update" method="post">
           <div>
-            <div>Your user ID</div>
+            <h1>Your user ID</h1>
             <input type="text" name="u_id" readonly value="${user.u_id}" />
           </div>
           <div>
-            <div>Your user Password</div>
+            <h1>Your user Password</h1>
             <input
               type="text"
               name="u_pw"
@@ -25,7 +25,7 @@ uri="http://java.sun.com/jsp/jstl/fmt" %>
             />
           </div>
           <div>
-            <div>Your Name</div>
+            <h1>Your Name</h1>
             <input
               type="text"
               readonly
@@ -34,7 +34,7 @@ uri="http://java.sun.com/jsp/jstl/fmt" %>
             />
           </div>
           <div>
-            <div>Your Birth Date</div>
+            <h1>Your Birth Date</h1>
             <input
               type="text"
               readonly
@@ -43,7 +43,7 @@ uri="http://java.sun.com/jsp/jstl/fmt" %>
             />
           </div>
           <div>
-            <div>Your Address</div>
+            <h1>Your Address</h1>
             <input
               type="text"
               readonly
@@ -52,12 +52,12 @@ uri="http://java.sun.com/jsp/jstl/fmt" %>
             />
           </div>
           <div>
-            <button>Update Account Information</button>
+            <button class="cay-update-btn">Update Account Information</button>
           </div>
         </form>
         <form action="/mypage/deleteAccount">
           <input type="hidden" name="u_id" value="${sessionScope.user.u_id}" />
-          <button>Delete account</button>
+          <button class="cay-delete-btn">Delete account</button>
         </form>
       </div>
     </div>

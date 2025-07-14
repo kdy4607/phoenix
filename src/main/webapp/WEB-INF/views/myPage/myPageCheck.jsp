@@ -15,27 +15,27 @@
 
 <div class="cay-myPage-content">
     <div class="cay-myPage-profile">
-        <div> Your Account Information is Successfully Updated ! </div>
+        <div> Your Account Information  is <br> Successfully Updated ! </div>
         <form action="/mypage">
             <div>
-                <div> Your user ID</div>
+                <h1> Your user ID</h1>
                 <input type="text" readonly name="u_id" value="${sessionScope.user.u_id}">
             </div>
             <div>
-                <div> Your Password </div>
+                <h1> Your Password </h1>
                 <input type="text" readonly name="u_pw" value="${sessionScope.user.u_pw}">
             </div>
             <div>
-                <div> Your Name</div>
+                <h1> Your Name</h1>
                 <input type="text" readonly name="u_name" value="${sessionScope.user.u_name}">
             </div>
             <div>
-                <div> Your Birth Date</div>
+                <h1> Your Birth Date</h1>
                 <input type="text" readonly name="u_birth"
                        value="<fmt:formatDate value='${sessionScope.user.u_birth}' pattern='yyyy-MM-dd'/>">
             </div>
             <div>
-                <div> Your Address</div>
+                <h1> Your Address</h1>
                 <input type="text" readonly name="u_address" value="${sessionScope.user.u_address}">
             </div>
             <div>
