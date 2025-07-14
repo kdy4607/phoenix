@@ -5,14 +5,14 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movie Schedule</title>
     <!-- 토스페이먼츠 SDK 추가 -->
     <script src="https://js.tosspayments.com/v2/standard"></script>
-    <link rel="icon" href="https://static.toss.im/icons/png/4x/icon-toss-logo.png" />
+    <link rel="icon" href="https://static.toss.im/icons/png/4x/icon-toss-logo.png"/>
     <link rel="stylesheet" href="/resources/css/schedule.css">
-    <link rel="stylesheet" type="text/css" href="/resources/css/payment.css" />
+    <link rel="stylesheet" type="text/css" href="/resources/css/payment.css"/>
 
 </head>
 <body>
@@ -51,12 +51,12 @@
     </c:if>
 
     <!-- Current Theater -->
-<%--    <div class="section">--%>
-<%--        <div class="section-header">Phoenix 종각점</div>--%>
-<%--        <div class="section-content">--%>
-<%--            <p style="color: #666; font-size: 14px;">서울특별시 종로구 종로12길 15</p>--%>
-<%--        </div>--%>
-<%--    </div>--%>
+    <%--    <div class="section">--%>
+    <%--        <div class="section-header">Phoenix 종각점</div>--%>
+    <%--        <div class="section-content">--%>
+    <%--            <p style="color: #666; font-size: 14px;">서울특별시 종로구 종로12길 15</p>--%>
+    <%--        </div>--%>
+    <%--    </div>--%>
 
     <!-- Movie Schedule Section -->
     <div class="section" id="scheduleSection">
@@ -124,7 +124,7 @@
                     </c:when>
                     <c:otherwise>
                         <div style="text-align: center; padding: 40px; color: #666;">
-                            선택하신 날짜에 상영 중인 영화가 없습니다.
+                            Sorry, no movies are scheduled for the selected date
                         </div>
                     </c:otherwise>
                 </c:choose>
@@ -135,7 +135,7 @@
                  style="display: none; background: #f8f9fa; padding: 15px; margin-top: 20px; border-radius: 8px;">
                 <h4>Selected Date & Time</h4>
                 <p id="selectedDetails"></p>
-                <button type="button" class="btn-primary" onclick="loadSeatSelection()">좌석 선택하기</button>
+                <button type="button" class="btn-primary" onclick="loadSeatSelection()">Select Seats</button>
             </div>
         </div>
     </div>
@@ -263,7 +263,7 @@
     <div id="completeSection" style="display: none;">
         <div id="completeMessage"></div>
         <button class="payButton" onclick="location.href='/reservation/list'">
-            예매 내역 보기
+            My Bookings
         </button>
     </div>
 
@@ -273,6 +273,78 @@
         let selectedSeats = [];
         let allSeats = [];
         let seatPrice = 12000; // 기본 가격
+        let widgets;
+        window.totalAmount = 0; // 전역에 총 결제금액 저장
+
+        function generateRandomString() {
+            return window.btoa(Math.random()).slice(0, 20);
+        }
+
+        async function initTossWidgets() {
+            const clientKey = "test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm";
+            const tossPayments = TossPayments(clientKey);
+            widgets = tossPayments.widgets({customerKey: generateRandomString()});
+
+            // 초깃값 0원 세팅 (나중에 실제 금액으로 갱신할 예정)
+            await widgets.setAmount({currency: "KRW", value: 0});
+
+            // 결제수단·약관 UI 단 한 번만 렌더링
+            await widgets.renderPaymentMethods({
+                selector: "#payment-method",
+                variantKey: "DEFAULT"
+            });
+            await widgets.renderAgreement({
+                selector: "#agreement",
+                variantKey: "AGREEMENT"
+            });
+
+            // 쿠폰 체크박스 핸들러 (window.totalAmount 참조)
+            document.getElementById("coupon-box").addEventListener("change", async () => {
+                const base = window.totalAmount || 0;
+                const newVal = document.getElementById("coupon-box").checked
+                    ? base - 5000
+                    : base;
+                await widgets.setAmount({currency: "KRW", value: newVal});
+            });
+
+            document.getElementById("payment-button")
+                .addEventListener("click", async () => {
+                    try {
+                        // 결제 요청
+                        await widgets.requestPayment({
+                            orderId: generateRandomString(),    // 랜덤 주문 ID
+                            orderName: "영화 예매",
+                            customerEmail: "customer123@gmail.com",
+                            customerName: "김토스",
+                            customerMobilePhone: "01012341234"
+                        });
+                        // 결제 성공 후 백엔드 예약 생성
+                        const resp = await fetch("/reservation/create", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify(window._reservationPayload)
+                        });
+                        const data = await resp.json();
+                        if (data.success) {
+                            updateSteps(4);
+                            document.getElementById("paymentSection").style.display = "none";
+                            showReservationComplete(data.reservation);
+                        } else {
+                            throw new Error(data.message);
+                        }
+                    } catch (err) {
+                        console.error("결제 혹은 예약 처리 중 오류:", err);
+                        alert("결제에 실패했습니다. 다시 시도해 주세요.");
+                        updateSteps(3);
+                        document.getElementById("paymentSection").style.display = "block";
+                    }
+                });
+
+        }
+
+        // 페이지 로드 직후 한번 호출
+        initTossWidgets();
+
 
         // 날짜 선택 기능
         function selectDate(dateString, element) {
@@ -358,7 +430,7 @@
 
                 if (infoDiv && detailsP) {
                     detailsP.innerHTML = '<strong>' + selectedShowtime.movieTitle + '</strong><br>' +
-                        selectedShowtime.startTime + ' | ' + selectedShowtime.roomName + ' | 잔여좌석: ' + selectedShowtime.availableSeats + '석';
+                        selectedShowtime.startTime + ' | ' + selectedShowtime.roomName + ' | Available Seats : ' + selectedShowtime.availableSeats + 'seats';
 
                     infoDiv.style.display = 'block';
                     console.log('✅ 선택된 상영시간 정보 표시 완료');
@@ -445,26 +517,19 @@
     <!-- 오른쪽 블록: 요금 리스트 -->
     <div class="price-list">
       <span class="price-item adult">
-        Adult <strong>\${priceAdult.toLocaleString()}원</strong>
+        Adult <strong>₩ \${priceAdult.toLocaleString()}</strong>
       </span>
       <span class="price-item youth">
-        Youth <strong>\${priceYouth.toLocaleString()}원</strong>
+        Youth <strong>₩ \${priceYouth.toLocaleString()}</strong>
       </span>
       <span class="price-item child">
-        Child <strong>\${priceChild.toLocaleString()}원</strong>
+        Child <strong>₩ \${priceChild.toLocaleString()}</strong>
       </span>
     </div>
   </div>
 </div>
     `;
 
-            // document.getElementById('seatRuntimeInfo').innerHTML =
-            //     '<strong>' + runtime.movie_title + '</strong> | ' +
-            //     runtime.start_time + ' | ' +
-            //     runtime.room_name + '<br/>' +
-            //     '성인 ' + priceAdult.toLocaleString() + '원' + ' | ' +
-            //     '청소년 ' + priceYouth.toLocaleString() + '원' + ' | ' +
-            //     '어린이 ' + priceChild.toLocaleString() + '원';
 
             // 좌석 맵 생성
             createSeatMap(seats);
@@ -573,9 +638,9 @@
 
                 // 인원 & 총 금액 노출
                 selectedSeatsList.innerHTML +=
-                    '<br><strong>Number of Seats:</strong> Adult ' + adultCount + '명, ' +
-                    'Youth ' + youthCount + ', Child ' + childCount + '명' +
-                    '<br><strong>Total Amount:</strong> ' + totalAmount.toLocaleString() + '원';
+                    '<br><strong>Number of Seats:</strong> Adult x' + adultCount +
+                    ', Youth x' + youthCount + ', Child x' + childCount +
+                    '<br><strong>Total Amount:</strong> ₩ ' + totalAmount.toLocaleString();
 
                 confirmBtn.disabled = false;
             } else {
@@ -623,7 +688,7 @@
 
             showPaymentSection(totalAmount, seatLabels);
 
-            // 백엔드에 보낼 페이로드 미리 저장
+            // 1) 페이로드 객체 정의
             window._reservationPayload = {
                 runtimeId: selectedShowtime.runtimeId,
                 adult: adultCount,
@@ -631,23 +696,14 @@
                 child: childCount,
                 seats: seatIds
             };
+
+            // 2) 전역 금액 저장
+            window.totalAmount = totalAmount;
+
+            // 3) 토스 위젯에 금액 반영
+            widgets.setAmount({currency: "KRW", value: totalAmount});
         }
 
-        // function confirmSeats() {
-        //     if (selectedSeats.length === 0) {
-        //         alert('좌석을 선택해주세요.');
-        //         return;
-        //     }
-        //
-        //     // 결제 단계로 넘어갈 준비
-        //     const totalAmount = selectedSeats.length * seatPrice;
-        //     const seatLabels = selectedSeats.map(seat => seat.seat_row + seat.seat_number).join(', ');
-        //
-        //     // 결제 섹션을 표시하는 함수 호출
-        //     showPaymentSection(totalAmount, seatLabels);
-        //
-        //     console.log('[confirmSeats] selectedShowtime', selectedShowtime);
-        // }
 
         /**
          * 결제 섹션을 설정하고 화면에 표시하는 함수
@@ -657,16 +713,16 @@
             // 1. 결제 요약 정보 채우기
             document.getElementById('paymentSummary').innerHTML = `
             <div class="payment-summary-box">
-               <h3>최종 예매 내역 확인</h3>
+               <h3>Final Booking Details</h3>
             <div class="poster">
             <img src="\${selectedShowtime.posterUrl}"/>
             </div>
             <div class="details">
-            <p><strong>영화:</strong> \${selectedShowtime.movieTitle}</p>
-            <p><strong>상영시간:</strong> \${selectedShowtime.startTime}</p>
-            <p><strong>상영관:</strong> \${selectedShowtime.roomName}</p>
-            <p><strong>좌석:</strong> \${seatLabels}</p>
-            <p><strong>최종 결제 금액:</strong> \${amount.toLocaleString()}원</p>
+            <p><strong>Movie:</strong> \${selectedShowtime.movieTitle}</p>
+            <p><strong>Time:</strong> \${selectedShowtime.startTime}</p>
+            <p><strong>Theater:</strong> \${selectedShowtime.roomName}</p>
+            <p><strong>Seats:</strong> \${seatLabels}</p>
+            <p><strong>Total Amount:</strong> ₩ \${amount.toLocaleString()}</p>
             </div>
             </div>
         `;
@@ -683,7 +739,7 @@
             paymentButton.disabled = false; // 버튼 활성화
         }
 
-            // paymentButton.onclick = processPaymentAndReserve; // 실제 예약 처리 함수 연결
+        // paymentButton.onclick = processPaymentAndReserve; // 실제 예약 처리 함수 연결
 
         /**
          * '결제하기' 버튼 클릭 시 최종 예약을 처리하는 함수
@@ -724,14 +780,18 @@
             const completeSection = document.getElementById('completeSection');
             const completeMessage = document.getElementById('completeMessage');
 
-            completeMessage.innerHTML = `
-            <h2>예약이 완료되었습니다!</h2>
-            <p><strong>예약번호:</strong> \${reservation.reservation_id}</p>
-            <p><strong>영화:</strong> \${reservation.movie_title}</p>
-            <p><strong>상영시간:</strong> \${reservation.start_time}</p>
-            <p><strong>상영관:</strong> \${reservation.room_name}</p>
-            <p><strong>좌석:</strong> \${reservation.selected_seats}</p>
-            <p><strong>총 금액:</strong> \${reservation.total_amount.toLocaleString()}원</p>
+                // 쿠폰 체크박스가 켜져 있으면 5000원 차감
+                    const finalAmount = document.getElementById('coupon-box').checked
+                    ? window.totalAmount - 5000 : window.totalAmount;
+
+                    completeMessage.innerHTML = `
+            <h2>Your Reservation is Complete!</h2>
+            <p><strong>Reservation Number:</strong> \${reservation.reservation_id}</p>
+            <p><strong>Movie:</strong> \${reservation.movie_title}</p>
+            <p><strong>Time:</strong> \${reservation.start_time}</p>
+            <p><strong>Theater:</strong> \${reservation.room_name}</p>
+            <p><strong>Seats:</strong> \${reservation.selected_seats}</p>
+            <p><strong>Total Amount:</strong> ₩ \${finalAmount.toLocaleString()}</p>
         `;
 
             completeSection.style.display = 'block';
@@ -904,114 +964,7 @@
         }
 
 
-        // 토스페이
 
-        main();
-
-        async function main() {
-            const button = document.getElementById("payment-button");
-            const coupon = document.getElementById("coupon-box");
-            const amount = {
-                currency: "KRW",
-                value: 50000,
-            };
-            // ------  결제위젯 초기화 ------
-            // TODO: clientKey는 개발자센터의 결제위젯 연동 키 > 클라이언트 키로 바꾸세요.
-            // TODO: 구매자의 고유 아이디를 불러와서 customerKey로 설정하세요. 이메일・전화번호와 같이 유추가 가능한 값은 안전하지 않습니다.
-            // @docs https://docs.tosspayments.com/sdk/v2/js#토스페이먼츠-초기화
-            const clientKey = "test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm";
-            const customerKey = generateRandomString();
-            const tossPayments = TossPayments(clientKey);
-            // 회원 결제
-            const widgets = tossPayments.widgets({
-                customerKey,
-            });
-            // 비회원 결제
-            // const widgets = tossPayments.widgets({customerKey: TossPayments.ANONYMOUS});
-
-            // ------  주문서의 결제 금액 설정 ------
-            // TODO: 위젯의 결제금액을 결제하려는 금액으로 초기화하세요.
-            // TODO: renderPaymentMethods, renderAgreement, requestPayment 보다 반드시 선행되어야 합니다.
-            await widgets.setAmount(amount);
-
-            // ------  결제 UI 렌더링 ------
-            // @docs https://docs.tosspayments.com/sdk/v2/js#widgetsrenderpaymentmethods
-            await widgets.renderPaymentMethods({
-                selector: "#payment-method",
-                // 렌더링하고 싶은 결제 UI의 variantKey
-                // 결제 수단 및 스타일이 다른 멀티 UI를 직접 만들고 싶다면 계약이 필요해요.
-                // @docs https://docs.tosspayments.com/guides/v2/payment-widget/admin#새로운-결제-ui-추가하기
-                variantKey: "DEFAULT",
-            });
-
-            // ------  이용약관 UI 렌더링 ------
-            // @docs https://docs.tosspayments.com/reference/widget-sdk#renderagreement선택자-옵션
-            await widgets.renderAgreement({selector: "#agreement", variantKey: "AGREEMENT"});
-
-            // ------  주문서의 결제 금액이 변경되었을 경우 결제 금액 업데이트 ------
-            // @docs https://docs.tosspayments.com/sdk/v2/js#widgetssetamount
-            coupon.addEventListener("change", async function () {
-                if (coupon.checked) {
-                    await widgets.setAmount({
-                        currency: "KRW",
-                        value: amount.value - 5000,
-                    });
-
-                    return;
-                }
-
-                await widgets.setAmount({
-                    currency: "KRW",
-                    value: amount,
-                });
-            });
-
-            // ------ '결제하기' 버튼 누르면 결제창 띄우기 ------
-            // @docs https://docs.tosspayments.com/sdk/v2/js#widgetsrequestpayment
-            button.addEventListener("click", async function () {
-                // 결제를 요청하기 전에 orderId, amount를 서버에 저장하세요.
-                // 결제 과정에서 악의적으로 결제 금액이 바뀌는 것을 확인하는 용도입니다.
-                // 결제 요청
-                try {
-                    await widgets.requestPayment({
-                        orderId: generateRandomString(),
-                        orderName: "영화 예매",
-                        customerEmail: "customer123@gmail.com",
-                        customerName: "김토스",
-                        customerMobilePhone: "01012341234",
-
-                    });
-
-                    // 결제 성공 시: 예약 생성 API 호출
-                    const resp = await fetch('/reservation/create', {
-                        method: 'POST',
-                        headers: {'Content-Type': 'application/json'},
-                        body: JSON.stringify(window._reservationPayload)
-                    });
-                    const data = await resp.json();
-                    if (data.success) {
-                        updateSteps(4);
-                        document.getElementById('paymentSection').style.display = 'none';
-                        document.getElementById('completeSection').style.display = 'block';
-                        // ✅ showReservationComplete 함수 호출 추가
-                        showReservationComplete(data.reservation);
-                    } else {
-                        throw new Error(data.message);
-                    }
-                } catch (err) {
-                    console.error('결제 또는 예약 처리 중 오류:', err);
-                    // 결제 실패 또는 예약 실패
-                    alert('결제에 실패했습니다. 다시 시도해 주세요.');
-                    // 필요시 3단계(결제)로 돌아가기
-                    updateSteps(3);
-                    document.getElementById('paymentSection').style.display = 'block';
-                }
-            });
-
-            function generateRandomString() {
-                return window.btoa(Math.random()).slice(0, 20);
-            }
-        }
 
         // ========================================
         // 로그인 상태 확인 함수
@@ -1037,7 +990,6 @@
                 window.location.href = '/login?returnUrl=' + currentUrl;
             }
         }
-
 
 
     </script>
