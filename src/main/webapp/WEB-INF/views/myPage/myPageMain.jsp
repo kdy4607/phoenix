@@ -19,7 +19,6 @@
             <li><a href="/mypage/profile?u_id=${user.u_id}"> Profile </a>
                 <ul>
                     <li><a href="/mypage/profile?u_id=${user.u_id}">General Info</a></li>
-                    <li><a href="/mypage/theatres?u_id=${user.u_id}">Favorite Theatres</a></li>
                 </ul>
             </li>
             <li><a href="/mypage/history?u_id=${user.u_id}">My History</a>

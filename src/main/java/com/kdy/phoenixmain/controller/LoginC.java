@@ -189,29 +189,6 @@ public class LoginC {
         return "myPage/myPageMain";
     }
 
-
-    // ===== 마이페이지 극장 관련 =====
-
-    @GetMapping("/mypage/theatres")
-    public String theatres(@RequestParam("u_id") String u_id,
-                           HttpSession session,
-                           Model model) {
-
-        LoginVO user = (LoginVO) session.getAttribute("user");
-
-        if (user == null) {
-            return "redirect:/login";
-        } else {
-            if (u_id.equals(user.getU_id())) {
-                model.addAttribute("content", "myPageTheatres.jsp");
-            }
-            return "myPage/myPageMain";
-        }
-
-//        model.addAttribute("content", "myPageTheatres.jsp");
-//        return "myPage/myPageMain";
-    }
-
     // ===== 마이페이지 관람 이력 관련 =====
 
     @GetMapping("/mypage/history")
@@ -229,9 +206,6 @@ public class LoginC {
             }
             return "myPage/myPageMain";
         }
-
-//        model.addAttribute("content", "myPageHistory.jsp");
-//        return "myPage/myPageMain";
     }
 
     // ===== 마이페이지 리워드 관련 =====
@@ -252,11 +226,6 @@ public class LoginC {
             }
             return "myPage/myPageMain";
         }
-
-//        model.addAttribute("pointContent", "myPagePoint.jsp");
-//        model.addAttribute("couponContent", "myPageCoupon.jsp");
-//        model.addAttribute("content", "myPageReward.jsp");
-//        return "myPage/myPageMain";
     }
 
     @GetMapping("/mypage/reward/point")
@@ -274,10 +243,6 @@ public class LoginC {
             }
             return "myPage/myPageMain";
         }
-
-//        model.addAttribute("content", "myPagePoint.jsp");
-//        return "myPage/myPageMain";
-
     }
 
     @GetMapping("/mypage/reward/coupon")
@@ -295,10 +260,6 @@ public class LoginC {
             }
             return "myPage/myPageMain";
         }
-
-//        model.addAttribute("content", "myPageCoupon.jsp");
-//        return "myPage/myPageMain";
-
     }
 
     // ===== 마이페이지 리마인더 관련 =====
@@ -314,13 +275,10 @@ public class LoginC {
             return "redirect:/login";
         } else {
             if (u_id.equals(user.getU_id())) {
-                model.addAttribute("content", "myPageReward.jsp");
+                model.addAttribute("content", "myPageReminder.jsp");
             }
             return "myPage/myPageMain";
         }
-
-//        model.addAttribute("content", "myPageReminder.jsp");
-//        return "myPage/myPageMain";
     }
 
     @GetMapping("/mypage/wishlist")
@@ -334,13 +292,10 @@ public class LoginC {
             return "redirect:/login";
         } else {
             if (u_id.equals(user.getU_id())) {
-                model.addAttribute("content", "myPageReward.jsp");
+                model.addAttribute("content", "myPageWishlist.jsp");
             }
             return "myPage/myPageMain";
         }
-
-//        model.addAttribute("content", "myPageWishlist.jsp");
-//        return "myPage/myPageMain";
     }
 
 
