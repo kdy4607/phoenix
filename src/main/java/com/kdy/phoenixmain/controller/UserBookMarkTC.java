@@ -1,13 +1,12 @@
 package com.kdy.phoenixmain.controller;
 
 import com.kdy.phoenixmain.service.UserBookMServiceT;
+import com.kdy.phoenixmain.vo.BookMarkVO;
 import com.kdy.phoenixmain.vo.UserVO;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class UserBookMarkTC {
@@ -58,5 +57,21 @@ public class UserBookMarkTC {
         Integer movieId = (Integer) session.getAttribute("lastMovieId");
         return "redirect:/oneMovieDetail?movie_id=" + movieId; // movieDetailView.jsp
     }
+    @PostMapping("/bookmark")
+    @ResponseBody
+    public String toggleBookmark(@RequestBody BookMarkVO dto, HttpSession session) {
+        String userId = (String) session.getAttribute("userId");
+        if (userId == null) {
+            return "로그인 필요";
+        }
 
+        // 처리 로직 예시
+        if (dto.isBookmarked()) {
+            userBookMServiceT.save(userId, dto.getMovieId());
+        } else {
+            userBookMServiceT.delete(userId, dto.getMovieId());
+        }
+
+        return "성공";
+    }
 }

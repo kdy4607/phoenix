@@ -75,4 +75,6 @@ public interface MovieMapper {
     @SelectProvider(type = MovieSqlBuilder.class, method = "buildQueryByAnyTag")
     @ResultMap("movieMap")
     List<MovieVO> selectMoviesByAnyTag(@Param("tags") List<Integer> tags, @Param("excludeId") int excludeId);
+
+
 }

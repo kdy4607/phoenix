@@ -38,7 +38,7 @@
     font-weight: bold;
 }
 .content {
-    height: 280px;
+    height: auto;
     display: none;
     width: 100%;               /* 전체 너비 채움 */
     border: 1px solid #ccc;
@@ -53,11 +53,17 @@
 .related-movie-wrap {
     display: flex;
     justify-content: center;   /* 가로 가운데 정렬 */
-    gap: 20px;                 /* 영화 간 간격 */
+    gap: 100px;           /* 영화 간 간격 */
     flex-wrap: wrap;           /* 넘치면 줄바꿈 */
     align-items: center;
 }
 
 .related-movie {
     text-align: center;
+    flex-shrink: 0; /* 줄어들지 않게 */
+
+}
+.related-movie img {
+    width: 220px !important;
+    height: auto;
 }

@@ -1,40 +1,41 @@
+let bookmarkAlertShown = false;
 
-    let bookmarkAlertShown = false;
-
-    function toggleBookmark(elem) {
+function toggleBookmark(elem) {
     const isLoggedIn = elem.getAttribute("data-logged-in") === "true";
     const movieId = elem.getAttribute("data-movie-id");
+    // 네, setAttribute()를 직접 호출하지 않아도 getAttribute()는 사용할 수 있습니다.
+    //     왜냐하면, HTML 안에 직접 작성된 속성(data-* 등)은 이미 요소의 attribute로 등록되어 있기 때문입니다.
 
     if (!isLoggedIn) {
-    if (!bookmarkAlertShown) {
-    alert("로그인 해주세요.");
-    bookmarkAlertShown = true;
-}
-    return;
-}
+        if (!bookmarkAlertShown) {
+            alert("로그인 해주세요.");
+            bookmarkAlertShown = true;
+        }
+        return;
+    }
 
     // 토글 UI
     const isBookmarked = elem.classList.toggle("bookmarked");
 
     // AJAX 호출
     fetch("/bookmark", {
-    method: "POST",
-    headers: {
-    "Content-Type": "application/json"
-},
-    body: JSON.stringify({
-    movieId: movieId,
-    bookmarked: isBookmarked
-})
-}).then(res => {
-    if (!res.ok) {
-    throw new Error("서버 오류");
-}
-    return res.text();
-}).then(msg => {
-    console.log("북마크 처리:", msg);
-}).catch(err => {
-    alert("북마크 실패");
-    console.error(err);
-});
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            movieId: movieId,
+            bookmarked: isBookmarked
+        })
+    }).then(res => {
+        if (!res.ok) {
+            throw new Error("서버 오류");
+        }
+        return res.text();
+    }).then(msg => {
+        console.log("북마크 처리:", msg);
+    }).catch(err => {
+        alert("북마크 실패");
+        console.error(err);
+    });
 }
