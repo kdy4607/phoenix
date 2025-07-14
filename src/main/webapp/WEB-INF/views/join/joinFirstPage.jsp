@@ -10,16 +10,16 @@
 
 <div class="cay-join-process">
     <div class="cay-join-process-step">
-        <div> Step <span>1</span></div>
+        <div> Step <span style="color: ${fontColor}">1</span></div>
         <div> Step 2</div>
         <div> Step 3</div>
     </div>
     <div class="cay-join-process-bar">
-        <div> 1</div>
-        <div> -</div>
-        <div> 1</div>
-        <div> -</div>
-        <div> 1</div>
+        <div style="background-color: ${color}"> ㅤ</div> <%-- 공백 문자 있음, 지우지 말 것 --%>
+        <div> ㅤ</div>
+        <div> ㅤ</div>
+        <div> ㅤ</div>
+        <div> ㅤ</div>
     </div>
     <div class="cay-join-process-txt">
         <div> Enter User ID And Password</div>
@@ -28,10 +28,8 @@
     </div>
 </div>
 
-
-
 <form class="cay-join-wrap" action="/join/step2" method="post" onsubmit="return call();">
-    <div class="error-message">${errorMessage}</div>
+    <div>error${errorMessage}</div>
     <div> Create Account</div>
     <div> Enter Your New User ID</div>
     <input type="text" name="u_id" placeholder="Enter User ID">

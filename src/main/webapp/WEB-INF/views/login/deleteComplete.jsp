@@ -11,10 +11,10 @@
 
 <jsp:include page="/WEB-INF/views/header.jsp" />
 
-    <main class="cay-login-container">
-        <div class="cay-login-content">
+    <main class="cay-deleteComplete-container">
+        <div class="cay-deleteComplete-content">
 
-            <h1> Your Account Has Been Deleted Successfully </h1>
+            <h1> Your Account Has Been <br> Deleted Successfully </h1>
             <img src="" alt="">
             <button onclick="location.href='/join/step1'"> Creat Account</button>
             <button onclick="location.href='/'"> Go To Main </button>

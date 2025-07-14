@@ -310,7 +310,4 @@ public class ReservationService {
         // 7) 완성된 VO 리턴
         return getReservationDetail(reservationId);
     }
-
-
-
 }
