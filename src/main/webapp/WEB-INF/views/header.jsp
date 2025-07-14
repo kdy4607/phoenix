@@ -54,7 +54,7 @@
                             <button class="user-menu-btn" onclick="toggleUserMenu()">⋮</button>
                             <div class="user-dropdown" id="userDropdown">
                                 <a href="/mypage" class="dropdown-item">👤 MyPage</a>
-                                <a href="/reservation/list" class="dropdown-item">📋 Book History</a>
+                                <a href="/reservation/list" class="dropdown-item">📋 My Bookings</a>
                                 <a href="#" class="dropdown-item" onclick="alert('설정 준비 중')">⚙️ Setting</a>
                                 <div class="dropdown-divider"></div>
                                 <button class="dropdown-item" onclick="logout()">🚪 Logout</button>

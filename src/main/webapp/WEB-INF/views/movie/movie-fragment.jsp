@@ -52,7 +52,7 @@
                 </c:forEach>
             </div>
         </div>
-            <button class="btn-book-tickets" onclick="location.href='oneMovieDetail?movie_id=${movie.movie_id}'">
+            <button class="btn-book-tickets" onclick="location.href='schedule?movie_id=${movie.movie_id}'">
                 Book Tickets
             </button>
     </div>
