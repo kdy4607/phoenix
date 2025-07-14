@@ -13,9 +13,9 @@
 </head>
 <body>
 
-<div> ${errorMessage} </div>
 
 <div class="cay-myPage-content">
+<div class="cay-myPage-errorMessage"> ${errorMessage} </div>
     <div class="cay-myPage-profile">
         <div> Update Account Information </div>
         <form action="/mypage/general-info/update/submit" method="post" onsubmit="return call();">
@@ -25,7 +25,7 @@
             </div>
             <div>
                 <h1> Your user Password</h1>
-                <input type="text"name="u_pw">
+                <input type="password"name="u_pw">
             </div>
             <div>
                 <h1> Your Name</h1>

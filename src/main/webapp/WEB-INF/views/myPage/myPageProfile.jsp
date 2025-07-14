@@ -12,12 +12,11 @@
 </head>
 <body>
 
-<div class="profile-error-message"> ${errorMessage} </div>
-
 <div class="cay-myPage-content">
     <div class="cay-myPage-profile">
         <div> Check Your Account</div>
         <form action="/mypage/general-info" method="post">
+            <div class="cay-myPage-errorMessage"> ${errorMessage} </div>
             <div> Enter Your Password to identify your Account</div>
             <div>
                 <input readonly type="text" placeholder="ID" value="${user.u_id}" name="u_id">

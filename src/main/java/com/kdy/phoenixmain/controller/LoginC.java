@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -63,7 +64,7 @@ public class LoginC {
             } else {
                 // 로그인 실패
                 System.out.println("❌ 로그인 실패 - 잘못된 인증 정보");
-                model.addAttribute("errorMessage", "아이디 또는 비밀번호가 올바르지 않습니다.");
+                model.addAttribute("errorMessage", "Account does not exist, <br> or entered the wrong ID or password");
                 model.addAttribute("returnUrl", returnUrl);
                 return "login/login";
             }
@@ -71,7 +72,7 @@ public class LoginC {
         } catch (Exception e) {
             System.err.println("❌ 로그인 처리 오류: " + e.getMessage());
             e.printStackTrace();
-            model.addAttribute("errorMessage", "로그인 중 오류가 발생했습니다.");
+            model.addAttribute("errorMessage", "Your can't log-in with a temporary error. <br> Please try again later.");
             model.addAttribute("returnUrl", returnUrl);
             return "login/login";
         }
@@ -186,6 +187,159 @@ public class LoginC {
         return "myPage/myPageMain";
     }
 
+
+    // ===== 마이페이지 극장 관련 =====
+
+    @GetMapping("/mypage/theatres")
+    public String theatres(@RequestParam("u_id") String u_id,
+                           HttpSession session,
+                           Model model) {
+
+//        LoginVO user = (LoginVO) session.getAttribute("user");
+//
+//        if (user == null) {
+//            return "redirect:/login";
+//        } else {
+//            if (u_id.equals(user.getU_id())) {
+//                model.addAttribute("content", "myPageTheatres.jsp");
+//            }
+//            return "myPage/myPageMain";
+//        }
+
+        model.addAttribute("content", "myPageTheatres.jsp");
+        return "myPage/myPageMain";
+    }
+
+    // ===== 마이페이지 관람 이력 관련 =====
+
+    @GetMapping("/mypage/history")
+    public String history(@RequestParam("u_id") String u_id,
+                          HttpSession session,
+                          Model model) {
+
+//        LoginVO user = (LoginVO) session.getAttribute("user");
+//
+//        if (user == null) {
+//            return "redirect:/login";
+//        } else {
+//            if (u_id.equals(user.getU_id())) {
+//                model.addAttribute("content", "myPageHistory.jsp");
+//            }
+//            return "myPage/myPageMain";
+//        }
+
+        model.addAttribute("content", "myPageHistory.jsp");
+        return "myPage/myPageMain";
+    }
+
+    // ===== 마이페이지 리워드 관련 =====
+
+    @GetMapping("/mypage/reward")
+    public String reward(@RequestParam("u_id") String u_id,
+                         HttpSession session,
+                         Model model) {
+//        LoginVO user = (LoginVO) session.getAttribute("user");
+//
+//        if (user == null) {
+//            return "redirect:/login";
+//        } else {
+//            if (u_id.equals(user.getU_id())) {
+//                model.addAttribute("content", "myPageReward.jsp");
+//            }
+//            return "myPage/myPageMain";
+//        }
+
+        model.addAttribute("pointContent", "myPagePoint.jsp");
+        model.addAttribute("couponContent", "myPageCoupon.jsp");
+        model.addAttribute("content", "myPageReward.jsp");
+        return "myPage/myPageMain";
+    }
+
+    @GetMapping("/mypage/reward/point")
+    public String point(@RequestParam("u_id") String u_id,
+                        HttpSession session,
+                        Model model) {
+
+//        LoginVO user = (LoginVO) session.getAttribute("user");
+//
+//        if (user == null) {
+//            return "redirect:/login";
+//        } else {
+//            if (u_id.equals(user.getU_id())) {
+//                model.addAttribute("content", "myPageReward.jsp");
+//            }
+//            return "myPage/myPageMain";
+//        }
+
+        model.addAttribute("content", "myPagePoint.jsp");
+        return "myPage/myPageMain";
+
+    }
+
+    @GetMapping("/mypage/reward/coupon")
+    public String coupon(@RequestParam("u_id") String u_id,
+                         HttpSession session,
+                         Model model) {
+
+//        LoginVO user = (LoginVO) session.getAttribute("user");
+//
+//        if (user == null) {
+//            return "redirect:/login";
+//        } else {
+//            if (u_id.equals(user.getU_id())) {
+//                model.addAttribute("content", "myPageReward.jsp");
+//            }
+//            return "myPage/myPageMain";
+//        }
+
+        model.addAttribute("content", "myPageCoupon.jsp");
+        return "myPage/myPageMain";
+
+    }
+
+    // ===== 마이페이지 리마인더 관련 =====
+
+    @GetMapping("/mypage/reminder")
+    public String reminder(@RequestParam("u_id") String u_id,
+                           HttpSession session,
+                           Model model) {
+
+//        LoginVO user = (LoginVO) session.getAttribute("user");
+//
+//        if (user == null) {
+//            return "redirect:/login";
+//        } else {
+//            if (u_id.equals(user.getU_id())) {
+//                model.addAttribute("content", "myPageReward.jsp");
+//            }
+//            return "myPage/myPageMain";
+//        }
+
+        model.addAttribute("content", "myPageReminder.jsp");
+        return "myPage/myPageMain";
+    }
+
+    @GetMapping("/mypage/wishlist")
+    public String wishlist(@RequestParam("u_id") String u_id,
+                           HttpSession session,
+                           Model model) {
+
+//        LoginVO user = (LoginVO) session.getAttribute("user");
+//
+//        if (user == null) {
+//            return "redirect:/login";
+//        } else {
+//            if (u_id.equals(user.getU_id())) {
+//                model.addAttribute("content", "myPageReward.jsp");
+//            }
+//            return "myPage/myPageMain";
+//        }
+
+        model.addAttribute("content", "myPageWishlist.jsp");
+        return "myPage/myPageMain";
+    }
+
+
     // ===== 회원정보 수정 관련 =====
 
     @PostMapping("/mypage/general-info/update")
@@ -245,10 +399,11 @@ public class LoginC {
 
             model.addAttribute("user", updateUser);
             model.addAttribute("content", "myPageCheck.jsp");
-            model.addAttribute("message", "회원 정보가 성공적으로 수정되었습니다.");
+            // JSP 내에서 안내 중이므로 삭제함.
+            //model.addAttribute("message", "Successfully updated !");
 
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("errorMessage", "정보 수정 중 오류가 발생했습니다.");
+            redirectAttributes.addFlashAttribute("errorMessage", "Could not update information. <br> Please try again");
             return "redirect:/mypage/general-info/update";
         }
 
@@ -292,7 +447,7 @@ public class LoginC {
                 session.invalidate();
                 return "login/deleteComplete";
             } catch (Exception e) {
-                redirectAttributes.addFlashAttribute("errorMessage", "회원탈퇴 중 오류가 발생했습니다.");
+                redirectAttributes.addFlashAttribute("errorMessage", "Could not delete your account. <br> Please try again..");
                 return "redirect:/mypage/deleteAccount?u_id=" + user.getU_id();
             }
         } else {
@@ -339,7 +494,7 @@ public class LoginC {
         try {
             LoginVO existingUser = loginService.findById(loginVO.getU_id());
             if (existingUser != null) {
-                model.addAttribute("errorMessage", "이미 사용 중인 아이디입니다.");
+                model.addAttribute("errorMessage", "This ID is already in use.");
                 model.addAttribute("content", "joinFirstPage.jsp");
                 return "join/joinMain";
             }
@@ -364,7 +519,7 @@ public class LoginC {
         }
 
         if (loginVO.getU_name() == null || loginVO.getU_name().isEmpty()) {
-            model.addAttribute("errorMessage", "성함을 입력해주세요.");
+            model.addAttribute("errorMessage", "Please enter your name.");
             session.setAttribute("loginVO", loginVO);
             return "redirect:/join/step2";
         }
@@ -420,7 +575,7 @@ public class LoginC {
             ));
         } else {
             response.put("success", false);
-            response.put("message", "로그인하지 않았습니다.");
+            response.put("message", "You are logged out.");
         }
 
         return response;
@@ -453,7 +608,7 @@ public class LoginC {
     @GetMapping("/login/test")
     public String loginTest(Model model) {
         System.out.println("🧪 로그인 테스트 페이지 접근");
-        model.addAttribute("message", "로그인 테스트 페이지입니다.");
+        model.addAttribute("message", "This is the login test page.");
         return "login/login";
     }
 

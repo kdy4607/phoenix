@@ -15,11 +15,11 @@
 
 
 <div class="cay-myPage-content">
-    <div>${errorMessage}</div>
     <div class="cay-myPage-profile">
         <div>Are you sure want to DELETE YOUR ACCOUNT ?</div>
 
         <form action="/mypage/deleteAccount" method="post">
+            <div class="cay-myPage-errorMessage">${errorMessage}</div>
             <div>
                 <h3>Your User ID</h3>
                 <input readonly type="text" placeholder="ID" name="u_id" value="${user.u_id}">
