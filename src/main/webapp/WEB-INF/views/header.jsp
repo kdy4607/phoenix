@@ -23,9 +23,8 @@
                 <ul class="nav-menu">
                     <li><a href="/movie-all">Movies</a></li>
                     <li><a href="/schedule">Schedule</a></li>
-                    <li><a href="/reservation/list">Booked</a></li>
-                    <li><a href="#" onclick="alert('준비 중입니다!')">Theater</a></li>
-                    <li><a href="#" onclick="alert('준비 중입니다!')">Events</a></li>
+                    <li><a href="/reservation/list">My Bookings</a></li>
+                    <li><a href="/events">Events</a></li>
                 </ul>
             </nav>
         </div>

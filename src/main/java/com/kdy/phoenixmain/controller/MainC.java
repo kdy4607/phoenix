@@ -10,4 +10,9 @@ public class MainC {
     public String credits() {
         return "credits";
     }
+
+    @GetMapping("/events")
+    public String eventsPage() {
+        return "events/events";  // events.jsp로 이동
+    }
 }

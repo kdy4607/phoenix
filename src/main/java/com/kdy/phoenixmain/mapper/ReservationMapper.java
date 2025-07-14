@@ -34,31 +34,32 @@ public interface ReservationMapper {
     int insertReservationSeat(ReservationSeatVO reservationSeat);
 
     /**
-     * 예약 정보 조회 (기본 정보 + 영화/상영관 정보)
+     * 예약 정보 조회 (기본 정보 + 영화/상영관 정보) - poster_url 추가
      */
     @Select("""
-        SELECT 
-            r.reservation_id,
-            r.u_id,
-            r.runtime_id,
-            r.adult,
-            r.youth,
-            r.child,
-            r.total_amount,
-            r.reservation_status,
-            r.reserved_at,
-            u.u_name,
-            m.title as movie_title,
-            rm.room_name,
-            rt.run_date,
-            rt.start_time
-        FROM RESERVATIONS r
-        JOIN USERS u ON r.u_id = u.u_id
-        JOIN RUNTIMES rt ON r.runtime_id = rt.runtime_id
-        JOIN MOVIES m ON rt.movie_id = m.movie_id
-        JOIN ROOMS rm ON rt.room_id = rm.room_id
-        WHERE r.reservation_id = #{reservationId}
-    """)
+    SELECT 
+        r.reservation_id,
+        r.u_id,
+        r.runtime_id,
+        r.adult,
+        r.youth,
+        r.child,
+        r.total_amount,
+        r.reservation_status,
+        r.reserved_at,
+        u.u_name,
+        m.title as movie_title,
+        m.poster_url,
+        rm.room_name,
+        rt.run_date,
+        rt.start_time
+    FROM RESERVATIONS r
+    JOIN USERS u ON r.u_id = u.u_id
+    JOIN RUNTIMES rt ON r.runtime_id = rt.runtime_id
+    JOIN MOVIES m ON rt.movie_id = m.movie_id
+    JOIN ROOMS rm ON rt.room_id = rm.room_id
+    WHERE r.reservation_id = #{reservationId}
+""")
     @Results({
             @Result(property = "reservation_id", column = "reservation_id"),
             @Result(property = "u_id", column = "u_id"),
@@ -71,6 +72,7 @@ public interface ReservationMapper {
             @Result(property = "reserved_at", column = "reserved_at"),
             @Result(property = "u_name", column = "u_name"),
             @Result(property = "movie_title", column = "movie_title"),
+            @Result(property = "poster_url", column = "poster_url"),  // ✅ 추가
             @Result(property = "room_name", column = "room_name"),
             @Result(property = "run_date", column = "run_date"),
             @Result(property = "start_time", column = "start_time")
@@ -102,38 +104,39 @@ public interface ReservationMapper {
     List<ReservationSeatVO> getReservationSeats(@Param("reservationId") int reservationId);
 
     /**
-     * 사용자별 예약 목록 조회 (좌석 정보 포함) - 수정된 버전
+     * 사용자별 예약 목록 조회 (좌석 정보 포함) - poster_url 추가
      */
     @Select("""
-    SELECT 
-        r.reservation_id,
-        r.u_id,
-        r.runtime_id,
-        r.adult,
-        r.youth,
-        r.child,
-        r.total_amount,
-        r.reservation_status,
-        r.reserved_at,
-        u.u_name,
-        m.title as movie_title,
-        rm.room_name,
-        rt.run_date,
-        rt.start_time,
-        LISTAGG(s.seat_row || s.seat_number, ', ') WITHIN GROUP (ORDER BY s.seat_row, s.seat_number) as selected_seats
-    FROM RESERVATIONS r
-    JOIN USERS u ON r.u_id = u.u_id
-    JOIN RUNTIMES rt ON r.runtime_id = rt.runtime_id
-    JOIN MOVIES m ON rt.movie_id = m.movie_id
-    JOIN ROOMS rm ON rt.room_id = rm.room_id
-    LEFT JOIN RESERVATION_SEATS rs ON r.reservation_id = rs.reservation_id
-    LEFT JOIN SEATS s ON rs.seat_id = s.seat_id
-    WHERE r.u_id = #{userId}
-    GROUP BY 
-        r.reservation_id, r.u_id, r.runtime_id, r.adult, r.youth, r.child, 
-        r.total_amount, r.reservation_status, r.reserved_at,
-        u.u_name, m.title, rm.room_name, rt.run_date, rt.start_time
-    ORDER BY r.reserved_at DESC
+SELECT 
+    r.reservation_id,
+    r.u_id,
+    r.runtime_id,
+    r.adult,
+    r.youth,
+    r.child,
+    r.total_amount,
+    r.reservation_status,
+    r.reserved_at,
+    u.u_name,
+    m.title as movie_title,
+    m.poster_url,
+    rm.room_name,
+    rt.run_date,
+    rt.start_time,
+    LISTAGG(s.seat_row || s.seat_number, ', ') WITHIN GROUP (ORDER BY s.seat_row, s.seat_number) as selected_seats
+FROM RESERVATIONS r
+JOIN USERS u ON r.u_id = u.u_id
+JOIN RUNTIMES rt ON r.runtime_id = rt.runtime_id
+JOIN MOVIES m ON rt.movie_id = m.movie_id
+JOIN ROOMS rm ON rt.room_id = rm.room_id
+LEFT JOIN RESERVATION_SEATS rs ON r.reservation_id = rs.reservation_id
+LEFT JOIN SEATS s ON rs.seat_id = s.seat_id
+WHERE r.u_id = #{userId}
+GROUP BY 
+    r.reservation_id, r.u_id, r.runtime_id, r.adult, r.youth, r.child, 
+    r.total_amount, r.reservation_status, r.reserved_at,
+    u.u_name, m.title, m.poster_url, rm.room_name, rt.run_date, rt.start_time
+ORDER BY r.reserved_at DESC
 """)
     @Results({
             @Result(property = "reservation_id", column = "reservation_id"),
@@ -147,6 +150,7 @@ public interface ReservationMapper {
             @Result(property = "reserved_at", column = "reserved_at"),
             @Result(property = "u_name", column = "u_name"),
             @Result(property = "movie_title", column = "movie_title"),
+            @Result(property = "poster_url", column = "poster_url"),  // ✅ 추가
             @Result(property = "room_name", column = "room_name"),
             @Result(property = "run_date", column = "run_date"),
             @Result(property = "start_time", column = "start_time"),

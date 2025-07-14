@@ -29,11 +29,14 @@ public class MovieC {
 
     // 전체 영화 목록 or 검색어 기반 목록 출력
     @GetMapping("/movie-all")
-    public String movieAll(@RequestParam(value = "title", required = false) String title, Model model) {
+    public String movieAll(
+            @RequestParam(value = "movie_id", required = false, defaultValue = "0") int movie_id,
+            @RequestParam(value = "title", required = false) String title,
+            Model model) {
+
         List<MovieVO> movies = (title != null && !title.isBlank())
                 ? movieService.findMoviesBySearch(title)
                 : movieService.getAllMovie();
-
         List<TagVO> tagList = tagMapper.selectAllTag();
 
         model.addAttribute("movies", movies);
@@ -41,6 +44,7 @@ public class MovieC {
 
         return "movie/movie";
     }
+
 
 
     @GetMapping("/oneMovieDetail")

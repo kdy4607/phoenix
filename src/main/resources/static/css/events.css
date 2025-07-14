@@ -1,0 +1,461 @@
+/* Phoenix Cinema Events Page Styles */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Malgun Gothic', sans-serif;
+    background-color: #f8f8f8;
+    min-height: 100vh;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* 페이지 헤더 */
+.page-header {
+    text-align: center;
+    margin-bottom: 50px;
+    background: white;
+    border-radius: 8px;
+    padding: 40px 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.page-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #FB4357;
+    background: linear-gradient(135deg, #FB4357, #e63946);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 10px;
+}
+
+.page-subtitle {
+    font-size: 1.1rem;
+    color: #666;
+    margin: 0;
+}
+
+/* 섹션 공통 스타일 */
+.events-section,
+.membership-section,
+.past-events-section {
+    margin-bottom: 50px;
+}
+
+.section-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #FB4357;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+/* 이벤트 그리드 */
+.event-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.event-card {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    position: relative;
+    border: 1px solid #e5e5e5;
+}
+
+.event-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 20px rgba(251, 67, 87, 0.3);
+}
+
+.event-card.featured {
+    border: 3px solid #ff6b6b;
+}
+
+.event-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: linear-gradient(135deg, #FB4357, #e63946);
+    color: white;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    z-index: 2;
+}
+
+.event-image {
+    height: 200px;
+    overflow: hidden;
+    position: relative;
+}
+
+.event-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.event-card:hover .event-image img {
+    transform: scale(1.05);
+}
+
+.event-content {
+    padding: 25px;
+}
+
+.event-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 12px;
+}
+
+.event-description {
+    color: #666;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.event-period {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #888;
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+}
+
+.event-period .icon {
+    font-size: 1rem;
+}
+
+.event-discount {
+    background: linear-gradient(135deg, #FB4357, #e63946);
+    color: white;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+/* 멤버십 섹션 */
+.membership-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+.membership-card {
+    background: white;
+    border-radius: 8px;
+    padding: 30px;
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    border: 1px solid #e5e5e5;
+}
+
+.membership-card:hover,
+.membership-card.active {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 20px rgba(251, 67, 87, 0.3);
+}
+
+.membership-card.bronze {
+    border-top: 4px solid #cd7f32;
+}
+
+.membership-card.silver {
+    border-top: 4px solid #c0c0c0;
+}
+
+.membership-card.gold {
+    border-top: 4px solid #ffd700;
+}
+
+.membership-tier {
+    margin-bottom: 20px;
+}
+
+.tier-icon {
+    font-size: 3rem;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.membership-tier h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.membership-benefits ul {
+    list-style: none;
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.membership-benefits li {
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    padding-left: 20px;
+}
+
+.membership-benefits li:before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: #4ecdc4;
+    font-weight: bold;
+}
+
+.membership-condition {
+    background: #f8f9fa;
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    color: #666;
+    font-weight: 500;
+}
+
+/* 지난 이벤트 */
+.past-events-list {
+    background: white;
+    border-radius: 8px;
+    padding: 30px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    border: 1px solid #e5e5e5;
+}
+
+.past-event-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.past-event-item:last-child {
+    border-bottom: none;
+}
+
+.past-event-date {
+    font-size: 0.9rem;
+    color: #888;
+    min-width: 80px;
+}
+
+.past-event-title {
+    flex: 1;
+    margin: 0 20px;
+    font-weight: 500;
+}
+
+.past-event-status {
+    background: #e9ecef;
+    color: #666;
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-size: 0.85rem;
+}
+
+/* 이벤트 안내 */
+.event-notice {
+    background: white;
+    border-radius: 8px;
+    padding: 30px;
+    margin-bottom: 40px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    border: 1px solid #e5e5e5;
+}
+
+.event-notice h3 {
+    color: #333;
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+}
+
+.event-notice ul {
+    padding-left: 20px;
+}
+
+.event-notice li {
+    margin-bottom: 8px;
+    color: #666;
+    line-height: 1.6;
+}
+
+/* 하단 네비게이션 */
+.bottom-navigation {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.nav-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, #FB4357, #e63946);
+    color: white;
+    text-decoration: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.nav-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(251, 67, 87, 0.3);
+    color: white;
+    text-decoration: none;
+}
+
+.nav-button .icon {
+    font-size: 1.1rem;
+}
+
+/* 푸터 */
+.footer {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+    margin-top: 30px;
+    padding: 20px;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+
+    .page-title {
+        font-size: 2rem;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+    }
+
+    .event-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .membership-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .bottom-navigation {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .nav-button {
+        justify-content: center;
+    }
+
+    .past-event-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .past-event-date {
+        min-width: auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .page-header {
+        padding: 30px 15px;
+    }
+
+    .page-title {
+        font-size: 1.8rem;
+    }
+
+    .event-content {
+        padding: 20px;
+    }
+
+    .membership-card {
+        padding: 25px;
+    }
+}
+
+/* 애니메이션 효과 */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.event-card,
+.membership-card {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.event-card:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+.event-card:nth-child(3) {
+    animation-delay: 0.2s;
+}
+
+/* 스크롤 애니메이션 */
+@media (prefers-reduced-motion: no-preference) {
+    .events-section,
+    .membership-section,
+    .past-events-section {
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeInUp 0.8s ease-out forwards;
+    }
+
+    .membership-section {
+        animation-delay: 0.2s;
+    }
+
+    .past-events-section {
+        animation-delay: 0.4s;
+    }
+}

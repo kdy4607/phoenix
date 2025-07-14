@@ -111,35 +111,60 @@
                                 </div>
 
                                 <div class="reservation-content">
-                                    <div class="movie-info">
-                                        <h3 class="movie-title">${reservation.movie_title}</h3>
-                                        <div class="screening-info">
-                                            📅 <fmt:formatDate value="${reservation.run_date}" pattern="yyyy년 MM월 dd일 (E)" /> |
-                                            🕐 ${reservation.start_time} |
-                                            🏢 ${reservation.room_name}
+                                    <!-- 왼쪽 영화 정보 영역 -->
+                                    <div class="reservation-info">
+                                        <div class="movie-info">
+                                            <div class="movie-title">${reservation.movie_title}</div>
+                                            <div class="screening-info">
+                                                <fmt:formatDate value="${reservation.run_date}" pattern="yyyy.MM.dd (E)" />
+                                                    ${reservation.start_time} / ${reservation.room_name}
+                                            </div>
+                                        </div>
+
+                                        <div class="reservation-details">
+                                            <div class="detail-row">
+                                                <span class="label">좌석:</span>
+                                                <span class="value">
+                    <c:choose>
+                        <c:when test="${not empty reservation.selected_seats}">
+                            ${reservation.selected_seats}
+                        </c:when>
+                        <c:otherwise>
+                            정보 없음
+                        </c:otherwise>
+                    </c:choose>
+                </span>
+                                            </div>
+                                            <div class="detail-row">
+                                                <span class="label">예매일:</span>
+                                                <span class="value">
+                    <fmt:formatDate value="${reservation.reservation_date}" pattern="yyyy.MM.dd HH:mm" />
+                </span>
+                                            </div>
+                                            <div class="detail-row">
+                                                <span class="label">결제금액:</span>
+                                                <span class="value amount">
+                    <fmt:formatNumber value="${reservation.total_amount}" pattern="#,###" />원
+                </span>
+                                            </div>
                                         </div>
                                     </div>
 
-                                    <div class="reservation-details">
-                                        <c:if test="${not empty reservation.selected_seats}">
-                                            <div class="seat-info2">
-                                                🪑 좌석: ${reservation.selected_seats}
-                                            </div>
-                                        </c:if>
-
-                                        <div class="ticket-info">
-                                            👥 성인 ${reservation.adult}명
-                                            <c:if test="${reservation.youth > 0}"> | 청소년 ${reservation.youth}명</c:if>
-                                            <c:if test="${reservation.child > 0}"> | 어린이 ${reservation.child}명</c:if>
-                                        </div>
-
-                                        <div class="amount-info">
-                                            💰 총 금액: <fmt:formatNumber value="${reservation.total_amount}" pattern="#,###" />원
-                                        </div>
-
-                                        <div class="reservation-date">
-                                            📝 예약일시: <fmt:formatDate value="${reservation.reservation_date}" pattern="yyyy-MM-dd HH:mm" />
-                                        </div>
+                                    <!-- 오른쪽 포스터 영역 -->
+                                    <div class="reservation-poster">
+                                        <c:choose>
+                                            <c:when test="${not empty reservation.poster_url}">
+                                                <img src="${reservation.poster_url}"
+                                                     alt="${reservation.movie_title} 포스터"
+                                                     onerror="this.parentElement.innerHTML='<div class=&quot;poster-placeholder&quot;><div class=&quot;icon&quot;>🎬</div><div>No Image</div></div>'">
+                                            </c:when>
+                                            <c:otherwise>
+                                                <div class="poster-placeholder">
+                                                    <div class="icon">🎬</div>
+                                                    <div>No Image</div>
+                                                </div>
+                                            </c:otherwise>
+                                        </c:choose>
                                     </div>
                                 </div>
 
