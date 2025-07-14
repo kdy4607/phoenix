@@ -103,7 +103,7 @@ public class LoginC {
             return "redirect:/login";
         }
 
-        String homeName = user.getU_name().substring(0, 3);
+        String homeName = user.getU_name().substring(0,  Math.min(user.getU_name().length(), 3));
         model.addAttribute("homeName", homeName);
 
         List<TagVO> tagList = tagMapper.selectAllTag();
