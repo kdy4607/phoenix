@@ -37,7 +37,7 @@
 
     <a href="/reservation/list" class="menu-item">
       <span class="icon">📋</span>
-      Booking history
+      My Bookings
     </a>
 
     <a href="/mypage" class="menu-item">
