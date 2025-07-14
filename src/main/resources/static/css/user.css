@@ -158,27 +158,6 @@ a {
     color: #FB4357;
 }
 
-.cay-join-wrap {
-    position: relative;
-    width: 550px;
-    height: 700px;
-    margin: 1rem auto 3rem auto;
-    padding: 1.5rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    background-color: white;
-}
-
-.cay-join-wrap > div:first-child {
-    position: absolute;
-    top: -50px;
-    left: 245px;
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #FB4357;
-    animation: shake 0.5s;
-}
-
 .cay-join-process {
     width: 35rem;
     margin: auto;
@@ -216,7 +195,7 @@ a {
 .cay-join-process-bar > div:nth-child(2) {
     position: absolute;
     top: 30px;
-    left:  60px;
+    left: 60px;
     width: 10rem;
     height: 0;
     border: 3px solid #FB4357;
@@ -256,6 +235,132 @@ a {
     margin: 0.5rem 0rem;
     font-size: 1.25rem;
     font-weight: bolder;
+}
+
+.cay-join-wrap {
+    position: relative;
+    width: 700px;
+    margin: 1rem auto 10rem auto;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    background-color: white;
+}
+
+.cay-join-wrap input {
+    width: 32.5rem;
+    height: 2rem;
+    margin: 0.5rem 0 1rem;
+    padding: 1.5rem;
+    font-size: 20px;
+    border: none;
+    border-radius: 8px;
+    color: #575757;
+    background-color: #efefef;
+}
+
+.cay-join-wrap button {
+    width: 15rem;
+    height: 3.5rem;
+    margin: 3.5rem 0.5rem 1rem;
+    border: 2px solid #FB4357;
+    border-radius: 45px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #FB4357;
+    background-color: white;
+}
+
+.cay-join-wrap button:hover {
+    color: white;
+    transition: ease-in-out 0.3s;
+    background-color: #FB4357;
+}
+
+.cay-join-wrap > div {
+    margin: 3rem 0;
+}
+
+.cay-join-wrap > div:first-child {
+    position: absolute;
+    top: -100px;
+    left: 215px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #FB4357;
+    animation: shake 0.5s;
+}
+
+.cay-join-wrap > div:nth-child(2) {
+    width: 15rem;
+    margin: 3rem auto;
+    padding: 0.75rem;
+    font-size: 3rem;
+    font-weight: bolder;
+    border-bottom: 5px solid #FB4357;
+    color: #FB4357;
+}
+
+.cay-join-wrap > div > div:nth-child(1) {
+    margin: 1rem 3.5rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: start;
+}
+
+.cay-join-wrap > div > div:nth-child(3),
+.cay-join-wrap > div > div:nth-child(4),
+.cay-join-wrap > div > div:nth-child(5) {
+    margin: 0 3.5rem;
+    font-size: 0.85rem;
+    color: #666;
+    text-align: start;
+}
+
+.cay-join-wrap > div > div:nth-child(3) > span,
+.cay-join-wrap > div > div:nth-child(4) > span {
+    font-weight: bold;
+    color: #FB4357;
+}
+
+/* Join Complete */
+
+.cay-joinComplete-wrap {
+    position: relative;
+    width: 700px;
+    margin: 5rem auto;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    background-color: white;
+}
+
+.cay-joinComplete-wrap > div:nth-child(1) {
+    width: 17.5rem;
+    margin: 2rem auto;
+    padding: 0.5rem;
+    font-size: 3rem;
+    font-weight: bolder;
+    border-bottom: 5px solid #FB4357;
+    color: #FB4357;
+}
+
+.cay-joinComplete-wrap > div:nth-child(2) {
+    margin: 3rem auto 0;
+    font-size: 2rem;
+    font-weight: bolder;
+}
+
+.cay-joinComplete-wrap button {
+    width: 30rem;
+    height: 3.5rem;
+    margin: 2rem auto 4.5rem;
+    border: 2px solid #FB4357;
+    border-radius: 16px;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    background-color: #FB4357;
 }
 
 /* My Page Main */

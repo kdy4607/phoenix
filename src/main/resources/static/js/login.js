@@ -132,7 +132,7 @@ function call() {
   // ID Check - At least 6 letters / Fewer than 20 letters / Containable English, case letters, numbers, special symbols ( @_. )
   if (lessThan(u_id, 6) || moreThan(u_id, 20) || containableWords(u_id)) {
     alert(
-      "Your ID must be between 6 and 20 characters, using only English letters (uppercase and lowercase), numbers, and special symbols (@_.)"
+      "Your ID must be between 6 and 20 characters, using only English letters (uppercase ade lowercase), numbers, and special symbols (@_.)"
     );
     u_id.value = "";
     u_id.focus();
@@ -144,7 +144,7 @@ function call() {
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_+=-])[A-Za-z0-9!@#$%^&*_+=-]{8,100}$/;
   if (!charset.test(u_pw.value)) {
     alert(
-      "Password must be 8-100 characters long, containing only English letters, numbers, and special symbols (!@#$%^&*-_+=)"
+      "Password must be 8-100 characters long, containing only English letters (uppercase and lowercase), numbers, and special symbols (!@#$%^&*-_+=)"
     );
     u_pw.focus();
     return false;
