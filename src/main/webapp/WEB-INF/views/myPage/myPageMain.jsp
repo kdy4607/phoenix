@@ -19,19 +19,19 @@
             <li><a href="/mypage/profile?u_id=${user.u_id}"> Profile </a>
                 <ul>
                     <li><a href="/mypage/profile?u_id=${user.u_id}">General Info</a></li>
-                    <li><a href="" onclick="alert('준비 중입니다!')">Favorite Theatres</a></li>
+                    <li><a href="/mypage/theatres?u_id=${user.u_id}">Favorite Theatres</a></li>
                 </ul>
             </li>
-            <li><a href="" onclick="alert('준비 중입니다!')">My Tickets</a>
+            <li><a href="/reservation/list">My Tickets</a>
                 <ul>
                     <li><a href="/reservation/list">My Reservation</a></li>
-                    <li><a href="" onclick="alert('준비 중입니다!')">My History</a></li>
+                    <li><a href="/mypage/history?u_id=${user.u_id}">My History</a></li>
                 </ul>
             </li>
-            <li><a href="" onclick="alert('준비 중입니다!')">Point & Rewards</a>
+            <li><a href="/mypage/reward?u_id=${user.u_id}">My Rewards</a>
                 <ul>
-                    <li><a href="" onclick="alert('준비 중입니다!')">Point</a></li>
-                    <li><a href="" onclick="alert('준비 중입니다!')">Reward Coupon</a></li>
+                    <li><a href="/mypage/reward/point?u_id=${user.u_id}">Point</a></li>
+                    <li><a href="/mypage/reward/coupon?u_id=${user.u_id}">Coupon</a></li>
                 </ul>
             </li>
             <li><a href="" onclick="alert('준비 중입니다!')">Event</a>
@@ -45,10 +45,10 @@
                     <li><a href="" onclick="alert('준비 중입니다!')">Gift Cards</a></li>
                 </ul>
             </li>
-            <li><a href="" onclick="alert('준비 중입니다!')">Movie Reminder</a>
+            <li><a href="/mypage/reminder?u_id=${user.u_id}">Movie Reminder</a>
                 <ul>
-                    <li><a href="" onclick="alert('준비 중입니다!')">My Movie Reminders</a></li>
-                    <li><a href="" onclick="alert('준비 중입니다!')">Wishlist</a></li>
+                    <li><a href="/mypage/reminder?u_id=${user.u_id}">My Movie Reminders</a></li>
+                    <li><a href="/mypage/wishlist?u_id=${user.u_id}">Wishlist</a></li>
                 </ul>
             </li>
         </ul>

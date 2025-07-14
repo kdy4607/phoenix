@@ -14,19 +14,30 @@
 <body>
 
 
-
 <div class="cay-myPage-content">
     <div class="cay-myPage-profile">
-        <div>${errorMessage}</div>
-        <h1> Are you sure want to DELETE YOUR ACCOUNT ? </h1>
-            <p> This action cannot be undone. Please check your password to verify your account. </p>
+        <div>Are you sure want to DELETE YOUR ACCOUNT ?</div>
+
         <form action="/mypage/deleteAccount" method="post">
-            ID : <input readonly type="text" name="u_id" value="${user.u_id}">
-            PASSWORD : <input name="u_pw" type="text">
-            <button> DELETE </button>
+            <div class="cay-myPage-errorMessage">${errorMessage}</div>
+            <div>
+                <h3>Your User ID</h3>
+                <input readonly type="text" placeholder="ID" name="u_id" value="${user.u_id}">
+                <h3>Please Enter Your Password</h3>
+                <input type="password" placeholder="password" name="u_pw">
+            </div>
+            <div>
+                <p>
+                    This action cannot be undone. <br>
+                    Please check your password to verify your account.
+                </p>
+                <div>
+                    <input name="agree" type="checkbox" class="chk-btn"/> I Agree to Delete Account
+                </div>
+                <button> DELETE</button>
+            </div>
         </form>
-
     </div>
-
+</div>
 </body>
 </html>

@@ -33,7 +33,6 @@
             </div>
         </div>
         <div class="cay-myPage-bottom">
-
             <div class="cay-myPage-history">
                 <h1>My History</h1>
                 <div>
