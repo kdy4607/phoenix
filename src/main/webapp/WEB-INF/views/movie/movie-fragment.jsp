@@ -2,39 +2,59 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <c:forEach var="movie" items="${movies}">
-    <div class="movie-card">
-        <div> <img src="${movie.poster_url}" alt="포스터"/>
-            <div>${movie.user_critic}</div>
-        <div class="movie-rating">${movie.rating}</div>
+    <div class="movie-card movie-card-wrapper">
+        <div class="poster-rating-wrapper" onclick="location.href='oneMovieDetail?movie_id=${movie.movie_id}'">
+            <img src="${movie.poster_url}" alt="포스터"/>
+            <div class="movie-rating">${movie.rating}</div>
+            <div class="bookmark">
+                <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                     xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                     width="30.972px" height="30.972px" viewBox="0 0 431.972 431.972"
+                     style="enable-background:new 0 0 431.972 431.972;"
+                     xml:space="preserve">
+                    <g>
+                        <path d="M393.146,14.279c-3.713-5.333-8.713-9.233-14.989-11.707c-3.997-1.711-8.186-2.568-12.565-2.568V0H66.378
+		c-4.377,0-8.562,0.857-12.56,2.568c-6.28,2.472-11.278,6.377-14.989,11.707c-3.71,5.33-5.568,11.228-5.568,17.701v368.019
+		c0,6.475,1.858,12.371,5.568,17.706c3.711,5.329,8.709,9.233,14.989,11.704c3.994,1.711,8.183,2.566,12.56,2.566
+		c8.949,0,16.844-3.142,23.698-9.418l125.91-121.062l125.91,121.065c6.663,6.081,14.562,9.127,23.695,9.127
+		c4.76,0,8.948-0.756,12.565-2.279c6.276-2.471,11.276-6.375,14.989-11.711c3.71-5.328,5.564-11.225,5.564-17.699V31.98
+		C398.71,25.507,396.852,19.609,393.146,14.279z M362.166,391.139L241.397,275.224l-25.411-24.264l-25.409,24.264L69.809,391.139
+		V36.549h292.357V391.139L362.166,391.139z"/>
+                    </g>
+                </svg>
+            </div>
         </div>
-        <div>
-            <h2>${movie.title}</h2>
-            <p>${movie.description}</p>
-            <div>
+        <div class="movie-text-wrapper">
+            <div class="movie-title">${movie.title}</div>
+            <span class="value movie-stars">
+                <c:forEach begin="1" end="${movie.user_critic}">⭐</c:forEach>
+            </span>
+<%--            <div class="movie-description">${movie.description}</div>--%>
+            <div class="tag-list-wrapper">
                 <c:forEach var="tag" items="${movie.m_tagList}">
                     <c:choose>
                         <c:when test="${tag.tag_type eq 'Genre'}">
-                            <span class="tag tag-genre">${tag.tag_name}</span>
+                            <span class="tag tag-genre tag-item">${tag.tag_name}</span>
                         </c:when>
                         <c:when test="${tag.tag_type eq 'Studio'}">
-                            <span class="tag tag-studio">${tag.tag_name}</span>
+                            <span class="tag tag-studio tag-item">${tag.tag_name}</span>
                         </c:when>
                         <c:when test="${tag.tag_type eq 'Country'}">
-                            <span class="tag tag-country">${tag.tag_name}</span>
+                            <span class="tag tag-country tag-item">${tag.tag_name}</span>
                         </c:when>
                         <c:when test="${tag.tag_type eq 'Mood'}">
-                            <span class="tag tag-mood">${tag.tag_name}</span>
+                            <span class="tag tag-mood tag-item">${tag.tag_name}</span>
                         </c:when>
                         <c:otherwise>
-                            <span class="tag">${tag.tag_name}</span>
+                            <span class="tag tag-item">${tag.tag_name}</span>
                         </c:otherwise>
                     </c:choose>
                 </c:forEach>
             </div>
         </div>
-        <div>
-            <div>movie_id: ${movie.movie_id}</div>
-        <button onclick="location.href='oneMovieDetail?movie_id=${movie.movie_id}'">상세페이지</button>
-        </div>
+            <button class="btn-book-tickets" onclick="location.href='oneMovieDetail?movie_id=${movie.movie_id}'">
+                Book Tickets
+            </button>
     </div>
 </c:forEach>
+

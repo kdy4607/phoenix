@@ -1,55 +1,203 @@
-
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+/*  태그 기본 스타일 */
 .tag {
+    font-size: 12px;
     display: inline-block;
-    padding: 5px 10px;
+    padding: 3px 8px;
     border-radius: 5px;
     margin: 3px;
 }
-
 .tag.selected {
     border: 2px solid #000;
+    border-color: #FB4357;
     font-weight: bold;
 }
 
-.tag-genre { background-color: #f99; }
-.tag-studio { background-color: #9cf; }
-.tag-country { background-color: #9f9; }
-.tag-mood { background-color: #ff88be; }
+/*  태그 타입별 색상 */
+.tag-genre { background-color: #bd99ff40; }
+.tag-studio { background-color: #88f7ff57; }
+.tag-country { background-color: #99ff998a; }
+.tag-mood { background-color: #ff888857; }
+.tag-group.genre .tag { background-color: #bd99ff40; }
+.tag-group.studio .tag { background-color: #88f7ff57; }
+.tag-group.country .tag { background-color: #99ff998a; }
+.tag-group.mood .tag { background-color: #ff888857; }
 
-.movie-container{
-    display: flex;
-    flex-wrap: wrap;
+/*  영화 목록 컨테이너 (4개씩 보이기) */
+.movie-container,
+.movie-container.movie-list-section {
+    margin: 30px auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
     gap: 20px;
 }
 
-.movie-card {
-    border: 1px solid #ccc;
-    margin: 10px;
-    padding: 10px;
-    border-radius: 8px;
+/*  개별 영화 카드 */
+.movie-card,
+.movie-card-wrapper {
     display: flex;
-    width: calc(48% - 10px);
-    box-sizing: border-box;
+    flex-direction: column;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    justify-content: space-between;
+}
+.movie-card-wrapper:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
 }
 
-.movie-card img {
-    width: 100px;
-    height: 150px;
-    margin-right: 10px;
+/*  포스터 + 등급 표시 */
+.poster-rating-wrapper {
+    position: relative;
 }
-
-.tag-group.genre .tag { background-color: #f88; }
-.tag-group.studio .tag { background-color: #9cf; }
-.tag-group.country .tag { background-color: #8f8; }
-.tag-group.mood .tag { background-color: #ff88be; }
-
+.poster-rating-wrapper img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
 .movie-rating {
-    display: inline-block;
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
     background-color: #FB4357;
     color: white;
-    padding: 4px 8px;
+    padding: 2px 6px;
     border-radius: 4px;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: bold;
-    margin-bottom: 15px;
+}
+
+/* 🎯 텍스트 정보 */
+.movie-text-wrapper {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+.movie-title {
+    font-weight: bold;
+    font-size: 20px;
+    color: #FB4357;
+}
+.movie-description {
+    font-size: 13px;
+    color: #555;
+    height: 40px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.2em;
+}
+
+/* 🎯 별점 */
+.movie-stars {
+    color: #f5c518;
+    font-size: 14px;
+}
+
+/* 🎯 태그 리스트 */
+.tag-list-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 6px;
+}
+
+/* 🎯 상세 버튼 */
+.movie-action-wrapper {
+    padding: 10px;
+    text-align: right;
+}
+.btn-book-tickets {
+    background: transparent;
+    border: 0px solid #ccc;
+    border-radius: 0px;
+    padding: 4px 8px;
+    font-size: 16px;
+    cursor: pointer;
+    color: white;
+    background-color: #FB4357;
+}
+.btn-more-details:hover {
+    background-color: #eee;
+}
+
+.bookmark{
+    position: absolute;
+    right: 8px;
+    top: 8px;
+    z-index: 999;
+}
+
+/* 🔍 검색 폼 전체 스타일 */
+.search-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin: 20px auto;
+    padding: 9px 13px;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    max-width: 600px;
+}
+
+/* 🔤 검색 입력창 */
+.search-input {
+    flex: 1;
+    padding: 10px 14px;
+    border: 1px solid #fb4357;
+    border-radius: 4px;
+    font-size: 14px;
+    outline: none;
+    min-width: 200px;
+}
+
+.search-input:focus {
+    border-color: #FB4357;
+    box-shadow: 0 0 0 2px rgba(251, 67, 87, 0.2);
+}
+
+/* 🔎 검색 버튼 */
+.search-button {
+    padding: 10px 16px;
+    background-color: #FB4357;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.search-button:hover {
+    background-color: #e32f45;
+}
+.tag-container{
+    display: none;
+}
+.tag-container.collapsed {
+    display: block;
+}
+
+.toggle-button {
+    font-size: 14px;
+    color: white;
+    padding: 11px 7px;
+    background-color: #FB4357;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.toggle-button:hover {
+    background-color: #e32f45;
 }
