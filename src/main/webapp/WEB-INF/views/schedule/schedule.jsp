@@ -25,19 +25,19 @@
         <div class="steps">
             <div class="step" id="step1">
                 <div class="step-number">1</div>
-                <span>상영시간</span>
+                <span>Date & Time</span>
             </div>
             <div class="step inactive" id="step2">
                 <div class="step-number">2</div>
-                <span>인원/좌석</span>
+                <span>Seats</span>
             </div>
             <div class="step inactive" id="step3">
                 <div class="step-number">3</div>
-                <span>결제</span>
+                <span>Payment</span>
             </div>
             <div class="step inactive" id="step4">
                 <div class="step-number">4</div>
-                <span>완료</span>
+                <span>Confirmation</span>
             </div>
         </div>
     </div>
@@ -60,7 +60,7 @@
 
     <!-- Movie Schedule Section -->
     <div class="section" id="scheduleSection">
-        <div class="section-header">날짜 및 상영시간 선택</div>
+        <div class="section-header">Select Date & Time</div>
         <div class="section-content">
             <!-- Date Selection -->
             <div class="date-selection">
@@ -133,7 +133,7 @@
             <!-- 선택된 상영시간 정보 -->
             <div id="selectedShowtimeInfo"
                  style="display: none; background: #f8f9fa; padding: 15px; margin-top: 20px; border-radius: 8px;">
-                <h4>선택된 상영시간</h4>
+                <h4>Selected Date & Time</h4>
                 <p id="selectedDetails"></p>
                 <button type="button" class="btn-primary" onclick="loadSeatSelection()">좌석 선택하기</button>
             </div>
@@ -143,8 +143,8 @@
 
     <!-- Seat Selection Section -->
     <div class="section seat-selection" id="seatSelection">
-        <div class="section-header">인원/좌석 선택
-            <span class="person-number">인원은 최대 8명까지 선택 가능합니다</span>
+        <div class="section-header">Select Guests & Seats
+            <span class="person-number">You can select up to 8 guests</span>
         </div>
         <div class="section-content">
             <!-- Runtime Info -->
@@ -156,7 +156,7 @@
             <div class="section person-selection" id="peopleSelection">
                 <div class="section-content">
                     <div class="people-row">
-                        <div class="label">성인</div>
+                        <div class="label">Adult</div>
                         <div class="counter">
                             <button type="button" onclick="changeCount('adult', -1)">−</button>
                             <span id="adultCount">0</span>
@@ -164,7 +164,7 @@
                         </div>
                     </div>
                     <div class="people-row">
-                        <div class="label">청소년</div>
+                        <div class="label">Youth</div>
                         <div class="counter">
                             <button type="button" onclick="changeCount('youth', -1)">−</button>
                             <span id="youthCount">0</span>
@@ -172,7 +172,7 @@
                         </div>
                     </div>
                     <div class="people-row">
-                        <div class="label">어린이</div>
+                        <div class="label">Child</div>
                         <div class="counter">
                             <button type="button" onclick="changeCount('child', -1)">−</button>
                             <span id="childCount">0</span>
@@ -445,13 +445,13 @@
     <!-- 오른쪽 블록: 요금 리스트 -->
     <div class="price-list">
       <span class="price-item adult">
-        성인 <strong>\${priceAdult.toLocaleString()}원</strong>
+        Adult <strong>\${priceAdult.toLocaleString()}원</strong>
       </span>
       <span class="price-item youth">
-        청소년 <strong>\${priceYouth.toLocaleString()}원</strong>
+        Youth <strong>\${priceYouth.toLocaleString()}원</strong>
       </span>
       <span class="price-item child">
-        어린이 <strong>\${priceChild.toLocaleString()}원</strong>
+        Child <strong>\${priceChild.toLocaleString()}원</strong>
       </span>
     </div>
   </div>
@@ -557,7 +557,7 @@
             const seatLabels = selectedSeats
                 .map(seat => seat.seat_row + seat.seat_number)
                 .join(', ');
-            selectedSeatsList.innerHTML = '<strong>선택된 좌석:</strong> ' + seatLabels;
+            selectedSeatsList.innerHTML = '<strong>Selected Seats:</strong> ' + seatLabels;
 
             // 선택된 좌석 수와 인원 수가 맞아야 인원·총금액 표시
             const totalPeople = adultCount + youthCount + childCount;
@@ -573,9 +573,9 @@
 
                 // 인원 & 총 금액 노출
                 selectedSeatsList.innerHTML +=
-                    '<br><strong>좌석 수:</strong> 성인 ' + adultCount + '명, ' +
-                    '청소년 ' + youthCount + '명, 어린이 ' + childCount + '명' +
-                    '<br><strong>총 금액:</strong> ' + totalAmount.toLocaleString() + '원';
+                    '<br><strong>Number of Seats:</strong> Adult ' + adultCount + '명, ' +
+                    'Youth ' + youthCount + ', Child ' + childCount + '명' +
+                    '<br><strong>Total Amount:</strong> ' + totalAmount.toLocaleString() + '원';
 
                 confirmBtn.disabled = false;
             } else {
