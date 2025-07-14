@@ -50,7 +50,7 @@
       Credits
     </a>
 
-    <a href="#" class="menu-item" onclick="alert('준비 중입니다!')">
+    <a href="/events" class="menu-item">
       <span class="icon">🎉</span>
       Events
     </a>
