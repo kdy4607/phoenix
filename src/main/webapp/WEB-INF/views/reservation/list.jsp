@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Booking History - Phoenix Cinema</title>
+    <title>My Bookings - Phoenix Cinema</title>
     <link rel="stylesheet" href="/resources/css/schedule.css">
     <link rel="stylesheet" href="/resources/css/reservation.css">
 </head>
@@ -17,7 +17,7 @@
 <div class="reservation-container">
     <!-- 페이지 헤더 -->
     <div class="page-header">
-        <h1>Booking History</h1>
+        <h1>My Bookings</h1>
         <a href="/schedule" class="btn-primary2">🎫 New Booking</a>
     </div>
 
@@ -63,7 +63,7 @@
     <!-- 예약 내역 섹션 -->
     <div class="section">
         <div class="section-header">
-            Booking History Management
+            My Bookings Management
         </div>
         <div class="section-content">
             <!-- 예약 필터 -->
