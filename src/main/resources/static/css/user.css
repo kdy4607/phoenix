@@ -868,13 +868,14 @@ div:nth-child(1) {
     background-color: #FB4357;
 }
 
-/* My Page - History */
+/* My Page - tabs */
 
 .cay-myPage-tabs {
     width: 80%;
     margin: 3rem auto;
     padding-bottom: 40px;
     border-radius: 8px;
+    text-align: center;
 }
 
 .tab_items {
@@ -916,15 +917,17 @@ div:nth-child(1) {
     text-align: start;
 }
 
-
-/* 선택 된 탭 콘텐츠를 표시 */
 #watch:checked ~ #watch_content,
 #review:checked ~ #review_content,
 #wishlist:checked ~ #wishlist_content {
     display: block;
 }
 
-/* 선택된 탭 스타일 */
+#upcoming:checked ~ #upcoming_content,
+#done:checked ~ #done_content {
+    display: block;
+}
+
 .cay-myPage-tab > input:checked + .tab_item {
     background-color: #333333;
     color: #fff;

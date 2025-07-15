@@ -21,11 +21,11 @@
                     <li><a href="/mypage/profile?u_id=${user.u_id}">General Info</a></li>
                 </ul>
             </li>
-            <li><a href="/mypage/history?u_id=${user.u_id}">My Movie History</a>
+            <li><a href="/mypage/history?u_id=${user.u_id}">My History</a>
                 <ul>
-                    <li><a href="/mypage/history?u_id=${user.u_id}">My History</a></li>
-                    <li><a href="" onclick="alert('준비 중입니다!')">My Events History</a></li>
                     <li><a href="/reservation/list">My Reservation</a></li>
+                    <li><a href="/mypage/history?u_id=${user.u_id}">My Movie History</a></li>
+                    <li><a href="/mypage/event?u_id=${user.u_id}">My Events History</a></li>
                 </ul>
             </li>
             <li><a href="/mypage/reward?u_id=${user.u_id}">My Rewards</a>

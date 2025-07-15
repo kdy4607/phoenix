@@ -201,7 +201,7 @@ public class LoginC {
         return "myPage/myPageMain";
     }
 
-    // ===== 마이페이지 관람 이력 관련 =====
+    // ===== 마이페이지 이력 관련 =====
 
     @GetMapping("/mypage/history")
     public String history(@RequestParam("u_id") String u_id,
@@ -222,12 +222,30 @@ public class LoginC {
         }
     }
 
+    @GetMapping("/mypage/event")
+    public String event(@RequestParam("u_id") String u_id,
+                        HttpSession session,
+                        Model model) {
+
+        LoginVO user = (LoginVO) session.getAttribute("user");
+
+        if (user == null) {
+            return "redirect:/login";
+        } else {
+            if (u_id.equals(user.getU_id())) {
+                model.addAttribute("content", "myPageEvent.jsp");
+            }
+            return "myPage/myPageMain";
+        }
+    }
+
     // ===== 마이페이지 리워드 관련 =====
 
     @GetMapping("/mypage/reward")
     public String reward(@RequestParam("u_id") String u_id,
                          HttpSession session,
                          Model model) {
+
         LoginVO user = (LoginVO) session.getAttribute("user");
 
         if (user == null) {
