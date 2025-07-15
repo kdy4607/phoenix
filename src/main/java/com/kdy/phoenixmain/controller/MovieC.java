@@ -28,9 +28,16 @@ public class MovieC {
 
     // 전체 영화 목록 or 검색어 기반 목록 출력
     @GetMapping("/movie-all")
-    public String movieAll(Model model) {
-        model.addAttribute("movies", movieService.getAllMovie());
+    public String movieAll(
+            @RequestParam(defaultValue = "showing") String status,
+            Model model
+    ) {
+        // status 값: all / now / upcoming
+        List<MovieVO> movies = movieService.getMoviesByStatus(status);
+
+        model.addAttribute("movies", movies);
         model.addAttribute("tagList", tagMapper.selectAllTag());
+        model.addAttribute("status", status); // 탭 활성화 표시용
         return "movie/movie";
     }
 

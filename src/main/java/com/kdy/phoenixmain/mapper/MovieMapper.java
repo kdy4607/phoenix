@@ -75,4 +75,23 @@ public interface MovieMapper {
     @SelectProvider(type = MovieSqlBuilder.class, method = "buildQueryByAnyTag")
     @ResultMap("movieMap")
     List<MovieVO> selectMoviesByAnyTag(@Param("tags") List<Integer> tags, @Param("excludeId") int excludeId);
+
+    // ✅ 상영 중 (release_date <= SYSDATE)
+    @Select("""
+    SELECT * FROM MOVIES
+    WHERE release_date BETWEEN SYSDATE - 365 AND SYSDATE
+""")
+    @ResultMap("movieMap")
+    List<MovieVO> selectNowShowingMovies();
+
+
+    // ✅ 미개봉 (release_date > SYSDATE)
+    @Select("""
+        SELECT * FROM MOVIES
+        WHERE release_date > SYSDATE
+    """)
+    @ResultMap("movieMap")
+    List<MovieVO> selectUpcomingMovies();
+
+
 }

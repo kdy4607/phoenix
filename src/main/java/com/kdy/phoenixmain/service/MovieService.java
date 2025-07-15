@@ -78,4 +78,17 @@ public class MovieService {
     public List<MovieVO> selectMoviesByAnyTag(List<Integer> tagIds, int movieId) {
         return movieMapper.selectMoviesByAnyTag(tagIds, movieId);
     }
+
+    public List<MovieVO> getMoviesByStatus(String status) {
+        switch (status) {
+            case "showing":
+                return movieMapper.selectNowShowingMovies();
+            case "upcoming":
+                return movieMapper.selectUpcomingMovies();
+            case "all":
+            default:
+                return movieMapper.selectAllMovie();
+        }
+    }
+
 }

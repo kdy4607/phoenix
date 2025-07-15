@@ -106,9 +106,9 @@ uri="http://java.sun.com/jsp/jstl/core" %>
       </div>
         <%--         상영중 전체 미개봉--%>
         <div class="movie-tab">
-          <a href="/movie-tab?status=all" class="${status == 'all' ? 'active' : ''}">Showing Movies</a>
-          <a href="/movie-tab?status=showing" class="${status == 'showing' ? 'active' : ''}">All Movies</a>
-          <a href="/movie-tab?status=upcoming" class="${status == 'upcoming' ? 'active' : ''}">Upcoming Movies</a>
+          <a href="/movie-all?status=all" class="${status == 'all' ? 'active' : ''}">All Movies</a>
+          <a href="/movie-all?status=showing" class="${status == 'showing' ? 'active' : ''}">Showing Movies</a>
+          <a href="/movie-all?status=upcoming" class="${status == 'upcoming' ? 'active' : ''}">Upcoming Movies</a>
         </div>
 
       <!-- 🎞️ 영화 목록 컨테이너 -->
