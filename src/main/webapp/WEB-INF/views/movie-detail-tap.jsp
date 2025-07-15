@@ -16,7 +16,7 @@
     <!-- 탭 내용 영역 -->
     <div class="content active">
         <div class="related-movie-wrap">
-            <c:forEach var="rel" items="${relatedMovies}">
+            <c:forEach var="rel" items="${relatedMovies}" end="5">
                 <div class="related-movie">
                     <img src="${rel.poster_url}" alt="${rel.title}" style="width:150px">
                     <div>${rel.title}</div>
@@ -29,13 +29,36 @@
 </div>
 
 <script>
+    // function showTab(index) {
+    //     const tabs = document.querySelectorAll('.tab');
+    //     const contents = document.querySelectorAll('.content');
+    //
+    //     tabs.forEach((tab, i) => {
+    //         tab.classList.toggle('active', i === index);
+    //         contents[i].classList.toggle('active', i === index);
+    //     });
+    // }
     function showTab(index) {
         const tabs = document.querySelectorAll('.tab');
         const contents = document.querySelectorAll('.content');
 
         tabs.forEach((tab, i) => {
             tab.classList.toggle('active', i === index);
-            contents[i].classList.toggle('active', i === index);
+        });
+
+        contents.forEach((content, i) => {
+            content.classList.toggle('active', i === index);
+            // 관련영화 탭(index === 0)일 때만 height 자동 조정
+            if (i === index) {
+                if (i === 0) {
+                    content.style.height = 'auto';
+                } else {
+                    content.style.height = '280px';
+                }
+            } else {
+                // 비활성화된 콘텐츠는 초기화 (안 보여도 height 남으면 깔끔하지 않음)
+                content.style.height = '';
+            }
         });
     }
 </script>

@@ -124,6 +124,15 @@ body, html {
     box-shadow: -2px 2px 10px rgba(0,0,0,0.4);
     padding: 10px;
 }
+.bookmark-icon svg {
+    fill: gray;
+    transition: fill 0.3s;
+    cursor: pointer;
+}
+
+.bookmark-icon.bookmarked svg {
+    fill: red; /* 북마크된 경우 */
+}
 /*.M-detail {*/
 /*    display: flex;*/
 /*    border: red 2px solid;*/

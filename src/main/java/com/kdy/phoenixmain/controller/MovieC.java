@@ -5,6 +5,7 @@ import com.kdy.phoenixmain.service.MovieService;
 import com.kdy.phoenixmain.service.TagService;
 import com.kdy.phoenixmain.vo.MovieVO;
 import com.kdy.phoenixmain.vo.TagVO;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,15 +29,25 @@ public class MovieC {
 
     // 전체 영화 목록 or 검색어 기반 목록 출력
     @GetMapping("/movie-all")
-    public String movieAll(Model model) {
-        model.addAttribute("movies", movieService.getAllMovie());
+    public String movieAll(
+            @RequestParam(defaultValue = "showing") String status,
+            Model model
+    ) {
+        // status 값: all / now / upcoming
+        List<MovieVO> movies = movieService.getMoviesByStatus(status);
+
+        model.addAttribute("movies", movies);
         model.addAttribute("tagList", tagMapper.selectAllTag());
+        model.addAttribute("status", status); // 탭 활성화 표시용
         return "movie/movie";
     }
 
 
     @GetMapping("/oneMovieDetail")
-    public String movieDetailOne(@RequestParam("movie_id") int movie_id, Model model) {
+    public String movieDetailOne(@RequestParam("movie_id") int movie_id, Model model, HttpSession session) {
+        //이전 세션값 저장용
+        session.setAttribute("lastMovieId", movie_id);
+
         //별개수 출력
         MovieVO movie = movieService.selectOneMovie(movie_id);
         //model.addAttribute("movieStar", movie);
@@ -71,19 +82,20 @@ public class MovieC {
     @PostMapping("/movies/filter")
     public String filterMovies(@RequestBody Map<String, Object> payload, Model model) {
         String title = (String) payload.get("title");
+        String status = (String) payload.get("status"); // ✅ 추가
         @SuppressWarnings("unchecked")
         List<Integer> tagIds = (List<Integer>) payload.get("tagIds");
 
         List<MovieVO> filteredMovies;
 
-        if (tagIds == null || tagIds.isEmpty()) {
-            filteredMovies = (title == null || title.isBlank())
-                    ? movieService.getAllMovie()
-                    : movieService.findMoviesBySearch(title);
-        } else if (title != null && !title.isBlank()) {
-            filteredMovies = movieService.findMoviesByTagsAndTitle(tagIds, title);
+        if ((tagIds == null || tagIds.isEmpty()) && (title == null || title.isBlank())) {
+            filteredMovies = movieService.getMoviesByStatus(status); // ✅ 탭 필터만 적용
+        } else if (tagIds != null && !tagIds.isEmpty() && title != null && !title.isBlank()) {
+            filteredMovies = movieService.findMoviesByTagsTitleAndStatus(tagIds, title, status); // ✅ 전체 필터
+        } else if (tagIds != null && !tagIds.isEmpty()) {
+            filteredMovies = movieService.findMoviesByTagsAndStatus(tagIds, status); // ✅ 태그 + 탭
         } else {
-            filteredMovies = movieService.findMoviesByTagIds(tagIds);
+            filteredMovies = movieService.findMoviesBySearchAndStatus(title, status); // ✅ 검색어 + 탭
         }
 
         model.addAttribute("movies", filteredMovies);

@@ -3,21 +3,34 @@
 <html>
 <head>
     <title>Title</title>
-    <link rel="stylesheet" href="/resources/css/logoin.css">
+    <link rel="stylesheet" href="/resources/css/detailmovie-menu-logoin.css">
     <link rel="stylesheet" href="/resources/css/menuCon.css">
 </head>
 <body>
+<jsp:include page="/WEB-INF/views/header.jsp" />
 <%-- 메뉴 로고 및 로그인 창 입니다--%>
-<div class="head-info">
-    <%-- 공간을 맞춰주기위해 빈 div 넣었습니다. --%>
-    <div class="nothing"></div>
-    <div class="title-img">
-        <a href="/"><div class="logo">Movie Information</div></a>
-    </div>
-    <div class="login-status">
-        <div>로그인상태창.</div>
-    </div>
-</div>
+<%--<div class="head-info">--%>
+<%--    &lt;%&ndash; 공간을 맞춰주기위해 빈 div 넣었습니다. &ndash;%&gt;--%>
+<%--    <div class="nothing"></div>--%>
+<%--    <div class="title-img">--%>
+<%--        <a href="/">--%>
+<%--            <div class="logo">Movie Information</div>--%>
+<%--        </a>--%>
+<%--    </div>--%>
+<%--    <div class="login-status">--%>
+<%--        <c:choose>--%>
+<%--            <c:when test="${not empty sessionScope.username}">--%>
+<%--                <div>${sessionScope.username}님 로그인 되었습니다</div>--%>
+<%--                <form action="/logoutx21" method="post">--%>
+<%--                    <button>로그아웃</button>--%>
+<%--                </form>--%>
+<%--            </c:when>--%>
+<%--            <c:otherwise>--%>
+<%--                <div><a href="/loginx21">로그인</a></div>--%>
+<%--            </c:otherwise>--%>
+<%--        </c:choose>--%>
+<%--    </div>--%>
+<%--</div>--%>
 
 <%-- 메뉴 선택 창입니다. --%>
 <div class="menu-sel">
