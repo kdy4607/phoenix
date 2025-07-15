@@ -1,15 +1,25 @@
 package com.kdy.phoenixmain.service;
 
 import com.kdy.phoenixmain.mapper.LoginMapper;
+import com.kdy.phoenixmain.mapper.ReservationMapper;
 import com.kdy.phoenixmain.vo.LoginVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class LoginService {
 
+    // ===== User =====
+
     @Autowired
     private LoginMapper loginMapper;
+
+    // ===== Reservation =====
+
+    @Autowired
+    private ReservationMapper reservationMapper;
+
 
     /**
      * 로그인 인증
@@ -101,6 +111,7 @@ public class LoginService {
     /**
      * 회원 삭제
      */
+    @Transactional
     public void deleteLogin(String u_id) {
         try {
             System.out.println("🗑️ 회원 삭제 시도 - ID: " + u_id);
@@ -111,6 +122,8 @@ public class LoginService {
                 throw new RuntimeException("사용자를 찾을 수 없습니다.");
             }
 
+            // 예약 내역 삭제
+            reservationMapper.deleteReservationByUserID(u_id);
             // 회원 삭제
             loginMapper.deleteLogin(u_id);
 
