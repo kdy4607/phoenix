@@ -9,14 +9,13 @@ function toggleBookmark(elem) {
     if (!isLoggedIn) {
         if (!bookmarkAlertShown) {
             alert("로그인 해주세요.");
-            bookmarkAlertShown = true;
         }
         return;
     }
 
     // 토글 UI
-    const isBookmarked = elem.classList.toggle("bookmarked");
-
+    const currentlyBookmarked = elem.classList.contains("bookmarked"); // 현재 상태 읽기
+    const newBookmarkedState = !currentlyBookmarked;
     // AJAX 호출
     fetch("/bookmark", {
         method: "POST",
@@ -25,7 +24,7 @@ function toggleBookmark(elem) {
         },
         body: JSON.stringify({
             movieId: movieId,
-            bookmarked: isBookmarked
+            bookmarked: newBookmarkedState  // 토글 후의 상태를 보냄
         })
     }).then(res => {
         if (!res.ok) {
@@ -34,6 +33,8 @@ function toggleBookmark(elem) {
         return res.text();
     }).then(msg => {
         console.log("북마크 처리:", msg);
+        // 성공했으니 토글 UI 반영
+        elem.classList.toggle("bookmarked");
     }).catch(err => {
         alert("북마크 실패");
         console.error(err);

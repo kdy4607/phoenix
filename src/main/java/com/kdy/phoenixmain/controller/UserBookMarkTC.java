@@ -57,6 +57,8 @@ public class UserBookMarkTC {
         Integer movieId = (Integer) session.getAttribute("lastMovieId");
         return "redirect:/oneMovieDetail?movie_id=" + movieId; // movieDetailView.jsp
     }
+
+
     @PostMapping("/bookmark")
     @ResponseBody
     public String toggleBookmark(@RequestBody BookMarkVO dto, HttpSession session) {
@@ -64,7 +66,6 @@ public class UserBookMarkTC {
         if (userId == null) {
             return "로그인 필요";
         }
-
         // 처리 로직 예시
         if (dto.isBookmarked()) {
             userBookMServiceT.save(userId, dto.getMovieId());
