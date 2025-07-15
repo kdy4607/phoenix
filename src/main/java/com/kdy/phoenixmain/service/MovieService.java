@@ -91,4 +91,19 @@ public class MovieService {
         }
     }
 
+    // 검색어 + 상태 필터
+    public List<MovieVO> findMoviesBySearchAndStatus(String title, String status) {
+        return movieMapper.selectMoviesByTitleAndStatus(title, status);
+    }
+
+    // 태그 + 상태 필터
+    public List<MovieVO> findMoviesByTagsAndStatus(List<Integer> tagIds, String status) {
+        return movieMapper.selectMoviesByTagsAndStatus(tagIds, tagIds.size(), status);
+    }
+
+    // 태그 + 검색어 + 상태 필터
+    public List<MovieVO> findMoviesByTagsTitleAndStatus(List<Integer> tagIds, String title, String status) {
+        return movieMapper.selectMoviesByTagsTitleAndStatus(tagIds, tagIds.size(), title, status);
+    }
+
 }

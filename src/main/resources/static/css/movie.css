@@ -5,6 +5,7 @@
 }
 /*  태그 기본 스타일 */
 .tag {
+    cursor: pointer;
     font-size: 12px;
     display: inline-block;
     padding: 4px 8px;
@@ -57,6 +58,7 @@
 /*  포스터 + 등급 표시 */
 .poster-rating-wrapper {
     position: relative;
+    cursor: pointer;
 }
 .poster-rating-wrapper img {
     width: 100%;

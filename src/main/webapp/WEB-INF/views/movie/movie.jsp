@@ -12,7 +12,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
   <body>
     <jsp:include page="/WEB-INF/views/header.jsp" />
     <div class="container">
-      <h1>🎬 Movie List</h1>
+      <h1 onclick="location.href='/movie-all?status=showing'" style="cursor: pointer;">🎬 Movie List</h1>
 
       <!-- 🔍 검색 폼 -->
       <form
@@ -20,13 +20,14 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         class="search-form"
         onsubmit="return handleSearch(event);"
       >
+        <input type="hidden" name="status" value="${status}">
         <button type="button" class="toggle-button" onclick="toggleTags()">
           Tag Filter
         </button>
         <input
           type="text"
           name="title"
-          placeholder="Movie Name"
+          placeholder="Movie Title"
           class="search-input"
         />
         <button type="submit" class="search-button">Search</button>
