@@ -13,7 +13,7 @@
 <body>
 
 <div class="cay-myPage-content">
-    <div class="cay-myPage-profile">
+    <div class="cay-myPage-wrap">
         <div> Check Your Account</div>
         <form action="/mypage/general-info" method="post">
             <div class="cay-myPage-errorMessage"> ${errorMessage} </div>

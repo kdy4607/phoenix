@@ -97,6 +97,8 @@ public class MovieC {
         } else {
             filteredMovies = movieService.findMoviesBySearchAndStatus(title, status); // ✅ 검색어 + 탭
         }
+        // 🎯 필터된 결과 내에서 user_critic 내림차순 정렬 + ranking 부여
+        filteredMovies = movieService.applyRanking(filteredMovies);
 
         model.addAttribute("movies", filteredMovies);
         return "movie/movie-fragment";

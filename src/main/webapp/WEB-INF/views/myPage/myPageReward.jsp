@@ -13,7 +13,7 @@
 <body>
 
 <div class="cay-myPage-content">
-    <div class="cay-myPage-profile">
+    <div class="cay-myPage-wrap">
         <div> My Reward </div>
 
         <h1 style="text-align: center"> 리워드 </h1>

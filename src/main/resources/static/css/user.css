@@ -403,16 +403,16 @@ a {
 
 .cay-myPage-aside > ul > li > ul {
     padding: 1rem;
-    display: none;
+    display: block;
 }
 
 .cay-myPage-aside > ul > li > ul > li {
     padding: 0.5rem;
 }
 
-.cay-myPage-aside > ul > li:hover > ul {
-    display: block;
-}
+/*.cay-myPage-aside > ul > li:hover > ul {*/
+/*    display: block;*/
+/*}*/
 
 .cay-myPage-aside > div:nth-child(1) > a {
     color: white;
@@ -563,6 +563,8 @@ a {
     display: flex;
 }
 
+/* Home History */
+
 .cay-myPage-history > div:nth-child(2) {
     padding: 1.5rem;
     text-align: center;
@@ -581,6 +583,8 @@ a {
     font-weight: bold;
     margin-top: 1rem;
 }
+
+/* Home Genre */
 
 .cay-myPage-genre > div:nth-child(2) {
     padding: 1.5rem;
@@ -606,6 +610,68 @@ a {
     width: 97.5% !important;
 }
 
+/* Home Order */
+
+.cay-myPage-order > div:nth-child(2) {
+    display: block !important;
+}
+
+.cay-myPage-order > div:nth-child(2) > div > div {
+    width: 100%;
+    margin: 1rem 0;
+    padding: 1rem;
+    border-top: 1px solid #333333;
+    border-bottom: 1px solid #333333;
+    display: flex;
+}
+
+.cay-myPage-order-img {
+    margin: auto 1rem;
+}
+
+.cay-myPage-order-img img {
+    width: 100px;
+}
+
+.cay-myPage-order-info {
+    width: 85%;
+    padding: 1rem;
+    display: block;
+}
+
+.cay-myPage-order-top {
+    margin: 0.5rem 0 2rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.cay-myPage-order-top > button {
+    width: 4.5rem;
+    height: 1.5rem;
+    border: 2px solid #FB4357;
+    border-radius: 45px;
+    font-size: 14px;
+    font-weight: bolder;
+    color: #FB4357;
+    background-color: white;
+}
+
+.cay-myPage-order-top > button:hover {
+    color: white;
+    background-color: #FB4357;
+}
+
+.cay-myPage-order-bottom > div {
+    margin: 0.5rem 0;
+}
+
+.cay-myPage-order-bottom > div:nth-child(3) {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Home Reward */
+
 .cay-myPage-reward h4 {
     margin: 0.5rem auto;
 }
@@ -615,31 +681,31 @@ a {
     display: block !important;
 }
 
-.cay-myPage-reward table {
+.cay-myPage-reward-table {
     width: 100%;
     border-collapse: collapse;
 }
 
-.cay-myPage-reward tr {
+.cay-myPage-reward-table tr {
     border-top: 1px solid #333333;
     border-bottom: 1px solid #333333;
 }
 
-.cay-myPage-reward td {
+.cay-myPage-reward-table td {
     padding: 1.5rem;
 }
 
-.cay-myPage-reward td:first-child {
+.cay-myPage-reward-table td:first-child {
     width: 40%;
     border-right: 1px solid #333333;
 }
 
-.cay-myPage-reward td:last-child {
+.cay-myPage-reward-table td:last-child {
     width: 60%;
 }
 
 /* My Page - Profile */
-.cay-myPage-profile {
+.cay-myPage-wrap {
     position: relative;
     width: 90%;
     margin: 1rem auto;
@@ -650,7 +716,7 @@ a {
     text-align: center;
 }
 
-.cay-myPage-profile > div {
+.cay-myPage-wrap > div:nth-child(1) {
     width: 80%;
     margin: auto;
     padding: 1.5rem;
@@ -660,11 +726,11 @@ a {
     color: #FB4357;
 }
 
-.cay-myPage-profile form:first-child {
+.cay-myPage-wrap form:first-child {
     padding: 3rem;
 }
 
-.cay-myPage-profile form >
+.cay-myPage-wrap form >
 div:nth-child(1) {
     position: relative;
     padding: 1.5rem;
@@ -681,14 +747,14 @@ div:nth-child(1) {
     animation: shake 0.5s;
 }
 
-.cay-myPage-profile > form:nth-child(2) > div {
+.cay-myPage-wrap > form:nth-child(2) > div {
     padding: 1.5rem;
     font-size: 1.25rem;
     font-weight: bold;
     text-align: center;
 }
 
-.cay-myPage-profile input {
+.cay-myPage-wrap input {
     width: 30rem;
     height: 4.5rem;
     padding: 1.5rem;
@@ -699,7 +765,7 @@ div:nth-child(1) {
     background-color: #efefef;
 }
 
-.cay-myPage-profile button {
+.cay-myPage-wrap button {
     width: 15rem;
     height: 3.5rem;
     margin: 3rem 0.5rem;
@@ -711,19 +777,19 @@ div:nth-child(1) {
     background-color: white;
 }
 
-.cay-myPage-profile button:hover {
+.cay-myPage-wrap button:hover {
     color: white;
     transition: ease-in-out 0.3s;
     background-color: #FB4357;
 }
 
-.cay-myPage-profile h1 {
+.cay-myPage-wrap h1 {
     padding: 1.5rem;
     font-size: 1.5rem;
     text-align: start;
 }
 
-.cay-myPage-profile form:last-child {
+.cay-myPage-wrap form:last-child {
     margin: 0 auto;
 }
 
@@ -740,18 +806,18 @@ div:nth-child(1) {
     margin-top: 1rem !important;
 }
 
-.cay-myPage-profile h2 {
+.cay-myPage-wrap h2 {
     padding: 3rem;
     color: #FB4357;
     text-align: center;
 }
 
-.cay-myPage-profile h3 {
+.cay-myPage-wrap h3 {
     padding: 3rem;
     text-align: center;
 }
 
-.cay-myPage-profile p {
+.cay-myPage-wrap p {
     margin: 3rem auto;
     font-size: 1.25rem;
 }
@@ -800,4 +866,69 @@ div:nth-child(1) {
     color: white;
     transition: ease-in-out 0.3s;
     background-color: #FB4357;
+}
+
+/* My Page - tabs */
+
+.cay-myPage-tabs {
+    width: 80%;
+    margin: 3rem auto;
+    padding-bottom: 40px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.tab_items {
+    width: 33%;
+    border-top: 3.5px solid #FB4357;
+    border-bottom: 3.5px solid #FB4357;
+    line-height: 50px;
+    font-size: 16px;
+    text-align: center;
+    color: #FB4357;
+    display: block;
+    float: left;
+    text-align: center;
+    font-weight: bold;
+    transition: all 0.2s ease;
+}
+
+.tab_items > div {
+    width: 80%;
+    height: 80%;
+    margin: 0.5rem auto;
+    font-size: 1.25rem;
+    border-radius: 8px;
+}
+
+.tab_items:hover {
+    background-color: white;
+}
+
+.cay-myPage-tabs > input {
+    display: none;
+}
+
+.cay-myPage-tabs-content {
+    display: none;
+    padding: 40px 40px 0;
+    clear: both;
+    overflow: hidden;
+    text-align: start;
+}
+
+#watch:checked ~ #watch_content,
+#review:checked ~ #review_content,
+#wishlist:checked ~ #wishlist_content {
+    display: block;
+}
+
+#upcoming:checked ~ #upcoming_content,
+#done:checked ~ #done_content {
+    display: block;
+}
+
+.cay-myPage-tab > input:checked + .tab_item {
+    background-color: #333333;
+    color: #fff;
 }
