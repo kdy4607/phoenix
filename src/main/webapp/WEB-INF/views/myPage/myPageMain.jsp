@@ -21,7 +21,7 @@
                     <li><a href="/mypage/profile?u_id=${user.u_id}">General Info</a></li>
                 </ul>
             </li>
-            <li><a href="/mypage/history?u_id=${user.u_id}">My History</a>
+            <li><a href="/mypage/history?u_id=${user.u_id}">My Movie History</a>
                 <ul>
                     <li><a href="/mypage/history?u_id=${user.u_id}">My History</a></li>
                     <li><a href="" onclick="alert('준비 중입니다!')">My Events History</a></li>
@@ -38,12 +38,6 @@
                 <ul>
                     <li><a href="" onclick="alert('준비 중입니다!')">Credit/Debit Cards</a></li>
                     <li><a href="" onclick="alert('준비 중입니다!')">Gift Cards</a></li>
-                </ul>
-            </li>
-            <li><a href="/mypage/reminder?u_id=${user.u_id}">Movie Reminder</a>
-                <ul>
-                    <li><a href="/mypage/reminder?u_id=${user.u_id}">My Movie Reminders</a></li>
-                    <li><a href="/mypage/wishlist?u_id=${user.u_id}">Wishlist</a></li>
                 </ul>
             </li>
         </ul>

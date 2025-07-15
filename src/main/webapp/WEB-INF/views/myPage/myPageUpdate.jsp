@@ -16,7 +16,7 @@
 
 <div class="cay-myPage-content">
 <div class="cay-myPage-errorMessage"> ${errorMessage} </div>
-    <div class="cay-myPage-profile">
+    <div class="cay-myPage-wrap">
         <div> Update Account Information </div>
         <form action="/mypage/general-info/update/submit" method="post" onsubmit="return call();">
             <div>

@@ -92,12 +92,12 @@
                                     <img src="${reservation.poster_url}" alt="">
                                 </div>
                                 <div class="cay-myPage-order-info">
-                                    <div class="cay-myPage-order-date">
+                                    <div class="cay-myPage-order-top">
                                         Booking Date - <fmt:formatDate value='${reservation.reservation_date}'
                                                                        pattern='yyyy-MM-dd (E)'/>
                                         <button onclick="location.href='/reservation/list'"> ⤴</button>
                                     </div>
-                                    <div class="cay-myPage-order-data">
+                                    <div class="cay-myPage-order-bottom">
                                         <div>
                                                 ${reservation.movie_title}
                                         </div>

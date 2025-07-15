@@ -109,7 +109,7 @@ public class LoginC {
             return "redirect:/login";
         }
 
-        String homeName = user.getU_name().substring(0,  Math.min(user.getU_name().length(), 3));
+        String homeName = user.getU_name().substring(0, Math.min(user.getU_name().length(), 3));
         model.addAttribute("homeName", homeName);
 
         List<TagVO> tagList = tagMapper.selectAllTag();
@@ -209,11 +209,13 @@ public class LoginC {
                           Model model) {
 
         LoginVO user = (LoginVO) session.getAttribute("user");
+        List<ReservationVO> reservations = reservationService.getUserReservations(user.getU_id());
 
         if (user == null) {
             return "redirect:/login";
         } else {
             if (u_id.equals(user.getU_id())) {
+                model.addAttribute("reservations", reservations);
                 model.addAttribute("content", "myPageHistory.jsp");
             }
             return "myPage/myPageMain";
@@ -273,43 +275,6 @@ public class LoginC {
             return "myPage/myPageMain";
         }
     }
-
-    // ===== 마이페이지 리마인더 관련 =====
-
-    @GetMapping("/mypage/reminder")
-    public String reminder(@RequestParam("u_id") String u_id,
-                           HttpSession session,
-                           Model model) {
-
-        LoginVO user = (LoginVO) session.getAttribute("user");
-
-        if (user == null) {
-            return "redirect:/login";
-        } else {
-            if (u_id.equals(user.getU_id())) {
-                model.addAttribute("content", "myPageReminder.jsp");
-            }
-            return "myPage/myPageMain";
-        }
-    }
-
-    @GetMapping("/mypage/wishlist")
-    public String wishlist(@RequestParam("u_id") String u_id,
-                           HttpSession session,
-                           Model model) {
-
-        LoginVO user = (LoginVO) session.getAttribute("user");
-
-        if (user == null) {
-            return "redirect:/login";
-        } else {
-            if (u_id.equals(user.getU_id())) {
-                model.addAttribute("content", "myPageWishlist.jsp");
-            }
-            return "myPage/myPageMain";
-        }
-    }
-
 
     // ===== 회원정보 수정 관련 =====
 

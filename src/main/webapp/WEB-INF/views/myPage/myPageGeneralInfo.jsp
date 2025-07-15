@@ -8,7 +8,7 @@ uri="http://java.sun.com/jsp/jstl/fmt" %>
   </head>
   <body>
     <div class="cay-myPage-content">
-      <div class="cay-myPage-profile">
+      <div class="cay-myPage-wrap">
         <div>Your Account Information</div>
         <form action="/mypage/general-info/update" method="post">
           <div>
