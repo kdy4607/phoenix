@@ -17,22 +17,24 @@
 }
 
     function submitFilter() {
-    const title = document.querySelector('input[name="title"]').value;
+        const title = document.querySelector('input[name="title"]').value;
+        const status = document.querySelector('input[name="status"]').value;  // ✅ 탭 상태 읽기
 
-    fetch("/movies/filter", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-    title: title,
-    tagIds: [...selectedTags],
-}),
-})
-    .then((res) => res.text())
-    .then((html) => {
-    document.getElementById("movie-container").innerHTML = html;
-})
-    .catch((err) => console.error("필터링 실패:", err));
-}
+        fetch("/movies/filter", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                title: title,
+                tagIds: [...selectedTags],
+                status: status  // ✅ 탭 상태 포함
+            }),
+        })
+            .then((res) => res.text())
+            .then((html) => {
+                document.getElementById("movie-container").innerHTML = html;
+            })
+            .catch((err) => console.error("필터링 실패:", err));
+    }
 
     // 태그 접기펴기
     function toggleTags() {

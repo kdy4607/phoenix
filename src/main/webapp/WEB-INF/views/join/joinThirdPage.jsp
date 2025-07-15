@@ -9,18 +9,20 @@
 </head>
 <body>
 
+<h1> Join Us </h1>
+
 <div class="cay-join-process">
     <div class="cay-join-process-step">
         <div> Step <span>1</span></div>
         <div> Step 2</div>
-        <div> Step 3</div>
+        <div> Step <span style="color: ${fontColor}">3</span></div>
     </div>
     <div class="cay-join-process-bar">
-        <div> 1</div>
-        <div> -</div>
-        <div> 1</div>
-        <div> -</div>
-        <div> 1</div>
+        <div> ㅤ</div>
+        <div> ㅤ</div>
+        <div> ㅤ</div>
+        <div> ㅤ</div>
+        <div style="background-color: ${color}"> ㅤ</div>
     </div>
     <div class="cay-join-process-txt">
         <div> Enter User ID And Password</div>
@@ -30,7 +32,8 @@
 </div>
 
 <form class="cay-join-wrap" action="/join/complete" method="post" onsubmit="return call();">
-    <div> Create Account</div>
+    <div> ${errorMessage} </div>
+    <div> Join Us !</div>
     <div>
         <div> Your User ID</div>
         <input type="text" readonly name="u_id" value="${loginVO.u_id}">

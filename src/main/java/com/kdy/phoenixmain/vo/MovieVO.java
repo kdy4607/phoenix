@@ -4,6 +4,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -21,7 +23,7 @@ public class MovieVO {
     private String description;      // 줄거리 설명
     private int running_time;        // 상영 시간 (분 단위)
     private String poster_url;       // 포스터 이미지 URL
-
+    private Date release_date; // 개봉일
 
 
     // 연결된 태그 리스트 (다대다 관계)

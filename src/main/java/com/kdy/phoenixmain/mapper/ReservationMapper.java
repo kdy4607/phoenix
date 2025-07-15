@@ -284,6 +284,16 @@ ORDER BY r.reserved_at DESC
     int deleteReservationSeats(@Param("reservationId") int reservationId);
 
     /**
+     * 회원 삭제에 따른 예약 내역 삭제
+     */
+    @Delete("""
+            DELETE FROM RESERVATIONS 
+            WHERE u_id = #{u_id}
+    """)
+   int deleteReservationByUserID(@Param("u_id") String u_id);
+
+
+    /**
      * 일별 예약 통계
      */
     @Select("""
