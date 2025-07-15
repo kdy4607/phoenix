@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>마이페이지 - Phoenix Cinema</title>
+    <title>My Page - Phoenix Cinema</title>
     <link rel="stylesheet" href="/resources/css/user.css">
     <!-- header.js 사용 (login.js 대신) -->
     <script src="/resources/js/header.js"></script>

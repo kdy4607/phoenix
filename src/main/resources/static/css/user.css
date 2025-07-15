@@ -606,6 +606,27 @@ a {
     width: 97.5% !important;
 }
 
+.cay-myPage-order > div:nth-child(2) {
+    display: block !important;
+}
+
+.cay-myPage-order > div:nth-child(2) > div > div {
+    display: flex;
+}
+
+.cay-myPage-order-img img {
+    width: 100px;
+}
+
+.cay-myPage-order-info {
+    display: block;
+}
+
+.cay-myPage-order-data > div:nth-child(3) {
+    display: flex;
+    justify-content: space-between;
+}
+
 .cay-myPage-reward h4 {
     margin: 0.5rem auto;
 }
@@ -615,26 +636,26 @@ a {
     display: block !important;
 }
 
-.cay-myPage-reward table {
+.cay-myPage-reward-table {
     width: 100%;
     border-collapse: collapse;
 }
 
-.cay-myPage-reward tr {
+.cay-myPage-reward-table tr {
     border-top: 1px solid #333333;
     border-bottom: 1px solid #333333;
 }
 
-.cay-myPage-reward td {
+.cay-myPage-reward-table td {
     padding: 1.5rem;
 }
 
-.cay-myPage-reward td:first-child {
+.cay-myPage-reward-table td:first-child {
     width: 40%;
     border-right: 1px solid #333333;
 }
 
-.cay-myPage-reward td:last-child {
+.cay-myPage-reward-table td:last-child {
     width: 60%;
 }
 
