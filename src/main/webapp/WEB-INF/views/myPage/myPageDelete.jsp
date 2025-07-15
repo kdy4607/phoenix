@@ -15,7 +15,7 @@
 
 
 <div class="cay-myPage-content">
-    <div class="cay-myPage-profile">
+    <div class="cay-myPage-wrap">
         <div>Are you sure want to DELETE YOUR ACCOUNT ?</div>
 
         <form action="/mypage/deleteAccount" method="post">

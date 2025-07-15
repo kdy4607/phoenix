@@ -14,7 +14,7 @@
 <body>
 
 <div class="cay-myPage-content">
-    <div class="cay-myPage-profile">
+    <div class="cay-myPage-wrap">
         <div> Your Account Information  is <br> Successfully Updated ! </div>
         <form action="/mypage">
             <div>

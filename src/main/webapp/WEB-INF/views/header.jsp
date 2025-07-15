@@ -45,9 +45,9 @@
                         <span class="user-name" id="userName">
                             <c:choose>
                                 <c:when test="${not empty sessionScope.user.u_name}">
-                                    ${sessionScope.user.u_name}님
+                                    ${sessionScope.user.u_name}
                                 </c:when>
-                                <c:otherwise>사용자님</c:otherwise>
+                                <c:otherwise>Guest</c:otherwise>
                             </c:choose>
                         </span>
                         <div class="user-menu">

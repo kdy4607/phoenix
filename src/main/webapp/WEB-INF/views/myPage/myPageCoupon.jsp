@@ -13,7 +13,7 @@
 <body>
 
 <div class="cay-myPage-content">
-    <div class="cay-myPage-profile">
+    <div class="cay-myPage-wrap">
         <div> My Coupon </div>
 
         <h1 style="text-align: center"> 쿠폰 </h1>

@@ -14,6 +14,16 @@ uri="http://java.sun.com/jsp/jstl/core" %>
     <div class="container">
       <h1 onclick="location.href='/movie-all?status=showing'" style="cursor: pointer;">🎬 Movie List</h1>
 
+      <%--         상영중 전체 미개봉--%>
+      <div class="movie-tab">
+        <a href="/movie-all?status=all" class="${status == 'all' ? 'active' : ''}">All Movies</a>
+        <a href="/movie-all?status=showing" class="${status == 'showing' ? 'active' : ''}">Showing Movies</a>
+        <a href="/movie-all?status=upcoming" class="${status == 'upcoming' ? 'active' : ''}">Upcoming Movies</a>
+      </div>
+
+
+
+
       <!-- 🔍 검색 폼 -->
       <form
         id="searchForm"
@@ -105,18 +115,15 @@ uri="http://java.sun.com/jsp/jstl/core" %>
           </div>
         </div>
       </div>
-        <%--         상영중 전체 미개봉--%>
-        <div class="movie-tab">
-          <a href="/movie-all?status=all" class="${status == 'all' ? 'active' : ''}">All Movies</a>
-          <a href="/movie-all?status=showing" class="${status == 'showing' ? 'active' : ''}">Showing Movies</a>
-          <a href="/movie-all?status=upcoming" class="${status == 'upcoming' ? 'active' : ''}">Upcoming Movies</a>
-        </div>
+
 
       <!-- 🎞️ 영화 목록 컨테이너 -->
       <div id="movie-container" class="movie-container movie-list-section">
         <jsp:include page="movie-fragment.jsp" />
       </div>
     </div>
-
+    <footer class="cay-footer">
+      © 2025 Phoenix Cinema. All rights reserved.
+    </footer>
   </body>
 </html>

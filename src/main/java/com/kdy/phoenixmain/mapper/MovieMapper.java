@@ -69,7 +69,7 @@ public interface MovieMapper {
 
     @Select("""
     SELECT * FROM MOVIES
-    WHERE release_date BETWEEN SYSDATE - 365 AND SYSDATE
+    WHERE release_date BETWEEN SYSDATE - 250 AND SYSDATE
     """)
     @ResultMap("movieMap")
     List<MovieVO> selectNowShowingMovies();

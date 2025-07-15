@@ -6,9 +6,6 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
 <html>
 <head>
     <title>Title</title>
@@ -17,21 +14,21 @@
 
 <div class="cay-myPage-content">
     <div class="cay-myPage-wrap">
-        <div> Movie History</div>
+        <div> My Event</div>
         <div class="cay-myPage-tabs">
-            <input type="radio" id="watch" name="radio" checked>
-            <input type="radio" id="review" name="radio"/>
+            <input type="radio" id="upcoming" name="radio" checked>
+            <input type="radio" id="done" name="radio"/>
             <input type="radio" id="wishlist" name="radio"/>
-            <label class="tab_items" for="watch">
-                <div>Watch</div>
-            </label>
-            <label class="tab_items" for="review">
-                <div>Review</div>
-            </label>
             <label class="tab_items" for="wishlist">
-                <div>Wishlist</div>
+                <div>Ongoing</div>
             </label>
-            <div class="cay-myPage-tabs-content" id="watch_content">
+            <label class="tab_items" for="upcoming">
+                <div>Upcoming</div>
+            </label>
+            <label class="tab_items" for="done">
+                <div>Done</div>
+            </label>
+            <div class="cay-myPage-tabs-content" id="upcoming_content">
                 <div class="cay-myPage-order">
                     <h1>Watched Movie</h1>
                     <div>
@@ -69,7 +66,7 @@
                     </div>
                 </div>
             </div>
-            <div class="cay-myPage-tabs-content" id="review_content">
+            <div class="cay-myPage-tabs-content" id="done_content">
                 <div class="cay-myPage-order">
                     <h1>My Review</h1>
                     <div>
@@ -85,7 +82,7 @@
                                                     ${reservation.movie_title} <br>
                                                 <fmt:formatDate value='${reservation.run_date}'
                                                                 pattern='yyyy-MM-dd (E)'/>
-                                                            ${reservation.start_time}
+                                                    ${reservation.start_time}
                                             </div>
                                             <div class="cay-myPage-order-bottom">
                                                 <div>
@@ -151,7 +148,6 @@
             </div>
         </div>
     </div>
-</div>
 
 </body>
 </html>
