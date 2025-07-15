@@ -67,15 +67,13 @@ public class ScheduleService {
         List<Map<String, Object>> dates = new ArrayList<>();
         Calendar cal = Calendar.getInstance();
 
-        String[] dayNames = {"일", "월", "화", "수", "목", "금", "토"};
+        String[] dayNames = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
 
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < 14; i++) {
             Map<String, Object> dateInfo = new HashMap<>();
 
             if (i == 0) {
-                dateInfo.put("dayName", "오늘");
-            } else if (i == 1) {
-                dateInfo.put("dayName", "내일");
+                dateInfo.put("dayName", "Today");
             } else {
                 dateInfo.put("dayName", dayNames[cal.get(Calendar.DAY_OF_WEEK) - 1]);
             }
