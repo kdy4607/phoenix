@@ -86,12 +86,6 @@ uri="http://java.sun.com/jsp/jstl/core" %>
           </c:forEach>
           </div>
         </div>
-<%--         상영중 전체 미개봉--%>
-        <div class="movie-tab">
-          <a href="/movie-tab?status=all" class="${status == 'all' ? 'active' : ''}">Showing Movies</a>
-          <a href="/movie-tab?status=showing" class="${status == 'showing' ? 'active' : ''}">All Movies</a>
-          <a href="/movie-tab?status=upcoming" class="${status == 'upcoming' ? 'active' : ''}">Upcoming Movies</a>
-        </div>
         <!-- 😎 태그 그룹 - 분위기 -->
         <div class="tag-group mood tag-group-mood">
           <div class="tag-group-name">Mood</div>
@@ -110,6 +104,12 @@ uri="http://java.sun.com/jsp/jstl/core" %>
           </div>
         </div>
       </div>
+        <%--         상영중 전체 미개봉--%>
+        <div class="movie-tab">
+          <a href="/movie-tab?status=all" class="${status == 'all' ? 'active' : ''}">Showing Movies</a>
+          <a href="/movie-tab?status=showing" class="${status == 'showing' ? 'active' : ''}">All Movies</a>
+          <a href="/movie-tab?status=upcoming" class="${status == 'upcoming' ? 'active' : ''}">Upcoming Movies</a>
+        </div>
 
       <!-- 🎞️ 영화 목록 컨테이너 -->
       <div id="movie-container" class="movie-container movie-list-section">
