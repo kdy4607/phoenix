@@ -11,3 +11,4 @@ CREATE TABLE bookmarks
     FOREIGN KEY (u_id) REFERENCES users (u_id) ON DELETE CASCADE,
     FOREIGN KEY (movie_id) REFERENCES movies (movie_id) ON DELETE CASCADE
 );
+
