@@ -80,16 +80,18 @@ public class MovieService {
     }
 
     public List<MovieVO> getMoviesByStatus(String status) {
+        List<MovieVO> result;
         switch (status) {
-            case "showing":
-                return movieMapper.selectNowShowingMovies();
-            case "upcoming":
-                return movieMapper.selectUpcomingMovies();
-            case "all":
-            default:
-                return movieMapper.selectAllMovie();
+            case "showing" -> result = movieMapper.selectNowShowingMovies();
+            case "upcoming" -> result = movieMapper.selectUpcomingMovies();
+            default -> result = movieMapper.selectAllMovie();
         }
+
+        // user_critic 기준 정렬
+        result.sort((a, b) -> Double.compare(b.getUser_critic(), a.getUser_critic()));
+        return applyRanking(result);
     }
+
 
     // 검색어 + 상태 필터
     public List<MovieVO> findMoviesBySearchAndStatus(String title, String status) {
@@ -105,5 +107,14 @@ public class MovieService {
     public List<MovieVO> findMoviesByTagsTitleAndStatus(List<Integer> tagIds, String title, String status) {
         return movieMapper.selectMoviesByTagsTitleAndStatus(tagIds, tagIds.size(), title, status);
     }
+
+    public List<MovieVO> applyRanking(List<MovieVO> movies) {
+        // user_critic 기준 내림차순 정렬 후 순위 부여
+        for (int i = 0; i < movies.size(); i++) {
+            movies.get(i).setRanking(i + 1);
+        }
+        return movies;
+    }
+
 
 }
