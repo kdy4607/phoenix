@@ -1,0 +1,17 @@
+.bookmark-btn {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #888;
+    display: flex;
+    align-items: center;
+}
+
+.bookmark-btn:hover .star-icon {
+    color: gold; /* 마우스 올렸을 때 */
+}
+
+.bookmark-btn.clicked .star-icon {
+    color: gold; /* 클릭 시 북마크된 상태 */
+}

@@ -5,7 +5,8 @@
     <title>(사진, 타이틀, 총 별점, 감독,주연,관객별점, 전문가 평점, 북마크)
         값을 사용하는 기준으로 같이 묶음.) </title>
     <link rel="stylesheet" href="/resources/css/movie-detail.css">
-    <script src="/resources/js/detailBookMark.js" defer></script>
+    <link rel="stylesheet" href="/resources/css/bookmark.css">
+<%--    <script src="/resources/js/detailBookMark.js" defer></script>--%>
 </head>
 <body>
 <div class="M-detail">
@@ -22,33 +23,23 @@
         <div class="info-title">
 
             <div class="info-title-t"><span class="value">${movieDetail2.title}</span></div>
-            <div class="bookmark-icon"
-                 onclick="toggleBookmark(this)"
-                 data-movie-id="${movie.m_id}"
-                 data-logged-in="${sessionScope.userId != null ? 'true' : 'false'}">
-                <!-- 여기에 SVG 코드 직접 넣기 -->
-                <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
-                     xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                     width="30.972px" height="30.972px" viewBox="0 0 431.972 431.972"
-                     style="enable-background:new 0 0 431.972 431.972;"
-                     xml:space="preserve">
-                    <g>
-                        <path d="M393.146,14.279c-3.713-5.333-8.713-9.233-14.989-11.707c-3.997-1.711-8.186-2.568-12.565-2.568V0H66.378
-		c-4.377,0-8.562,0.857-12.56,2.568c-6.28,2.472-11.278,6.377-14.989,11.707c-3.71,5.33-5.568,11.228-5.568,17.701v368.019
-		c0,6.475,1.858,12.371,5.568,17.706c3.711,5.329,8.709,9.233,14.989,11.704c3.994,1.711,8.183,2.566,12.56,2.566
-		c8.949,0,16.844-3.142,23.698-9.418l125.91-121.062l125.91,121.065c6.663,6.081,14.562,9.127,23.695,9.127
-		c4.76,0,8.948-0.756,12.565-2.279c6.276-2.471,11.276-6.375,14.989-11.711c3.71-5.328,5.564-11.225,5.564-17.699V31.98
-		C398.71,25.507,396.852,19.609,393.146,14.279z M362.166,391.139L241.397,275.224l-25.411-24.264l-25.409,24.264L69.809,391.139
-		V36.549h292.357V391.139L362.166,391.139z"/>
-                    </g>
-                </svg>
-            </div>
+            <form action="${pageContext.request.contextPath}/bookmark"
+                  method="post"
+                  onsubmit="return checkLogin(this);">
+                <input type="hidden" name="movie_id" value="${movieDetail2.movie_id}">
+                <input type="hidden" name="u_id" value="${sessionScope.userId}">
+
+                <button type="submit" class="bookmark-btn">
+                    <span class="star-icon">☆</span> 북마크
+                </button>
+            </form>
         </div>
         <div class="info-plusStar"><span class="label">총 별점:</span>
             <span class="value">
         <c:forEach begin="1" end="${plusStar}">⭐</c:forEach>
             </span>
         </div>
+
         <div class="info-ather">
             <div class="row"><span class="label">영화감독:</span>
                 <span class="value">${movieDetail2.director}</span>
@@ -80,6 +71,21 @@
         </div>
     </div>
 </div>
+<p>세션 user: ${sessionScope.user}</p>
+<p>세션 userId: ${sessionScope.userId}</p>
+<p>${movieDetail2.movie_id}</p>///movieDetail2.movie_id
 <div class="side-bar">side</div>
+
+<script>
+    function checkLogin(form) {
+        const userId = form.querySelector('input[name="u_id"]').value;
+        if (!userId) {
+            alert("로그인 후 이용해주세요.");
+            return false;
+        }
+        return true;
+    }
+</script>
+
 </body>
 </html>
