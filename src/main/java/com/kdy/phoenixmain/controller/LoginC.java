@@ -118,6 +118,9 @@ public class LoginC {
         List<ReservationVO> reservations = reservationService.getUserReservations(user.getU_id());
         model.addAttribute("reservations", reservations);
 
+        ReservationVO stats = reservationService.getReservationStats(user.getU_id());
+        model.addAttribute("stats", stats);
+
         model.addAttribute("user", user);
         model.addAttribute("content", "myPageHome.jsp");
         return "myPage/myPageMain";

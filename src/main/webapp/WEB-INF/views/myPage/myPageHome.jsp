@@ -28,10 +28,26 @@
             <div>
                 <div>
                     <div>POINT</div>
-                    <span id="point-ctn"> 0 </span></div>
+                    <span id="point-ctn"> ${stats.adult*500} </span></div>
                 <div>
                     <div>MEMBERSHIP</div>
-                    <span id="membership-ctn"> A </span></div>
+                    <span id="membership-ctn">
+                        <c:choose>
+                            <c:when test="${stats.adult*500 ge 5000}">
+                                A
+                            </c:when>
+                            <c:when test="${stats.adult*500 ge 3000}">
+                                B
+                            </c:when>
+                            <c:when test="${stats.adult*500 ge 1000}">
+                                C
+                            </c:when>
+                            <c:when test="${stats.adult*500 ge 0}">
+                                E
+                            </c:when>
+                        </c:choose>
+
+                    </span></div>
             </div>
         </div>
         <div class="cay-myPage-bottom">
@@ -39,7 +55,7 @@
                 <h1>My History</h1>
                 <div>
                     <a href="">
-                        <span> 0 </span>
+                        <span> ${stats.adult != null ? stats.adult : 0} </span>
                         <div> Watch</div>
                     </a>
                     <a href="">
@@ -77,8 +93,9 @@
                                 </div>
                                 <div class="cay-myPage-order-info">
                                     <div class="cay-myPage-order-date">
-                                        Booking Date <fmt:formatDate value='${reservation.reservation_date}'
-                                                                     pattern='yyyy-MM-dd (E)'/>
+                                        Booking Date - <fmt:formatDate value='${reservation.reservation_date}'
+                                                                       pattern='yyyy-MM-dd (E)'/>
+                                        <button onclick="location.href='/reservation/list'"> ⤴</button>
                                     </div>
                                     <div class="cay-myPage-order-data">
                                         <div>
@@ -109,7 +126,6 @@
             </div>
             <div class="cay-myPage-event">
                 <h1>My Event History</h1>
-                <%-- JSTL 로 반복문 사용 --%>
                 <div>
                     <span> No events participated.  </span>
                 </div>
@@ -117,7 +133,7 @@
             <div class="cay-myPage-reward">
                 <h1>My reward</h1>
                 <div>
-                    <div><h4>Reward</h4></div>
+                    <div><h4>Ticket</h4></div>
                     <div>
                         <table class="cay-myPage-reward-table">
                             <tr>

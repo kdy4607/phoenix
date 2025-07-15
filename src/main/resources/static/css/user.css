@@ -563,6 +563,8 @@ a {
     display: flex;
 }
 
+/* Home History */
+
 .cay-myPage-history > div:nth-child(2) {
     padding: 1.5rem;
     text-align: center;
@@ -581,6 +583,8 @@ a {
     font-weight: bold;
     margin-top: 1rem;
 }
+
+/* Home Genre */
 
 .cay-myPage-genre > div:nth-child(2) {
     padding: 1.5rem;
@@ -606,12 +610,23 @@ a {
     width: 97.5% !important;
 }
 
+/* Home Order */
+
+
 .cay-myPage-order > div:nth-child(2) {
     display: block !important;
 }
 
 .cay-myPage-order > div:nth-child(2) > div > div {
+    width: 100%;
+    margin: 1rem 0;
+    border-top: 1px solid #333333;
+    border-bottom: 1px solid #333333;
     display: flex;
+}
+
+.cay-myPage-order-img {
+    margin: auto 1rem;
 }
 
 .cay-myPage-order-img img {
@@ -619,13 +634,43 @@ a {
 }
 
 .cay-myPage-order-info {
+    width: 85%;
+    padding: 1rem;
     display: block;
+}
+
+.cay-myPage-order-date {
+    margin: 0.5rem 0 2rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.cay-myPage-order-date > button {
+    width: 4.5rem;
+    height: 1.5rem;
+    border: 2px solid #FB4357;
+    border-radius: 45px;
+    font-size: 14px;
+    font-weight: bolder;
+    color: #FB4357;
+    background-color: white;
+}
+
+.cay-myPage-order-date > button:hover {
+    color: white;
+    background-color: #FB4357;
+}
+
+.cay-myPage-order-data > div {
+    margin: 0.5rem 0;
 }
 
 .cay-myPage-order-data > div:nth-child(3) {
     display: flex;
     justify-content: space-between;
 }
+
+/* Home Reward */
 
 .cay-myPage-reward h4 {
     margin: 0.5rem auto;
