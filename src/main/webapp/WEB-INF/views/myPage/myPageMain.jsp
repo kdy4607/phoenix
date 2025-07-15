@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>마이페이지 - Phoenix Cinema</title>
+    <title>My Page - Phoenix Cinema</title>
     <link rel="stylesheet" href="/resources/css/user.css">
     <!-- header.js 사용 (login.js 대신) -->
     <script src="/resources/js/header.js"></script>
@@ -23,9 +23,9 @@
             </li>
             <li><a href="/mypage/history?u_id=${user.u_id}">My History</a>
                 <ul>
-                    <li><a href="/mypage/history?u_id=${user.u_id}">My History</a></li>
-                    <li><a href="" onclick="alert('준비 중입니다!')">My Events History</a></li>
                     <li><a href="/reservation/list">My Reservation</a></li>
+                    <li><a href="/mypage/history?u_id=${user.u_id}">My Movie History</a></li>
+                    <li><a href="/mypage/event?u_id=${user.u_id}">My Events History</a></li>
                 </ul>
             </li>
             <li><a href="/mypage/reward?u_id=${user.u_id}">My Rewards</a>
@@ -38,12 +38,6 @@
                 <ul>
                     <li><a href="" onclick="alert('준비 중입니다!')">Credit/Debit Cards</a></li>
                     <li><a href="" onclick="alert('준비 중입니다!')">Gift Cards</a></li>
-                </ul>
-            </li>
-            <li><a href="/mypage/reminder?u_id=${user.u_id}">Movie Reminder</a>
-                <ul>
-                    <li><a href="/mypage/reminder?u_id=${user.u_id}">My Movie Reminders</a></li>
-                    <li><a href="/mypage/wishlist?u_id=${user.u_id}">Wishlist</a></li>
                 </ul>
             </li>
         </ul>
