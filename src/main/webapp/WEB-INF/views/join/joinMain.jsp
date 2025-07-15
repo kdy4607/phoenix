@@ -15,12 +15,13 @@
 
     <main class="cay-join-container">
         <div class="cay-join-content">
-                <h1> Join Us </h1>
                 <jsp:include page="${content}"></jsp:include>
         </div>
     </main>
 
-    <footer class="cay-footer"><h1>footer</h1></footer>
+    <footer class="cay-footer">
+    © 2025 Phoenix Cinema. All rights reserved.
+</footer>
 </div>
 
 

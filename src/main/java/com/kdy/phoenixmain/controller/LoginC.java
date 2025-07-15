@@ -1,5 +1,6 @@
 package com.kdy.phoenixmain.controller;
 
+import com.kdy.phoenixmain.mapper.ReservationMapper;
 import com.kdy.phoenixmain.mapper.TagMapper;
 import com.kdy.phoenixmain.service.LoginService;
 import com.kdy.phoenixmain.vo.LoginVO;
@@ -95,13 +96,14 @@ public class LoginC {
 
     @GetMapping("/mypage")
     public String myPageGet(HttpSession session, Model model) {
+
         LoginVO user = (LoginVO) session.getAttribute("user");
 
         if (user == null) {
             return "redirect:/login";
         }
 
-        String homeName = user.getU_name().substring(0, 3);
+        String homeName = user.getU_name().substring(0,  Math.min(user.getU_name().length(), 3));
         model.addAttribute("homeName", homeName);
 
         List<TagVO> tagList = tagMapper.selectAllTag();
@@ -187,29 +189,6 @@ public class LoginC {
         return "myPage/myPageMain";
     }
 
-
-    // ===== 마이페이지 극장 관련 =====
-
-    @GetMapping("/mypage/theatres")
-    public String theatres(@RequestParam("u_id") String u_id,
-                           HttpSession session,
-                           Model model) {
-
-//        LoginVO user = (LoginVO) session.getAttribute("user");
-//
-//        if (user == null) {
-//            return "redirect:/login";
-//        } else {
-//            if (u_id.equals(user.getU_id())) {
-//                model.addAttribute("content", "myPageTheatres.jsp");
-//            }
-//            return "myPage/myPageMain";
-//        }
-
-        model.addAttribute("content", "myPageTheatres.jsp");
-        return "myPage/myPageMain";
-    }
-
     // ===== 마이페이지 관람 이력 관련 =====
 
     @GetMapping("/mypage/history")
@@ -217,19 +196,16 @@ public class LoginC {
                           HttpSession session,
                           Model model) {
 
-//        LoginVO user = (LoginVO) session.getAttribute("user");
-//
-//        if (user == null) {
-//            return "redirect:/login";
-//        } else {
-//            if (u_id.equals(user.getU_id())) {
-//                model.addAttribute("content", "myPageHistory.jsp");
-//            }
-//            return "myPage/myPageMain";
-//        }
+        LoginVO user = (LoginVO) session.getAttribute("user");
 
-        model.addAttribute("content", "myPageHistory.jsp");
-        return "myPage/myPageMain";
+        if (user == null) {
+            return "redirect:/login";
+        } else {
+            if (u_id.equals(user.getU_id())) {
+                model.addAttribute("content", "myPageHistory.jsp");
+            }
+            return "myPage/myPageMain";
+        }
     }
 
     // ===== 마이페이지 리워드 관련 =====
@@ -238,21 +214,18 @@ public class LoginC {
     public String reward(@RequestParam("u_id") String u_id,
                          HttpSession session,
                          Model model) {
-//        LoginVO user = (LoginVO) session.getAttribute("user");
-//
-//        if (user == null) {
-//            return "redirect:/login";
-//        } else {
-//            if (u_id.equals(user.getU_id())) {
-//                model.addAttribute("content", "myPageReward.jsp");
-//            }
-//            return "myPage/myPageMain";
-//        }
+        LoginVO user = (LoginVO) session.getAttribute("user");
 
-        model.addAttribute("pointContent", "myPagePoint.jsp");
-        model.addAttribute("couponContent", "myPageCoupon.jsp");
-        model.addAttribute("content", "myPageReward.jsp");
-        return "myPage/myPageMain";
+        if (user == null) {
+            return "redirect:/login";
+        } else {
+            if (u_id.equals(user.getU_id())) {
+                model.addAttribute("pointContent", "myPagePoint.jsp");
+                model.addAttribute("couponContent", "myPageCoupon.jsp");
+                model.addAttribute("content", "myPageReward.jsp");
+            }
+            return "myPage/myPageMain";
+        }
     }
 
     @GetMapping("/mypage/reward/point")
@@ -260,20 +233,16 @@ public class LoginC {
                         HttpSession session,
                         Model model) {
 
-//        LoginVO user = (LoginVO) session.getAttribute("user");
-//
-//        if (user == null) {
-//            return "redirect:/login";
-//        } else {
-//            if (u_id.equals(user.getU_id())) {
-//                model.addAttribute("content", "myPageReward.jsp");
-//            }
-//            return "myPage/myPageMain";
-//        }
+        LoginVO user = (LoginVO) session.getAttribute("user");
 
-        model.addAttribute("content", "myPagePoint.jsp");
-        return "myPage/myPageMain";
-
+        if (user == null) {
+            return "redirect:/login";
+        } else {
+            if (u_id.equals(user.getU_id())) {
+                model.addAttribute("content", "myPagePoint.jsp");
+            }
+            return "myPage/myPageMain";
+        }
     }
 
     @GetMapping("/mypage/reward/coupon")
@@ -281,20 +250,16 @@ public class LoginC {
                          HttpSession session,
                          Model model) {
 
-//        LoginVO user = (LoginVO) session.getAttribute("user");
-//
-//        if (user == null) {
-//            return "redirect:/login";
-//        } else {
-//            if (u_id.equals(user.getU_id())) {
-//                model.addAttribute("content", "myPageReward.jsp");
-//            }
-//            return "myPage/myPageMain";
-//        }
+        LoginVO user = (LoginVO) session.getAttribute("user");
 
-        model.addAttribute("content", "myPageCoupon.jsp");
-        return "myPage/myPageMain";
-
+        if (user == null) {
+            return "redirect:/login";
+        } else {
+            if (u_id.equals(user.getU_id())) {
+                model.addAttribute("content", "myPageCoupon.jsp");
+            }
+            return "myPage/myPageMain";
+        }
     }
 
     // ===== 마이페이지 리마인더 관련 =====
@@ -304,19 +269,16 @@ public class LoginC {
                            HttpSession session,
                            Model model) {
 
-//        LoginVO user = (LoginVO) session.getAttribute("user");
-//
-//        if (user == null) {
-//            return "redirect:/login";
-//        } else {
-//            if (u_id.equals(user.getU_id())) {
-//                model.addAttribute("content", "myPageReward.jsp");
-//            }
-//            return "myPage/myPageMain";
-//        }
+        LoginVO user = (LoginVO) session.getAttribute("user");
 
-        model.addAttribute("content", "myPageReminder.jsp");
-        return "myPage/myPageMain";
+        if (user == null) {
+            return "redirect:/login";
+        } else {
+            if (u_id.equals(user.getU_id())) {
+                model.addAttribute("content", "myPageReminder.jsp");
+            }
+            return "myPage/myPageMain";
+        }
     }
 
     @GetMapping("/mypage/wishlist")
@@ -324,19 +286,16 @@ public class LoginC {
                            HttpSession session,
                            Model model) {
 
-//        LoginVO user = (LoginVO) session.getAttribute("user");
-//
-//        if (user == null) {
-//            return "redirect:/login";
-//        } else {
-//            if (u_id.equals(user.getU_id())) {
-//                model.addAttribute("content", "myPageReward.jsp");
-//            }
-//            return "myPage/myPageMain";
-//        }
+        LoginVO user = (LoginVO) session.getAttribute("user");
 
-        model.addAttribute("content", "myPageWishlist.jsp");
-        return "myPage/myPageMain";
+        if (user == null) {
+            return "redirect:/login";
+        } else {
+            if (u_id.equals(user.getU_id())) {
+                model.addAttribute("content", "myPageWishlist.jsp");
+            }
+            return "myPage/myPageMain";
+        }
     }
 
 
@@ -417,6 +376,7 @@ public class LoginC {
                                 HttpSession session,
                                 Model model) {
 
+
         LoginVO user = (LoginVO) session.getAttribute("user");
 
         if (user == null || !user.getU_id().equals(u_id)) {
@@ -430,7 +390,6 @@ public class LoginC {
 
     @PostMapping("/mypage/deleteAccount")
     public String deleteAccountSubmit(@RequestParam("u_pw") String u_pw,
-                                      Model model,
                                       RedirectAttributes redirectAttributes,
                                       HttpSession session) {
 
@@ -447,7 +406,7 @@ public class LoginC {
                 session.invalidate();
                 return "login/deleteComplete";
             } catch (Exception e) {
-                redirectAttributes.addFlashAttribute("errorMessage", "Could not delete your account. <br> Please try again..");
+                redirectAttributes.addFlashAttribute("errorMessage", "Could not delete your account. <br> Please try again. <br><br> If you have a reservation left, you can't withdraw.  ");
                 return "redirect:/mypage/deleteAccount?u_id=" + user.getU_id();
             }
         } else {
@@ -460,6 +419,8 @@ public class LoginC {
 
     @GetMapping("/join/step1")
     public String joinStep1(Model model) {
+        model.addAttribute("fontColor", "#FB4357");
+        model.addAttribute("color", "#C8E465");
         model.addAttribute("content", "joinFirstPage.jsp");
         return "join/joinMain";
     }
@@ -486,7 +447,6 @@ public class LoginC {
 
         if (loginVO.getU_id() == null || loginVO.getU_id().isEmpty()
                 || loginVO.getU_pw() == null || loginVO.getU_pw().isEmpty()) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Please fill all the fields");
             return "redirect:/join/step1";
         }
 
@@ -494,9 +454,8 @@ public class LoginC {
         try {
             LoginVO existingUser = loginService.findById(loginVO.getU_id());
             if (existingUser != null) {
-                model.addAttribute("errorMessage", "This ID is already in use.");
-                model.addAttribute("content", "joinFirstPage.jsp");
-                return "join/joinMain";
+                redirectAttributes.addFlashAttribute("errorMessage", "This ID is already in use.");
+                return "redirect:/join/step1";
             }
         } catch (Exception e) {
             // 사용자가 없으면 정상 (가입 가능)
@@ -504,28 +463,34 @@ public class LoginC {
 
         session.setAttribute("loginVO", loginVO);
         model.addAttribute("loginVO", loginVO);
+        model.addAttribute("fontColor", "#FB4357");
+        model.addAttribute("color", "#C8E465");
         model.addAttribute("content", "joinSecondPage.jsp");
         return "join/joinMain";
     }
 
     @PostMapping("/join/step3")
     public String joinStep3(@ModelAttribute("loginVO") LoginVO loginVO,
+                            RedirectAttributes redirectAttributes,
                             HttpSession session,
                             Model model) {
 
         if (loginVO.getU_address() != null && loginVO.getU_address().length() > 500) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Address Must be less than 500 characters.");
             session.setAttribute("loginVO", loginVO);
             return "redirect:/join/step2";
         }
 
         if (loginVO.getU_name() == null || loginVO.getU_name().isEmpty()) {
-            model.addAttribute("errorMessage", "Please enter your name.");
+            redirectAttributes.addFlashAttribute("errorMessage", "Please enter your name.");
             session.setAttribute("loginVO", loginVO);
             return "redirect:/join/step2";
         }
 
         session.setAttribute("loginVO", loginVO);
         model.addAttribute("loginVO", loginVO);
+        model.addAttribute("fontColor", "#FB4357");
+        model.addAttribute("color", "#C8E465");
         model.addAttribute("content", "joinThirdPage.jsp");
         return "join/joinMain";
     }
@@ -543,8 +508,8 @@ public class LoginC {
 
         try {
             loginService.insertLogin(user);
-            model.addAttribute("content", "joinCompletePage.jsp");
             session.setAttribute("user", user);
+            model.addAttribute("content", "joinCompletePage.jsp");
             return "join/joinMain";
 
         } catch (Exception e) {
