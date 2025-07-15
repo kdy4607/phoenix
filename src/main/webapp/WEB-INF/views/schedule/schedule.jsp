@@ -63,15 +63,40 @@
         <div class="section-header">Select Date & Time</div>
         <div class="section-content">
             <!-- Date Selection -->
-            <div class="date-selection">
-                <c:forEach var="date" items="${dates}" varStatus="status">
-                    <div class="date-item ${status.index == 0 ? 'active' : ''}"
-                         data-date="${date.dateString}"
-                         onclick="selectDate('${date.dateString}', this)">
-                        <div class="date-day">${date.dayName}</div>
-                        <div class="date-number">${date.dayNumber}</div>
-                    </div>
-                </c:forEach>
+            <div class="date-carousel-wrapper">
+                <button class="date-nav prev" onclick="scrollDates(-1)" aria-label="Previous Dates">
+                    <!-- Left chevron SVG -->
+                    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+                        <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+                    </svg>
+                </button>
+                <div class="date-carousel" id="dateCarousel">
+                    <c:forEach var="date" items="${dates}" varStatus="status">
+                        <c:set var="extraClass" value=""/>
+                        <c:if test="${date.dayName == 'Sat'}">
+                            <c:set var="extraClass" value=" saturday"/>
+                        </c:if>
+                        <c:if test="${date.dayName == 'Sun'}">
+                            <c:set var="extraClass" value=" sunday"/>
+                        </c:if>
+
+                        <div class="date-item${extraClass} ${status.index == 0 ? 'active' : ''}"
+                             data-date="${date.dateString}"
+                             onclick="selectDate('${date.dateString}', this)">
+                            <!-- 숫자와 라벨을 한 줄에 -->
+                            <div class="date-number">
+                                    ${date.dayNumber}
+                                <span class="date-label">(${date.dayName})</span>
+                            </div>
+                        </div>
+                    </c:forEach>
+                </div>
+                <button class="date-nav next" onclick="scrollDates(1)" aria-label="Next Dates">
+                    <!-- Right chevron SVG -->
+                    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+                        <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/>
+                    </svg>
+                </button>
             </div>
 
             <!-- Movie Selection -->
@@ -185,15 +210,15 @@
             <div class="seat-legend">
                 <div class="legend-item">
                     <div class="legend-seat legend-available"></div>
-                    <span>선택가능</span>
+                    <span>Available</span>
                 </div>
                 <div class="legend-item">
                     <div class="legend-seat legend-selected"></div>
-                    <span>선택됨</span>
+                    <span>Selected</span>
                 </div>
                 <div class="legend-item">
                     <div class="legend-seat legend-reserved"></div>
-                    <span>예약됨</span>
+                    <span>Reserved</span>
                 </div>
             </div>
 
@@ -224,7 +249,7 @@
     <!-- ▼ 결제 섹션 시작 ▼ -->
     <div class="section payment-section" id="paymentSection" style="display:none;">
         <!-- 헤더 -->
-        <div class="section-header">결제하기</div>
+        <div class="section-header">Payment</div>
         <!-- 본문 -->
         <div class="section-content">
             <!-- 결제 요약 -->
@@ -367,6 +392,13 @@
                     console.error('Error:', error);
                     alert('오류가 발생했습니다. 다시 시도해 주세요.');
                 });
+        }
+
+        // 날짜 스크롤 기능
+        function scrollDates(direction) {
+            const container = document.getElementById('dateCarousel');
+            const scrollAmount = 120;
+            container.scrollBy({ left: scrollAmount * direction, behavior: 'smooth' });
         }
 
         // 상영시간 선택 (DOM 엘리먼트 방식)
