@@ -122,6 +122,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         <jsp:include page="movie-fragment.jsp" />
       </div>
     </div>
-
+    <footer class="cay-footer">
+      © 2025 Phoenix Cinema. All rights reserved.
+    </footer>
   </body>
 </html>
