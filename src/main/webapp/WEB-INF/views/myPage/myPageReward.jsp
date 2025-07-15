@@ -14,13 +14,23 @@
 
 <div class="cay-myPage-content">
     <div class="cay-myPage-wrap">
-        <div> My Reward </div>
-
-        <h1 style="text-align: center"> 리워드 </h1>
-
-        <jsp:include page="${pointContent}"></jsp:include>
-        <jsp:include page="${couponContent}"></jsp:include>
-
+        <div> My Reward</div>
+        <div class="cay-myPage-reward">
+            <div>
+                <div>Point&Membership</div>
+                <div>
+                    <div>Total Point <span> 0 </span></div>
+                    <div>Membership Class <span> A </span></div>
+                </div>
+            </div>
+            <div>
+                <div>Ticket&Coupon</div>
+                <div>
+                    <div>Total Reward Ticket <span> 0 </span></div>
+                    <div>Total Reward Coupon <span> 0 </span></div>
+                </div>
+            </div>
+        </div>
         </form>
     </div>
 </div>
