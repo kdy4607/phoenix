@@ -1,7 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
+
 
 <c:forEach var="movie" items="${movies}">
+
     <div class="movie-card movie-card-wrapper">
         <div class="poster-rating-wrapper" onclick="location.href='oneMovieDetail?movie_id=${movie.movie_id}'">
             <img src="${movie.poster_url}" alt="포스터"/>
@@ -10,9 +13,13 @@
         </div>
         <div class="movie-text-wrapper">
             <div class="movie-title">${movie.title}</div>
+
             <span class="value movie-stars">
                 <c:forEach begin="1" end="${movie.user_critic}">⭐</c:forEach>
             </span>
+            <div class="movie-release-date">
+                <fmt:formatDate value="${movie.release_date}" pattern="yyyy.MM.dd" />
+            </div>
 <%--            <div class="movie-description">${movie.description}</div>--%>
             <div class="tag-list-wrapper">
                 <c:forEach var="tag" items="${movie.m_tagList}">
@@ -36,9 +43,11 @@
                 </c:forEach>
             </div>
         </div>
+        <c:if test="${status eq 'showing'}">
             <button class="btn-book-tickets" onclick="location.href='schedule?movie_id=${movie.movie_id}'">
                 Book Tickets
             </button>
+        </c:if>
     </div>
 </c:forEach>
 

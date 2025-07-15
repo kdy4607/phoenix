@@ -127,6 +127,11 @@
     color: white;
     background-color: #FB4357;
 }
+
+.btn-book-tickets:hover {
+    background-color: #e02d45; /* 살짝 어두운 핑크 */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
 .btn-more-details:hover {
     background-color: #eee;
 }
@@ -252,8 +257,8 @@
 
 .movie-ranking {
     position: absolute;
-    top: 16px;
-    left: 16px;
+    bottom: 16px;
+    right: 16px;
     padding: 8px 20px;
     font-size: 24px;
     font-weight: 900;
@@ -296,3 +301,18 @@
 }
 
 
+.cay-footer {
+    height: 30%;
+    margin: auto;
+    padding: 50px 0;
+    color: #999;
+    text-align: center;
+}
+
+.movie-release-date {
+    font-size: 14px;
+    color: #888;              /* 살짝 흐린 회색 */
+    margin-top: 8px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
