@@ -5,6 +5,7 @@ import com.kdy.phoenixmain.service.MovieService;
 import com.kdy.phoenixmain.service.TagService;
 import com.kdy.phoenixmain.vo.MovieVO;
 import com.kdy.phoenixmain.vo.TagVO;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -43,7 +44,10 @@ public class MovieC {
 
 
     @GetMapping("/oneMovieDetail")
-    public String movieDetailOne(@RequestParam("movie_id") int movie_id, Model model) {
+    public String movieDetailOne(@RequestParam("movie_id") int movie_id, Model model, HttpSession session) {
+        //이전 세션값 저장용
+        session.setAttribute("lastMovieId", movie_id);
+
         //별개수 출력
         MovieVO movie = movieService.selectOneMovie(movie_id);
         //model.addAttribute("movieStar", movie);

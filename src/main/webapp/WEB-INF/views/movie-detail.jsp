@@ -5,6 +5,7 @@
     <title>(사진, 타이틀, 총 별점, 감독,주연,관객별점, 전문가 평점, 북마크)
         값을 사용하는 기준으로 같이 묶음.) </title>
     <link rel="stylesheet" href="/resources/css/movie-detail.css">
+    <script src="/resources/js/detailBookMark.js" defer></script>
 </head>
 <body>
 <div class="M-detail">
@@ -21,7 +22,10 @@
         <div class="info-title">
 
             <div class="info-title-t"><span class="value">${movieDetail2.title}</span></div>
-            <div class="bookmark-icon" onclick="toggleBookmark(this)">
+            <div class="bookmark-icon"
+                 onclick="toggleBookmark(this)"
+                 data-movie-id="${movie.m_id}"
+                 data-logged-in="${sessionScope.userId != null ? 'true' : 'false'}">
                 <!-- 여기에 SVG 코드 직접 넣기 -->
                 <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
                      xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
