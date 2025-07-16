@@ -59,6 +59,7 @@ body, html {
 }
 
 .info-title-t {
+    margin-right: 30px;
     font-size: 40pt;
     flex: 1;
     font-weight: bold;
