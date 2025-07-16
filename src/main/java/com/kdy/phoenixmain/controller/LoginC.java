@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.time.LocalDate;
+import java.time.MonthDay;
 import java.time.ZoneId;
 import java.util.*;
 
@@ -97,14 +98,12 @@ public class LoginC {
     // ===== 마이페이지 관련 =====
 
     @GetMapping("/mypage")
-    public String myPageGet(RedirectAttributes redirectAttributes,
-                            HttpSession session,
+    public String myPageGet(HttpSession session,
                             Model model) {
 
         LoginVO user = (LoginVO) session.getAttribute("user");
 
         if (user == null) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Please enter both your ID and Password.");
             return "redirect:/login";
         }
 
@@ -133,7 +132,7 @@ public class LoginC {
                              RedirectAttributes redirectAttributes) {
 
         if (u_id.isEmpty() || u_pw.isEmpty()) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Please enter both your ID and Password.");
+            redirectAttributes.addFlashAttribute("errorMessage", "Please enter your ID and Password");
             return "redirect:/login";
         }
 
@@ -320,10 +319,13 @@ public class LoginC {
         ZoneId desiredZoneId = ZoneId.of("Asia/Seoul");
         java.time.ZonedDateTime zonedDateTime = instant.atZone(desiredZoneId);
 
-
         LocalDate userBirth = zonedDateTime.toLocalDate();
 
+        MonthDay userBirthMonthDay = MonthDay.of(user.getU_birth().getMonth(), user.getU_birth().getDay());
+
         LocalDate today = LocalDate.now();
+
+        MonthDay todayMonthDay = MonthDay.of(today.getMonth(), today.getDayOfMonth());
 
 
         if (user == null) {
@@ -335,6 +337,8 @@ public class LoginC {
                 model.addAttribute("stats", stats);
                 model.addAttribute("today", today);
                 model.addAttribute("userBirth", userBirth);
+                model.addAttribute("userBirthMonthDay", userBirthMonthDay);
+                model.addAttribute("todayMonthDay", todayMonthDay);
                 model.addAttribute("reservations", reservations);
                 model.addAttribute("content", "myPageCoupon.jsp");
             }
