@@ -20,7 +20,7 @@ public class UserBookMarkTC {
     public String toggleBookmark(BookMarkVO dto, HttpSession session, Model model) {
         System.out.println("북마크 컨트롤러 진입CONCON");
         LoginVO uservo = (LoginVO) session.getAttribute("user");
-
+        System.out.println("uservo = 뭐가나오나?1" + uservo);
         String user = uservo.getU_id();
         System.out.println("세션 userId = " + user);
 

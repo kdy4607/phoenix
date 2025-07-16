@@ -22,3 +22,6 @@ FROM user_cons_columns a
          JOIN user_constraints c ON a.constraint_name = c.constraint_name
          JOIN user_cons_columns c_pk ON c.r_constraint_name = c_pk.constraint_name
 WHERE c.constraint_type = 'R' AND a.table_name = 'BOOKMARKS';
+
+-- 무비 재설정용
+select GENRE from MOVIES;

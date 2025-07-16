@@ -81,6 +81,7 @@ public class MovieC {
 
         //북마스 정보를 받아서 다시 페이지를 출력
         LoginVO uservo = (LoginVO) session.getAttribute("user");
+        System.out.println(uservo + "뭐가나오나2");
         if (uservo != null) {
             String u_id = uservo.getU_id();
             boolean existsBookmark = userBookMServiceT.existsBookmark(u_id, movie_id);
