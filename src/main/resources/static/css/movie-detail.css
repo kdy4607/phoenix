@@ -95,13 +95,13 @@ body, html {
     padding: 15px;
     background-color: #1f1f1f;
     border-radius: 8px;
-    width: 70%;
+    width: auto;
 }
 
 .row {
     display: flex;
     margin-bottom: 10px;
-    align-items: center;
+    align-items: flex-start;
 }
 
 .label {

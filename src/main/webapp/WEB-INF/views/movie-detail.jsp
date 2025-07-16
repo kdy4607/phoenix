@@ -58,6 +58,9 @@
             <div class="row"><span class="label">관람연령:</span>
                 <span class="value">${movieDetail2.rating}</span>
             </div>
+            <div class="row"><span class="label">스토리:</span>
+                <span class="value">${movieDetail2.description}</span>
+            </div>
             <div class="row">
                 <span class="label">평론가 평점:</span>
                 <span class="value"><c:forEach begin="1" end="${proStar}">
@@ -68,11 +71,6 @@
                 <span class="value"><c:forEach begin="1" end="${userStar}">
                     ⭐
                 </c:forEach></span></div>
-        </div>
-        <div id="check">
-            <button style="width: 200px; height: 30px"
-                    onclick="예매사이트">예매
-            </button>
         </div>
     </div>
 </div>
