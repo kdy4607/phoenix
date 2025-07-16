@@ -59,6 +59,7 @@ public class LoginC {
             if (user != null) {
                 // 로그인 성공
                 session.setAttribute("user", user);
+              //  session.setAttribute("userId", user.getU_id()); // 북마크용입니다.
                 System.out.println("✅ 로그인 성공 - 사용자: " + user.getU_name());
 
                 // 리턴 URL이 있으면 해당 페이지로, 없으면 메인 페이지로

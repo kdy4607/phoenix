@@ -4,9 +4,6 @@ import lombok.Data;
 
 @Data
 public class BookMarkVO {
-
-        private int movieId;
-        private boolean bookmarked;
-
-
+        private String u_id;
+        private int movie_id;
 }
