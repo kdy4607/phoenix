@@ -25,3 +25,23 @@ WHERE c.constraint_type = 'R' AND a.table_name = 'BOOKMARKS';
 
 -- 무비 재설정용
 select GENRE from MOVIES;
+
+select * from MOVIES;
+SELECT
+    m.movie_id,
+    m.title,
+    REGEXP_SUBSTR(m.genre, '[^/]+', 1, LEVEL) AS genre_split
+FROM
+    movies m
+CONNECT BY
+    LEVEL <= LENGTH(m.genre) - LENGTH(REPLACE(m.genre, '/', '')) + 1
+       AND PRIOR movie_id = movie_id
+       AND PRIOR SYS_GUID() IS NOT NULL
+
+
+SELECT DISTINCT m2.movie_id, m2.title
+FROM movies m1
+         JOIN movies m2
+              ON m1.genre = m2.genre
+WHERE m1.movie_id = 1
+  AND m2.movie_id != 1

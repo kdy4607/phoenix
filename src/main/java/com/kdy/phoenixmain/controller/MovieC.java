@@ -71,14 +71,22 @@ public class MovieC {
         model.addAttribute("movieTapClic", "movie-detail-tap.jsp");
         System.out.println(model.getAttribute("movieDetail"));
 
-        // tap 중에서 뭐더라 그 음... 추천영화..
-        List<TagVO> tagList = movieService.getTagsByMovieId(movie_id);
-        List<Integer> tagIds = tagList.stream()
-                .map(TagVO::getTag_id)
-                .toList();
-        List<MovieVO> relatedMovies = movieService.selectMoviesByAnyTag(tagIds, movie_id); // 자기 자신 제외
-        model.addAttribute("relatedMovies", relatedMovies);
 
+//        List<TagVO> tagList = movieService.getTagsByMovieId(movie_id);
+//        List<Integer> tagIds = tagList.stream()
+//                .map(TagVO::getTag_id)
+//                .toList();
+//        List<MovieVO> relatedMovies = movieService.selectMoviesByAnyTag(tagIds, movie_id); // 자기 자신 제외
+//        model.addAttribute("relatedMovies", relatedMovies);
+        // tap 중에서 뭐더라 그 음... 추천영화..
+        // 영화 상세 정보
+        movie = movieService.selectOneMovie(movie_id);
+        model.addAttribute("movie", movie);
+
+        // 관련 영화 (장르 겹치는 다른 영화들)
+        List<MovieVO> relatedMovies = movieService.getRelatedByGenre(movie_id);
+        model.addAttribute("relatedMovies", relatedMovies);
+        //-------------------------------------------------------
         //북마스 정보를 받아서 다시 페이지를 출력
         LoginVO uservo = (LoginVO) session.getAttribute("user");
         System.out.println(uservo + "뭐가나오나2");
