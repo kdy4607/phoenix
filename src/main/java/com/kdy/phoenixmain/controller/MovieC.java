@@ -86,6 +86,7 @@ public class MovieC {
         // 관련 영화 (장르 겹치는 다른 영화들)
         List<MovieVO> relatedMovies = movieService.getRelatedByGenre(movie_id);
         model.addAttribute("relatedMovies", relatedMovies);
+//        System.out.println(model.getAttribute("relatedMovies"));
         //-------------------------------------------------------
         //북마스 정보를 받아서 다시 페이지를 출력
         LoginVO uservo = (LoginVO) session.getAttribute("user");

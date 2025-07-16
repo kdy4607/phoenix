@@ -139,7 +139,7 @@ public interface MovieMapper {
         MovieVO selectMovieById(@Param("movieId") int movieId);
     // ② 특정 영화와 장르가 겹치는 다른 영화 목록 조회
     @Select("""
-        SELECT DISTINCT m2.movie_id, m2.title
+        SELECT DISTINCT m2.movie_id, m2.title, m2.poster_url
         FROM movies m1
         JOIN movies m2 ON m1.genre = m2.genre
         WHERE m1.movie_id = #{movieId}
