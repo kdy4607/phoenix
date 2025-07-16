@@ -27,6 +27,7 @@ public class UserBookMarkTC {
 //            return "redirect:/oneMovieDetail?movie_id=" + dto.getMovie_id();
 //
 //        }
+        //보안용 기능이라고 하는데 잘 모르겠음.
         //return "redirect;/login";
 
         //북마크존재 확인용 + 저장 삭제
@@ -37,7 +38,7 @@ public class UserBookMarkTC {
             return "redirect:/oneMovieDetail?movie_id=" + dto.getMovie_id();
         }else {
             userBookMServiceT.delete(dto.getU_id(), dto.getMovie_id());
-            System.out.println("북마크에tj 삭제됨" + dto.getU_id() + dto.getMovie_id());
+            System.out.println("북마크에서 삭제됨" + dto.getU_id() + dto.getMovie_id());
             return "redirect:/oneMovieDetail?movie_id=" + dto.getMovie_id();
         }
 

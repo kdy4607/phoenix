@@ -39,7 +39,6 @@ public class UserBookMServiceTImpl implements UserBookMServiceT {
         bookmarkMapper.deleteBookmark(u_id, movie_id);
     }
 
-
     @Override
     @Transactional
     public UserVO findByUsername(String username) {
@@ -50,6 +49,7 @@ public class UserBookMServiceTImpl implements UserBookMServiceT {
         return bookmarkMapper.isStarmark(u_id, movie_id);
     }
     // 북마크 기존 확인용
+    @Override
     public boolean existsBookmark(String u_id, int movie_id) {
         return bookmarkMapper.existsBookmark(u_id, movie_id);
     }

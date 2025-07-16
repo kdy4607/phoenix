@@ -3,6 +3,7 @@ package com.kdy.phoenixmain.controller;
 import com.kdy.phoenixmain.mapper.TagMapper;
 import com.kdy.phoenixmain.service.MovieService;
 import com.kdy.phoenixmain.service.TagService;
+import com.kdy.phoenixmain.service.UserBookMServiceT;
 import com.kdy.phoenixmain.vo.MovieVO;
 import com.kdy.phoenixmain.vo.TagVO;
 import jakarta.servlet.http.HttpSession;
@@ -26,6 +27,8 @@ public class MovieC {
 
     @Autowired
     private TagMapper tagMapper;
+    @Autowired
+    private UserBookMServiceT userBookMServiceT;
 
     // 전체 영화 목록 or 검색어 기반 목록 출력
     @GetMapping("/movie-all")
@@ -74,6 +77,17 @@ public class MovieC {
                 .toList();
         List<MovieVO> relatedMovies = movieService.selectMoviesByAnyTag(tagIds, movie_id); // 자기 자신 제외
         model.addAttribute("relatedMovies", relatedMovies);
+
+        //북마스 정보를 받아서 다시 페이지를 출력
+        String loginedUser = (String) session.getAttribute("userId");
+        if (loginedUser != null) {
+            boolean existsBookmark = userBookMServiceT.existsBookmark(loginedUser, movie_id);
+            model.addAttribute("existsBookmark", existsBookmark);
+            System.out.println("existsBookmark = 별색칠//" + existsBookmark);
+        }else {
+            model.addAttribute("existsBookmark", false);
+            System.out.println("existsBookmark = 빈별");
+        }
 
         return "movieDetailView";
     }

@@ -32,11 +32,11 @@
                 <button type="submit" class="bookmark-btn">
                     <span class="star-icon">
                 <c:choose>
-                    <c:when test="${isBookmarked == 1}">★</c:when>
+                    <c:when test="${existsBookmark == true}">★</c:when>
                     <c:otherwise>☆</c:otherwise>
                 </c:choose>
-            </span>
-                    북마크</button>
+                    </span>
+                </button>
             </form>
         </div>
         <div class="info-plusStar"><span class="label">총 별점:</span>
