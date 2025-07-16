@@ -4,6 +4,7 @@ import com.kdy.phoenixmain.mapper.TagMapper;
 import com.kdy.phoenixmain.service.MovieService;
 import com.kdy.phoenixmain.service.TagService;
 import com.kdy.phoenixmain.service.UserBookMServiceT;
+import com.kdy.phoenixmain.vo.LoginVO;
 import com.kdy.phoenixmain.vo.MovieVO;
 import com.kdy.phoenixmain.vo.TagVO;
 import jakarta.servlet.http.HttpSession;
@@ -79,9 +80,10 @@ public class MovieC {
         model.addAttribute("relatedMovies", relatedMovies);
 
         //북마스 정보를 받아서 다시 페이지를 출력
-        String loginedUser = (String) session.getAttribute("userId");
-        if (loginedUser != null) {
-            boolean existsBookmark = userBookMServiceT.existsBookmark(loginedUser, movie_id);
+        LoginVO uservo = (LoginVO) session.getAttribute("user");
+        if (uservo != null) {
+            String u_id = uservo.getU_id();
+            boolean existsBookmark = userBookMServiceT.existsBookmark(u_id, movie_id);
             model.addAttribute("existsBookmark", existsBookmark);
             System.out.println("existsBookmark = 별색칠//" + existsBookmark);
         }else {

@@ -27,7 +27,7 @@
                   method="post"
                   onsubmit="return checkLogin(this);">
                 <input type="hidden" name="movie_id" value="${movieDetail2.movie_id}">
-                <input type="hidden" name="u_id" value="${sessionScope.userId}">
+                <input type="hidden" name="u_id" value="${sessionScope.user.u_id}">
 
                 <button type="submit" class="bookmark-btn">
                     <span class="star-icon">
@@ -77,7 +77,7 @@
     </div>
 </div>
 <p>세션 user: ${sessionScope.user}</p>
-<p>세션 userId: ${sessionScope.userId}</p>
+<p>세션 userId: ${sessionScope.user.u_id}</p>
 <p>${movieDetail2.movie_id}</p>///movieDetail2.movie_id
 <div class="side-bar">side</div>
 

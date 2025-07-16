@@ -65,9 +65,9 @@ public class MovieService {
 
 
 
-    public List<TagVO> getTagsbyMovieId(int movieId) {
-    return movieMapper.getTagsByMovieId(movieId);
-    }
+//    public List<TagVO> getTagsbyMovieId(int movieId) {
+//    return movieMapper.getTagsByMovieId(movieId);
+//    }
 
 
     public List<TagVO> getTagsByMovieId(int movieId) {

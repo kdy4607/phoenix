@@ -2,6 +2,7 @@ package com.kdy.phoenixmain.controller;
 
 import com.kdy.phoenixmain.service.UserBookMServiceT;
 import com.kdy.phoenixmain.vo.BookMarkVO;
+import com.kdy.phoenixmain.vo.LoginVO;
 import com.kdy.phoenixmain.vo.UserVO;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +19,10 @@ public class UserBookMarkTC {
     @PostMapping("/bookmark")
     public String toggleBookmark(BookMarkVO dto, HttpSession session, Model model) {
         System.out.println("북마크 컨트롤러 진입CONCON");
+        LoginVO uservo = (LoginVO) session.getAttribute("user");
 
-        String userId = (String) session.getAttribute("userId");
-        System.out.println("세션 userId = " + userId);
+        String user = uservo.getU_id();
+        System.out.println("세션 userId = " + user);
 
 //        if (userId == null || !userId.equals(dto.getU_id())) {
 //            System.out.println("세션없음 세션아이디 = 폼아이디");
