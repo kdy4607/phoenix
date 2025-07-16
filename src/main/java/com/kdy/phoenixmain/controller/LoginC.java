@@ -17,6 +17,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -215,6 +217,7 @@ public class LoginC {
             return "redirect:/login";
         } else {
             if (u_id.equals(user.getU_id())) {
+                model.addAttribute("user", user);
                 model.addAttribute("reservations", reservations);
                 model.addAttribute("content", "myPageHistory.jsp");
             }
@@ -233,6 +236,7 @@ public class LoginC {
             return "redirect:/login";
         } else {
             if (u_id.equals(user.getU_id())) {
+                model.addAttribute("user", user);
                 model.addAttribute("content", "myPageEvent.jsp");
             }
             return "myPage/myPageMain";
@@ -247,13 +251,26 @@ public class LoginC {
                          Model model) {
 
         LoginVO user = (LoginVO) session.getAttribute("user");
+        ReservationVO stats = reservationService.getReservationStats(user.getU_id());
+
+        java.time.Instant instant = user.getU_birth().toInstant();
+
+        ZoneId desiredZoneId = ZoneId.of("Asia/Seoul");
+        java.time.ZonedDateTime zonedDateTime = instant.atZone(desiredZoneId);
+
+
+        LocalDate userBirth = zonedDateTime.toLocalDate();
+
+        LocalDate today = LocalDate.now();
 
         if (user == null) {
             return "redirect:/login";
         } else {
             if (u_id.equals(user.getU_id())) {
-                model.addAttribute("pointContent", "myPagePoint.jsp");
-                model.addAttribute("couponContent", "myPageCoupon.jsp");
+                model.addAttribute("user", user);
+                model.addAttribute("stats", stats);
+                model.addAttribute("today", today);
+                model.addAttribute("userBirth", userBirth);
                 model.addAttribute("content", "myPageReward.jsp");
             }
             return "myPage/myPageMain";
@@ -266,11 +283,17 @@ public class LoginC {
                         Model model) {
 
         LoginVO user = (LoginVO) session.getAttribute("user");
+        ReservationVO stats = reservationService.getReservationStats(user.getU_id());
+        List<ReservationVO> reservations = reservationService.getUserReservations(user.getU_id());
+
 
         if (user == null) {
             return "redirect:/login";
         } else {
             if (u_id.equals(user.getU_id())) {
+                model.addAttribute("user", user);
+                model.addAttribute("stats", stats);
+                model.addAttribute("reservations", reservations);
                 model.addAttribute("content", "myPagePoint.jsp");
             }
             return "myPage/myPageMain";
@@ -283,11 +306,29 @@ public class LoginC {
                          Model model) {
 
         LoginVO user = (LoginVO) session.getAttribute("user");
+        ReservationVO stats = reservationService.getReservationStats(user.getU_id());
+        List<ReservationVO> reservations = reservationService.getUserReservations(user.getU_id());
+
+        java.time.Instant instant = user.getU_birth().toInstant();
+
+        ZoneId desiredZoneId = ZoneId.of("Asia/Seoul");
+        java.time.ZonedDateTime zonedDateTime = instant.atZone(desiredZoneId);
+
+
+        LocalDate userBirth = zonedDateTime.toLocalDate();
+
+        LocalDate today = LocalDate.now();
+
 
         if (user == null) {
             return "redirect:/login";
         } else {
             if (u_id.equals(user.getU_id())) {
+                model.addAttribute("user", user);
+                model.addAttribute("stats", stats);
+                model.addAttribute("today", today);
+                model.addAttribute("userBirth", userBirth);
+                model.addAttribute("reservations", reservations);
                 model.addAttribute("content", "myPageCoupon.jsp");
             }
             return "myPage/myPageMain";

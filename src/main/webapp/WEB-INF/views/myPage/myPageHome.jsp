@@ -28,26 +28,26 @@
             <div>
                 <div>
                     <div>POINT</div>
-                    <span id="point-ctn"> ${stats.adult*500} </span></div>
+                    <span id="point-ctn"> ${(stats.adult*500) + (stats.youth*500) + (stats.child*300)} </span></div>
                 <div>
                     <div>MEMBERSHIP</div>
                     <span id="membership-ctn">
                         <c:choose>
-                            <c:when test="${stats.adult*500 ge 5000}">
+                            <c:when test="${(stats.adult*500) + (stats.youth*500) + (stats.child*300) ge 5000}">
                                 A
                             </c:when>
-                            <c:when test="${stats.adult*500 ge 3000}">
+                            <c:when test="${(stats.adult*500) + (stats.youth*500) + (stats.child*300) ge 3000}">
                                 B
                             </c:when>
-                            <c:when test="${stats.adult*500 ge 1000}">
+                            <c:when test="${(stats.adult*500) + (stats.youth*500) + (stats.child*300) ge 1000}">
                                 C
                             </c:when>
-                            <c:when test="${stats.adult*500 ge 0}">
+                            <c:when test="${(stats.adult*500) + (stats.youth*500) + (stats.child*300) ge 0}">
                                 E
                             </c:when>
                         </c:choose>
-
-                    </span></div>
+                    </span>
+                </div>
             </div>
         </div>
         <div class="cay-myPage-bottom">
@@ -55,7 +55,7 @@
                 <h1>My History</h1>
                 <div>
                     <a href="">
-                        <span> ${stats.adult != null ? stats.adult : 0} </span>
+                        <span> ${stats.adult != null || stats.youth != null || stats.child != null ? stats.adult + stats.youth + stats.child : 0} </span>
                         <div> Watch</div>
                     </a>
                     <a href="">
@@ -95,7 +95,7 @@
                                     <div class="cay-myPage-order-top">
                                         Booking Date - <fmt:formatDate value='${reservation.reservation_date}'
                                                                        pattern='yyyy-MM-dd (E)'/>
-                                        <button onclick="location.href='/reservation/list'"> ⤴</button>
+                                        <button class="cay-myPage-order-button" onclick="location.href='/reservation/list'"> ⤴</button>
                                     </div>
                                     <div class="cay-myPage-order-bottom">
                                         <div>
@@ -141,7 +141,7 @@
                                 <td> 12,000 ₩</td>
                             </tr>
                             <tr>
-                                <td>Lady's Day Cinema Ticket</td>
+                                <td>Welcome Cinema Ticket</td>
                                 <td> 12,000 ₩</td>
                             </tr>
                         </table>

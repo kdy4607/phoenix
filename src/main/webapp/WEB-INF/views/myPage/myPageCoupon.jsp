@@ -18,7 +18,14 @@
 
         <h1 style="text-align: center"> 쿠폰 </h1>
 
-        </form>
+${userBirth}
+
+        ${userBirth.isEqual(today) ? "쿠폰 지급" : "없음"}
+
+        ${userBirth.isBefore(today) ? "쿠폰 지급" : "없음"}
+
+        ${userBirth.isAfter(today) ? "쿠폰 지급" : "없음"}
+
     </div>
 </div>
 

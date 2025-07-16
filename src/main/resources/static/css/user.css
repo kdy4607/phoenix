@@ -645,7 +645,7 @@ a {
     justify-content: space-between;
 }
 
-.cay-myPage-order-top > button {
+.cay-myPage-order-button {
     width: 4.5rem;
     height: 1.5rem;
     border: 2px solid #FB4357;
@@ -656,7 +656,7 @@ a {
     background-color: white;
 }
 
-.cay-myPage-order-top > button:hover {
+.cay-myPage-order-button:hover {
     color: white;
     background-color: #FB4357;
 }
@@ -702,6 +702,10 @@ a {
 
 .cay-myPage-reward-table td:last-child {
     width: 60%;
+}
+
+.cay-myPage-reward-table td:nth-child(3) {
+    width: 30%;
 }
 
 /* My Page - Profile */
@@ -936,6 +940,50 @@ div:nth-child(1) {
 
 /* My Page - My Reward */
 
-.cay-myPage-reward > div > div {
-    margin: 0.5rem auto;
+.cay-myPage-reward > div {
+    width: 80%;
+    margin: 3rem auto;
+    padding: 1.5rem 1rem;
+    text-align: start;
+}
+
+.cay-myPage-reward > div > div:nth-child(1) {
+    margin: 1rem auto 2rem;
+    padding: 1rem 0;
+    font-size: 1.5rem;
+    font-weight: bold;
+    border-bottom: 2px solid;
+}
+
+.cay-myPage-reward > div > div:nth-child(2) {
+    margin: 1rem auto;
+    font-size: 1.25rem;
+    font-weight: 500;
+    display: flex;
+    text-align: center;
+}
+
+.cay-myPage-reward > div > div:nth-child(2) > div:hover {
+    transform: scale(1.1)
+}
+
+.cay-myPage-reward > div > div:nth-child(2) > div {
+    width: 50%;
+    margin: 1rem;
+    padding: 3rem 0;
+    border-top: 4px solid #FB4357;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    display: block;
+}
+
+.cay-myPage-reward > div > div:nth-child(2) > div > div {
+    margin: 1rem auto;
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.cay-myPage-reward > div > div:nth-child(2) > div > span {
+    font-size: 3.5rem;
+    color: #FB4357;
 }
