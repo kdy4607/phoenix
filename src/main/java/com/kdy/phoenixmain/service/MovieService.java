@@ -116,5 +116,10 @@ public class MovieService {
         return movies;
     }
 
+    public List<MovieVO> getRelatedByGenre(int movieId) {
+        return movieMapper.selectRelatedMovies(movieId); // ★ 이 부분 정상 작동
+    }
+
+
 
 }

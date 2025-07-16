@@ -116,15 +116,36 @@ public interface MovieMapper {
             @Param("status") String status
     );
 
+//    @Select("""
+//    SELECT *
+//    FROM movies
+//    WHERE movie_id != #{excludeId}
+//      AND REGEXP_LIKE(
+//            genre,
+//            '(^|/)(#{regexGenres})(/|$)'
+//        )
+//""")
+//    List<MovieVO> selectSimilarMoviesByGenre(@Param("excludeId") int excludeId,
+//                                             @Param("regexGenres") String regexGenres);
+
+
+    // 1) 영화 ID로 영화 정보 가져오기
+     @Select("""
+            SELECT movie_id, title, genre
+            FROM movies
+            WHERE movie_id = #{movieId}
+            FETCH FIRST 1 ROWS ONLY
+        """)
+        MovieVO selectMovieById(@Param("movieId") int movieId);
+    // ② 특정 영화와 장르가 겹치는 다른 영화 목록 조회
     @Select("""
-    SELECT *
-    FROM movies
-    WHERE movie_id != #{excludeId}
-      AND REGEXP_LIKE(
-            genre,
-            '(^|/)(#{regexGenres})(/|$)'
-        )
-""")
-    List<MovieVO> selectSimilarMoviesByGenre(@Param("excludeId") int excludeId,
-                                             @Param("regexGenres") String regexGenres);
+        SELECT DISTINCT m2.movie_id, m2.title, m2.poster_url
+        FROM movies m1
+        JOIN movies m2 ON m1.genre = m2.genre
+        WHERE m1.movie_id = #{movieId}
+          AND m2.movie_id != #{movieId}
+    """)
+    List<MovieVO> selectRelatedMovies(@Param("movieId") int movieId);
+
+
 }
