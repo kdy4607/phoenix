@@ -704,10 +704,6 @@ a {
     width: 60%;
 }
 
-.cay-myPage-reward-table td:nth-child(3) {
-    width: 30%;
-}
-
 /* My Page - Profile */
 .cay-myPage-wrap {
     position: relative;
@@ -986,4 +982,78 @@ div:nth-child(1) {
 .cay-myPage-reward > div > div:nth-child(2) > div > span {
     font-size: 3.5rem;
     color: #FB4357;
+}
+
+/* Point & Membership */
+
+.cay-myPage-total,
+.cay-myPage-point,
+.cay-myPage-membership {
+    width: 80%;
+    margin: 3rem auto;
+}
+
+.cay-myPage-total > div:nth-child(1),
+.cay-myPage-point > div:nth-child(1),
+.cay-myPage-membership > div:nth-child(1){
+    margin: 3rem 0;
+    padding: 1rem 0;
+    font-size: 1.5rem;
+    font-weight: bold;
+    border-bottom: 2px solid;
+    text-align: start;
+}
+
+.cay-myPage-point-table,
+.cay-myPage-membership-table {
+    width: 100%;
+    text-align: center;
+    border-collapse: collapse;
+}
+
+.cay-myPage-total-table {
+    width: 80%;
+    margin: auto;
+    text-align: center;
+    border-collapse: collapse;
+}
+
+.cay-myPage-point-total th,
+.cay-myPage-point-total td,
+.cay-myPage-point-table th,
+.cay-myPage-point-table td,
+.cay-myPage-membership-table th,
+.cay-myPage-membership-table td {
+    padding: 0.75rem 0;
+    border-top: 1px solid #333333;
+    border-bottom: 1px solid #333333;
+    border-right: 1px solid #333333;
+}
+
+.cay-myPage-total-table th,
+.cay-myPage-total-table td {
+    width: 50%;
+    padding: 2rem 0;
+    font-size: 1.25rem;
+    border-top: 1px solid #333333;
+    border-bottom: 1px solid #333333;
+    border-right: 1px solid #333333;
+}
+
+.cay-myPage-total-table td {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #FB4357;
+}
+
+.cay-myPage-point-table th:last-child,
+.cay-myPage-membership-table th:last-child,
+.cay-myPage-point-table td:last-child,
+.cay-myPage-membership-table td:last-child {
+    border-right: none !important;
+}
+
+.cay-myPage-total-table th:last-child,
+.cay-myPage-total-table td:last-child {
+    border-right: none !important;
 }

@@ -85,7 +85,7 @@
                                                     ${reservation.movie_title} <br>
                                                 <fmt:formatDate value='${reservation.run_date}'
                                                                 pattern='yyyy-MM-dd (E)'/>
-                                                            ${reservation.start_time}
+                                                    ${reservation.start_time}
                                             </div>
                                             <div class="cay-myPage-order-bottom">
                                                 <div>

@@ -26,6 +26,20 @@ ${userBirth}
 
         ${userBirth.isAfter(today) ? "쿠폰 지급" : "없음"}
 
+        Date of issuance
+        <table class="cay-myPage-reward-table">
+            <tr>
+                <td>Birthday Cinema Ticket</td>
+                <td> 12,000 ₩</td>
+                <td>  <fmt:formatDate value="${user.u_birth}" pattern="yyyy-MM-dd"/> </td>
+            </tr>
+            <tr>
+                <td>Welcome Cinema Ticket</td>
+                <td> 12,000 ₩</td>
+                <td> Date of subscription </td>
+            </tr>
+        </table>
+
     </div>
 </div>
 
