@@ -16,10 +16,10 @@
     <div class="cay-myPage-wrap">
         <div> My Event</div>
         <div class="cay-myPage-tabs">
-            <input type="radio" id="upcoming" name="radio" checked>
+            <input type="radio" id="ongoing" name="radio" checked/>
+            <input type="radio" id="upcoming" name="radio">
             <input type="radio" id="done" name="radio"/>
-            <input type="radio" id="wishlist" name="radio"/>
-            <label class="tab_items" for="wishlist">
+            <label class="tab_items" for="ongoing">
                 <div>Ongoing</div>
             </label>
             <label class="tab_items" for="upcoming">
@@ -28,126 +28,37 @@
             <label class="tab_items" for="done">
                 <div>Done</div>
             </label>
+            <div class="cay-myPage-tabs-content" id="ongoing_content">
+                <div class="cay-myPage-order">
+                    <h1>Ongoing Event</h1>
+                </div>
+                <c:if test="${empty event}">
+                    <span> Your recent event reservation details do not exist.  </span>
+                </c:if>
+            </div>
             <div class="cay-myPage-tabs-content" id="upcoming_content">
                 <div class="cay-myPage-order">
-                    <h1>Watched Movie</h1>
+                    <h1>Upcoming Event</h1>
                     <div>
-                        <div>
-                            <c:if test="${not empty reservations}">
-                                <c:forEach items="${reservations}" var="reservation">
-                                    <div>
-                                        <div class="cay-myPage-order-img">
-                                            <img src="${reservation.poster_url}" alt="">
-                                        </div>
-                                        <div class="cay-myPage-order-info">
-                                            <div class="cay-myPage-order-top">
-                                                    ${reservation.movie_title}
-                                            </div>
-                                            <div class="cay-myPage-order-bottom">
-                                                <div>
-                                                        ${reservation.room_name}
-                                                </div>
-                                                <div>
-                                                    <div>
-                                                        <fmt:formatDate value='${reservation.run_date}'
-                                                                        pattern='yyyy-MM-dd (E)'/>
-                                                            ${reservation.start_time}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </c:forEach>
-                            </c:if>
-                        </div>
                         <c:if test="${empty reservations}">
-                            <span> Your recent reservation details do not exist.  </span>
+                            <span> Your recent event reservation details do not exist.  </span>
                         </c:if>
                     </div>
                 </div>
             </div>
             <div class="cay-myPage-tabs-content" id="done_content">
                 <div class="cay-myPage-order">
-                    <h1>My Review</h1>
+                    <h1>Done Event</h1>
                     <div>
-                        <div>
-                            <c:if test="${not empty reservations}">
-                                <c:forEach items="${reservations}" var="reservation">
-                                    <div>
-                                        <div class="cay-myPage-order-img">
-                                            <img src="${reservation.poster_url}" alt="">
-                                        </div>
-                                        <div class="cay-myPage-order-info">
-                                            <div class="cay-myPage-order-top">
-                                                    ${reservation.movie_title} <br>
-                                                <fmt:formatDate value='${reservation.run_date}'
-                                                                pattern='yyyy-MM-dd (E)'/>
-                                                    ${reservation.start_time}
-                                            </div>
-                                            <div class="cay-myPage-order-bottom">
-                                                <div>
-                                                    <div>
-                                                        <c:if test="${not empty review}">
-                                                            <span>
-                                                                review
-                                                            </span>
-                                                        </c:if>
-                                                        <c:if test="${empty review}">
-                                                            <span>
-                                                                The review has not been created yet.
-                                                            </span>
-                                                        </c:if>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </c:forEach>
-                            </c:if>
-                        </div>
                         <c:if test="${empty reservations}">
-                            <span> Your recent reservation details do not exist.  </span>
-                        </c:if>
-                    </div>
-                </div>
-            </div>
-            <div class="cay-myPage-tabs-content" id="wishlist_content">
-                <div class="cay-myPage-order">
-                    <h1>My Wishlist</h1>
-                    <div>
-                        <div>
-                            <c:if test="${not empty reservations}">
-                                <c:forEach items="${reservations}" var="reservation">
-                                    <div>
-                                        <div class="cay-myPage-order-img">
-                                            <img src="${reservation.poster_url}" alt="">
-                                        </div>
-                                        <div class="cay-myPage-order-info">
-                                            <div class="cay-myPage-order-top">
-                                                    ${reservation.movie_title}
-                                            </div>
-                                            <div class="cay-myPage-order-bottom">
-                                                <div>
-                                                    Dummy Plot. <br>
-                                                    This is for the plot of the wishlist movie
-                                                    <c:if test="${not empty wishlist}">
-                                                        Movie Plot
-                                                    </c:if>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </c:forEach>
-                            </c:if>
-                        </div>
-                        <c:if test="${empty reservations}">
-                            <span> Your recent reservation details do not exist.  </span>
+                            <span> Your past event reservation details do not exist.  </span>
                         </c:if>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
 </body>
 </html>

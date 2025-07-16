@@ -1,7 +1,5 @@
 package com.kdy.phoenixmain.controller;
 
-import ch.qos.logback.classic.Logger;
-import com.kdy.phoenixmain.mapper.ReservationMapper;
 import com.kdy.phoenixmain.mapper.TagMapper;
 import com.kdy.phoenixmain.service.LoginService;
 import com.kdy.phoenixmain.service.ReservationService;
@@ -16,11 +14,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.time.LocalDate;
+import java.time.MonthDay;
+import java.time.ZoneId;
+import java.util.*;
 
 @Controller
 public class LoginC {
@@ -102,7 +99,8 @@ public class LoginC {
     // ===== 마이페이지 관련 =====
 
     @GetMapping("/mypage")
-    public String myPageGet(HttpSession session, Model model) {
+    public String myPageGet(HttpSession session,
+                            Model model) {
 
         LoginVO user = (LoginVO) session.getAttribute("user");
 
@@ -135,7 +133,7 @@ public class LoginC {
                              RedirectAttributes redirectAttributes) {
 
         if (u_id.isEmpty() || u_pw.isEmpty()) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Please enter both your ID and Password.");
+            redirectAttributes.addFlashAttribute("errorMessage", "Please enter your ID and Password");
             return "redirect:/login";
         }
 
@@ -206,6 +204,7 @@ public class LoginC {
 
     @GetMapping("/mypage/history")
     public String history(@RequestParam("u_id") String u_id,
+                          RedirectAttributes  redirectAttributes,
                           HttpSession session,
                           Model model) {
 
@@ -213,9 +212,11 @@ public class LoginC {
         List<ReservationVO> reservations = reservationService.getUserReservations(user.getU_id());
 
         if (user == null) {
+            redirectAttributes.addFlashAttribute("errorMessage", "You are logged out.");
             return "redirect:/login";
         } else {
             if (u_id.equals(user.getU_id())) {
+                model.addAttribute("user", user);
                 model.addAttribute("reservations", reservations);
                 model.addAttribute("content", "myPageHistory.jsp");
             }
@@ -225,15 +226,18 @@ public class LoginC {
 
     @GetMapping("/mypage/event")
     public String event(@RequestParam("u_id") String u_id,
+                        RedirectAttributes redirectAttributes,
                         HttpSession session,
                         Model model) {
 
         LoginVO user = (LoginVO) session.getAttribute("user");
 
         if (user == null) {
+            redirectAttributes.addFlashAttribute("errorMessage", "You are logged out.");
             return "redirect:/login";
         } else {
             if (u_id.equals(user.getU_id())) {
+                model.addAttribute("user", user);
                 model.addAttribute("content", "myPageEvent.jsp");
             }
             return "myPage/myPageMain";
@@ -244,17 +248,32 @@ public class LoginC {
 
     @GetMapping("/mypage/reward")
     public String reward(@RequestParam("u_id") String u_id,
+                         RedirectAttributes redirectAttributes,
                          HttpSession session,
                          Model model) {
 
         LoginVO user = (LoginVO) session.getAttribute("user");
+        ReservationVO stats = reservationService.getReservationStats(user.getU_id());
+
+        java.time.Instant instant = user.getU_birth().toInstant();
+
+        ZoneId desiredZoneId = ZoneId.of("Asia/Seoul");
+        java.time.ZonedDateTime zonedDateTime = instant.atZone(desiredZoneId);
+
+
+        LocalDate userBirth = zonedDateTime.toLocalDate();
+
+        LocalDate today = LocalDate.now();
 
         if (user == null) {
+            redirectAttributes.addFlashAttribute("errorMessage", "You are logged out.");
             return "redirect:/login";
         } else {
             if (u_id.equals(user.getU_id())) {
-                model.addAttribute("pointContent", "myPagePoint.jsp");
-                model.addAttribute("couponContent", "myPageCoupon.jsp");
+                model.addAttribute("user", user);
+                model.addAttribute("stats", stats);
+                model.addAttribute("today", today);
+                model.addAttribute("userBirth", userBirth);
                 model.addAttribute("content", "myPageReward.jsp");
             }
             return "myPage/myPageMain";
@@ -263,15 +282,23 @@ public class LoginC {
 
     @GetMapping("/mypage/reward/point")
     public String point(@RequestParam("u_id") String u_id,
+                        RedirectAttributes redirectAttributes,
                         HttpSession session,
                         Model model) {
 
         LoginVO user = (LoginVO) session.getAttribute("user");
+        ReservationVO stats = reservationService.getReservationStats(user.getU_id());
+        List<ReservationVO> reservations = reservationService.getUserReservations(user.getU_id());
+
 
         if (user == null) {
+            redirectAttributes.addFlashAttribute("errorMessage", "You are logged out.");
             return "redirect:/login";
         } else {
             if (u_id.equals(user.getU_id())) {
+                model.addAttribute("user", user);
+                model.addAttribute("stats", stats);
+                model.addAttribute("reservations", reservations);
                 model.addAttribute("content", "myPagePoint.jsp");
             }
             return "myPage/myPageMain";
@@ -281,14 +308,39 @@ public class LoginC {
     @GetMapping("/mypage/reward/coupon")
     public String coupon(@RequestParam("u_id") String u_id,
                          HttpSession session,
+                         RedirectAttributes redirectAttributes,
                          Model model) {
 
         LoginVO user = (LoginVO) session.getAttribute("user");
+        ReservationVO stats = reservationService.getReservationStats(user.getU_id());
+        List<ReservationVO> reservations = reservationService.getUserReservations(user.getU_id());
+
+        java.time.Instant instant = user.getU_birth().toInstant();
+
+        ZoneId desiredZoneId = ZoneId.of("Asia/Seoul");
+        java.time.ZonedDateTime zonedDateTime = instant.atZone(desiredZoneId);
+
+        LocalDate userBirth = zonedDateTime.toLocalDate();
+
+        MonthDay userBirthMonthDay = MonthDay.of(user.getU_birth().getMonth(), user.getU_birth().getDay());
+
+        LocalDate today = LocalDate.now();
+
+        MonthDay todayMonthDay = MonthDay.of(today.getMonth(), today.getDayOfMonth());
+
 
         if (user == null) {
+            redirectAttributes.addFlashAttribute("errorMessage", "You are logged out.");
             return "redirect:/login";
         } else {
             if (u_id.equals(user.getU_id())) {
+                model.addAttribute("user", user);
+                model.addAttribute("stats", stats);
+                model.addAttribute("today", today);
+                model.addAttribute("userBirth", userBirth);
+                model.addAttribute("userBirthMonthDay", userBirthMonthDay);
+                model.addAttribute("todayMonthDay", todayMonthDay);
+                model.addAttribute("reservations", reservations);
                 model.addAttribute("content", "myPageCoupon.jsp");
             }
             return "myPage/myPageMain";
@@ -298,10 +350,14 @@ public class LoginC {
     // ===== 회원정보 수정 관련 =====
 
     @PostMapping("/mypage/general-info/update")
-    public String generalInfoUpdate(HttpSession session, Model model) {
+    public String generalInfoUpdate(RedirectAttributes redirectAttributes,
+                                    HttpSession session,
+                                    Model model) {
+
         LoginVO user = (LoginVO) session.getAttribute("user");
 
         if (user == null) {
+            redirectAttributes.addFlashAttribute("errorMessage", "You are logged out.");
             return "redirect:/login";
         }
 
@@ -324,6 +380,8 @@ public class LoginC {
         LoginVO sessionUser = (LoginVO) session.getAttribute("user");
 
         if (sessionUser == null) {
+            redirectAttributes.addFlashAttribute("errorMessage", "You are logged out.");
+
             return "redirect:/login";
         }
 
@@ -369,6 +427,7 @@ public class LoginC {
 
     @GetMapping("/mypage/deleteAccount")
     public String deleteAccount(@RequestParam("u_id") String u_id,
+                                RedirectAttributes redirectAttributes,
                                 HttpSession session,
                                 Model model) {
 
@@ -376,6 +435,7 @@ public class LoginC {
         LoginVO user = (LoginVO) session.getAttribute("user");
 
         if (user == null || !user.getU_id().equals(u_id)) {
+            redirectAttributes.addFlashAttribute("errorMessage", "You are logged out.");
             return "redirect:/login";
         }
 
