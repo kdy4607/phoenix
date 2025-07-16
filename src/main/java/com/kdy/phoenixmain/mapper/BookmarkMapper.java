@@ -30,4 +30,9 @@ public interface BookmarkMapper {
     @Select("SELECT CASE WHEN COUNT(*) > 0 THEN 1 ELSE 0 END FROM bookmarks " +
             "WHERE u_id = #{u_id} AND movie_id = #{movie_id}")
     boolean existsBookmark(@Param("u_id") String u_id, @Param("movie_id") int movie_id);
+
+    //북마크 있으면 별을 유지시키기 위한거.
+    @Select("SELECT CASE WHEN COUNT(*) > 0 THEN 1 ELSE 0 END FROM bookmarks " +
+            "WHERE u_id = #{u_id} AND movie_id = #{movie_id}")
+    int isStarmark(@Param("u_id") String u_id, @Param("movie_id") int movie_id);
 }

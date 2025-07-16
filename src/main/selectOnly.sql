@@ -13,7 +13,7 @@ CREATE TABLE bookmarks
 );
 
 DROP TABLE bookmarks;
-SELECT * FROM bookmarks;
+SELECT * FROM PHOENIX.bookmarks;
 SELECT * FROM users WHERE u_id = 'go';
 ;SELECT * FROM movies WHERE movie_id = 79; -- 예시
 

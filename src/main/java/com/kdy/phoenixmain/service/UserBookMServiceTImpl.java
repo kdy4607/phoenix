@@ -45,4 +45,12 @@ public class UserBookMServiceTImpl implements UserBookMServiceT {
     public UserVO findByUsername(String username) {
         return bookmarkMapper.findByUsername(username);
     }
+    @Override // 별모양용
+    public int isStarmark(String u_id, int movie_id) {
+        return bookmarkMapper.isStarmark(u_id, movie_id);
+    }
+    // 북마크 기존 확인용
+    public boolean existsBookmark(String u_id, int movie_id) {
+        return bookmarkMapper.existsBookmark(u_id, movie_id);
+    }
 }

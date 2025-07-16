@@ -6,7 +6,7 @@
         값을 사용하는 기준으로 같이 묶음.) </title>
     <link rel="stylesheet" href="/resources/css/movie-detail.css">
     <link rel="stylesheet" href="/resources/css/bookmark.css">
-<%--    <script src="/resources/js/detailBookMark.js" defer></script>--%>
+    <%--    <script src="/resources/js/detailBookMark.js" defer></script>--%>
 </head>
 <body>
 <div class="M-detail">
@@ -30,8 +30,13 @@
                 <input type="hidden" name="u_id" value="${sessionScope.userId}">
 
                 <button type="submit" class="bookmark-btn">
-                    <span class="star-icon">☆</span> 북마크
-                </button>
+                    <span class="star-icon">
+                <c:choose>
+                    <c:when test="${isBookmarked == 1}">★</c:when>
+                    <c:otherwise>☆</c:otherwise>
+                </c:choose>
+            </span>
+                    북마크</button>
             </form>
         </div>
         <div class="info-plusStar"><span class="label">총 별점:</span>
@@ -81,6 +86,7 @@
         const userId = form.querySelector('input[name="u_id"]').value;
         if (!userId) {
             alert("로그인 후 이용해주세요.");
+            window.location.replace("/login");
             return false;
         }
         return true;
