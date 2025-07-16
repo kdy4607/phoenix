@@ -43,6 +43,7 @@
                 </c:forEach>
             </div>
         </div>
+        <div class="movie-director">${movie.director}</div>
         <c:if test="${status eq 'showing'}">
             <button class="btn-book-tickets" onclick="location.href='schedule?movie_id=${movie.movie_id}'">
                 Book Tickets
