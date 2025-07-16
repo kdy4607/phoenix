@@ -1,0 +1,30 @@
+.bookmark-btn {
+    background: none;
+    border: none;
+    /* font-size: 20px; 이 부분은 star-icon에서 직접 설정하는 게 더 좋습니다. */
+    cursor: pointer;
+    /* color: #888; 이 부분도 star-icon에서 직접 설정하는 게 더 좋습니다. */
+    display: flex;
+    align-items: center;
+    padding: 0; /* 버튼 자체의 패딩 제거 (선택 사항) */
+}
+
+.star-icon {
+    font-size: 2em; /* 별 크기 조절 (원하는 크기로 변경) */
+    color: yellow;; /* 기본 회색 */
+    transition: color 0.2s ease-in-out; /* 색상 변경 시 부드러운 전환 효과 */
+    margin-right: 5px;
+}
+
+/* 마우스 올렸을 때의 색상 (북마크되지 않은 별도 호버 시 색 변경) */
+.bookmark-btn:hover .star-icon {
+    color: #FFD700; /* 노란색 (골드) */
+}
+
+/* 북마크된 상태의 별 색상 */
+.star-icon.bookmarked {
+    color: #FFD700; /* 노란색 (골드) */
+}
+
+/* 추가: 마우스 오버 시 별표 자체가 아닌 버튼에 텍스트가 있다면, 텍스트 색 변경 등을 활용하세요.
+   현재는 star-icon에만 집중합니다. */
