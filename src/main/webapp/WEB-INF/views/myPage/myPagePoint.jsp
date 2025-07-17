@@ -15,10 +15,35 @@
 </head>
 <body>
 
+<div style="display: none">
+    <%-- 인원수 총합계를 저장할 변수 초기화 --%>
+    <c:set var="totalAdults" value="0"/>
+    <c:set var="totalYouths" value="0"/>
+    <c:set var="totalChildren" value="0"/>
+
+    <c:forEach items="${reservations}" var="reservation">
+        <c:set var="totalAdults" value="${totalAdults + reservation.adult}"/>
+        <c:set var="totalYouths" value="${totalYouths + reservation.youth}"/>
+        <c:set var="totalChildren" value="${totalChildren + reservation.child}"/>
+        ${reservation.adult}
+    </c:forEach>
+
+    <%-- 계산된 총 인원수를 바탕으로 금액 계산 --%>
+    <c:set var="calculatedTotalAmount" value="${(totalAdults * 500) + (totalYouths * 500) + (totalChildren * 300)}"/>
+
+    <p>
+        총 성인 수: ${totalAdults}명 <br>
+        총 청소년 수: ${totalYouths}명 <br>
+        총 아동 수: ${totalChildren}명 <br>
+        <br>
+        계산된 총 인원수 기반 금액: <fmt:formatNumber value="${calculatedTotalAmount}" type="number"/> ₩
+    </p>
+</div>
+
 
 <div class="cay-myPage-content">
     <div class="cay-myPage-wrap">
-        <div> My Point</div>
+        <div> My Point & Membership </div>
 
         <div class="cay-myPage-total">
 
@@ -28,19 +53,19 @@
                     <th> Total Point</th>
                     <th> Membership Class</th>
                     <tr>
-                        <td> ${(stats.adult*500) + (stats.youth*500) + (stats.child*300)} </td>
+                        <td>${(totalAdults * 500) + (totalYouths * 500) + (totalChildren * 300)} </td>
                         <td>
                             <c:choose>
-                                <c:when test="${(stats.adult*500) + (stats.youth*500) + (stats.child*300) ge 5000}">
+                                <c:when test="${(totalAdults * 500) + (totalYouths * 500) + (totalChildren * 300) ge 5000}">
                                     A
                                 </c:when>
-                                <c:when test="${(stats.adult*500) + (stats.youth*500) + (stats.child*300) ge 3000}">
+                                <c:when test="${(totalAdults * 500) + (totalYouths * 500) + (totalChildren * 300) ge 3000}">
                                     B
                                 </c:when>
-                                <c:when test="${(stats.adult*500) + (stats.youth*500) + (stats.child*300) ge 1000}">
+                                <c:when test="${(totalAdults * 500) + (totalYouths * 500) + (totalChildren * 300) ge 1000}">
                                     C
                                 </c:when>
-                                <c:when test="${(stats.adult*500) + (stats.youth*500) + (stats.child*300) ge 0}">
+                                <c:when test="${(totalAdults * 500) + (totalYouths * 500) + (totalChildren * 300) ge 0}">
                                     E
                                 </c:when>
                             </c:choose>
