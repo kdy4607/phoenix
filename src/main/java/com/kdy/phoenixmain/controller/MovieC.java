@@ -58,22 +58,10 @@ public class MovieC {
         if (user == null) {
             return "redirect:/login"; // 로그인 페이지로
         }
-        review.setU_id(user.getU_id());
 
         reviewService.writeReview(review);
 
         // 리뷰 작성 후 다시 해당 영화 상세 페이지로 리디렉션
-        return "redirect:/oneMovieDetail?movie_id=" + review.getMovie_id();
-    }
-
-    @PostMapping("/reviews/update")
-    public String updateReview(@ModelAttribute ReviewVO review, HttpSession session) {
-        LoginVO user = (LoginVO) session.getAttribute("user");
-        if (user == null) return "redirect:/login";
-
-        review.setU_id(user.getU_id());
-        reviewService.updateReview(review);
-
         return "redirect:/oneMovieDetail?movie_id=" + review.getMovie_id();
     }
 

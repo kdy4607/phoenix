@@ -20,12 +20,6 @@ import java.util.List;
     """)
     List<ReviewVO> getReviewsByMovieId(int movie_id);
 
-    @Update("""
-        UPDATE reviews
-        SET r_rating = #{r_rating}, r_text = #{r_text}
-        WHERE r_id = #{r_id} AND u_id = #{u_id}
-    """)
-    void updateReview(ReviewVO review);
 
     @Delete("""
         DELETE FROM reviews
