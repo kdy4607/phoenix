@@ -18,12 +18,16 @@ public interface MovieMapper {
                     many = @Many(select = "getTagsByMovieId"))
     })
 
+    // ✅ 전체 영화 조회
     @Select("SELECT * FROM MOVIES")
     List<MovieVO> selectAllMovie();
 
+    // ✅ 단일 영화 조회 (모든 정보)
     @Select("SELECT * FROM MOVIES WHERE MOVIE_ID = #{movie_id}")
+    @ResultMap("movieMap")
     MovieVO selectOneMovie(@Param("movie_id") int movie_id);
 
+    // ✅ 특정 영화의 태그 목록
     @Select("""
         SELECT t.tag_id, t.tag_name, t.tag_type
         FROM MOVIE_TAGS mt
@@ -32,47 +36,19 @@ public interface MovieMapper {
     """)
     List<TagVO> getTagsByMovieId(int movie_id);
 
-    @SelectProvider(type = MovieSqlBuilder.class, method = "buildQueryByTagIds")
-    @ResultMap("movieMap")
-    List<MovieVO> selectMoviesByTagIds(
-            @Param("tagIds") List<Integer> tagIds,
-            @Param("tagCount") int tagCount
-    );
-
-    @Select("SELECT * FROM MOVIES WHERE title LIKE '%' || #{title} || '%'")
-    @ResultMap("movieMap")
-    List<MovieVO> findByTitle(@Param("title") String title);
-
-    @SelectProvider(type = MovieSqlBuilder.class, method = "buildQueryByTagsAndTitle")
-    @ResultMap("movieMap")
-    List<MovieVO> selectMoviesByTagsAndTitle(
-            @Param("tagIds") List<Integer> tagIds,
-            @Param("tagCount") int tagCount,
-            @Param("title") String title
-    );
-
-    @Select("""
-        SELECT m.movie_id, m.title, m.poster_url
-        FROM MOVIES m
-        JOIN MOVIE_TAGS mt ON m.movie_id = mt.movie_id
-        JOIN TAGS t ON mt.tag_id = t.tag_id
-        WHERE t.tag_name = #{tagName}
-    """)
-    @Results({
-            @Result(property = "movie_id", column = "MOVIE_ID")
-    })
-    List<MovieVO> findMoviesByTagName(@Param("tagName") String tagName);
-
+    // ✅ 추천 영화: 하나라도 태그가 겹치는 영화 (상세페이지용)
     @SelectProvider(type = MovieSqlBuilder.class, method = "buildQueryByAnyTag")
     @ResultMap("movieMap")
     List<MovieVO> selectMoviesByAnyTag(@Param("tags") List<Integer> tags, @Param("excludeId") int excludeId);
 
+    // ✅ 단순 정보만 가져오는 select (장르 기반 추천용)
     @Select("""
-    SELECT * FROM MOVIES
-    WHERE release_date BETWEEN SYSDATE - 250 AND SYSDATE
+        SELECT movie_id, title, genre
+        FROM movies
+        WHERE movie_id = #{movieId}
+        FETCH FIRST 1 ROWS ONLY
     """)
-    @ResultMap("movieMap")
-    List<MovieVO> selectNowShowingMovies();
+    MovieVO selectMovieById(@Param("movieId") int movieId);
 
     @Select("""
         SELECT * FROM MOVIES
@@ -134,6 +110,4 @@ public interface MovieMapper {
           AND m2.movie_id != #{movieId}
     """)
     List<MovieVO> selectRelatedMovies(@Param("movieId") int movieId);
-
-
 }

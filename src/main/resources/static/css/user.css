@@ -561,6 +561,8 @@ a {
     margin: auto;
     border-top: 2px solid;
     display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
 }
 
 /* Home History */
@@ -988,14 +990,36 @@ div:nth-child(1) {
 
 .cay-myPage-total,
 .cay-myPage-point,
-.cay-myPage-membership {
+.cay-myPage-membership,
+.cay-myPage-ticket,
+.cay-myPage-coupon {
     width: 80%;
     margin: 3rem auto;
 }
 
+.cay-myPage-total > div:last-child,
+.cay-myPage-point > div:last-child,
+.cay-myPage-membership > div:last-child,
+.cay-myPage-ticket > div:last-child,
+.cay-myPage-coupon > div:last-child {
+    padding: 0.5rem 0.5rem;
+    font-size: 0.75rem;
+    color: #aaaaaa;
+}
+
+.cay-myPage-total > div:last-child > div > a,
+.cay-myPage-point > div:last-child > div > a,
+.cay-myPage-membership > div:last-child > div > a,
+.cay-myPage-ticket > div:last-child > div > a,
+.cay-myPage-coupon > div:last-child > div > a {
+    color: #FB4357;
+}
+
 .cay-myPage-total > div:nth-child(1),
 .cay-myPage-point > div:nth-child(1),
-.cay-myPage-membership > div:nth-child(1){
+.cay-myPage-membership > div:nth-child(1),
+.cay-myPage-ticket > div:nth-child(1),
+.cay-myPage-coupon > div:nth-child(1) {
     margin: 3rem 0;
     padding: 1rem 0;
     font-size: 1.5rem;
@@ -1005,7 +1029,9 @@ div:nth-child(1) {
 }
 
 .cay-myPage-point-table,
-.cay-myPage-membership-table {
+.cay-myPage-membership-table,
+.cay-myPage-ticket-table,
+.cay-myPage-coupon-table {
     width: 100%;
     text-align: center;
     border-collapse: collapse;
@@ -1023,7 +1049,11 @@ div:nth-child(1) {
 .cay-myPage-point-table th,
 .cay-myPage-point-table td,
 .cay-myPage-membership-table th,
-.cay-myPage-membership-table td {
+.cay-myPage-membership-table td,
+.cay-myPage-ticket-table th,
+.cay-myPage-ticket-table td,
+.cay-myPage-coupon-table th,
+.cay-myPage-coupon-table td {
     padding: 0.75rem 0;
     border-top: 1px solid #333333;
     border-bottom: 1px solid #333333;
@@ -1047,9 +1077,13 @@ div:nth-child(1) {
 }
 
 .cay-myPage-point-table th:last-child,
-.cay-myPage-membership-table th:last-child,
 .cay-myPage-point-table td:last-child,
-.cay-myPage-membership-table td:last-child {
+.cay-myPage-membership-table th:last-child,
+.cay-myPage-membership-table td:last-child,
+.cay-myPage-ticket-table th:last-child,
+.cay-myPage-ticket-table td:last-child,
+.cay-myPage-coupon-table th:last-child,
+.cay-myPage-coupon-table td:last-child {
     border-right: none !important;
 }
 

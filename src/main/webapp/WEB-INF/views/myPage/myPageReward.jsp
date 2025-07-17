@@ -14,6 +14,32 @@
 </head>
 <body>
 
+<div style="display: none">
+    <%-- 인원수 총합계를 저장할 변수 초기화 --%>
+    <c:set var="totalAdults" value="0"/>
+    <c:set var="totalYouths" value="0"/>
+    <c:set var="totalChildren" value="0"/>
+
+    <c:forEach items="${reservations}" var="reservation">
+        <c:set var="totalAdults" value="${totalAdults + reservation.adult}"/>
+        <c:set var="totalYouths" value="${totalYouths + reservation.youth}"/>
+        <c:set var="totalChildren" value="${totalChildren + reservation.child}"/>
+       ${reservation.adult}
+    </c:forEach>
+
+    <%-- 계산된 총 인원수를 바탕으로 금액 계산 --%>
+    <c:set var="calculatedTotalAmount" value="${(totalAdults * 500) + (totalYouths * 500) + (totalChildren * 300)}"/>
+
+    <p>
+        총 성인 수: ${totalAdults}명 <br>
+        총 청소년 수: ${totalYouths}명 <br>
+        총 아동 수: ${totalChildren}명 <br>
+        <br>
+        계산된 총 인원수 기반 금액: <fmt:formatNumber value="${calculatedTotalAmount}" type="number"/> ₩
+    </p>
+</div>
+
+
 <div class="cay-myPage-content">
     <div class="cay-myPage-wrap">
         <div> My Reward</div>
@@ -22,22 +48,22 @@
                 <div>Point&Membership</div>
                 <div>
                     <div onclick="location.href='/mypage/reward/point?u_id=${user.u_id}'">
-                        <span> ${(stats.adult*500) + (stats.youth*500) + (stats.child*300)} </span>
+                        <span>${(totalAdults * 500) + (totalYouths * 500) + (totalChildren * 300)}</span>
                         <div>Total Point</div>
                     </div>
                     <div onclick="location.href='/mypage/reward/point?u_id=${user.u_id}'">
                         <span>
                         <c:choose>
-                            <c:when test="${(stats.adult*500) + (stats.youth*500) + (stats.child*300) ge 5000}">
+                            <c:when test="${(totalAdults * 500) + (totalYouths * 500) + (totalChildren * 300) ge 5000}">
                                 A
                             </c:when>
-                            <c:when test="${(stats.adult*500) + (stats.youth*500) + (stats.child*300) ge 3000}">
+                            <c:when test="${(totalAdults * 500) + (totalYouths * 500) + (totalChildren * 300) ge 3000}">
                                 B
                             </c:when>
-                            <c:when test="${(stats.adult*500) + (stats.youth*500) + (stats.child*300) ge 1000}">
+                            <c:when test="${(totalAdults * 500) + (totalYouths * 500) + (totalChildren * 300) ge 1000}">
                                 C
                             </c:when>
-                            <c:when test="${(stats.adult*500) + (stats.youth*500) + (stats.child*300) ge 0}">
+                            <c:when test="${(totalAdults * 500) + (totalYouths * 500) + (totalChildren * 300) ge 0}">
                                 E
                             </c:when>
                         </c:choose>
@@ -50,11 +76,11 @@
                 <div>Ticket&Coupon</div>
                 <div>
                     <div onclick="location.href='/mypage/reward/coupon?u_id=${user.u_id}'">
-                        <span> ${userBirth.isBefore(today) ? 2 : 1} </span>
+                        <span> ${userBirthMonthDay.isBefore(todayMonthDay) ? 2 : 1 } </span>
                         <div>Total Reward Ticket</div>
                     </div>
                     <div onclick="location.href='/mypage/reward/coupon?u_id=${user.u_id}'">
-                        <span> ${stats.adult != null || stats.youth != null || stats.child != null ? stats.adult + stats.youth + stats.child : 0} </span>
+                        <span> ${totalAdults != null || totalYouths != null || totalChildren != null ? totalAdults + totalYouths + totalChildren : 0} </span>
                         <div>Total Reward Coupon</div>
                     </div>
                 </div>

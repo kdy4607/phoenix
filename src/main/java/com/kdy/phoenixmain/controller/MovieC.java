@@ -1,7 +1,5 @@
 package com.kdy.phoenixmain.controller;
 
-import com.kdy.phoenixmain.mapper.ReviewMapper;
-import com.kdy.phoenixmain.mapper.TagMapper;
 import com.kdy.phoenixmain.service.MovieService;
 import com.kdy.phoenixmain.service.ReviewService;
 import com.kdy.phoenixmain.service.TagService;
@@ -9,16 +7,15 @@ import com.kdy.phoenixmain.service.UserBookMServiceT;
 import com.kdy.phoenixmain.vo.LoginVO;
 import com.kdy.phoenixmain.vo.MovieVO;
 import com.kdy.phoenixmain.vo.ReviewVO;
-import com.kdy.phoenixmain.vo.TagVO;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Controller
 public class MovieC {
@@ -30,38 +27,74 @@ public class MovieC {
     private TagService tagService;
 
     @Autowired
-    private TagMapper tagMapper;
-    @Autowired
     private UserBookMServiceT userBookMServiceT;
+
     @Autowired
     private ReviewService reviewService;
 
-    // 전체 영화 목록 or 검색어 기반 목록 출력
-    @GetMapping("/movie-all")
-    public String movieAll(
-            @RequestParam(defaultValue = "showing") String status,
-            Model model
-    ) {
-        // status 값: all / now / upcoming
-        List<MovieVO> movies = movieService.getMoviesByStatus(status);
-
-        model.addAttribute("movies", movies);
-        model.addAttribute("tagList", tagMapper.selectAllTag());
-        model.addAttribute("status", status); // 탭 활성화 표시용
-        return "movie/movie";
+    // ✅ 프론트 필터링용 전체 데이터 API
+    @GetMapping("/movies/all-data")
+    @ResponseBody
+    public Map<String, Object> getAllMovieAndTags() {
+        Map<String, Object> result = new HashMap<>();
+        result.put("movies", movieService.getAllMovie());     // 모든 영화 정보
+        result.put("tags", tagService.getAllTags());          // 모든 태그 정보
+        return result;
     }
 
+    // ✅ 진입용 JSP만 보여주는 라우트
+    @GetMapping("/movie-all")
+    public String movieAll() {
+        return "movie/movie"; // 실제 데이터는 JS에서 fetch로 처리
+    }
+
+    // // ✅ 영화 상세 페이지
+    // @GetMapping("/oneMovieDetail")
+    // public String movieDetailOne(@RequestParam("movie_id") int movie_id, Model model, HttpSession session) {
+    //     session.setAttribute("lastMovieId", movie_id);
+
+    //     MovieVO movie = movieService.selectOneMovie(movie_id);
+    //     int proStar = (int) Math.floor(movie.getPro_critic());
+    //     int userStar = (int) Math.floor(movie.getUser_critic());
+    //     int plusStar = (proStar + userStar) / 2;
+
+    //     model.addAttribute("proStar", proStar);
+    //     model.addAttribute("userStar", userStar);
+    //     model.addAttribute("plusStar", plusStar);
+
+    //     model.addAttribute("movieDetail", "movie-detail.jsp");
+    //     model.addAttribute("movieDetail2", movie);
+    //     model.addAttribute("movieTapClic", "movie-detail-tap.jsp");
+
+    //     // 영화 + 관련 영화 + 리뷰
+    //     model.addAttribute("movie", movie);
+    //     model.addAttribute("relatedMovies", movieService.getRelatedByGenre(movie_id));
+    //     model.addAttribute("reviewList", reviewService.getReviews(movie_id));
+
+    //     // 북마크 여부 확인
+    //     LoginVO uservo = (LoginVO) session.getAttribute("user");
+    //     if (uservo != null) {
+    //         String u_id = uservo.getU_id();
+    //         boolean existsBookmark = userBookMServiceT.existsBookmark(u_id, movie_id);
+    //         model.addAttribute("existsBookmark", existsBookmark);
+    //     } else {
+    //         model.addAttribute("existsBookmark", false);
+    //     }
+
+    //     return "movieDetailView";
+    // }
+
+    // ✅ 리뷰 작성
     @PostMapping("/reviews")
     public String writeReview(@ModelAttribute ReviewVO review, HttpSession session) {
-        // 로그인 확인 및 사용자 정보 보정 (보안상 중요)
         LoginVO user = (LoginVO) session.getAttribute("user");
         if (user == null) {
             return "redirect:/login"; // 로그인 페이지로
         }
 
+        review.setU_id(user.getU_id());
         reviewService.writeReview(review);
 
-        // 리뷰 작성 후 다시 해당 영화 상세 페이지로 리디렉션
         return "redirect:/oneMovieDetail?movie_id=" + review.getMovie_id();
     }
 
@@ -133,28 +166,28 @@ public class MovieC {
     }
 
 
-    @PostMapping("/movies/filter")
-    public String filterMovies(@RequestBody Map<String, Object> payload, Model model) {
-        String title = (String) payload.get("title");
-        String status = (String) payload.get("status"); // ✅ 추가
-        @SuppressWarnings("unchecked")
-        List<Integer> tagIds = (List<Integer>) payload.get("tagIds");
+    // @PostMapping("/movies/filter")
+    // public String filterMovies(@RequestBody Map<String, Object> payload, Model model) {
+    //     String title = (String) payload.get("title");
+    //     String status = (String) payload.get("status"); // ✅ 추가
+    //     @SuppressWarnings("unchecked")
+    //     List<Integer> tagIds = (List<Integer>) payload.get("tagIds");
 
-        List<MovieVO> filteredMovies;
+    //     List<MovieVO> filteredMovies;
 
-        if ((tagIds == null || tagIds.isEmpty()) && (title == null || title.isBlank())) {
-            filteredMovies = movieService.getMoviesByStatus(status); // ✅ 탭 필터만 적용
-        } else if (tagIds != null && !tagIds.isEmpty() && title != null && !title.isBlank()) {
-            filteredMovies = movieService.findMoviesByTagsTitleAndStatus(tagIds, title, status); // ✅ 전체 필터
-        } else if (tagIds != null && !tagIds.isEmpty()) {
-            filteredMovies = movieService.findMoviesByTagsAndStatus(tagIds, status); // ✅ 태그 + 탭
-        } else {
-            filteredMovies = movieService.findMoviesBySearchAndStatus(title, status); // ✅ 검색어 + 탭
-        }
-        // 🎯 필터된 결과 내에서 user_critic 내림차순 정렬 + ranking 부여
-        filteredMovies = movieService.applyRanking(filteredMovies);
+    //     if ((tagIds == null || tagIds.isEmpty()) && (title == null || title.isBlank())) {
+    //         filteredMovies = movieService.getMoviesByStatus(status); // ✅ 탭 필터만 적용
+    //     } else if (tagIds != null && !tagIds.isEmpty() && title != null && !title.isBlank()) {
+    //         filteredMovies = movieService.findMoviesByTagsTitleAndStatus(tagIds, title, status); // ✅ 전체 필터
+    //     } else if (tagIds != null && !tagIds.isEmpty()) {
+    //         filteredMovies = movieService.findMoviesByTagsAndStatus(tagIds, status); // ✅ 태그 + 탭
+    //     } else {
+    //         filteredMovies = movieService.findMoviesBySearchAndStatus(title, status); // ✅ 검색어 + 탭
+    //     }
+    //     // 🎯 필터된 결과 내에서 user_critic 내림차순 정렬 + ranking 부여
+    //     filteredMovies = movieService.applyRanking(filteredMovies);
 
-        model.addAttribute("movies", filteredMovies);
-        return "movie/movie-fragment";
-    }
+    //     model.addAttribute("movies", filteredMovies);
+    //     return "movie/movie-fragment";
+    // }
 }
