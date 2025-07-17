@@ -11,6 +11,4 @@ public class ReviewVO {
         private int r_rating;
         private String r_text;
         private Date r_date;
-
-
 }

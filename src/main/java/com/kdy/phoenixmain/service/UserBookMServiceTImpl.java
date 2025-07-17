@@ -1,10 +1,13 @@
 package com.kdy.phoenixmain.service;
 
 import com.kdy.phoenixmain.mapper.BookmarkMapper;
+import com.kdy.phoenixmain.vo.MovieVO;
 import com.kdy.phoenixmain.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class UserBookMServiceTImpl implements UserBookMServiceT {
@@ -53,4 +56,10 @@ public class UserBookMServiceTImpl implements UserBookMServiceT {
     public boolean existsBookmark(String u_id, int movie_id) {
         return bookmarkMapper.existsBookmark(u_id, movie_id);
     }
+    //북마크 마이페이지용 입니다.
+    @Override
+    public List<MovieVO> getBookMarkWhidMovie(String u_id) {
+        return bookmarkMapper.getBookMarkWhidMovie(u_id);
+    }
+
 }

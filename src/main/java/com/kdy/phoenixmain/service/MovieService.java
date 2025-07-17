@@ -50,4 +50,13 @@ public class MovieService {
         }
         return movies;
     }
+<<<<<<< HEAD
+
+    public List<MovieVO> getRelatedByGenre(int movieId) {
+        return movieMapper.selectRelatedMovies(movieId); // ★ 이 부분 정상 작동
+    }
+
+
+=======
+>>>>>>> 7a8cadfbfea0f06e8e480852afeb6c6b5dd66a14
 }
