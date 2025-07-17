@@ -71,17 +71,16 @@
             <div class="cay-myPage-genre">
                 <h1>Favorite Genre</h1>
                 <div>
-                    <a href="/movie-all">
-                        <c:forEach var="tag" items="${tagList}">
-                            <c:choose>
-                                <c:when test="${tag.tag_type eq 'Genre'}">
-                                    <div class="tag tag-genre">${tag.tag_name}</div>
-                                </c:when>
-                            </c:choose>
-                        </c:forEach>
-                    </a>
+                    <c:forEach var="tag" items="${tagList}">
+                        <c:if test="${tag.tag_type eq 'Genre'}">
+                            <a class=""  href="/movie-all?status=showing&tags=${tag.tag_id}">
+                                <div class="tag tag-genre">${tag.tag_name}</div>
+                            </a>
+                        </c:if>
+                    </c:forEach>
                 </div>
             </div>
+
             <div class="cay-myPage-order">
                 <h1>My Order History</h1>
                 <div>
@@ -95,7 +94,9 @@
                                     <div class="cay-myPage-order-top">
                                         Booking Date - <fmt:formatDate value='${reservation.reservation_date}'
                                                                        pattern='yyyy-MM-dd (E)'/>
-                                        <button class="cay-myPage-order-button" onclick="location.href='/reservation/list'"> ⤴</button>
+                                        <button class="cay-myPage-order-button"
+                                                onclick="location.href='/reservation/list'"> ⤴
+                                        </button>
                                     </div>
                                     <div class="cay-myPage-order-bottom">
                                         <div>

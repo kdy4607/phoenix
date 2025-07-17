@@ -27,33 +27,5 @@ public class TagService {
         return tag;
     }
 
-    // 태그 등록
-    public void addTag(TagVO tagVO) {
-        int result = tagMapper.insertTag(tagVO);
-        if (result == 1) {
-            System.out.println("[태그 등록 성공] → " + tagVO);
-        } else {
-            System.out.println("[태그 등록 실패]");
-        }
-    }
 
-    // 태그 삭제
-    public void deleteTag(int tagId) {
-        int result = tagMapper.deleteTag(tagId);
-        if (result == 1) {
-            System.out.println("[태그 삭제 성공] ID: " + tagId);
-        } else {
-            System.out.println("[태그 삭제 실패]");
-        }
-    }
-
-    // 태그 수정
-    public void updateTag(TagVO tagVO) {
-        int result = tagMapper.updateTag(tagVO);
-        if (result == 1) {
-            System.out.println("[태그 수정 성공] → " + tagVO);
-        } else {
-            System.out.println("[태그 수정 실패]");
-        }
-    }
 }

@@ -561,6 +561,8 @@ a {
     margin: auto;
     border-top: 2px solid;
     display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
 }
 
 /* Home History */
