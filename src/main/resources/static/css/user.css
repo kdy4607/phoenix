@@ -995,6 +995,24 @@ div:nth-child(1) {
     margin: 3rem auto;
 }
 
+.cay-myPage-total > div:last-child,
+.cay-myPage-point > div:last-child,
+.cay-myPage-membership > div:last-child,
+.cay-myPage-ticket > div:last-child,
+.cay-myPage-coupon > div:last-child {
+    padding: 0.5rem 0.5rem;
+    font-size: 0.75rem;
+    color: #aaaaaa;
+}
+
+.cay-myPage-total > div:last-child > div > a,
+.cay-myPage-point > div:last-child > div > a,
+.cay-myPage-membership > div:last-child > div > a,
+.cay-myPage-ticket > div:last-child > div > a,
+.cay-myPage-coupon > div:last-child > div > a {
+    color: #FB4357;
+}
+
 .cay-myPage-total > div:nth-child(1),
 .cay-myPage-point > div:nth-child(1),
 .cay-myPage-membership > div:nth-child(1),

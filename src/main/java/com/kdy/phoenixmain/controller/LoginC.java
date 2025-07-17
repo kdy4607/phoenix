@@ -99,12 +99,14 @@ public class LoginC {
     // ===== 마이페이지 관련 =====
 
     @GetMapping("/mypage")
-    public String myPageGet(HttpSession session,
+    public String myPageGet(RedirectAttributes redirectAttributes,
+                            HttpSession session,
                             Model model) {
 
         LoginVO user = (LoginVO) session.getAttribute("user");
 
         if (user == null) {
+            redirectAttributes.addFlashAttribute("errorMessage", "You are logged out.");
             return "redirect:/login";
         }
 
@@ -119,6 +121,21 @@ public class LoginC {
 
         ReservationVO stats = reservationService.getReservationStats(user.getU_id());
         model.addAttribute("stats", stats);
+
+        java.time.Instant ins = user.getU_birth().toInstant();
+        ZoneId desiredZoneId = ZoneId.of("Asia/Seoul");
+        java.time.ZonedDateTime zonedDateTime = ins.atZone(desiredZoneId);
+
+        LocalDate userBirth = zonedDateTime.toLocalDate();
+        MonthDay userBirthMonthDay = MonthDay.of(userBirth.getMonth(), userBirth.getDayOfMonth());
+        model.addAttribute("userBirth", userBirth);
+        model.addAttribute("userBirthMonthDay", userBirthMonthDay);
+
+        LocalDate today = LocalDate.now();
+        MonthDay todayMonthDay = MonthDay.of(today.getMonth(), today.getDayOfMonth());
+        model.addAttribute("today", today);
+        model.addAttribute("todayMonthDay", todayMonthDay);
+
 
         model.addAttribute("user", user);
         model.addAttribute("content", "myPageHome.jsp");
@@ -255,12 +272,25 @@ public class LoginC {
         LoginVO user = (LoginVO) session.getAttribute("user");
         List<ReservationVO> reservations = reservationService.getUserReservations(user.getU_id());
 
+        // 생년월일 : 오늘 날짜 비교
+        java.time.Instant instant = user.getU_birth().toInstant();
+        ZoneId desiredZoneId = ZoneId.of("Asia/Seoul");
+        java.time.ZonedDateTime zonedDateTime = instant.atZone(desiredZoneId);
+
+        LocalDate userBirth = zonedDateTime.toLocalDate();
+        MonthDay userBirthMonthDay = MonthDay.of(userBirth.getMonth(), userBirth.getDayOfMonth());
+
+        LocalDate today = LocalDate.now();
+        MonthDay todayMonthDay = MonthDay.of(today.getMonth(), today.getDayOfMonth());
+
         if (user == null) {
             redirectAttributes.addFlashAttribute("errorMessage", "You are logged out.");
             return "redirect:/login";
         } else {
             if (u_id.equals(user.getU_id())) {
                 model.addAttribute("user", user);
+                model.addAttribute("userBirthMonthDay", userBirthMonthDay);
+                model.addAttribute("todayMonthDay", todayMonthDay);
                 model.addAttribute("reservations", reservations);
                 model.addAttribute("content", "myPageReward.jsp");
             }
@@ -322,7 +352,6 @@ public class LoginC {
             if (u_id.equals(user.getU_id())) {
                 model.addAttribute("user", user);
                 model.addAttribute("stats", stats);
-                model.addAttribute("today", today);
                 model.addAttribute("userBirth", userBirth);
                 model.addAttribute("userBirthMonthDay", userBirthMonthDay);
                 model.addAttribute("todayMonthDay", todayMonthDay);

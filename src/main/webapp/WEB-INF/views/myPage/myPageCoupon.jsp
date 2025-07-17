@@ -44,13 +44,13 @@
         <div> My Ticket & Coupon</div>
 
         <div class="cay-myPage-total">
-            <div>Total Reward Ticket & Discount Coupon</div>
+            <div>Total  Reward Ticket & Discount Coupon </div>
             <div>
                 <table class="cay-myPage-total-table">
-                    <th> Total Reward Ticket</th>
-                    <th> Total Discount Coupon</th>
+                    <th> Total Reward Ticket </th>
+                    <th> Total Discount Coupon </th>
                     <tr>
-                        <td> ${userBirth.isBefore(today) ? 2 : 1} </td>
+                        <td> ${userBirthMonthDay.isBefore(todayMonthDay) ? 2 : 1 } </td>
                         <td>
                             ${totalAdults != null || totalYouths != null || totalChildren != null ? totalAdults + totalYouths + totalChildren : 0}
                         </td>

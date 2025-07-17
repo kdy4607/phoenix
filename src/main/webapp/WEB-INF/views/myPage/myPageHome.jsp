@@ -51,11 +51,11 @@
                 </div>
             </div>
             <div>
-                <div>
+                <div onclick="location.href='/mypage/reward/point?u_id=${user.u_id}'">
                     <div>POINT</div>
                     <span id="point-ctn"> ${(totalAdults * 500) + (totalYouths * 500) + (totalChildren * 300)} </span>
                 </div>
-                <div>
+                <div  onclick="location.href='/mypage/reward/point?u_id=${user.u_id}'">
                     <div>MEMBERSHIP</div>
                     <span id="membership-ctn">
                         <c:choose>
@@ -160,30 +160,67 @@
             </div>
             <div class="cay-myPage-reward">
                 <h1>My reward</h1>
-                <div>
-                    <div><h4>Ticket</h4></div>
-                    <div>
-                        <table class="cay-myPage-reward-table">
+                <div class="cay-myPage-ticket">
+                    <div>Reward Ticket</div>
+                    <table class="cay-myPage-ticket-table">
+                        <th> Ticket</th>
+                        <th> Price</th>
+                        <th> Date of issuance</th>
+                        <c:if test="${userBirthMonthDay.isBefore(todayMonthDay)}">
                             <tr>
                                 <td>Birthday Cinema Ticket</td>
                                 <td> 12,000 ₩</td>
+                                <td> ${userBirth} </td>
                             </tr>
-                            <tr>
-                                <td>Welcome Cinema Ticket</td>
-                                <td> 12,000 ₩</td>
-                            </tr>
-                        </table>
-                    </div>
+                        </c:if>
+                        <tr>
+                            <td>Welcome Cinema Ticket</td>
+                            <td> 12,000 ₩</td>
+                            <td> Membership Date</td>
+                        </tr>
+                    </table>
                 </div>
-                <div>
-                    <div><h4>Coupon</h4></div>
+                <div class="cay-myPage-coupon">
+                    <div>Reward Coupon</div>
+                    <table class="cay-myPage-coupon-table">
+                        <th> Coupon</th>
+                        <th> Benefit</th>
+                        <th> Date of issuance</th>
+                        <c:forEach items="${reservations}" var="reservation" begin="${reservations.size() - 1}"
+                                   end="${reservations.size() - 1}">
+                            <%-- 성인 수만큼 반복하여 쿠폰 출력 --%>
+                            <c:forEach begin="1" end="${reservation.adult}" varStatus="loop">
+                                <tr>
+                                    <td>Adult Cinema Discount Coupon</td>
+                                    <td> 50%</td>
+                                    <td><fmt:formatDate value="${reservation.run_date}" pattern="yyyy-MM-dd (E)"/></td>
+                                </tr>
+                            </c:forEach>
+
+                            <%-- 청소년 수만큼 반복하여 쿠폰 출력 --%>
+                            <c:forEach begin="1" end="${reservation.youth}" varStatus="loop">
+                                <tr>
+                                    <td>Youth Cinema Discount Coupon</td>
+                                    <td> 30%</td>
+                                    <td><fmt:formatDate value="${reservation.run_date}" pattern="yyyy-MM-dd (E)"/></td>
+                                </tr>
+                            </c:forEach>
+
+                            <%-- 아동 수만큼 반복하여 쿠폰 출력 --%>
+                            <c:forEach begin="1" end="${reservation.child}" varStatus="loop">
+                                <tr>
+                                    <td>Child Cinema Discount Coupon</td>
+                                    <td> 10%</td>
+                                    <td><fmt:formatDate value="${reservation.run_date}" pattern="yyyy-MM-dd (E)"/></td>
+                                </tr>
+                            </c:forEach>
+                        </c:forEach>
+                    </table>
                     <div>
-                        <table class="cay-myPage-reward-table">
-                            <tr>
-                                <td>Welcome Discount Coupon</td>
-                                <td> 50 %</td>
-                            </tr>
-                        </table>
+                        <div> ※ It only reflects the coupon payment status of the most recent reservation details.</div>
+                        <div> ※ Check <a href="/mypage/reward/coupon?u_id=${user.u_id}">here</a> for more coupon
+                            details.
+                        </div>
                     </div>
                 </div>
             </div>

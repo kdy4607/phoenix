@@ -76,7 +76,7 @@
                 <div>Ticket&Coupon</div>
                 <div>
                     <div onclick="location.href='/mypage/reward/coupon?u_id=${user.u_id}'">
-                        <span> ${userBirth.isBefore(today) ? 2 : 1} </span>
+                        <span> ${userBirthMonthDay.isBefore(todayMonthDay) ? 2 : 1 } </span>
                         <div>Total Reward Ticket</div>
                     </div>
                     <div onclick="location.href='/mypage/reward/coupon?u_id=${user.u_id}'">
