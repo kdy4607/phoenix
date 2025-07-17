@@ -6,19 +6,110 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <html>
 <head>
     <title>Title</title>
 </head>
 <body>
 
+
 <div class="cay-myPage-content">
     <div class="cay-myPage-wrap">
-        <div> My Point </div>
+        <div> My Point</div>
 
-        <h1 style="text-align: center"> 포인트 </h1>
+        <div class="cay-myPage-total">
 
-        </form>
+            <div>My Total Point & Membership Class</div>
+            <div>
+                <table class="cay-myPage-total-table">
+                    <th> Total Point</th>
+                    <th> Membership Class</th>
+                    <tr>
+                        <td> ${(stats.adult*500) + (stats.youth*500) + (stats.child*300)} </td>
+                        <td>
+                            <c:choose>
+                                <c:when test="${(stats.adult*500) + (stats.youth*500) + (stats.child*300) ge 5000}">
+                                    A
+                                </c:when>
+                                <c:when test="${(stats.adult*500) + (stats.youth*500) + (stats.child*300) ge 3000}">
+                                    B
+                                </c:when>
+                                <c:when test="${(stats.adult*500) + (stats.youth*500) + (stats.child*300) ge 1000}">
+                                    C
+                                </c:when>
+                                <c:when test="${(stats.adult*500) + (stats.youth*500) + (stats.child*300) ge 0}">
+                                    E
+                                </c:when>
+                            </c:choose>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+
+
+        <div class="cay-myPage-point">
+
+            <div>Point History</div>
+            <div>
+                <table class="cay-myPage-point-table">
+                    <th> Point</th>
+                    <th> Adult</th>
+                    <th> Youth</th>
+                    <th> Child</th>
+                    <th> Point Accrual Date</th>
+                    <c:forEach items="${reservations}" var="reservation">
+                        <tr>
+                            <td>${reservation.adult * 500 + reservation.youth * 500 + reservation.child * 300} </td>
+                            <td>${reservation.adult}</td>
+                            <td>${reservation.youth}</td>
+                            <td> ${reservation.child}</td>
+                            <td><fmt:formatDate value="${reservation.reservation_date}" pattern="yyyy-MM-dd"/></td>
+                        </tr>
+                    </c:forEach>
+                </table>
+            </div>
+
+        </div>
+
+        <div class="cay-myPage-membership">
+
+            <div>Membership Class Guide</div>
+            <div>
+                <table class="cay-myPage-membership-table">
+                    <th> Class</th>
+                    <th> Benefit</th>
+                    <th> Requirements</th>
+                    <tr>
+                        <td> A</td>
+                        <td> One movie ticket (adult) is provided.</td>
+                        <td> 5000 points or more required.</td>
+                    </tr>
+                    <tr>
+                        <td> B</td>
+                        <td> 50% discount coupon is provided.</td>
+                        <td> 3000 points or more required.</td>
+                    </tr>
+                    <tr>
+                        <td> C</td>
+                        <td> 30% discount coupon is provided.</td>
+                        <td> 1000 points or more required.</td>
+                    </tr>
+                    <tr>
+                        <td> D</td>
+                        <td> No Benefits</td>
+                        <td> No Requirements</td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+
+
     </div>
 </div>
 

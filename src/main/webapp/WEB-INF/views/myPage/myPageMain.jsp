@@ -30,14 +30,14 @@
             </li>
             <li><a href="/mypage/reward?u_id=${user.u_id}">My Rewards</a>
                 <ul>
-                    <li><a href="/mypage/reward/point?u_id=${user.u_id}">Point</a></li>
-                    <li><a href="/mypage/reward/coupon?u_id=${user.u_id}">Coupon</a></li>
+                    <li><a href="/mypage/reward/point?u_id=${user.u_id}">Point&Membership</a></li>
+                    <li><a href="/mypage/reward/coupon?u_id=${user.u_id}">Ticket&Coupon</a></li>
                 </ul>
             </li>
-            <li><a href="" onclick="alert('준비 중입니다!')">Wallet</a>
+            <li><a href="" onclick="alert('🤞 In ready !')">Wallet</a>
                 <ul>
-                    <li><a href="" onclick="alert('준비 중입니다!')">Credit/Debit Cards</a></li>
-                    <li><a href="" onclick="alert('준비 중입니다!')">Gift Cards</a></li>
+                    <li><a href="" onclick="alert('🤞 In ready !')">Credit/Debit Cards</a></li>
+                    <li><a href="" onclick="alert('🤞 In ready !')">Gift Cards</a></li>
                 </ul>
             </li>
         </ul>
