@@ -36,7 +36,7 @@ FROM
 CONNECT BY
     LEVEL <= LENGTH(m.genre) - LENGTH(REPLACE(m.genre, '/', '')) + 1
        AND PRIOR movie_id = movie_id
-       AND PRIOR SYS_GUID() IS NOT NULL
+       AND PRIOR SYS_GUID() IS NOT NULL;
 
 
 SELECT DISTINCT m2.movie_id, m2.title
@@ -44,4 +44,11 @@ FROM movies m1
          JOIN movies m2
               ON m1.genre = m2.genre
 WHERE m1.movie_id = 1
-  AND m2.movie_id != 1
+  AND m2.movie_id != 1;
+
+
+
+select m.movie_id, m.title, m.poster_url
+from bookmarks b1
+join movies m on b1.MOVIE_ID = m.MOVIE_ID
+where b1.u_id = 'go'

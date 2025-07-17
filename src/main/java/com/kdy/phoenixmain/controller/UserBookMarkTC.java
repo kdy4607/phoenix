@@ -3,12 +3,16 @@ package com.kdy.phoenixmain.controller;
 import com.kdy.phoenixmain.service.UserBookMServiceT;
 import com.kdy.phoenixmain.vo.BookMarkVO;
 import com.kdy.phoenixmain.vo.LoginVO;
+import com.kdy.phoenixmain.vo.MovieVO;
 import com.kdy.phoenixmain.vo.UserVO;
 import jakarta.servlet.http.HttpSession;
+import jakarta.websocket.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 public class UserBookMarkTC {
@@ -43,15 +47,22 @@ public class UserBookMarkTC {
             System.out.println("북마크에서 삭제됨" + dto.getU_id() + dto.getMovie_id());
             return "redirect:/oneMovieDetail?movie_id=" + dto.getMovie_id();
         }
-
-//        int isStarmark = 0; // 별 유지시켜주기위한 컨트롤러
-//        if(userId != null) {
-//            isStarmark = userBookMServiceT.isStarmark(userId, dto.getMovie_id());
-//        }
-//        model.addAttribute("isBookmarked", isStarmark);
-//
-//        return "redirect:/oneMovieDetail?movie_id=" + dto.getMovie_id();
     }
 
+    @GetMapping("/userBookMarks")//마이페이지에서 북마크한거 보여주는거에요
+    public String userBookMarks(Model model, HttpSession session ) {
+    String u_id = (String) session.getAttribute("userId");
+        System.out.println("유저북마크 진입 확인용");
+    List<MovieVO> Bookmarks = userBookMServiceT.getBookMarkWhidMovie(u_id);
+        System.out.println("북마크 수 확인용: " + Bookmarks.size());
+        System.out.println("u_id = " + u_id);
+        for (MovieVO movie : Bookmarks) { //뭐야?
+            System.out.println(">> 영화 ID: " + movie.getMovie_id());
+            System.out.println(">> 제목: " + movie.getTitle());
+            System.out.println(">> 포스터 URL: " + movie.getPoster_url());
+        }
+    model.addAttribute("bookmarks", Bookmarks);
+        return "testbookMforUser";
+    }
 
 }

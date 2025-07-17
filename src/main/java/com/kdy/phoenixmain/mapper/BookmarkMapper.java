@@ -1,8 +1,11 @@
 package com.kdy.phoenixmain.mapper;
 
 
+import com.kdy.phoenixmain.vo.MovieVO;
 import com.kdy.phoenixmain.vo.UserVO;
 import org.apache.ibatis.annotations.*;
+
+import java.util.List;
 
 @Mapper
 public interface BookmarkMapper {
@@ -35,4 +38,12 @@ public interface BookmarkMapper {
     @Select("SELECT CASE WHEN COUNT(*) > 0 THEN 1 ELSE 0 END FROM bookmarks " +
             "WHERE u_id = #{u_id} AND movie_id = #{movie_id}")
     int isStarmark(@Param("u_id") String u_id, @Param("movie_id") int movie_id);
+
+    //북마크 테이블과 무비테이블을 조인(마이페이지 북마크영화내용 조회)
+    @Select("SELECT m.movie_id, m.title, m.poster_url " +
+            "FROM bookmarks b1 " +
+            "JOIN movies m ON b1.movie_id = m.movie_id " +
+            "WHERE b1.u_id = #{u_id}")
+    List<MovieVO> getBookMarkWhidMovie(@Param("u_id") String u_id);
+
 }

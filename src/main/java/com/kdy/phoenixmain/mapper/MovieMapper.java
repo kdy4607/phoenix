@@ -116,18 +116,6 @@ public interface MovieMapper {
             @Param("status") String status
     );
 
-//    @Select("""
-//    SELECT *
-//    FROM movies
-//    WHERE movie_id != #{excludeId}
-//      AND REGEXP_LIKE(
-//            genre,
-//            '(^|/)(#{regexGenres})(/|$)'
-//        )
-//""")
-//    List<MovieVO> selectSimilarMoviesByGenre(@Param("excludeId") int excludeId,
-//                                             @Param("regexGenres") String regexGenres);
-
 
     // 1) 영화 ID로 영화 정보 가져오기
      @Select("""
