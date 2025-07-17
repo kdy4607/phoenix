@@ -116,6 +116,8 @@ public class LoginC {
         List<TagVO> tagList = tagMapper.selectAllTag();
         model.addAttribute("tagList", tagList);
 
+
+
         List<ReservationVO> reservations = reservationService.getUserReservations(user.getU_id());
         model.addAttribute("reservations", reservations);
 

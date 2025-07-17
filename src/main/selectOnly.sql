@@ -44,4 +44,15 @@ FROM movies m1
          JOIN movies m2
               ON m1.genre = m2.genre
 WHERE m1.movie_id = 1
-  AND m2.movie_id != 1
+  AND m2.movie_id != 1;
+
+
+SELECT DISTINCT t.tag_id, t.tag_name, t.tag_type
+FROM reservations r
+         JOIN movie_tags mt ON r.movie_id = mt.movie_id
+         JOIN tags t ON mt.tag_id = t.tag_id
+WHERE r.u_id = #{u_id}
+  AND t.tag_type = 'Genre';
+
+
+
