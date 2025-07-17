@@ -8,7 +8,7 @@
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/header.jsp"/>
-
+<div class="container">
 <%-- 메뉴 선택 창입니다. --%>
 <div class="menu-sel">
     <h1>
@@ -33,6 +33,7 @@
 <%--    <div onclick="alert('준비 중입니다!')">--%>
 <%--        <span class="icon">🎉</span>이벤트--%>
 <%--    </div>--%>
+</div>
 </body>
 
 </html>
