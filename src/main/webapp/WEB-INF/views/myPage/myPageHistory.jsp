@@ -119,9 +119,10 @@
                     <h1>My Wishlist</h1>
                     <div>
                         <div>
-                            <c:if test="${not empty reservations}">
-                                <c:forEach items="${reservations}" var="reservation">
-                                    <div>
+                            <div>
+                                <%--북마크 추가에 따른 수정 필요<--%>
+                                <c:if test="${not empty wishlists}">
+                                    <c:forEach items="${reservations}" var="reservation">
                                         <div class="cay-myPage-order-img">
                                             <img src="${reservation.poster_url}" alt="">
                                         </div>
@@ -139,13 +140,13 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </c:forEach>
-                            </c:if>
+                                    </c:forEach>
+                                </c:if>
+                                <c:if test="${empty wishlists}">
+                                    <span> Your wishlist do not exist.  </span>
+                                </c:if>
+                            </div>
                         </div>
-                        <c:if test="${empty reservations}">
-                            <span> Your recent reservation details do not exist.  </span>
-                        </c:if>
                     </div>
                 </div>
             </div>

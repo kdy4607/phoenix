@@ -7,7 +7,7 @@ body, html {
     display: flex;
     justify-content: center;
     margin-right: 80px;
-    margin-left: 70px;
+    margin-left: 80px;
     margin-top: 20px;
     min-width: 500px;
 }
@@ -18,9 +18,11 @@ body, html {
     display: flex;
     justify-content: center;
 }
-
+.aaa{
+    width: 90%;
+}
 #img {
-    width: 340px;
+    width: 500px;
     height: auto;
     overflow: hidden;
     border-radius: 8px;
@@ -40,7 +42,7 @@ body, html {
 }
 
 .detail-info {
-    flex: 2;
+    /*flex: 2;*/
     margin: 10px;
     padding: 15px;
     background-color: #1f1f1f;
@@ -95,13 +97,13 @@ body, html {
     padding: 15px;
     background-color: #1f1f1f;
     border-radius: 8px;
-    width: 70%;
+    width: auto;
 }
 
 .row {
     display: flex;
     margin-bottom: 10px;
-    align-items: center;
+    align-items: flex-start;
 }
 
 .label {

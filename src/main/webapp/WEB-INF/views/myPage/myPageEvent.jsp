@@ -31,18 +31,29 @@
             <div class="cay-myPage-tabs-content" id="ongoing_content">
                 <div class="cay-myPage-order">
                     <h1>Ongoing Event</h1>
+                    <div>
+                        <div>
+                            <div>
+                                <c:if test="${empty event}">
+                                    <span> Your recent event reservation details do not exist.  </span>
+                                </c:if>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <c:if test="${empty event}">
-                    <span> Your recent event reservation details do not exist.  </span>
-                </c:if>
+
             </div>
             <div class="cay-myPage-tabs-content" id="upcoming_content">
                 <div class="cay-myPage-order">
                     <h1>Upcoming Event</h1>
                     <div>
-                        <c:if test="${empty reservations}">
-                            <span> Your recent event reservation details do not exist.  </span>
-                        </c:if>
+                        <div>
+                            <div>
+                                <c:if test="${empty reservations}">
+                                    <span> Your recent event reservation details do not exist.  </span>
+                                </c:if>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -50,9 +61,13 @@
                 <div class="cay-myPage-order">
                     <h1>Done Event</h1>
                     <div>
-                        <c:if test="${empty reservations}">
-                            <span> Your past event reservation details do not exist.  </span>
-                        </c:if>
+                        <div>
+                            <div>
+                                <c:if test="${empty reservations}">
+                                    <span> Your past event reservation details do not exist.  </span>
+                                </c:if>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
