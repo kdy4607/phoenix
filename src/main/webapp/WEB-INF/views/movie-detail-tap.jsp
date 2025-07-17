@@ -1,60 +1,104 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Movie Detail</title>
     <link rel="stylesheet" href="/resources/css/clickTap.css">
 </head>
 <body>
+
 <div class="tap-outBox">
-    <!-- 탭 버튼 영역 -->
-    <div class="tab" onclick="showTab(0)">동일장르 영화</div>
-    <div class="tab" onclick="showTab(1)">스토리</div>
-    <div class="tab" onclick="showTab(2)">관객평</div>
+    <div class="tab active" data-tab="genre" onclick="showTab(this)">Similar Genre Movies</div>
+    <div class="tab" data-tab="review" onclick="showTab(this)">User Reviews</div>
 </div>
+
 <div class="tap-inBox">
-    <!-- 탭 내용 영역 -->
-    <div class="content active">
+  
+    <!-- 동일장르 -->
+    <div class="content active" data-tab-content="genre">
         <div class="related-movie-wrap">
-            <c:forEach var="rel" items="${relatedMovies}" end="5">
-                <div class="related-movie">
-                    <img src="${rel.poster_url}" alt="${rel.title}" style="width:150px">
-                    <div>${rel.title}</div>
-                </div>
+            <c:forEach var="rel" items="${relatedMovies}" varStatus="loop">
+                <c:if test="${loop.index < 5}">
+                    <!-- 동일장르 -->
+                    <div class="related-movie">
+                        <img src="${rel.poster_url}" alt="${rel.title}" style="width:150px">
+                        <div>${rel.title}</div>
+                    </div>
+                </c:if>
             </c:forEach>
         </div>
     </div>
-    <div class="content">줄거리:${movieDetail2.description}</div>
-    <div class="content">감상평</div>
+
+    <!-- 관객평 -->
+    <div class="content" data-tab-content="review">
+        <!-- 리뷰 작성 폼 -->
+        <form action="/reviews" method="post" class="review-form">
+            <input type="hidden" name="movie_id" value="${movieDetail2.movie_id}"/>
+            <input type="hidden" name="u_id" value="${sessionScope.user.u_id}"/>
+
+            <div class="review-top">
+                <span class="review-user">${sessionScope.user.u_id}</span>
+                <div class="review-star">
+                    <input type="radio" id="star5" name="r_rating" value="5" required><label for="star5">★</label>
+                    <input type="radio" id="star4" name="r_rating" value="4"><label for="star4">★</label>
+                    <input type="radio" id="star3" name="r_rating" value="3"><label for="star3">★</label>
+                    <input type="radio" id="star2" name="r_rating" value="2"><label for="star2">★</label>
+                    <input type="radio" id="star1" name="r_rating" value="1"><label for="star1">★</label>
+                </div>
+            </div>
+            <textarea name="r_text" rows="4" cols="50" placeholder="Please enter your review." required
+                      oninvalid="this.setCustomValidity('Please enter your review.')"
+                      oninput="this.setCustomValidity('')"></textarea>
+            <button type="submit" class="submit-btn">Submit</button>
+        </form>
+
+        <hr>
+
+        <!-- 리뷰 목록 -->
+        <div class="review-list">
+            <c:forEach var="review" items="${reviewList}">
+                <div class="review-item">
+                    <div class="review-header">
+                        <span class="review-uid">${review.u_id}</span>
+                        <span class="review-stars">
+                            <c:forEach begin="1" end="${review.r_rating}" var="i">⭐</c:forEach>
+                        </span>
+                    </div>
+
+                    <div class="review-text">${review.r_text}</div>
+
+                    <div class="review-date">
+                        <fmt:formatDate value="${review.r_date}" pattern="yyyy.MM.dd HH:mm:ss" />
+                    </div>
+
+                    <!-- 본인만 삭제 버튼 노출 -->
+                    <c:if test="${review.u_id == sessionScope.user.u_id}">
+                        <form action="/reviews/delete" method="post" style="margin-top: 5px;">
+                            <input type="hidden" name="r_id" value="${review.r_id}" />
+                            <input type="hidden" name="movie_id" value="${movieDetail2.movie_id}" />
+                            <button type="submit" class="submit-btn" onclick="return confirm('Do you really want to delete this?')">Delete</button>
+                        </form>
+                    </c:if>
+                </div>
+            </c:forEach>
+        </div>
+        <div class="content">줄거리:${movieDetail2.description}</div>
+        <div class="content">감상평</div>
+    </div>
 </div>
 
 <script>
-
-    function showTab(index) {
-        const tabs = document.querySelectorAll('.tab');
-        const contents = document.querySelectorAll('.content');
-
-        tabs.forEach((tab, i) => {
-            tab.classList.toggle('active', i === index);
+    function showTab(tabElement) {
+        const tabName = tabElement.dataset.tab;
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.classList.toggle('active', tab.dataset.tab === tabName);
         });
-
-        contents.forEach((content, i) => {
-            content.classList.toggle('active', i === index);
-            // 관련영화 탭(index === 0)일 때만 height 자동 조정
-            if (i === index) {
-                if (i === 0) {
-                    content.style.height = 'auto';
-                } else {
-                    content.style.height = '280px';
-                }
-            } else {
-                // 비활성화된 콘텐츠는 초기화 (안 보여도 height 남으면 깔끔하지 않음)
-                content.style.height = '';
-            }
+        document.querySelectorAll('.content').forEach(content => {
+            content.classList.toggle('active', content.dataset.tabContent === tabName);
         });
     }
 </script>
 
 </body>
 </html>
-
