@@ -77,7 +77,7 @@
 <p>세션 user: ${sessionScope.user}</p>
 <p>세션 userId: ${sessionScope.user.u_id}</p>
 <p>${movieDetail2.movie_id}</p>///movieDetail2.movie_id
-<div class="side-bar">side</div>
+<%--<div class="side-bar">side</div>--%>
 
 <script>
     function checkLogin(form) {

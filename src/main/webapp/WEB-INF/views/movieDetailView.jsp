@@ -11,28 +11,28 @@
 
 <%-- 메뉴 선택 창입니다. --%>
 <div class="menu-sel">
-    <div onclick="location.href='/movie-all'">
-        <span class="icon">🎭</span>영화 목록
-    </div>
-    <div onclick="location.href='/schedule'">
-        <span class=" icon">🎫</span>상영시간표 & 예매
-    </div>
-    <div onclick="alert('준비 중입니다!')">
-        <span class="icon">🏢</span>극장 정보
-    </div>
-    <div onclick="alert('준비 중입니다!')">
-        <span class="icon">🎉</span>이벤트
-    </div>
+    <h1>
+        MOVIE INFORMATION
+    </h1>
 </div>
-
-<%--<p>include 경로: ${movieDetail}</p>--%>
 <div>
     <jsp:include page="${movieDetail}"></jsp:include>
 </div>
 <div>
     <jsp:include page="${movieTapClic}"></jsp:include>
 </div>
-
+<%--    <div onclick="location.href='/movie-all'">--%>
+<%--        <span class="icon">🎭</span>영화 목록--%>
+<%--    </div>--%>
+<%--    <div onclick="location.href='/schedule'">--%>
+<%--        <span class=" icon">🎫</span>상영시간표 & 예매--%>
+<%--    </div>--%>
+<%--    <div onclick="alert('준비 중입니다!')">--%>
+<%--        <span class="icon">🏢</span>극장 정보--%>
+<%--    </div>--%>
+<%--    <div onclick="alert('준비 중입니다!')">--%>
+<%--        <span class="icon">🎉</span>이벤트--%>
+<%--    </div>--%>
 </body>
 
 </html>

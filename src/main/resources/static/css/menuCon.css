@@ -6,14 +6,13 @@ body, html {
 .menu-sel {
     display: flex;
     justify-content: space-evenly;
-    background-color: #fff; /* 완전한 흰색으로 카드 느낌 */
-    margin-left: 20px;
-    margin-right: 20px;
-    margin-top: 20px;
+    margin-left: 70px;
+    margin-right: 70px;
+    margin-top: 30px;
     border-radius: 8px;
     padding: 10px 0;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* 더 자연스러운 그림자 */
-    border: 2px solid #FB4357;
+    background-color: #FB4357;
+    color: white;
 }
 
 .menu-sel > div {

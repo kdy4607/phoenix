@@ -13,7 +13,7 @@
 .tap-inBox{
     display: flex;
     flex-direction: column;
-    padding-left: 40px;
+    padding-left: 50px;
     padding-right: 50px;
     width: 100%;
     box-sizing: border-box;
