@@ -7,79 +7,33 @@
     <link rel="stylesheet" href="/resources/css/menuCon.css">
 </head>
 <body>
-<jsp:include page="/WEB-INF/views/header.jsp" />
-<%-- 메뉴 로고 및 로그인 창 입니다--%>
-<%--<div class="head-info">--%>
-<%--    &lt;%&ndash; 공간을 맞춰주기위해 빈 div 넣었습니다. &ndash;%&gt;--%>
-<%--    <div class="nothing"></div>--%>
-<%--    <div class="title-img">--%>
-<%--        <a href="/">--%>
-<%--            <div class="logo">Movie Information</div>--%>
-<%--        </a>--%>
-<%--    </div>--%>
-<%--    <div class="login-status">--%>
-<%--        <c:choose>--%>
-<%--            <c:when test="${not empty sessionScope.username}">--%>
-<%--                <div>${sessionScope.username}님 로그인 되었습니다</div>--%>
-<%--                <form action="/logoutx21" method="post">--%>
-<%--                    <button>로그아웃</button>--%>
-<%--                </form>--%>
-<%--            </c:when>--%>
-<%--            <c:otherwise>--%>
-<%--                <div><a href="/loginx21">로그인</a></div>--%>
-<%--            </c:otherwise>--%>
-<%--        </c:choose>--%>
-<%--    </div>--%>
-<%--</div>--%>
-
+<jsp:include page="/WEB-INF/views/header.jsp"/>
+<div class="container">
 <%-- 메뉴 선택 창입니다. --%>
 <div class="menu-sel">
-    <div onclick="location.href='/movie-all'">
-        <span class="icon">🎭</span>영화 목록
-    </div>
-    <div onclick="location.href='/schedule'">
-        <span class=" icon">🎫</span>상영시간표 & 예매
-    </div>
-    <div onclick="alert('준비 중입니다!')">
-        <span class="icon">🏢</span>극장 정보
-    </div>
-    <div onclick="alert('준비 중입니다!')">
-        <span class="icon">🎉</span>이벤트
-    </div>
+    <h1>
+        MOVIE INFORMATION
+    </h1>
 </div>
-
-<%--<p>include 경로: ${movieDetail}</p>--%>
 <div>
     <jsp:include page="${movieDetail}"></jsp:include>
 </div>
 <div>
     <jsp:include page="${movieTapClic}"></jsp:include>
 </div>
-
-<%--<c:if test="${not empty movieDetail}">--%>
-<%--    <jsp:include page="${movieDetail}" />--%>
-<%--</c:if>--%>
-<%-- 위 movie 디테일
-(사진, 타이틀, 총 별점, 감독,주연,관객별점, 전문가 평점, 북마크)
-값을 사용하는 기준으로 같이 묶음.) --%>
-<%-- El 값 받을때 사용 이름 movieDetail--%>
-<%--<div>--%>
-<%--    <jsp:include page="${movieDetail}"></jsp:include>--%>
-<%--</div>--%>
-
-<%-- 컨트롤러를 타고 갖고오는 jsp 이름 movieDetail.jsp --%>
-<%-- 현재 movieHome.jsp 로
-movie-detail.jsp 를 갖고와줄 컨트롤러 이름 MovieDetailCON--%>
-
-<%-- 이하 영화 정보 셀렉트--%>
-<%-- 인클루드 해줄 이름 --%>
-<%--<div>--%>
-<%--    <jsp:include page="${clickMovieDetail}"></jsp:include>--%>
-<%--</div>--%>
-<%-- 거쳐야하는 기능창 지금은 movieDao  --%>
-<%--<div>--%>
-<%--    <jsp:include page="${clickMovieDetail}"></jsp:include>--%>
-<%--</div>--%>
+<%--    <div onclick="location.href='/movie-all'">--%>
+<%--        <span class="icon">🎭</span>영화 목록--%>
+<%--    </div>--%>
+<%--    <div onclick="location.href='/schedule'">--%>
+<%--        <span class=" icon">🎫</span>상영시간표 & 예매--%>
+<%--    </div>--%>
+<%--    <div onclick="alert('준비 중입니다!')">--%>
+<%--        <span class="icon">🏢</span>극장 정보--%>
+<%--    </div>--%>
+<%--    <div onclick="alert('준비 중입니다!')">--%>
+<%--        <span class="icon">🎉</span>이벤트--%>
+<%--    </div>--%>
+</div>
 </body>
 
 </html>
