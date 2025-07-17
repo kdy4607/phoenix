@@ -86,7 +86,7 @@ body, html {
     display: flex;
     align-items: center;
     gap: 4px;
-    color: #FFD700; /* 별은 금색 느낌 */
+    color: #FB4357; /* 별은 금색 느낌 */
     font-size: 20px;
 }
 
@@ -137,6 +137,117 @@ body, html {
 
 .bookmark-icon.bookmarked svg {
     fill: red; /* 북마크된 경우 */
+}
+
+
+/* 📌 리뷰 작성/수정 폼 */
+.review-form {
+    margin-bottom: 20px;
+    padding: 15px;
+    border-radius: 6px;
+    background-color: #2b2b2b;
+}
+
+/* 상단 유저 ID + 별점 입력 */
+.review-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+/* ⭐ 별점 입력 라디오 */
+.review-star {
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 5px;
+}
+
+.review-star input[type="radio"] {
+    display: none;
+}
+
+.review-star label {
+    font-size: 22px;
+    color: #777;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.review-star input[type="radio"]:checked ~ label,
+.review-star label:hover,
+.review-star label:hover ~ label {
+    color: #FB4357;
+}
+
+/* ✍ 텍스트 입력 */
+textarea {
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px;
+    resize: vertical;
+    background-color: #fff;
+    border: 1px solid #bbb;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+/* ✅ 등록/수정/삭제 버튼 공통 */
+.submit-btn,
+.review-item button {
+    margin-top: 10px;
+    padding: 8px 14px;
+    background-color: #FB4357;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.submit-btn:hover,
+.review-item button:hover {
+    background-color: #d02e45;
+}
+
+/* 📜 리뷰 리스트 */
+.review-list {
+    margin-top: 30px;
+}
+
+.review-item {
+    border-bottom: 1px solid #444;
+    padding: 15px 0;
+    color: #eee;
+}
+
+.review-header {
+    display: flex;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #f0f0f0;
+}
+
+.review-stars {
+    color: #FB4357;
+}
+
+/* 일반 리뷰 텍스트 */
+.review-text {
+    margin-bottom: 8px;
+    line-height: 1.5;
+}
+
+/* 날짜 텍스트 */
+.review-date {
+    font-size: 0.85em;
+    color: #aaa;
+}
+.review-uid{
+    color: #FB4357;
+}
+.review-text{
+    color: #1f1f1f;
 }
 
 
