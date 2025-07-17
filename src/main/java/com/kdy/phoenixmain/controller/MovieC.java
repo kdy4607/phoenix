@@ -101,13 +101,6 @@ public class MovieC {
         model.addAttribute("movieTapClic", "movie-detail-tap.jsp");
         System.out.println(model.getAttribute("movieDetail"));
 
-
-//        List<TagVO> tagList = movieService.getTagsByMovieId(movie_id);
-//        List<Integer> tagIds = tagList.stream()
-//                .map(TagVO::getTag_id)
-//                .toList();
-//        List<MovieVO> relatedMovies = movieService.selectMoviesByAnyTag(tagIds, movie_id); // 자기 자신 제외
-//        model.addAttribute("relatedMovies", relatedMovies);
         // tap 중에서 뭐더라 그 음... 추천영화..
         // 영화 상세 정보
         movie = movieService.selectOneMovie(movie_id);

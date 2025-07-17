@@ -18,6 +18,9 @@
     <!-- 동일장르 -->
     <div class="content active" data-tab-content="genre">
         <div class="related-movie-wrap">
+            <c:if  test="${movie_id == null}">
+                관련 영화가 없습니다.
+            </c:if>
             <c:forEach var="rel" items="${relatedMovies}" varStatus="loop">
                 <c:if test="${loop.index < 5}">
                     <!-- 동일장르 -->
