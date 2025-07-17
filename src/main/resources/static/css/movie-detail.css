@@ -18,9 +18,11 @@ body, html {
     display: flex;
     justify-content: center;
 }
-
+.aaa{
+    width: 90%;
+}
 #img {
-    width: 340px;
+    width: 500px;
     height: auto;
     overflow: hidden;
     border-radius: 8px;
