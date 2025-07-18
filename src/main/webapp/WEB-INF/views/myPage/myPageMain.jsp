@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>My Page - Phoenix Cinema</title>
+    <title>MyPage - Phoenix Cinema</title>
     <link rel="stylesheet" href="/resources/css/user.css">
     <!-- header.js 사용 (login.js 대신) -->
     <script src="/resources/js/header.js"></script>
@@ -9,8 +9,6 @@
 <body>
 
 <jsp:include page="/WEB-INF/views/header.jsp"/>
-
-<button onclick="logout()"></button>
 
 <main class="cay-myPage-container">
     <div class="cay-myPage-aside">
@@ -48,5 +46,6 @@
     © 2025 Phoenix Cinema. All rights reserved.
 </footer>
 <script src="/resources/js/login.js"></script>
+
 </body>
 </html>

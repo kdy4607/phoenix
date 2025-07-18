@@ -11,7 +11,7 @@
 
 <html>
 <head>
-    <title>Title</title>
+    <title>MyPage : Home - Phoenix Cinema</title>
 </head>
 <body>
 
@@ -27,10 +27,8 @@
         <c:set var="totalChildren" value="${totalChildren + reservation.child}"/>
         ${reservation.adult}
     </c:forEach>
-
     <%-- 계산된 총 인원수를 바탕으로 금액 계산 --%>
     <c:set var="calculatedTotalAmount" value="${(totalAdults * 500) + (totalYouths * 500) + (totalChildren * 300)}"/>
-
     <p>
         총 성인 수: ${totalAdults}명 <br>
         총 청소년 수: ${totalYouths}명 <br>
@@ -39,7 +37,6 @@
         계산된 총 인원수 기반 금액: <fmt:formatNumber value="${calculatedTotalAmount}" type="number"/> ₩
     </p>
 </div>
-
 <div class="cay-myPage-content">
     <div class="cay-myPage-home">
         <div class="cay-myPage-top">
@@ -110,7 +107,6 @@
                     </c:forEach>
                 </div>
             </div>
-
             <div class="cay-myPage-order">
                 <h1>My Order History
                     <div class="cay-maPage-bottom-solid"></div>
@@ -211,7 +207,6 @@
                                     <td><fmt:formatDate value="${reservation.run_date}" pattern="yyyy-MM-dd (E)"/></td>
                                 </tr>
                             </c:forEach>
-
                             <%-- 청소년 수만큼 반복하여 쿠폰 출력 --%>
                             <c:forEach begin="1" end="${reservation.youth}" varStatus="loop">
                                 <tr>
@@ -220,7 +215,6 @@
                                     <td><fmt:formatDate value="${reservation.run_date}" pattern="yyyy-MM-dd (E)"/></td>
                                 </tr>
                             </c:forEach>
-
                             <%-- 아동 수만큼 반복하여 쿠폰 출력 --%>
                             <c:forEach begin="1" end="${reservation.child}" varStatus="loop">
                                 <tr>

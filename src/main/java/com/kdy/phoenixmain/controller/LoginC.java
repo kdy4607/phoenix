@@ -58,7 +58,7 @@ public class LoginC {
             if (user != null) {
                 // 로그인 성공
                 session.setAttribute("user", user);
-                session.setAttribute("userId", user.getU_id()); // 북마크용입니다.
+                session.setAttribute("userId", user.getU_id()); // 북마크 용
                 System.out.println("✅ 로그인 성공 - 사용자: " + user.getU_name());
 
                 // 리턴 URL이 있으면 해당 페이지로, 없으면 메인 페이지로
@@ -85,7 +85,7 @@ public class LoginC {
         }
     }
 
-    // 로그아웃 (GET과 POST 둘 다 지원)
+    // 로그아웃 (GET과 POST 지원)
     @GetMapping("/logout")
     public String logoutGet(HttpSession session) {
         session.invalidate();
@@ -118,17 +118,19 @@ public class LoginC {
         int BookmarksCtn = userBookMServiceT.getBookmarkCountByUserId(user.getU_id());
         model.addAttribute("BookmarksCtn", BookmarksCtn);
 
-//        List<TagVO> tagList = tagMapper.selectAllTag();
         List<TagVO> tagLists = loginService.getTagIdByUserID(user.getU_id());
         model.addAttribute("tagLists", tagLists);
         System.out.println("tagList - " + tagLists);
-
 
         List<ReservationVO> reservations = reservationService.getUserReservations(user.getU_id());
         model.addAttribute("reservations", reservations);
 
         ReservationVO stats = reservationService.getReservationStats(user.getU_id());
         model.addAttribute("stats", stats);
+
+        if (user.getU_birth() == null) {
+            user.setU_birth(new Date());
+        }
 
         java.time.Instant ins = user.getU_birth().toInstant();
         ZoneId desiredZoneId = ZoneId.of("Asia/Seoul");
@@ -143,7 +145,6 @@ public class LoginC {
         MonthDay todayMonthDay = MonthDay.of(today.getMonth(), today.getDayOfMonth());
         model.addAttribute("today", today);
         model.addAttribute("todayMonthDay", todayMonthDay);
-
 
         model.addAttribute("user", user);
         model.addAttribute("content", "myPageHome.jsp");
@@ -291,6 +292,11 @@ public class LoginC {
             List<ReservationVO> reservations = reservationService.getUserReservations(user.getU_id());
 
             // 생년월일 : 오늘 날짜 비교
+
+            if (user.getU_birth() == null) {
+                user.setU_birth(new Date());
+            }
+
             java.time.Instant instant = user.getU_birth().toInstant();
             ZoneId desiredZoneId = ZoneId.of("Asia/Seoul");
             java.time.ZonedDateTime zonedDateTime = instant.atZone(desiredZoneId);
@@ -356,6 +362,11 @@ public class LoginC {
             List<ReservationVO> reservations = reservationService.getUserReservations(user.getU_id());
 
             // 생년월일 : 오늘 날짜 비교
+
+            if (user.getU_birth() == null) {
+                user.setU_birth(new Date());
+            }
+
             java.time.Instant instant = user.getU_birth().toInstant();
             ZoneId desiredZoneId = ZoneId.of("Asia/Seoul");
             java.time.ZonedDateTime zonedDateTime = instant.atZone(desiredZoneId);
@@ -590,7 +601,7 @@ public class LoginC {
                                RedirectAttributes redirectAttributes,
                                Model model) {
 
-        // 주소가 빈 문자열인 경우 null로 설정
+        // 주소가 빈 문자 열인 경우 null로 설정
         if (user.getU_address() != null && user.getU_address().isEmpty()) {
             user.setU_address(null);
         }
