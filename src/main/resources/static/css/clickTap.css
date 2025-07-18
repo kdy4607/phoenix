@@ -29,7 +29,6 @@
     padding: 10px 20px;
     background: #eee;
     cursor: pointer;
-    border: 1px solid #ccc;
     margin: 3px;
 }
 
@@ -38,8 +37,9 @@
 }
 
 .tab.active {
-    background: #fff;
+    background: #FB4357;
     font-weight: bold;
+    color: white;
 }
 
 .content {
