@@ -19,21 +19,22 @@
     <div class="content active" data-tab-content="genre">
         <div class="related-movie-wrap">
             <c:choose>
-                <c:when test="${empty relatedMovies}">
-                    관련 영화가 없습니다.
-                </c:when>
-                <c:otherwise>
-                    <c:forEach var="rel" items="${relatedMovies}" varStatus="loop">
-                        <c:if test="${loop.index < 5}">
-                            <!-- 동일장르 -->
-                            <div class="related-movie">
-                                <img src="${rel.poster_url}" alt="${rel.title}" style="width:150px">
-                                <div>${rel.title}</div>
-                            </div>
-                        </c:if>
-                    </c:forEach>
+            <c:when test="${empty relatedMovies}">
+                관련 영화가 없습니다.
+            </c:when>
+            <c:otherwise>
+            <c:forEach var="rel" items="${relatedMovies}" varStatus="loop">
+            <a href="/oneMovieDetail?movie_id=${rel.movie_id}" style="text-decoration: none; color: inherit;">
+                <c:if test="${loop.index < 5}">
+                <!-- 동일장르 -->
+                <div class="related-movie">
+                    <img src="${rel.poster_url}" alt="${rel.title}" style="width:150px">
+                    <div>${rel.title}</div>
+                </div>
+                </c:if>
+                </c:forEach>
                 </c:otherwise>
-            </c:choose>
+                </c:choose>
         </div>
     </div>
 
