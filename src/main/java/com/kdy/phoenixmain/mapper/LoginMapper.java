@@ -215,11 +215,9 @@ public interface LoginMapper {
     @Update("UPDATE USERS SET u_pw= #{u_pw}, u_name = #{u_name}, u_birth = #{u_birth, jdbcType=DATE}, u_address = #{u_address, jdbcType=VARCHAR} WHERE u_id = #{u_id}")
     int updateLoginByID(LoginVO loginVO);
 
-
     /**
     * TAG ID SELECT
     */
-
     @Select("""
             SELECT DISTINCT t.tag_id, t.tag_name, t.tag_type
             FROM USERS u

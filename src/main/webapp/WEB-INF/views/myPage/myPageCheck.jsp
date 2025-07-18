@@ -9,7 +9,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>MyPage : User Information Update Check - Phoenix Cinema</title>
 </head>
 <body>
 

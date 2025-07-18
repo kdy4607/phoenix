@@ -11,7 +11,7 @@
 
 <html>
 <head>
-    <title>Title</title>
+    <title>MyPage : My History - Phoenix Cinema</title>
 </head>
 <body>
 
