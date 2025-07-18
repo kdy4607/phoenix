@@ -14,22 +14,26 @@
 </div>
 
 <div class="tap-inBox">
-  
+
     <!-- 동일장르 -->
     <div class="content active" data-tab-content="genre">
         <div class="related-movie-wrap">
-            <c:if  test="${movie_id == null}">
-                관련 영화가 없습니다.
-            </c:if>
-            <c:forEach var="rel" items="${relatedMovies}" varStatus="loop">
-                <c:if test="${loop.index < 5}">
-                    <!-- 동일장르 -->
-                    <div class="related-movie">
-                        <img src="${rel.poster_url}" alt="${rel.title}" style="width:150px">
-                        <div>${rel.title}</div>
-                    </div>
-                </c:if>
-            </c:forEach>
+            <c:choose>
+                <c:when test="${empty relatedMovies}">
+                    관련 영화가 없습니다.
+                </c:when>
+                <c:otherwise>
+                    <c:forEach var="rel" items="${relatedMovies}" varStatus="loop">
+                        <c:if test="${loop.index < 5}">
+                            <!-- 동일장르 -->
+                            <div class="related-movie">
+                                <img src="${rel.poster_url}" alt="${rel.title}" style="width:150px">
+                                <div>${rel.title}</div>
+                            </div>
+                        </c:if>
+                    </c:forEach>
+                </c:otherwise>
+            </c:choose>
         </div>
     </div>
 
@@ -72,15 +76,17 @@
                     <div class="review-text">${review.r_text}</div>
 
                     <div class="review-date">
-                        <fmt:formatDate value="${review.r_date}" pattern="yyyy.MM.dd HH:mm:ss" />
+                        <fmt:formatDate value="${review.r_date}" pattern="yyyy.MM.dd HH:mm:ss"/>
                     </div>
 
                     <!-- 본인만 삭제 버튼 노출 -->
                     <c:if test="${review.u_id == sessionScope.user.u_id}">
                         <form action="/reviews/delete" method="post" style="margin-top: 5px;">
-                            <input type="hidden" name="r_id" value="${review.r_id}" />
-                            <input type="hidden" name="movie_id" value="${movieDetail2.movie_id}" />
-                            <button type="submit" class="submit-btn" onclick="return confirm('Do you really want to delete this?')">Delete</button>
+                            <input type="hidden" name="r_id" value="${review.r_id}"/>
+                            <input type="hidden" name="movie_id" value="${movieDetail2.movie_id}"/>
+                            <button type="submit" class="submit-btn"
+                                    onclick="return confirm('Do you really want to delete this?')">Delete
+                            </button>
                         </form>
                     </c:if>
                 </div>

@@ -16,7 +16,9 @@ public interface UserBookMServiceT {
 
     boolean existsBookmark(String u_id, int movie_id);
 
-
     //북마크 마이페이지용 입니다.
     List<MovieVO> getBookMarkWhidMovie(String u_id);
+    // 관련 영화 가져오기 메서드 추가
+    List<MovieVO> getRelatedMovies(int movieId);
+
 }
