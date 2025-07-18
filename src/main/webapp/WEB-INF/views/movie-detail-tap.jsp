@@ -92,7 +92,6 @@
             <button type="submit" class="submit-btn">Submit</button>
         </form>
 
-        <hr>
 
         <!-- 리뷰 목록 -->
         <div class="review-list">

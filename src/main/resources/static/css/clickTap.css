@@ -45,11 +45,12 @@
 .content {
     height: auto;
     display: none;
-    width: 100%; /* 전체 너비 채움 */
-    border: 1px solid #ccc;
+    width: 100%;
+    border-bottom: 10px solid #FB4357;
     padding-top: 10px;
-    margin-top: 10px;
-    box-sizing: border-box; /* 패딩 포함해서 너비 계산 */
+    padding-bottom: 30px;
+    margin-top: 20px;
+    box-sizing: border-box;
     margin-bottom: 40px;
 }
 
