@@ -855,7 +855,8 @@
             const movieGrid = document.getElementById('movieGrid');
 
             if (!movieRuntimes || Object.keys(movieRuntimes).length === 0) {
-                movieGrid.innerHTML = '<div style="text-align: center; padding: 40px; color: #666;">선택하신 날짜에 상영 중인 영화가 없습니다.</div>';
+                movieGrid.style.display = 'inline';
+                movieGrid.innerHTML = '<div style="text-align: center; padding: 40px; color: #666;">There are no films screening on the chosen date.</div>';
                 return;
             }
 
