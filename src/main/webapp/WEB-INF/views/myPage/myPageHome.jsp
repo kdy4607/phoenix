@@ -91,7 +91,7 @@
                         <div> Review</div>
                     </a>
                     <a href="/mypage/history?u_id=${user.u_id}">
-                        <span> 0 </span>
+                        <span> ${BookmarksCtn != null ? BookmarksCtn : 0 }</span>
                         <div> Wishlist</div>
                     </a>
                 </div>
@@ -101,7 +101,7 @@
                     <div class="cay-maPage-bottom-solid"></div>
                 </h1>
                 <div>
-                    <c:forEach var="tag" items="${tagList}">
+                    <c:forEach var="tag" items="${tagLists}">
                         <c:if test="${tag.tag_type eq 'Genre'}">
                             <a class="" href="/movie-all?status=showing&tags=${tag.tag_id}">
                                 <div class="tag tag-genre">${tag.tag_name}</div>

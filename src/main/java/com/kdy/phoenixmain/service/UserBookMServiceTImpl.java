@@ -62,4 +62,9 @@ public class UserBookMServiceTImpl implements UserBookMServiceT {
         return bookmarkMapper.getBookMarkWhidMovie(u_id);
     }
 
+
+    // 북마크 수 체크용 <- 2025년 07월 18일 12시경 추가하였습니다. (최아영)
+    @Override
+    public int getBookmarkCountByUserId(String u_id) { return  bookmarkMapper.getBookmarkCountByUserId(u_id); }
+
 }
