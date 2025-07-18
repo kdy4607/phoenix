@@ -26,7 +26,7 @@ function checkLoginStatus() {
 // 로그인 필요 알림
 // ========================================
 function requireLogin() {
-    if (confirm('예약을 위해 로그인이 필요합니다.\n로그인 페이지로 이동하시겠습니까?')) {
+    if (confirm('Login is required for reservations. \nWould you like to go to the login page?')) {
         const currentUrl = encodeURIComponent(window.location.pathname + window.location.search);
         window.location.href = '/login?returnUrl=' + currentUrl;
     }
@@ -111,13 +111,13 @@ function loadSchedule() {
             } else {
                 console.error('상영 시간표 로드 실패:', data.message);
                 document.getElementById('scheduleList').innerHTML =
-                    '<div class="no-schedule">상영 시간표가 없습니다.</div>';
+                    '<div class="no-schedule">There are no showtimes available.</div>';
             }
         })
         .catch(error => {
             console.error('상영 시간표 로드 오류:', error);
             document.getElementById('scheduleList').innerHTML =
-                '<div class="error-message">상영 시간표를 불러오는 중 오류가 발생했습니다.</div>';
+                '<div class="error-message">An error occurred while loading the showtime schedule.</div>';
         });
 }
 
@@ -128,7 +128,7 @@ function displaySchedule(schedule) {
     const scheduleList = document.getElementById('scheduleList');
 
     if (!schedule || schedule.length === 0) {
-        scheduleList.innerHTML = '<div class="no-schedule">선택한 조건에 맞는 상영 시간표가 없습니다.</div>';
+        scheduleList.innerHTML = '<div class="no-schedule">There are no showtimes that match the selected criteria.</div>';
         return;
     }
 
