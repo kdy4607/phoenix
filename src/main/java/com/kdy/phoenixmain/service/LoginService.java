@@ -3,9 +3,12 @@ package com.kdy.phoenixmain.service;
 import com.kdy.phoenixmain.mapper.LoginMapper;
 import com.kdy.phoenixmain.mapper.ReservationMapper;
 import com.kdy.phoenixmain.vo.LoginVO;
+import com.kdy.phoenixmain.vo.TagVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class LoginService {
@@ -198,4 +201,20 @@ public class LoginService {
             return 0;
         }
     }
+
+
+    /**
+     * 예약한 영화의 태그 조회
+     */
+    public List<TagVO> getTagIdByUserID(String u_id) {
+        try {
+            return loginMapper.getTagIdByUserID(u_id);
+        }catch (Exception e) {
+            System.out.println("예매 영화의 태그 조회 오류: " + e.getMessage());
+            return null;
+        }
+    }
+
+
+
 }

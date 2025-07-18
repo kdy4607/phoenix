@@ -55,7 +55,7 @@
                     <div>POINT</div>
                     <span id="point-ctn"> ${(totalAdults * 500) + (totalYouths * 500) + (totalChildren * 300)} </span>
                 </div>
-                <div  onclick="location.href='/mypage/reward/point?u_id=${user.u_id}'">
+                <div onclick="location.href='/mypage/reward/point?u_id=${user.u_id}'">
                     <div>MEMBERSHIP</div>
                     <span id="membership-ctn">
                         <c:choose>
@@ -78,7 +78,9 @@
         </div>
         <div class="cay-myPage-bottom">
             <div class="cay-myPage-history">
-                <h1>My History</h1>
+                <h1>My History
+                    <div class="cay-maPage-bottom-solid"></div>
+                </h1>
                 <div>
                     <a href="/mypage/history?u_id=${user.u_id}">
                         <span> ${stats.youth != null ? stats.youth : 0} </span>
@@ -89,17 +91,19 @@
                         <div> Review</div>
                     </a>
                     <a href="/mypage/history?u_id=${user.u_id}">
-                        <span> 0 </span>
+                        <span> ${BookmarksCtn != null ? BookmarksCtn : 0 }</span>
                         <div> Wishlist</div>
                     </a>
                 </div>
             </div>
             <div class="cay-myPage-genre">
-                <h1>Favorite Genre</h1>
+                <h1>Favorite Genre
+                    <div class="cay-maPage-bottom-solid"></div>
+                </h1>
                 <div>
-                    <c:forEach var="tag" items="${tagList}">
+                    <c:forEach var="tag" items="${tagLists}">
                         <c:if test="${tag.tag_type eq 'Genre'}">
-                            <a class=""  href="/movie-all?status=showing&tags=${tag.tag_id}">
+                            <a class="" href="/movie-all?status=showing&tags=${tag.tag_id}">
                                 <div class="tag tag-genre">${tag.tag_name}</div>
                             </a>
                         </c:if>
@@ -108,10 +112,12 @@
             </div>
 
             <div class="cay-myPage-order">
-                <h1>My Order History</h1>
+                <h1>My Order History
+                    <div class="cay-maPage-bottom-solid"></div>
+                </h1>
                 <div>
                     <div>
-                        <c:forEach items="${reservations}" var="reservation">
+                        <c:forEach items="${reservations}" var="reservation" begin="0" end="2">
                             <div>
                                 <div class="cay-myPage-order-img">
                                     <img src="${reservation.poster_url}" alt="">
@@ -150,15 +156,25 @@
                         <span> Your recent reservation details do not exist.  </span>
                     </c:if>
                 </div>
+                <div>
+                    <div> ※ It only reflects reservations of the most recent reservation details.</div>
+                    <div> ※ Check <a href="/reservation/list">here</a> for more coupon
+                        details.
+                    </div>
+                </div>
             </div>
             <div class="cay-myPage-event">
-                <h1>My Event History</h1>
+                <h1>My Event History
+                    <div class="cay-maPage-bottom-solid"></div>
+                </h1>
                 <div>
                     <span> No events participated.  </span>
                 </div>
             </div>
             <div class="cay-myPage-reward">
-                <h1>My reward</h1>
+                <h1>My reward
+                    <div class="cay-maPage-bottom-solid"></div>
+                </h1>
                 <div class="cay-myPage-ticket">
                     <div>Reward Ticket</div>
                     <table class="cay-myPage-ticket-table">
