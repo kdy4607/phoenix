@@ -103,12 +103,25 @@ public interface MovieMapper {
 //        MovieVO selectMovieById(@Param("movieId") int movieId);
 
     // ② 특정 영화와 장르가 겹치는 다른 영화 목록 조회
+//    @Select("""
+//        SELECT DISTINCT m2.movie_id, m2.title, m2.poster_url
+//        FROM movies m1
+//        JOIN movies m2 ON m1.genre = m2.genre
+//        WHERE m1.movie_id = #{movieId}
+//          AND m2.movie_id != #{movieId}
+//    """)
+//    List<MovieVO> selectRelatedMovies(@Param("movieId") int movieId);
     @Select("""
-        SELECT DISTINCT m2.movie_id, m2.title, m2.poster_url
-        FROM movies m1
-        JOIN movies m2 ON m1.genre = m2.genre
-        WHERE m1.movie_id = #{movieId}
-          AND m2.movie_id != #{movieId}
+    SELECT DISTINCT m2.movie_id, m2.title, m2.poster_url
+    FROM movies m2
+    WHERE m2.movie_id != #{movieId}
+      AND (
+        (#{genre1} IS NULL OR m2.genre LIKE '%' || #{genre1} || '%')
+        OR
+        (#{genre2} IS NULL OR m2.genre LIKE '%' || #{genre2} || '%')
+      )
     """)
-    List<MovieVO> selectRelatedMovies(@Param("movieId") int movieId);
+    List<MovieVO> selectRelatedMovies(@Param("movieId") int movieId,
+                                      @Param("genre1") String genre1,
+                                      @Param("genre2") String genre2);
 }

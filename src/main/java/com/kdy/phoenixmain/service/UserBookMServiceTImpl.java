@@ -1,12 +1,14 @@
 package com.kdy.phoenixmain.service;
 
 import com.kdy.phoenixmain.mapper.BookmarkMapper;
+import com.kdy.phoenixmain.mapper.MovieMapper;
 import com.kdy.phoenixmain.vo.MovieVO;
 import com.kdy.phoenixmain.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -14,6 +16,8 @@ public class UserBookMServiceTImpl implements UserBookMServiceT {
 
     @Autowired
     private BookmarkMapper bookmarkMapper;
+    @Autowired
+    private MovieMapper movieMapper;  //영화조회 위해서 여기다 끌어다 썻어요
 
     @Override
     @Transactional
@@ -62,6 +66,21 @@ public class UserBookMServiceTImpl implements UserBookMServiceT {
         return bookmarkMapper.getBookMarkWhidMovie(u_id);
     }
 
+    @Override //하나라도 일치하는 영화 / 기준 앞뒤 조사 조회
+    public List<MovieVO> getRelatedMovies(int movieId) {
+        MovieVO movie = movieMapper.selectOneMovie(movieId);  // 해당 영화 정보 조회
+        if (movie == null || movie.getGenre() == null) {
+            return new ArrayList<>();
+        }
+
+        String[] genres = movie.getGenre().split("/");
+        String genre1 = genres.length > 0 ? genres[0] : null;
+        String genre2 = genres.length > 1 ? genres[1] : null;
+
+        return movieMapper.selectRelatedMovies(movieId, genre1, genre2);
+
+
+    }
 
     // 북마크 수 체크용 <- 2025년 07월 18일 12시경 추가하였습니다. (최아영)
     @Override

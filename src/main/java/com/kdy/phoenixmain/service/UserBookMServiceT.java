@@ -19,6 +19,9 @@ public interface UserBookMServiceT {
 
     //북마크 마이페이지용 입니다.
     List<MovieVO> getBookMarkWhidMovie(String u_id);
+    // 관련 영화 가져오기 메서드 추가
+    List<MovieVO> getRelatedMovies(int movieId);
+
 
     // 북마크 수 체크용 <- 2025년 07월 18일 12시경 추가했습니다. (최아영)
     int getBookmarkCountByUserId(String u_id);
