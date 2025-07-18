@@ -1,4 +1,4 @@
-.tap-outBox{
+.tap-outBox {
     display: flex;
     width: 90%;
     align-items: center;
@@ -10,16 +10,18 @@
     padding-left: 15px;
     padding-right: 15px;
 }
-.tap-inBox{
+
+.tap-inBox {
     display: flex;
     flex-direction: column;
-    padding-left: 50px;
-    padding-right: 50px;
-    width: 100%;
+    /*padding-left: 50px;*/
+    width: 87%;
+    justify-self: center;
     box-sizing: border-box;
 
 
 }
+
 .tab {
     text-align: center;
     width: 100%;
@@ -28,34 +30,41 @@
     background: #eee;
     cursor: pointer;
     border: 1px solid #ccc;
-    margin-right: 5px;
+    margin: 3px;
 }
+
 .tab:last-child {
     border-right: 1px solid #ccc; /* 마지막 탭만 다시 추가 */
 }
+
 .tab.active {
     background: #fff;
     font-weight: bold;
 }
+
 .content {
     height: auto;
     display: none;
-    width: 100%;               /* 전체 너비 채움 */
+    width: 100%; /* 전체 너비 채움 */
     border: 1px solid #ccc;
-    padding: 20px;
+    padding-top: 10px;
     margin-top: 10px;
-    box-sizing: border-box;    /* 패딩 포함해서 너비 계산 */
+    box-sizing: border-box; /* 패딩 포함해서 너비 계산 */
     margin-bottom: 40px;
 }
+
 .content.active {
     display: block;
 }
+
 .related-movie-wrap {
     display: flex;
-    justify-content: center;   /* 가로 가운데 정렬 */
-    gap: 100px;           /* 영화 간 간격 */
-    flex-wrap: wrap;           /* 넘치면 줄바꿈 */
+    justify-content: center; /* 가로 가운데 정렬 */
+    /*gap: 100px; !* 영화 간 간격 *!*/
+    /*flex-wrap: wrap; !* 넘치면 줄바꿈 *!*/
     align-items: center;
+    transition: transform 0.5s ease;
+    will-change: transform;
 }
 
 .related-movie {
@@ -63,6 +72,79 @@
     flex-shrink: 0; /* 줄어들지 않게 */
 
 }
+
+/* 슬라이더 전체 감싸는 박스 */
+.slider-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* 버튼 좌우 고정 */
+    position: relative;
+    width: 810px; /* 필요에 따라 조정 */
+    margin: 0 auto;
+    overflow: hidden; /* 넘치는 영화 숨기기 */
+
+}
+
+#slider-track {
+    display: flex;
+    position: relative;
+    left: 10px;
+    transition: transform 0.5s ease;
+    white-space: nowrap;
+    gap: 20px; /* 영화 사이 간격 */
+}
+
+/* 버튼 스타일 */
+/*.slider-btn {*/
+/*    background-color: rgba(0, 0, 0, 0.5);*/
+/*    border: none;*/
+/*    color: white;*/
+/*    padding: 10px 15px;*/
+/*    cursor: pointer;*/
+/*    font-size: 24px;*/
+/*    user-select: none;*/
+/*    flex-shrink: 0;*/
+/*}*/
+.slider-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 2rem;
+    background-color: rgba(255, 255, 255, 0.8);
+    border: none;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.slider-btn.prev {
+    left: 0;
+}
+
+.slider-btn.next {
+    right: 0;
+}
+
+/* 보이는 부분 */
+.related-movie-viewport {
+    overflow: hidden;
+    width: 720px; /* 220px * 3개 + 간격 고려 */
+}
+
+/* 내부 트랙 */
+.related-movie-track {
+    display: flex;
+    gap: 30px;
+    transition: transform 0.3s ease-in-out;
+}
+
+/* 영화 링크 */
+.related-movie-link {
+    display: inline-block;
+    width: 250px;
+    text-align: center;
+    white-space: normal;
+}
+
 .related-movie img {
     width: 220px !important;
     height: auto;
