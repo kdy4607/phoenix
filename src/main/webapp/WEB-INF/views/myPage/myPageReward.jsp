@@ -10,7 +10,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>MyPage : My Reward - Phoenix Cinema</title>
 </head>
 <body>
 
@@ -19,17 +19,14 @@
     <c:set var="totalAdults" value="0"/>
     <c:set var="totalYouths" value="0"/>
     <c:set var="totalChildren" value="0"/>
-
     <c:forEach items="${reservations}" var="reservation">
         <c:set var="totalAdults" value="${totalAdults + reservation.adult}"/>
         <c:set var="totalYouths" value="${totalYouths + reservation.youth}"/>
         <c:set var="totalChildren" value="${totalChildren + reservation.child}"/>
        ${reservation.adult}
     </c:forEach>
-
     <%-- 계산된 총 인원수를 바탕으로 금액 계산 --%>
     <c:set var="calculatedTotalAmount" value="${(totalAdults * 500) + (totalYouths * 500) + (totalChildren * 300)}"/>
-
     <p>
         총 성인 수: ${totalAdults}명 <br>
         총 청소년 수: ${totalYouths}명 <br>
@@ -38,8 +35,6 @@
         계산된 총 인원수 기반 금액: <fmt:formatNumber value="${calculatedTotalAmount}" type="number"/> ₩
     </p>
 </div>
-
-
 <div class="cay-myPage-content">
     <div class="cay-myPage-wrap">
         <div> My Reward</div>

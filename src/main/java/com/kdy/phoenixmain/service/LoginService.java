@@ -202,7 +202,6 @@ public class LoginService {
         }
     }
 
-
     /**
      * 예약한 영화의 태그 조회
      */
@@ -214,7 +213,4 @@ public class LoginService {
             return null;
         }
     }
-
-
-
 }

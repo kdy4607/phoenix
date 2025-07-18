@@ -9,15 +9,13 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>MyPage : Withdraw Membership - Phoenix Cinema</title>
 </head>
 <body>
-
 
 <div class="cay-myPage-content">
     <div class="cay-myPage-wrap">
         <div>Are you sure want to DELETE YOUR ACCOUNT ?</div>
-
         <form action="/mypage/deleteAccount" method="post">
             <div class="cay-myPage-errorMessage">${errorMessage}</div>
             <div>
@@ -39,5 +37,6 @@
         </form>
     </div>
 </div>
+
 </body>
 </html>

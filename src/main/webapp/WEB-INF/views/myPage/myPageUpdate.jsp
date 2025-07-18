@@ -9,10 +9,9 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>MyPage : User Information Update - Phoenix Cinema</title>
 </head>
 <body>
-
 
 <div class="cay-myPage-content">
 <div class="cay-myPage-errorMessage"> ${errorMessage} </div>
