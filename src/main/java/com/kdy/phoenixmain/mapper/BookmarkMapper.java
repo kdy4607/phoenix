@@ -46,4 +46,10 @@ public interface BookmarkMapper {
             "WHERE b1.u_id = #{u_id}")
     List<MovieVO> getBookMarkWhidMovie(@Param("u_id") String u_id);
 
+
+    // 북마크 수 확인용 <- 2025년 07월 18일 12시경 추가했습니다. (최아영)
+    @Select("SELECT COUNT(*) FROM bookmarks WHERE u_id = #{u_id}")
+    int getBookmarkCountByUserId(@Param("u_id") String u_id);
+
+
 }

@@ -119,33 +119,36 @@
                     <h1>My Wishlist</h1>
                     <div>
                         <div>
-                            <div>
-                                <%--북마크 추가에 따른 수정 필요<--%>
-                                <c:if test="${not empty wishlists}">
-                                    <c:forEach items="${reservations}" var="reservation">
+                            <%--북마크 추가에 따른 수정 필요<--%>
+                            <c:if test="${not empty bookmarks}">
+                                <c:forEach items="${bookmarks}" var="bookmark">
+                                    <div>
                                         <div class="cay-myPage-order-img">
-                                            <img src="${reservation.poster_url}" alt="">
+                                            <img src="${bookmark.poster_url}" alt="">
                                         </div>
                                         <div class="cay-myPage-order-info">
                                             <div class="cay-myPage-order-top">
-                                                    ${reservation.movie_title}
+                                                    ${bookmark.title}
                                             </div>
                                             <div class="cay-myPage-order-bottom">
                                                 <div>
-                                                    Dummy Plot. <br>
-                                                    This is for the plot of the wishlist movie
-                                                    <c:if test="${not empty wishlist}">
-                                                        Movie Plot
-                                                    </c:if>
+                                                    <div> ㅤ</div>
+                                                    Click the button to view movie details.
+                                                    <button class="cay-myPage-history-button"
+                                                            onclick="location.href='/oneMovieDetail?movie_id=${bookmark.movie_id}'">
+                                                        ⤴
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
-                                    </c:forEach>
-                                </c:if>
-                                <c:if test="${empty wishlists}">
+                                    </div>
+                                </c:forEach>
+                            </c:if>
+                            <c:if test="${empty bookmarks}">
+                                <div>
                                     <span> Your wishlist do not exist.  </span>
-                                </c:if>
-                            </div>
+                                </div>
+                            </c:if>
                         </div>
                     </div>
                 </div>

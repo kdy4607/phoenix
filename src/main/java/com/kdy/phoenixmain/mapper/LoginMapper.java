@@ -1,6 +1,8 @@
 package com.kdy.phoenixmain.mapper;
 
 import com.kdy.phoenixmain.vo.LoginVO;
+import com.kdy.phoenixmain.vo.ReservationVO;
+import com.kdy.phoenixmain.vo.TagVO;
 import org.apache.ibatis.annotations.*;
 
 import java.util.Date;
@@ -13,10 +15,10 @@ public interface LoginMapper {
      * 로그인 (ID와 비밀번호로 사용자 조회)
      */
     @Select("""
-        SELECT u_id, u_pw, u_name, u_birth, u_address
-        FROM USERS
-        WHERE u_id = #{u_id} AND u_pw = #{u_pw}
-    """)
+                SELECT u_id, u_pw, u_name, u_birth, u_address
+                FROM USERS
+                WHERE u_id = #{u_id} AND u_pw = #{u_pw}
+            """)
     @Results({
             @Result(property = "u_id", column = "u_id"),
             @Result(property = "u_pw", column = "u_pw"),
@@ -30,10 +32,10 @@ public interface LoginMapper {
      * 사용자 정보 조회 (ID로)
      */
     @Select("""
-        SELECT u_id, u_pw, u_name, u_birth, u_address
-        FROM USERS
-        WHERE u_id = #{u_id}
-    """)
+                SELECT u_id, u_pw, u_name, u_birth, u_address
+                FROM USERS
+                WHERE u_id = #{u_id}
+            """)
     @Results({
             @Result(property = "u_id", column = "u_id"),
             @Result(property = "u_pw", column = "u_pw"),
@@ -53,13 +55,13 @@ public interface LoginMapper {
      * 회원 정보 수정
      */
     @Update("""
-        UPDATE USERS
-        SET u_pw = #{u_pw},
-            u_name = #{u_name},
-            u_birth = #{u_birth, jdbcType=DATE},
-            u_address = #{u_address, jdbcType=VARCHAR}
-        WHERE u_id = #{u_id}
-    """)
+                UPDATE USERS
+                SET u_pw = #{u_pw},
+                    u_name = #{u_name},
+                    u_birth = #{u_birth, jdbcType=DATE},
+                    u_address = #{u_address, jdbcType=VARCHAR}
+                WHERE u_id = #{u_id}
+            """)
     int updateLogin(LoginVO loginVO);
 
     /**
@@ -72,20 +74,20 @@ public interface LoginMapper {
      * 비밀번호 변경
      */
     @Update("""
-        UPDATE USERS
-        SET u_pw = #{newPassword}
-        WHERE u_id = #{u_id}
-    """)
+                UPDATE USERS
+                SET u_pw = #{newPassword}
+                WHERE u_id = #{u_id}
+            """)
     int updatePassword(@Param("u_id") String u_id, @Param("newPassword") String newPassword);
 
     /**
      * 모든 사용자 조회 (관리자용)
      */
     @Select("""
-        SELECT u_id, u_pw, u_name, u_birth, u_address
-        FROM USERS
-        ORDER BY u_id
-    """)
+                SELECT u_id, u_pw, u_name, u_birth, u_address
+                FROM USERS
+                ORDER BY u_id
+            """)
     @Results({
             @Result(property = "u_id", column = "u_id"),
             @Result(property = "u_pw", column = "u_pw"),
@@ -105,10 +107,10 @@ public interface LoginMapper {
      * 사용자 이름으로 검색
      */
     @Select("""
-        SELECT u_id, u_pw, u_name, u_birth, u_address
-        FROM USERS
-        WHERE u_name LIKE '%' || #{u_name} || '%'
-    """)
+                SELECT u_id, u_pw, u_name, u_birth, u_address
+                FROM USERS
+                WHERE u_name LIKE '%' || #{u_name} || '%'
+            """)
     @Results({
             @Result(property = "u_id", column = "u_id"),
             @Result(property = "u_pw", column = "u_pw"),
@@ -122,11 +124,11 @@ public interface LoginMapper {
      * 최근 가입자 조회
      */
     @Select("""
-        SELECT u_id, u_pw, u_name, u_birth, u_address
-        FROM USERS
-        ORDER BY u_id DESC
-        FETCH FIRST #{limit} ROWS ONLY
-    """)
+                SELECT u_id, u_pw, u_name, u_birth, u_address
+                FROM USERS
+                ORDER BY u_id DESC
+                FETCH FIRST #{limit} ROWS ONLY
+            """)
     @Results({
             @Result(property = "u_id", column = "u_id"),
             @Result(property = "u_pw", column = "u_pw"),
@@ -140,10 +142,10 @@ public interface LoginMapper {
      * 생년월일로 검색
      */
     @Select("""
-        SELECT u_id, u_pw, u_name, u_birth, u_address
-        FROM USERS
-        WHERE u_birth BETWEEN #{startDate} AND #{endDate}
-    """)
+                SELECT u_id, u_pw, u_name, u_birth, u_address
+                FROM USERS
+                WHERE u_birth BETWEEN #{startDate} AND #{endDate}
+            """)
     @Results({
             @Result(property = "u_id", column = "u_id"),
             @Result(property = "u_pw", column = "u_pw"),
@@ -157,10 +159,10 @@ public interface LoginMapper {
      * 주소로 검색
      */
     @Select("""
-        SELECT u_id, u_pw, u_name, u_birth, u_address
-        FROM USERS
-        WHERE u_address LIKE '%' || #{address} || '%'
-    """)
+                SELECT u_id, u_pw, u_name, u_birth, u_address
+                FROM USERS
+                WHERE u_address LIKE '%' || #{address} || '%'
+            """)
     @Results({
             @Result(property = "u_id", column = "u_id"),
             @Result(property = "u_pw", column = "u_pw"),
@@ -174,10 +176,10 @@ public interface LoginMapper {
      * 이메일로 사용자 검색 (확장 기능)
      */
     @Select("""
-        SELECT u_id, u_pw, u_name, u_birth, u_address
-        FROM USERS
-        WHERE u_id LIKE '%@%' AND u_id = #{email}
-    """)
+                SELECT u_id, u_pw, u_name, u_birth, u_address
+                FROM USERS
+                WHERE u_id LIKE '%@%' AND u_id = #{email}
+            """)
     @Results({
             @Result(property = "u_id", column = "u_id"),
             @Result(property = "u_pw", column = "u_pw"),
@@ -212,4 +214,21 @@ public interface LoginMapper {
      */
     @Update("UPDATE USERS SET u_pw= #{u_pw}, u_name = #{u_name}, u_birth = #{u_birth, jdbcType=DATE}, u_address = #{u_address, jdbcType=VARCHAR} WHERE u_id = #{u_id}")
     int updateLoginByID(LoginVO loginVO);
+
+
+    /**
+    * TAG ID SELECT
+    */
+
+    @Select("""
+            SELECT DISTINCT t.tag_id, t.tag_name, t.tag_type
+            FROM USERS u
+            JOIN RESERVATIONS r ON u.u_id = r.u_id
+            JOIN RUNTIMES rt ON r.runtime_id = rt.runtime_id
+            JOIN MOVIES m ON rt.movie_id = m.movie_id
+            JOIN MOVIE_TAGS mt ON m.movie_id = mt.movie_id
+            JOIN TAGS t ON mt.tag_id = t.tag_id
+            WHERE u.u_id = 'TestUser'
+            """)
+    List<TagVO> getTagIdByUserID(@Param("u_id") String u_id);
 }
