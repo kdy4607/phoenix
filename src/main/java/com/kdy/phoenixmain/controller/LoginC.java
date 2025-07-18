@@ -3,7 +3,9 @@ package com.kdy.phoenixmain.controller;
 import com.kdy.phoenixmain.mapper.TagMapper;
 import com.kdy.phoenixmain.service.LoginService;
 import com.kdy.phoenixmain.service.ReservationService;
+import com.kdy.phoenixmain.service.UserBookMServiceT;
 import com.kdy.phoenixmain.vo.LoginVO;
+import com.kdy.phoenixmain.vo.MovieVO;
 import com.kdy.phoenixmain.vo.ReservationVO;
 import com.kdy.phoenixmain.vo.TagVO;
 import jakarta.servlet.http.HttpSession;
@@ -30,6 +32,9 @@ public class LoginC {
 
     @Autowired
     private ReservationService reservationService;
+
+    @Autowired
+    private UserBookMServiceT userBookMServiceT;
 
     // ===== 로그인 관련 =====
 
@@ -229,6 +234,7 @@ public class LoginC {
 
         LoginVO user = (LoginVO) session.getAttribute("user");
         List<ReservationVO> reservations = reservationService.getUserReservations(user.getU_id());
+        List<MovieVO> Bookmarks = userBookMServiceT.getBookMarkWhidMovie(u_id);
 
         if (user == null) {
             redirectAttributes.addFlashAttribute("errorMessage", "You are logged out.");
@@ -236,6 +242,7 @@ public class LoginC {
         } else {
             if (u_id.equals(user.getU_id())) {
                 model.addAttribute("user", user);
+                model.addAttribute("bookmarks", Bookmarks);
                 model.addAttribute("reservations", reservations);
                 model.addAttribute("content", "myPageHistory.jsp");
             }
