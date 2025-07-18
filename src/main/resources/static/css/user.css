@@ -680,6 +680,18 @@ a {
     justify-content: space-between;
 }
 
+.cay-myPage-order > div:nth-child(3) {
+    width: 90% !important;
+    padding: 0 1rem 3rem !important;
+    font-size: 1rem !important;
+    color: #aaaaaa !important;
+    display: block !important;
+}
+
+.cay-myPage-order > div:nth-child(3) > div > a {
+    color: #FB4357 !important;
+}
+
 /* Home Reward */
 
 .cay-myPage-reward h4 {

@@ -117,7 +117,7 @@
                 </h1>
                 <div>
                     <div>
-                        <c:forEach items="${reservations}" var="reservation">
+                        <c:forEach items="${reservations}" var="reservation" begin="0" end="2">
                             <div>
                                 <div class="cay-myPage-order-img">
                                     <img src="${reservation.poster_url}" alt="">
@@ -155,6 +155,12 @@
                     <c:if test="${empty reservations}">
                         <span> Your recent reservation details do not exist.  </span>
                     </c:if>
+                </div>
+                <div>
+                    <div> ※ It only reflects reservations of the most recent reservation details.</div>
+                    <div> ※ Check <a href="/reservation/list">here</a> for more coupon
+                        details.
+                    </div>
                 </div>
             </div>
             <div class="cay-myPage-event">
