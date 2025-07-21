@@ -9,7 +9,6 @@
 <body>
 <jsp:include page="/WEB-INF/views/header.jsp"/>
 <div class="container">
-    <%-- 메뉴 선택 창입니다. --%>
     <div class="menu-sel">
         <h1>
             MOVIE INFORMATION
@@ -22,9 +21,8 @@
         <jsp:include page="${movieTapClic}"></jsp:include>
     </div>
 
-
 </div>
-<a href="/userBookMarks">북마크 보기 테스트</a>
+<%--<a href="/userBookMarks">북마크 보기 테스트</a>--%>
 </body>
 
 </html>

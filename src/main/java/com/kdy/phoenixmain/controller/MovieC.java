@@ -117,6 +117,7 @@ public class MovieC {
         session.setAttribute("lastMovieId", movie_id);
         //별개수 출력
         MovieVO movie = movieService.selectOneMovie(movie_id);
+
         //model.addAttribute("movieStar", movie);
         int proStar = (int) Math.floor(movie.getPro_critic());
         int userStar = (int) Math.floor(movie.getUser_critic());
@@ -139,10 +140,13 @@ public class MovieC {
         movie = movieService.selectOneMovie(movie_id);
         model.addAttribute("movie", movie);
 
-        // 관련 영화 (장르 겹치는 다른 영화들)
-        List<MovieVO> relatedMovies = movieService.getRelatedByGenre(movie_id);
+        // 관련 영화 (장르 겹치는 다른 영화들) 1개라도 겹치면 온다.
+//        List<MovieVO> relatedMovies = movieService.getRelatedByGenre(movie_id);
+//        model.addAttribute("relatedMovies", relatedMovies); //구 버젼
+        List<MovieVO> relatedMovies = userBookMServiceT.getRelatedMovies(movie_id);
         model.addAttribute("relatedMovies", relatedMovies);
-
+        System.out.println(relatedMovies);
+        //리뷰용
         List<ReviewVO> reviewList = reviewService.getReviews(movie_id);
         model.addAttribute("reviewList", reviewList);
 
