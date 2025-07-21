@@ -239,8 +239,8 @@
 
             <!-- Seat Buttons -->
             <div class="seat-buttons">
-                <button type="button" class="btn-secondary" onclick="cancelSeatSelection()">이전 단계</button>
-                <button type="button" class="btn-primary" id="confirmSeatsBtn" onclick="confirmSeats()" disabled>다음 단계
+                <button type="button" class="btn-secondary" onclick="cancelSeatSelection()">Previous</button>
+                <button type="button" class="btn-primary" id="confirmSeatsBtn" onclick="confirmSeats()" disabled>Next
                 </button>
             </div>
         </div>
