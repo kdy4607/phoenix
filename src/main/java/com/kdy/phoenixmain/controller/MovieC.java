@@ -96,17 +96,6 @@ public class MovieC {
         return "redirect:/oneMovieDetail?movie_id=" + review.getMovie_id();
     }
 
-    // ✅ 리뷰 수정
-    @PostMapping("/reviews/update")
-    public String updateReview(@ModelAttribute ReviewVO review, HttpSession session) {
-        LoginVO user = (LoginVO) session.getAttribute("user");
-        if (user == null) return "redirect:/login";
-
-        review.setU_id(user.getU_id());
-        reviewService.updateReview(review);
-
-        return "redirect:/oneMovieDetail?movie_id=" + review.getMovie_id();
-    }
 
     // ✅ 리뷰 삭제
     @PostMapping("/reviews/delete")
