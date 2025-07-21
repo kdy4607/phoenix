@@ -145,40 +145,42 @@ function setStatus(status) {
 
 // 필터링을 적용해서 영화 목록을 새로 그리는 함수
 function applyFilters() {
-    // 검색어 가져오기
     const titleInput = document.querySelector('input[name="title"]');
     const title = titleInput ? titleInput.value.trim().toLowerCase() : "";
 
-    // 전체 영화 중 조건에 맞는 영화만 필터링
     const filtered = allMovies.filter((movie) => {
-        // 제목 필터
         const matchTitle = !title || movie.title.toLowerCase().includes(title);
 
-        // 상태 필터 (상영중/개봉예정)
         const releaseDate = new Date(movie.release_date);
         const today = new Date();
         let matchStatus = true;
-
         if (currentStatus === "showing") {
             matchStatus = releaseDate <= today;
         } else if (currentStatus === "upcoming") {
             matchStatus = releaseDate > today;
         }
 
-        // 태그 필터
         const movieTagIds = movie.m_tagList.map((tag) => tag.tag_id);
-        const matchTags = [...selectedTags].every((id) => movieTagIds.includes(id));
+        const matchTags = selectedTags.size === 0 || [...selectedTags].some((id) => movieTagIds.includes(id));
 
-        // 모든 조건을 만족하는 영화만 남김
+
         return matchTitle && matchStatus && matchTags;
     });
 
-    // 약간의 딜레이 후 영화 렌더링 (UX 향상용)
+    // ⭐️ 평점 높은 순으로 정렬
+    filtered.sort((a, b) => b.user_critic - a.user_critic);
+
+    // ⭐️ 정렬된 순서대로 랭킹 부여
+    filtered.forEach((movie, idx) => {
+        movie.ranking = idx + 1;
+    });
+
     setTimeout(() => {
-        renderMovies(filtered); // 필터된 영화 렌더링
-        updateURLParams();      // URL 업데이트
+        renderMovies(filtered);
+        updateURLParams();
     }, 200);
 }
+
 
 // 태그 목록 펼치기/접기 토글
 function toggleTags() {
