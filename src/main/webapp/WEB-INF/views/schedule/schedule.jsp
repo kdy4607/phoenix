@@ -858,6 +858,8 @@
                 movieGrid.style.display = 'inline';
                 movieGrid.innerHTML = '<div style="text-align: center; padding: 40px; color: #666;">There are no films screening on the chosen date.</div>';
                 return;
+            } else {
+                movieGrid.style.display = 'grid';
             }
 
             let html = '';
