@@ -9,31 +9,20 @@
 <body>
 <jsp:include page="/WEB-INF/views/header.jsp"/>
 <div class="container">
-<%-- 메뉴 선택 창입니다. --%>
-<div class="menu-sel">
-    <h1>
-        MOVIE INFORMATION
-    </h1>
+    <div class="menu-sel">
+        <h1>
+            MOVIE INFORMATION
+        </h1>
+    </div>
+    <div>
+        <jsp:include page="${movieDetail}"></jsp:include>
+    </div>
+    <div>
+        <jsp:include page="${movieTapClic}"></jsp:include>
+    </div>
+
 </div>
-<div>
-    <jsp:include page="${movieDetail}"></jsp:include>
-</div>
-<div>
-    <jsp:include page="${movieTapClic}"></jsp:include>
-</div>
-<%--    <div onclick="location.href='/movie-all'">--%>
-<%--        <span class="icon">🎭</span>영화 목록--%>
-<%--    </div>--%>
-<%--    <div onclick="location.href='/schedule'">--%>
-<%--        <span class=" icon">🎫</span>상영시간표 & 예매--%>
-<%--    </div>--%>
-<%--    <div onclick="alert('준비 중입니다!')">--%>
-<%--        <span class="icon">🏢</span>극장 정보--%>
-<%--    </div>--%>
-<%--    <div onclick="alert('준비 중입니다!')">--%>
-<%--        <span class="icon">🎉</span>이벤트--%>
-<%--    </div>--%>
-</div>
+<%--<a href="/userBookMarks">북마크 보기 테스트</a>--%>
 </body>
 
 </html>

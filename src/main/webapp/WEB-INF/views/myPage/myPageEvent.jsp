@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>MyPage : My Event - Phoenix Cinema</title>
 </head>
 <body>
 
@@ -41,7 +41,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
             <div class="cay-myPage-tabs-content" id="upcoming_content">
                 <div class="cay-myPage-order">

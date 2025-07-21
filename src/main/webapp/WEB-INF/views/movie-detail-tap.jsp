@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <html>
 <head>
     <title>Movie Detail</title>
@@ -14,22 +15,60 @@
 </div>
 
 <div class="tap-inBox">
-  
-    <!-- 동일장르 -->
-    <div class="content active" data-tab-content="genre">
-        <div class="related-movie-wrap">
-            <c:forEach var="rel" items="${relatedMovies}" varStatus="loop">
-                <c:if test="${loop.index < 5}">
-                    <!-- 동일장르 -->
-                    <div class="related-movie">
-                        <img src="${rel.poster_url}" alt="${rel.title}" style="width:150px">
-                        <div>${rel.title}</div>
-                    </div>
-                </c:if>
-            </c:forEach>
-        </div>
-    </div>
 
+    <%--    <!-- 동일장르 -->--%>
+    <%--    <div class="content active" data-tab-content="genre">--%>
+    <%--        <div class="related-movie-wrap">--%>
+    <%--            <c:choose>--%>
+    <%--                <c:when test="${empty relatedMovies}">--%>
+    <%--                    관련 영화가 없습니다.--%>
+    <%--                </c:when>--%>
+    <%--                <c:otherwise>--%>
+
+    <%--                    <c:forEach var="rel" items="${relatedMovies}" varStatus="loop">--%>
+
+    <%--                        <c:if test="${loop.index < 5}">--%>
+    <%--                            <a href="/oneMovieDetail?movie_id=${rel.movie_id}"--%>
+    <%--                               style="text-decoration: none; color: inherit;">--%>
+    <%--                                <!-- 동일장르 -->--%>
+    <%--                                <div class="related-movie">--%>
+    <%--                                    <img src="${rel.poster_url}" alt="${rel.title}" style="width:150px">--%>
+    <%--                                    <div>${rel.title}</div>--%>
+    <%--                                </div>--%>
+    <%--                            </a>--%>
+    <%--                        </c:if>--%>
+
+    <%--                    </c:forEach>--%>
+
+    <%--                </c:otherwise>--%>
+    <%--            </c:choose>--%>
+    <%--        </div>--%>
+    <%--    </div>--%>
+    <!-- 동일장르 -->
+        <div class="content active" data-tab-content="genre">
+            <c:choose>
+                <c:when test="${empty relatedMovies}">
+                    관련 영화가 없습니다.
+                </c:when>
+                <c:otherwise>
+                    <div class="slider-container">
+                        <button class="slider-btn prev" onclick="slideMovies(-1)">&#10094;</button>
+
+                        <div class="related-movie-wrap" id="slider-track"  style="width: calc((250px + 20px) * ${fn:length(relatedMovies)});">
+                            <c:forEach var="rel" items="${relatedMovies}">
+                                <a href="/oneMovieDetail?movie_id=${rel.movie_id}" class="related-movie-link">
+                                    <div class="related-movie">
+                                        <img src="${rel.poster_url}" alt="${rel.title}" style="width:150px">
+                                        <div>${rel.title}</div>
+                                    </div>
+                                </a>
+                            </c:forEach>
+                        </div>
+                        <button class="slider-btn next" onclick="slideMovies(1)">&#10095;</button>
+                    </div>
+                </c:otherwise>
+            </c:choose>
+        </div>
     <!-- 관객평 -->
     <div class="content" data-tab-content="review">
         <!-- 리뷰 작성 폼 -->
@@ -53,7 +92,6 @@
             <button type="submit" class="submit-btn">Submit</button>
         </form>
 
-        <hr>
 
         <!-- 리뷰 목록 -->
         <div class="review-list">
@@ -69,15 +107,17 @@
                     <div class="review-text">${review.r_text}</div>
 
                     <div class="review-date">
-                        <fmt:formatDate value="${review.r_date}" pattern="yyyy.MM.dd HH:mm:ss" />
+                        <fmt:formatDate value="${review.r_date}" pattern="yyyy.MM.dd HH:mm:ss"/>
                     </div>
 
                     <!-- 본인만 삭제 버튼 노출 -->
                     <c:if test="${review.u_id == sessionScope.user.u_id}">
                         <form action="/reviews/delete" method="post" style="margin-top: 5px;">
-                            <input type="hidden" name="r_id" value="${review.r_id}" />
-                            <input type="hidden" name="movie_id" value="${movieDetail2.movie_id}" />
-                            <button type="submit" class="submit-btn" onclick="return confirm('Do you really want to delete this?')">Delete</button>
+                            <input type="hidden" name="r_id" value="${review.r_id}"/>
+                            <input type="hidden" name="movie_id" value="${movieDetail2.movie_id}"/>
+                            <button type="submit" class="submit-btn"
+                                    onclick="return confirm('Do you really want to delete this?')">Delete
+                            </button>
                         </form>
                     </c:if>
                 </div>
@@ -98,6 +138,32 @@
             content.classList.toggle('active', content.dataset.tabContent === tabName);
         });
     }
+
+ // 이건 사이드바 조절용~
+    let currentIndex = 0;
+    const visibleCount = 4; // 한 번에 보일 영화 개수
+    const itemWidth = 270; // 영화 박스 하나의 대략적인 width + margin
+    const track = document.getElementById('slider-track');
+
+    function slideMovies(direction) {
+        const totalItems = track.children.length;
+        console.log("totalItems : "+totalItems);
+
+        const maxIndex = totalItems - visibleCount;
+        console.log("maxIndex : "+maxIndex);
+
+        console.log("currentIndex : " + currentIndex);
+
+        currentIndex += direction;
+
+        if (currentIndex < 0) currentIndex = 0;
+        if (currentIndex > maxIndex) currentIndex = maxIndex;
+
+        console.log("currentIndex : " + currentIndex);
+        const moveX = -currentIndex * itemWidth;
+        track.style.transform = `translateX(\${moveX}px)`;
+    }
+
 </script>
 
 </body>

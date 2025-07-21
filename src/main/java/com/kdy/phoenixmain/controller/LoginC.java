@@ -3,9 +3,8 @@ package com.kdy.phoenixmain.controller;
 import com.kdy.phoenixmain.mapper.TagMapper;
 import com.kdy.phoenixmain.service.LoginService;
 import com.kdy.phoenixmain.service.ReservationService;
-import com.kdy.phoenixmain.vo.LoginVO;
-import com.kdy.phoenixmain.vo.ReservationVO;
-import com.kdy.phoenixmain.vo.TagVO;
+import com.kdy.phoenixmain.service.UserBookMServiceT;
+import com.kdy.phoenixmain.vo.*;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +29,9 @@ public class LoginC {
 
     @Autowired
     private ReservationService reservationService;
+
+    @Autowired
+    private UserBookMServiceT userBookMServiceT;
 
     // ===== 로그인 관련 =====
 
@@ -56,7 +58,7 @@ public class LoginC {
             if (user != null) {
                 // 로그인 성공
                 session.setAttribute("user", user);
-              //  session.setAttribute("userId", user.getU_id()); // 북마크용입니다.
+                session.setAttribute("userId", user.getU_id()); // 북마크 용
                 System.out.println("✅ 로그인 성공 - 사용자: " + user.getU_name());
 
                 // 리턴 URL이 있으면 해당 페이지로, 없으면 메인 페이지로
@@ -83,7 +85,7 @@ public class LoginC {
         }
     }
 
-    // 로그아웃 (GET과 POST 둘 다 지원)
+    // 로그아웃 (GET과 POST 지원)
     @GetMapping("/logout")
     public String logoutGet(HttpSession session) {
         session.invalidate();
@@ -113,16 +115,22 @@ public class LoginC {
         String homeName = user.getU_name().substring(0, Math.min(user.getU_name().length(), 3));
         model.addAttribute("homeName", homeName);
 
-        List<TagVO> tagList = tagMapper.selectAllTag();
-        model.addAttribute("tagList", tagList);
+        int BookmarksCtn = userBookMServiceT.getBookmarkCountByUserId(user.getU_id());
+        model.addAttribute("BookmarksCtn", BookmarksCtn);
 
-
+        List<TagVO> tagLists = loginService.getTagIdByUserID(user.getU_id());
+        model.addAttribute("tagLists", tagLists);
+        System.out.println("tagList - " + tagLists);
 
         List<ReservationVO> reservations = reservationService.getUserReservations(user.getU_id());
         model.addAttribute("reservations", reservations);
 
         ReservationVO stats = reservationService.getReservationStats(user.getU_id());
         model.addAttribute("stats", stats);
+
+        if (user.getU_birth() == null) {
+            user.setU_birth(new Date());
+        }
 
         java.time.Instant ins = user.getU_birth().toInstant();
         ZoneId desiredZoneId = ZoneId.of("Asia/Seoul");
@@ -137,7 +145,6 @@ public class LoginC {
         MonthDay todayMonthDay = MonthDay.of(today.getMonth(), today.getDayOfMonth());
         model.addAttribute("today", today);
         model.addAttribute("todayMonthDay", todayMonthDay);
-
 
         model.addAttribute("user", user);
         model.addAttribute("content", "myPageHome.jsp");
@@ -223,19 +230,23 @@ public class LoginC {
 
     @GetMapping("/mypage/history")
     public String history(@RequestParam("u_id") String u_id,
-                          RedirectAttributes  redirectAttributes,
+                          RedirectAttributes redirectAttributes,
                           HttpSession session,
                           Model model) {
 
         LoginVO user = (LoginVO) session.getAttribute("user");
-        List<ReservationVO> reservations = reservationService.getUserReservations(user.getU_id());
 
         if (user == null) {
             redirectAttributes.addFlashAttribute("errorMessage", "You are logged out.");
             return "redirect:/login";
         } else {
+
+            List<ReservationVO> reservations = reservationService.getUserReservations(user.getU_id());
+            List<MovieVO> Bookmarks = userBookMServiceT.getBookMarkWhidMovie(u_id);
+
             if (u_id.equals(user.getU_id())) {
                 model.addAttribute("user", user);
+                model.addAttribute("bookmarks", Bookmarks);
                 model.addAttribute("reservations", reservations);
                 model.addAttribute("content", "myPageHistory.jsp");
             }
@@ -272,23 +283,31 @@ public class LoginC {
                          Model model) {
 
         LoginVO user = (LoginVO) session.getAttribute("user");
-        List<ReservationVO> reservations = reservationService.getUserReservations(user.getU_id());
-
-        // 생년월일 : 오늘 날짜 비교
-        java.time.Instant instant = user.getU_birth().toInstant();
-        ZoneId desiredZoneId = ZoneId.of("Asia/Seoul");
-        java.time.ZonedDateTime zonedDateTime = instant.atZone(desiredZoneId);
-
-        LocalDate userBirth = zonedDateTime.toLocalDate();
-        MonthDay userBirthMonthDay = MonthDay.of(userBirth.getMonth(), userBirth.getDayOfMonth());
-
-        LocalDate today = LocalDate.now();
-        MonthDay todayMonthDay = MonthDay.of(today.getMonth(), today.getDayOfMonth());
 
         if (user == null) {
             redirectAttributes.addFlashAttribute("errorMessage", "You are logged out.");
             return "redirect:/login";
         } else {
+
+            List<ReservationVO> reservations = reservationService.getUserReservations(user.getU_id());
+
+            // 생년월일 : 오늘 날짜 비교
+
+            if (user.getU_birth() == null) {
+                user.setU_birth(new Date());
+            }
+
+            java.time.Instant instant = user.getU_birth().toInstant();
+            ZoneId desiredZoneId = ZoneId.of("Asia/Seoul");
+            java.time.ZonedDateTime zonedDateTime = instant.atZone(desiredZoneId);
+
+            LocalDate userBirth = zonedDateTime.toLocalDate();
+            MonthDay userBirthMonthDay = MonthDay.of(userBirth.getMonth(), userBirth.getDayOfMonth());
+
+            LocalDate today = LocalDate.now();
+            MonthDay todayMonthDay = MonthDay.of(today.getMonth(), today.getDayOfMonth());
+
+
             if (u_id.equals(user.getU_id())) {
                 model.addAttribute("user", user);
                 model.addAttribute("userBirthMonthDay", userBirthMonthDay);
@@ -307,14 +326,15 @@ public class LoginC {
                         Model model) {
 
         LoginVO user = (LoginVO) session.getAttribute("user");
-        ReservationVO stats = reservationService.getReservationStats(user.getU_id());
-        List<ReservationVO> reservations = reservationService.getUserReservations(user.getU_id());
-
 
         if (user == null) {
             redirectAttributes.addFlashAttribute("errorMessage", "You are logged out.");
             return "redirect:/login";
         } else {
+
+            ReservationVO stats = reservationService.getReservationStats(user.getU_id());
+            List<ReservationVO> reservations = reservationService.getUserReservations(user.getU_id());
+
             if (u_id.equals(user.getU_id())) {
                 model.addAttribute("user", user);
                 model.addAttribute("stats", stats);
@@ -332,25 +352,32 @@ public class LoginC {
                          Model model) {
 
         LoginVO user = (LoginVO) session.getAttribute("user");
-        ReservationVO stats = reservationService.getReservationStats(user.getU_id());
-        List<ReservationVO> reservations = reservationService.getUserReservations(user.getU_id());
-
-        // 생년월일 : 오늘 날짜 비교
-        java.time.Instant instant = user.getU_birth().toInstant();
-        ZoneId desiredZoneId = ZoneId.of("Asia/Seoul");
-        java.time.ZonedDateTime zonedDateTime = instant.atZone(desiredZoneId);
-
-        LocalDate userBirth = zonedDateTime.toLocalDate();
-        MonthDay userBirthMonthDay = MonthDay.of(userBirth.getMonth(), userBirth.getDayOfMonth());
-
-        LocalDate today = LocalDate.now();
-        MonthDay todayMonthDay = MonthDay.of(today.getMonth(), today.getDayOfMonth());
-
 
         if (user == null) {
             redirectAttributes.addFlashAttribute("errorMessage", "You are logged out.");
             return "redirect:/login";
         } else {
+
+            ReservationVO stats = reservationService.getReservationStats(user.getU_id());
+            List<ReservationVO> reservations = reservationService.getUserReservations(user.getU_id());
+
+            // 생년월일 : 오늘 날짜 비교
+
+            if (user.getU_birth() == null) {
+                user.setU_birth(new Date());
+            }
+
+            java.time.Instant instant = user.getU_birth().toInstant();
+            ZoneId desiredZoneId = ZoneId.of("Asia/Seoul");
+            java.time.ZonedDateTime zonedDateTime = instant.atZone(desiredZoneId);
+
+            LocalDate userBirth = zonedDateTime.toLocalDate();
+            MonthDay userBirthMonthDay = MonthDay.of(userBirth.getMonth(), userBirth.getDayOfMonth());
+
+            LocalDate today = LocalDate.now();
+            MonthDay todayMonthDay = MonthDay.of(today.getMonth(), today.getDayOfMonth());
+
+
             if (u_id.equals(user.getU_id())) {
                 model.addAttribute("user", user);
                 model.addAttribute("stats", stats);
@@ -574,7 +601,7 @@ public class LoginC {
                                RedirectAttributes redirectAttributes,
                                Model model) {
 
-        // 주소가 빈 문자열인 경우 null로 설정
+        // 주소가 빈 문자 열인 경우 null로 설정
         if (user.getU_address() != null && user.getU_address().isEmpty()) {
             user.setU_address(null);
         }

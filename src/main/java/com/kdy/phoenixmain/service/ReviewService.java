@@ -20,10 +20,6 @@ public class ReviewService {
         return reviewMapper.getReviewsByMovieId(movie_id);
     }
 
-    public void updateReview(ReviewVO review) {
-        reviewMapper.updateReview(review);
-    }
-
     public void deleteReview(int r_id, String u_id) {
         reviewMapper.deleteReview(r_id, u_id);
     }

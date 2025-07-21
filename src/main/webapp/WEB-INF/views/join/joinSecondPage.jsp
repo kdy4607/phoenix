@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Document</title>
+    <title>Join : Step 2 - Phoenix Cinema</title>
 </head>
 <body>
 
@@ -17,6 +17,7 @@
         <div> Step 3</div>
     </div>
     <div class="cay-join-process-bar">
+        <%-- 공백 문자 있음, 지우지 말 것 --%>
         <div> ㅤ</div>
         <div> ㅤ</div>
         <div style="background-color: ${color}"> ㅤ</div>

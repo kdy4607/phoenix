@@ -36,7 +36,7 @@ FROM
 CONNECT BY
     LEVEL <= LENGTH(m.genre) - LENGTH(REPLACE(m.genre, '/', '')) + 1
        AND PRIOR movie_id = movie_id
-       AND PRIOR SYS_GUID() IS NOT NULL
+       AND PRIOR SYS_GUID() IS NOT NULL;
 
 
 SELECT DISTINCT m2.movie_id, m2.title
@@ -47,12 +47,8 @@ WHERE m1.movie_id = 1
   AND m2.movie_id != 1;
 
 
-SELECT DISTINCT t.tag_id, t.tag_name, t.tag_type
-FROM reservations r
-         JOIN movie_tags mt ON r.movie_id = mt.movie_id
-         JOIN tags t ON mt.tag_id = t.tag_id
-WHERE r.u_id = #{u_id}
-  AND t.tag_type = 'Genre';
 
-
-
+select m.movie_id, m.title, m.poster_url
+from bookmarks b1
+join movies m on b1.MOVIE_ID = m.MOVIE_ID
+where b1.u_id = 'go'

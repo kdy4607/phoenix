@@ -50,13 +50,78 @@ public interface MovieMapper {
     """)
     MovieVO selectMovieById(@Param("movieId") int movieId);
 
-    // ✅ 같은 장르를 가진 다른 영화 추천
     @Select("""
-        SELECT DISTINCT m2.movie_id, m2.title, m2.poster_url
-        FROM movies m1
-        JOIN movies m2 ON m1.genre = m2.genre
-        WHERE m1.movie_id = #{movieId}
-          AND m2.movie_id != #{movieId}
+        SELECT * FROM MOVIES
+        WHERE release_date > SYSDATE
     """)
-    List<MovieVO> selectRelatedMovies(@Param("movieId") int movieId);
+    @ResultMap("movieMap")
+    List<MovieVO> selectUpcomingMovies();
+
+    // ✅ [추가] 제목 + 상태 필터링
+    @Select("""
+        SELECT * FROM MOVIES
+        WHERE title LIKE '%' || #{title} || '%'
+        AND (
+            (#{status} = 'showing' AND release_date <= SYSDATE)
+            OR (#{status} = 'upcoming' AND release_date > SYSDATE)
+            OR (#{status} = 'all')
+        )
+    """)
+    @ResultMap("movieMap")
+    List<MovieVO> selectMoviesByTitleAndStatus(
+            @Param("title") String title,
+            @Param("status") String status
+    );
+
+//    // ✅ [추가] 태그 + 상태 필터링
+//    @SelectProvider(type = MovieSqlBuilder.class, method = "buildQueryByTagsAndStatus")
+//    @ResultMap("movieMap")
+//    List<MovieVO> selectMoviesByTagsAndStatus(
+//            @Param("tagIds") List<Integer> tagIds,
+//            @Param("tagCount") int tagCount,
+//            @Param("status") String status
+//    );
+//
+//    // ✅ [추가] 태그 + 제목 + 상태 필터링
+//    @SelectProvider(type = MovieSqlBuilder.class, method = "buildQueryByTagsTitleAndStatus")
+//    @ResultMap("movieMap")
+//    List<MovieVO> selectMoviesByTagsTitleAndStatus(
+//            @Param("tagIds") List<Integer> tagIds,
+//            @Param("tagCount") int tagCount,
+//            @Param("title") String title,
+//            @Param("status") String status
+//    );
+
+
+//    // 1) 영화 ID로 영화 정보 가져오기
+//     @Select("""
+//            SELECT movie_id, title, genre
+//            FROM movies
+//            WHERE movie_id = #{movieId}
+//            FETCH FIRST 1 ROWS ONLY
+//        """)
+//        MovieVO selectMovieById(@Param("movieId") int movieId);
+
+    // ② 특정 영화와 장르가 겹치는 다른 영화 목록 조회
+//    @Select("""
+//        SELECT DISTINCT m2.movie_id, m2.title, m2.poster_url
+//        FROM movies m1
+//        JOIN movies m2 ON m1.genre = m2.genre
+//        WHERE m1.movie_id = #{movieId}
+//          AND m2.movie_id != #{movieId}
+//    """)
+//    List<MovieVO> selectRelatedMovies(@Param("movieId") int movieId);
+    @Select("""
+    SELECT DISTINCT m2.movie_id, m2.title, m2.poster_url
+    FROM movies m2
+    WHERE m2.movie_id != #{movieId}
+      AND (
+        (#{genre1} IS NULL OR m2.genre LIKE '%' || #{genre1} || '%')
+        OR
+        (#{genre2} IS NULL OR m2.genre LIKE '%' || #{genre2} || '%')
+      )
+    """)
+    List<MovieVO> selectRelatedMovies(@Param("movieId") int movieId,
+                                      @Param("genre1") String genre1,
+                                      @Param("genre2") String genre2);
 }
