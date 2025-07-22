@@ -192,7 +192,8 @@
                     </table>
                 </div>
                 <div class="cay-myPage-coupon">
-                    <div>Reward Coupon</div>
+                    <div style="color: black">Reward Coupon</div>
+                        <c:if test="${not empty reservations}">
                     <table class="cay-myPage-coupon-table">
                         <th> Coupon</th>
                         <th> Benefit</th>
@@ -231,6 +232,10 @@
                             details.
                         </div>
                     </div>
+                    </c:if>
+                    <c:if test="${empty reservations}">
+                        Your recent coupon details do not exist.
+                    </c:if>
                 </div>
             </div>
         </div>
