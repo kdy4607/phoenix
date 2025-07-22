@@ -98,27 +98,28 @@
                 </div>
             </div>
 
-            <!-- Lee Dong-ju -->
-            <div class="member-card detail">
-                <div class="role-badge"><i class="fas fa-info-circle"></i> Movie Detail</div>
+            <!-- Choi A-young -->
+            <div class="member-card user">
+                <div class="role-badge"><i class="fas fa-user-cog"></i> User System</div>
                 <div class="member-info">
-                    <h3>Lee Dong-ju</h3>
-                    <p class="position">Movie Detail Page Development</p>
+                    <h3>Choi A-young</h3>
+                    <p class="position">User Management System Development</p>
                     <div class="responsibilities">
-                        <span>• Movie detail information page implementation</span>
-                        <span>• Movie information display system development</span>
-                        <span>• Rating and review system implementation</span>
-                        <span>• Collaborated with Han Saeng-myeong for movie information integration</span>
-                        <span>• Detail page UI/UX optimization</span>
+                        <span>• User registration and login system implementation</span>
+                        <span>• User authentication and authorization</span>
+                        <span>• User profile management features</span>
+                        <span>• Security implementation and session management</span>
+                        <span>• User experience optimization</span>
                     </div>
                     <div class="tech-stack">
+                        <span class="tech">Spring Security</span>
                         <span class="tech">JSP</span>
-                        <span class="tech">CSS3</span>
                         <span class="tech">JavaScript</span>
-                        <span class="tech">AJAX</span>
+                        <span class="tech">Oracle DB</span>
                     </div>
                 </div>
             </div>
+
 
             <!-- Han Saeng-myeong -->
             <div class="member-card movie">
@@ -142,27 +143,27 @@
                 </div>
             </div>
 
-            <!-- Choi A-young -->
-            <div class="member-card user">
-                <div class="role-badge"><i class="fas fa-user-cog"></i> User System</div>
-                <div class="member-info">
-                    <h3>Choi A-young</h3>
-                    <p class="position">User Management System Development</p>
-                    <div class="responsibilities">
-                        <span>• User registration and login system implementation</span>
-                        <span>• User authentication and authorization</span>
-                        <span>• User profile management features</span>
-                        <span>• Security implementation and session management</span>
-                        <span>• User experience optimization</span>
-                    </div>
-                    <div class="tech-stack">
-                        <span class="tech">Spring Security</span>
-                        <span class="tech">JSP</span>
-                        <span class="tech">JavaScript</span>
-                        <span class="tech">Oracle DB</span>
-                    </div>
+        <!-- Lee Dong-ju -->
+        <div class="member-card detail">
+            <div class="role-badge"><i class="fas fa-info-circle"></i> Movie Detail</div>
+            <div class="member-info">
+                <h3>Lee Dong-ju</h3>
+                <p class="position">Movie Detail Page Development</p>
+                <div class="responsibilities">
+                    <span>• Movie detail information page implementation</span>
+                    <span>• Movie information display system development</span>
+                    <span>• Rating and review system implementation</span>
+                    <span>• Collaborated with Han Saeng-myeong for movie information integration</span>
+                    <span>• Detail page UI/UX optimization</span>
+                </div>
+                <div class="tech-stack">
+                    <span class="tech">JSP</span>
+                    <span class="tech">CSS3</span>
+                    <span class="tech">JavaScript</span>
+                    <span class="tech">AJAX</span>
                 </div>
             </div>
+        </div>
         </div>
 
         <!-- Project Information -->
