@@ -5,6 +5,7 @@
 <html>
 <head>
   <title>메인</title>
+  <link rel="icon" href="/resources/images/logo.png" type="image/png">
 </head>
 <body>
 <h1>메인 페이지</h1>

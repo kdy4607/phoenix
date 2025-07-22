@@ -5,6 +5,7 @@
   <meta charset="UTF-8" />
   <title>Movie List</title>
   <link rel="stylesheet" href="/resources/css/movie.css" />
+  <link rel="icon" href="/resources/images/logo.png" type="image/png">
   <script src="/resources/js/movie.js" defer></script>
 </head>
 <body>

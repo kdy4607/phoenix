@@ -5,6 +5,7 @@
 <html>
 <head>
     <title>Title</title>
+    <link rel="icon" href="/resources/images/logo.png" type="image/png">
 </head>
 <body>
 <c:forEach var="rel" items="${bookmarks}" varStatus="loop">

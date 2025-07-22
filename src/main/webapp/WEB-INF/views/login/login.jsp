@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Login - Phoenix Cinema</title>
     <link rel="stylesheet" href="/resources/css/user.css"/>
+    <link rel="icon" href="/resources/images/logo.png" type="image/png">
     <script src="/resources/js/login.js"></script>
 </head>
 <body>

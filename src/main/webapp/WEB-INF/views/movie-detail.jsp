@@ -6,6 +6,7 @@
         값을 사용하는 기준으로 같이 묶음.) </title>
     <link rel="stylesheet" href="/resources/css/movie-detail.css">
     <link rel="stylesheet" href="/resources/css/bookmark.css">
+    <link rel="icon" href="/resources/images/logo.png" type="image/png">
     <%--    <script src="/resources/js/detailBookMark.js" defer></script>--%>
 </head>
 <body>

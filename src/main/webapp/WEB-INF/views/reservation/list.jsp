@@ -9,6 +9,7 @@
     <title>My Bookings - Phoenix Cinema</title>
     <link rel="stylesheet" href="/resources/css/schedule.css">
     <link rel="stylesheet" href="/resources/css/reservation.css">
+    <link rel="icon" href="/resources/images/logo.png" type="image/png">
 </head>
 <body>
 <!-- 헤더 포함 -->

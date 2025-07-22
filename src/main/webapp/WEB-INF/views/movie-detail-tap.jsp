@@ -6,6 +6,7 @@
 <head>
     <title>Movie Detail</title>
     <link rel="stylesheet" href="/resources/css/clickTap.css">
+    <link rel="icon" href="/resources/images/logo.png" type="image/png">
 </head>
 <body>
 
