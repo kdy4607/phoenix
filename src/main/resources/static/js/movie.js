@@ -153,16 +153,20 @@ function applyFilters() {
 
         const releaseDate = new Date(movie.release_date);
         const today = new Date();
+        const daysAgo250 = new Date();
+        daysAgo250.setDate(today.getDate() - 250);
+
         let matchStatus = true;
         if (currentStatus === "showing") {
-            matchStatus = releaseDate <= today;
+            // ✅ 오늘부터 250일 이내 개봉한 영화만 상영중
+            matchStatus = releaseDate >= daysAgo250 && releaseDate <= today;
         } else if (currentStatus === "upcoming") {
+            // ✅ 오늘 이후 개봉 예정인 영화만 미개봉
             matchStatus = releaseDate > today;
         }
 
         const movieTagIds = movie.m_tagList.map((tag) => tag.tag_id);
         const matchTags = selectedTags.size === 0 || [...selectedTags].some((id) => movieTagIds.includes(id));
-
 
         return matchTitle && matchStatus && matchTags;
     });
