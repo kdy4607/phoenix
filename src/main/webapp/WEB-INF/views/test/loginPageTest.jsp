@@ -5,6 +5,7 @@
 <html>
 <head>
   <title>로그인</title>
+  <link rel="icon" href="/resources/images/logo.png" type="image/png">
 </head>
 <body>
 <h2>로그인 페이지</h2>

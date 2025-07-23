@@ -5,6 +5,7 @@
     <title>Title</title>
     <link rel="stylesheet" href="/resources/css/detailmovie-menu-logoin.css">
     <link rel="stylesheet" href="/resources/css/menuCon.css">
+    <link rel="icon" href="/resources/images/logo.png" type="image/png">
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/header.jsp"/>

@@ -11,6 +11,7 @@
     <meta charset="utf-8"/>
     <link rel="icon" href="https://static.toss.im/icons/png/4x/icon-toss-logo.png"/>
     <link rel="stylesheet" type="text/css" href="/resources/css/payment.css"/>
+    <link rel="icon" href="/resources/images/logo.png" type="image/png">
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>토스페이먼츠 샘플 프로젝트</title>

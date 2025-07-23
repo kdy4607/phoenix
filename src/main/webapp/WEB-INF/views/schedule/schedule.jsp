@@ -13,7 +13,7 @@
     <link rel="icon" href="https://static.toss.im/icons/png/4x/icon-toss-logo.png"/>
     <link rel="stylesheet" href="/resources/css/schedule.css">
     <link rel="stylesheet" type="text/css" href="/resources/css/payment.css"/>
-
+    <link rel="icon" href="/resources/images/logo.png" type="image/png">
 </head>
 <body>
 <!-- 공통 헤더 포함 -->

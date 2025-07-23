@@ -24,4 +24,6 @@ public class ReviewService {
         reviewMapper.deleteReview(r_id, u_id);
     }
 
+    public List<ReviewVO> getReviewsByUserId(String u_id) { return reviewMapper.getReviewsByUserId(u_id); }
+
 }

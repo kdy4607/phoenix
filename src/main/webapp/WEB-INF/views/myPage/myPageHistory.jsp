@@ -15,6 +15,7 @@
 </head>
 <body>
 
+
 <div class="cay-myPage-content">
     <div class="cay-myPage-wrap">
         <div> Movie History</div>
@@ -74,25 +75,22 @@
                     <h1>My Review</h1>
                     <div>
                         <div>
-                            <c:if test="${not empty reservations}">
-                                <c:forEach items="${reservations}" var="reservation">
+                            <c:if test="${not empty reviewList}">
+                                <c:forEach items="${reviewList}" var="review">
                                     <div>
                                         <div class="cay-myPage-order-img">
-                                            <img src="${reservation.poster_url}" alt="">
+                                            <img src="${review.movie.poster_url}" alt="">
                                         </div>
                                         <div class="cay-myPage-order-info">
                                             <div class="cay-myPage-order-top">
-                                                    ${reservation.movie_title} <br>
-                                                <fmt:formatDate value='${reservation.run_date}'
-                                                                pattern='yyyy-MM-dd (E)'/>
-                                                    ${reservation.start_time}
+                                                    ${review.movie.title}
                                             </div>
                                             <div class="cay-myPage-order-bottom">
                                                 <div>
                                                     <div>
                                                         <c:if test="${not empty review}">
-                                                            <span>
-                                                                review
+                                                            <span style="font-size: 1.5rem">
+                                                                " ${review.r_text} "
                                                             </span>
                                                         </c:if>
                                                         <c:if test="${empty review}">

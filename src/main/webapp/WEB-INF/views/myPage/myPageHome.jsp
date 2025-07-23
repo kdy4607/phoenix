@@ -84,7 +84,7 @@
                         <div> Watch</div>
                     </a>
                     <a href="/mypage/history?u_id=${user.u_id}">
-                        <span> 0 </span>
+                        <span> ${reviewsCtn != null ? reviewsCtn : 0} </span>
                         <div> Review</div>
                     </a>
                     <a href="/mypage/history?u_id=${user.u_id}">

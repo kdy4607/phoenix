@@ -3,6 +3,7 @@
 <head>
     <title>MyPage - Phoenix Cinema</title>
     <link rel="stylesheet" href="/resources/css/user.css">
+    <link rel="icon" href="/resources/images/logo.png" type="image/png">
     <!-- header.js 사용 (login.js 대신) -->
     <script src="/resources/js/header.js"></script>
 </head>

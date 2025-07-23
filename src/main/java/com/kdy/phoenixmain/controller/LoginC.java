@@ -3,16 +3,19 @@ package com.kdy.phoenixmain.controller;
 import com.kdy.phoenixmain.mapper.TagMapper;
 import com.kdy.phoenixmain.service.LoginService;
 import com.kdy.phoenixmain.service.ReservationService;
+import com.kdy.phoenixmain.service.ReviewService;
 import com.kdy.phoenixmain.service.UserBookMServiceT;
 import com.kdy.phoenixmain.vo.*;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.HttpServletRequest;
+import org.apache.jasper.tagplugins.jstl.core.ForEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import java.time.LocalDate;
 import java.time.MonthDay;
 import java.time.ZoneId;
@@ -32,6 +35,9 @@ public class LoginC {
 
     @Autowired
     private UserBookMServiceT userBookMServiceT;
+
+    @Autowired
+    private ReviewService reviewService;
 
     // ===== 로그인 관련 =====
 
@@ -127,6 +133,10 @@ public class LoginC {
 
         ReservationVO stats = reservationService.getReservationStats(user.getU_id());
         model.addAttribute("stats", stats);
+
+        List<ReviewVO> reviewList = reviewService.getReviewsByUserId(user.getU_id());
+        int reviewsCtn = reviewList.size();
+        model.addAttribute("reviewsCtn", reviewsCtn);
 
         if (user.getU_birth() == null) {
             user.setU_birth(new Date());
@@ -243,10 +253,12 @@ public class LoginC {
 
             List<ReservationVO> reservations = reservationService.getUserReservations(user.getU_id());
             List<MovieVO> Bookmarks = userBookMServiceT.getBookMarkWhidMovie(u_id);
+            List<ReviewVO> reviewList = reviewService.getReviewsByUserId(u_id);
 
             if (u_id.equals(user.getU_id())) {
                 model.addAttribute("user", user);
                 model.addAttribute("bookmarks", Bookmarks);
+                model.addAttribute("reviewList", reviewList);
                 model.addAttribute("reservations", reservations);
                 model.addAttribute("content", "myPageHistory.jsp");
             }

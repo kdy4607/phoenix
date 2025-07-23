@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <link rel="stylesheet" href="/resources/css/header.css">
+<link rel="icon" href="/resources/images/logo.png" type="image/png">
 
 <!-- 디버깅용 정보 표시 -->
 <%--<div style="background-color: yellow; padding: 10px; font-size: 12px;">--%>
